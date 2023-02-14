@@ -41,3 +41,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: WorkspaceLayer
+    uniqueID: 1754650633
+    locked: 0
+  - name: PlushieLayer
+    uniqueID: 675928311
+    locked: 0
+  - name: PlushieDamageLayer
+    uniqueID: 433339407
+    locked: 0
+  - name: ToolLayer
+    uniqueID: 650574839
+    locked: 0
+  - name: UILayer
+    uniqueID: 1658616955
+    locked: 0
