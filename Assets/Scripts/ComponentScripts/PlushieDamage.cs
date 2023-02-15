@@ -18,7 +18,7 @@ public class PlushieDamage : MonoBehaviour
         this.spriteRenderer = this.transform.gameObject.GetComponent<SpriteRenderer>();
         this.spriteRenderer.color = Color.red;
         this.spriteRenderer.sprite = this.sprite;
-        
+
         this.pluishieDamageRenderer = this.transform.gameObject.GetComponent<Renderer>();
         this.pluishieDamageRenderer.sortingLayerID = SortingLayer.NameToID("PlushieDamageLayer");
     }
@@ -26,6 +26,6 @@ public class PlushieDamage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

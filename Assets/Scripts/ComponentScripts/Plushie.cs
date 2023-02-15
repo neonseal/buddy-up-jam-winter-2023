@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Plushie : MonoBehaviour
@@ -29,7 +27,7 @@ public class Plushie : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void AddPlushieDamageToScene(float x, float y)
