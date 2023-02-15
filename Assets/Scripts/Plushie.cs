@@ -19,8 +19,6 @@ public class Plushie : MonoBehaviour
         this.spriteRenderer = this.transform.gameObject.GetComponent<SpriteRenderer>();
         this.spriteRenderer.sprite = this.sprite;
 
-        Debug.Log(this.sprite);
-
         this.plushieRenderer = this.transform.gameObject.GetComponent<Renderer>();
         this.plushieRenderer.sortingLayerID = SortingLayer.NameToID("PlushieLayer");
         this.AddPlushieDamageToScene();
