@@ -23,7 +23,7 @@ public class Plushie : MonoBehaviour
 
         this.plushieRenderer = this.transform.gameObject.GetComponent<Renderer>();
         this.plushieRenderer.sortingLayerID = SortingLayer.NameToID("PlushieLayer");
-        this.AddPlushieDamageToScene();
+        this.AddPlushieDamageToScene(5f, 0f);
     }
 
     // Update is called once per frame
@@ -32,11 +32,12 @@ public class Plushie : MonoBehaviour
         
     }
 
-    private void AddPlushieDamageToScene()
+    private void AddPlushieDamageToScene(float x, float y)
     {
         this.plushieDamage = new GameObject();
         this.plushieDamage.name = "PlushieDamage";
         this.plushieDamage.AddComponent<PlushieDamage>();
+        this.plushieDamage.transform.localPosition = new Vector3(x, y, 1f);
         this.plushieDamage.transform.SetParent(this.transform);
     }
 }
