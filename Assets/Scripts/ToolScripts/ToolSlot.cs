@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ToolSlot : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+public class ToolSlot : MonoBehaviour {
+    private ToolController tool;
+
+    private void Awake() {
+        tool = GetComponentInChildren<ToolController>();
+        Renderer toolSlotRenderer = GetComponent<Renderer>();
+        toolSlotRenderer.sortingLayerID = SortingLayer.NameToID("ToolSlot");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void OnMouseOver() {
+        if (Input.GetMouseButtonDown(0) && tool.pickedUp) {
+            EventManager.TriggerEvent("DropTool");
+        }
     }
 }
