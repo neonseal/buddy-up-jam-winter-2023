@@ -44,7 +44,6 @@ public class ToolController : MonoBehaviour, ITool {
     // Attempt to pick up tool
     private void PickUpTool() {
         if (targetCollider && targetCollider.transform.gameObject.tag == "Tool") {
-
             selectedTool = targetCollider.transform.gameObject;
             toolPickedUp = true;
         }
