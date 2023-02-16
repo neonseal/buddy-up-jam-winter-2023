@@ -14,8 +14,9 @@ namespace DamageScripts {
     public static class DamageTypes {
         static DamageTypes() {
             damageInfoDictionary = new Dictionary<PlushieDamageType, DamageInformation>();
-            damageInfoDictionary.Add(PlushieDamageType.SMALL_RIP, new DamageInformation("Sprites/Damage_Cut"));
-            damageInfoDictionary.Add(PlushieDamageType.WORN_STUFFING, new DamageInformation("Sprites/Damage_Dirt"));
+            damageInfoDictionary.Add(PlushieDamageType.SMALL_RIP, new DamageInformation("Sprites/Damage_SMALL_RIP"));
+            damageInfoDictionary.Add(PlushieDamageType.LARGE_RIP, new DamageInformation("Sprites/Damage_LARGE_RIP"));
+            damageInfoDictionary.Add(PlushieDamageType.LARGE_RIP_STUFFED, new DamageInformation("Sprites/Damage_LARGE_RIP_STUFFED"));
         }
 
         public static Dictionary<PlushieDamageType, DamageInformation> damageInfoDictionary;
