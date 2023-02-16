@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DamageResources {
+namespace DamageScripts {
     public enum PlushieDamageType {
         SmallRip,
         LargeRip,
@@ -15,7 +15,6 @@ namespace DamageResources {
             damageInfoDictionary.Add(PlushieDamageType.SmallRip, new DamageInformation("Sprites/Damage_Cut"));
             damageInfoDictionary.Add(PlushieDamageType.WornStuffing, new DamageInformation("Sprites/Damage_Dirt"));
         }
-
 
         public static Dictionary<PlushieDamageType, DamageInformation> damageInfoDictionary;
     }
