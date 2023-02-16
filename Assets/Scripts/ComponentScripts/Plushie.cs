@@ -1,5 +1,5 @@
 using UnityEngine;
-using DamageResoueces;
+using DamageResources;
 
 public class Plushie : MonoBehaviour
 {
@@ -19,8 +19,8 @@ public class Plushie : MonoBehaviour
 
         this.plushieRenderer = this.transform.gameObject.GetComponent<Renderer>();
         this.plushieRenderer.sortingLayerID = SortingLayer.NameToID("PlushieLayer");
-        this.AddPlushieDamageToScene(2f, 0f, DamageTypes.plushieDamageType.CUT);
-        this.AddPlushieDamageToScene(2.5f, 0.5f, DamageTypes.plushieDamageType.DIRT);
+        this.AddPlushieDamageToScene(2f, 0f, PlushieDamageType.SmallRip);
+        this.AddPlushieDamageToScene(2.5f, 0.5f, PlushieDamageType.WornStuffing);
     }
 
     // Update is called once per frame
@@ -29,7 +29,7 @@ public class Plushie : MonoBehaviour
 
     }
 
-    private void AddPlushieDamageToScene(float x, float y, DamageTypes.plushieDamageType plushieDamageType)
+    private void AddPlushieDamageToScene(float x, float y, PlushieDamageType PlushieDamageType)
     {
         // Initialize damage as child GameObject
         GameObject plushieDamage = new GameObject();
@@ -41,10 +41,10 @@ public class Plushie : MonoBehaviour
         // Attach SpriteRenderer to add damage spirte
         plushieDamage.AddComponent<SpriteRenderer>();
 
-        // Add sprite to damage, corresponding to parameter plushieDamageType
+        // Add sprite to damage, corresponding to parameter PlushieDamageType
         SpriteRenderer damageSpriteRenderer = plushieDamage.transform.gameObject.GetComponent<SpriteRenderer>();
         // Retrieve sprite (or any other information if needed) from dictionary
-        damageSpriteRenderer.sprite = DamageTypes.damageInfoDictionary[plushieDamageType].sprite;
+        damageSpriteRenderer.sprite = DamageTypes.damageInfoDictionary[PlushieDamageType].sprite;
 
         
 

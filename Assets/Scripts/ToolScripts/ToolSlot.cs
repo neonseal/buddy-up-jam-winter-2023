@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 public class ToolSlot : MonoBehaviour, IPointerDownHandler {
     private ToolController tool;
 
-
     private void Awake() {
         tool = GetComponentInChildren<ToolController>();
     }

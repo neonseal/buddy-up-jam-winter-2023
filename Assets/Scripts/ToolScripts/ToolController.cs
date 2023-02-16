@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 using Tool;
 
 public class ToolController : MonoBehaviour, IPointerDownHandler, ITool {
-    [SerializeField] private Canvas canvas;
     [SerializeField] private ToolType toolType; 
 
     private RectTransform rectTransform;
@@ -14,6 +13,9 @@ public class ToolController : MonoBehaviour, IPointerDownHandler, ITool {
     private Collider2D targetCollider;
 
     private bool pickedUp;
+    public bool PickedUp {
+        get { return pickedUp; }
+    }
 
     private void Awake() {
         pickedUp = false;
@@ -43,13 +45,28 @@ public class ToolController : MonoBehaviour, IPointerDownHandler, ITool {
 
             // Check if over plushy
             if (targetCollider.transform.gameObject.tag == "Damage") {
-                ApplyTool();
+                PlushieDamage damageObject = targetCollider.transform.gameObject.GetComponent<PlushieDamage>();
+                ApplyTool(damageObject);
             }
         }
     }
 
-    public void ApplyTool() {
+    public void ApplyTool(PlushieDamage damageObject) {
         // On click, check if the collider is a valid damage type for the selected tool
+        switch (toolType) {
+            case (ToolType.Scissors):
+                // Check if large rip or worn stuffing
+                break;
+            case (ToolType.Needle):
+                // Check if small rip
+                // Or large rip that has been stuffed
+                // Or worn stuffing that has been cut and stuffed
+                break;
+            case (ToolType.Stuffing):
+                // Check if large rip
+                // Or worn stuffing that has been cut
+                break;
+        }
     }
 
     // Drop tool back on starting position
@@ -57,9 +74,6 @@ public class ToolController : MonoBehaviour, IPointerDownHandler, ITool {
         pickedUp = false;
     }
 
-    public bool PickedUp {
-        get { return pickedUp; }
-    }
 
     private void OnEnable() {
         EventManager.StartListening("DropTool", DropTool);
