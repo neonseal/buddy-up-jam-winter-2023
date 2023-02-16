@@ -32,23 +32,25 @@ public class Plushie : MonoBehaviour
     private void AddPlushieDamageToScene(float x, float y, PlushieDamageType plushieDamageTypeParameter)
     {
         // Initialize damage as child GameObject
-        GameObject plushieDamage = new GameObject();
-        plushieDamage.name = "PlushieDamage";
+        GameObject plushieDamageGameObject = new GameObject();
+        plushieDamageGameObject.name = "PlushieDamage";
 
-        // Modify components
         // Attach script for functions
-        PlushieDamage plushieDamageScript = plushieDamage.AddComponent<PlushieDamage>();
+        PlushieDamage plushieDamageScript = plushieDamageGameObject.AddComponent<PlushieDamage>();
+
+        // Assign initial fields to plushieDamage child game object
         plushieDamageScript.plushieDamageType = plushieDamageTypeParameter;
+        plushieDamageScript.plushieDamageSprite = DamageTypes.damageInfoDictionary[plushieDamageTypeParameter].sprite;
         // Attach SpriteRenderer to add damage spirte
-        SpriteRenderer damageSpriteRenderer = plushieDamage.AddComponent<SpriteRenderer>();
+        SpriteRenderer damageSpriteRenderer = plushieDamageGameObject.AddComponent<SpriteRenderer>();
 
         // Retrieve sprite (or any other information if needed) from dictionary
         damageSpriteRenderer.sprite = DamageTypes.damageInfoDictionary[plushieDamageTypeParameter].sprite;
 
         // Set local position of damage to be parameter floats x and y
-        plushieDamage.transform.localPosition = new Vector3(x, y, 1f);
+        plushieDamageGameObject.transform.localPosition = new Vector3(x, y, 1f);
 
         //Add damage as a child GameObject of the plushie
-        plushieDamage.transform.SetParent(this.transform);
+        plushieDamageGameObject.transform.SetParent(this.transform);
     }
 }
