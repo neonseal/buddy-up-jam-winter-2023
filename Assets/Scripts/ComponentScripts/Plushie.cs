@@ -5,7 +5,7 @@ public class Plushie : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     private Renderer plushieRenderer;
-    private string spritePath = "Sprites/Circle";
+    private string spritePath = "Sprites/nuigurumi_bear";
     private Sprite sprite;
 
     // Start is called before the first frame update
