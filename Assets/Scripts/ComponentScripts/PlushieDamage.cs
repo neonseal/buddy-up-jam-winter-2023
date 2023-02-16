@@ -24,6 +24,10 @@ public class PlushieDamage : MonoBehaviour
         this.plushieDamageSprite = DamageTypes.damageInfoDictionary[newDamageType].sprite;
     }
 
+    public void deletePlushieDamage() {
+        Object.Destroy(this.gameObject); // F
+    }
+
     // Update is called once per frame
     void Update()
     {
