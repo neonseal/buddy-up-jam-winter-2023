@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class ToolSlot : MonoBehaviour {
+public class ToolSlot : MonoBehaviour, IPointerDownHandler {
     private ToolController tool;
 
     private void Awake() {
         tool = GetComponentInChildren<ToolController>();
-        Renderer toolSlotRenderer = GetComponent<Renderer>();
-        toolSlotRenderer.sortingLayerID = SortingLayer.NameToID("ToolSlot");
     }
 
-    private void OnMouseOver() {
-        if (Input.GetMouseButtonDown(0) && tool.pickedUp) {
+    public void OnPointerDown(PointerEventData eventData) {
+        if (tool.PickedUp) {
+            tool.GetComponent<RectTransform>().position = GetComponent<RectTransform>().position;
+
+            tool.GetComponent<CanvasGroup>().alpha = 1;
+            tool.GetComponent<CanvasGroup>().blocksRaycasts = true;
             EventManager.TriggerEvent("DropTool");
         }
     }

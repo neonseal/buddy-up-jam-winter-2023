@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DamageResoueces
+namespace DamageResources
 {
     public sealed class DamageInformation
     {

@@ -1,24 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using Tool;
 
-public class ToolController : MonoBehaviour, ITool {
-    private Collider2D targetCollider;
-    private GameObject selectedTool;
+public class ToolController : MonoBehaviour, IPointerDownHandler, ITool {
+    [SerializeField] private ToolType toolType; 
+
+    private RectTransform rectTransform;
+    private CanvasGroup canvasGroup;
     private Vector3 mousePosition;
-    private Vector3 startingPosition;
+    private Collider2D targetCollider;
 
-    [SerializeField] private string toolName;
-    [SerializeField] private ToolType type;
-
-    public bool pickedUp;
+    private bool pickedUp;
+    public bool PickedUp {
+        get { return pickedUp; }
+    }
 
     private void Awake() {
-        startingPosition = gameObject.transform.position;
-        Renderer toolRenderer = GetComponent<Renderer>();
-        toolRenderer.sortingLayerID = SortingLayer.NameToID("Tool");
+        pickedUp = false;
+        rectTransform = GetComponent<RectTransform>();
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
     private void Update() {
@@ -26,47 +28,52 @@ public class ToolController : MonoBehaviour, ITool {
             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
 
-        if (pickedUp && selectedTool) {
-            selectedTool.transform.position = new Vector3(mousePosition.x, mousePosition.y, selectedTool.transform.position.z);
+        if (pickedUp) {
+            rectTransform.position = Input.mousePosition;
         }
     }
 
-    // Check for mouse click when the user is hovering over a tool to trigger pick up
-    private void OnMouseOver() {
-        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        targetCollider = Physics2D.OverlapPoint(mousePosition);
+    public void OnPointerDown(PointerEventData eventData) {
+        // Check if the tool needs to be picked up
+        if (!pickedUp) {
+            pickedUp = true;
+            canvasGroup.alpha = .6f;
+            canvasGroup.blocksRaycasts = false;
+        } else {
+            // Check if we are above a damage spot
+            targetCollider = Physics2D.OverlapPoint(mousePosition);
 
-        if (Input.GetMouseButtonDown(0)) {
-            // If not holding a tool, try to pick up tool
-            if (!pickedUp) {
-                PickUpTool();
-            } else {
-                // Check if over plushy
-                if (targetCollider.transform.gameObject.tag == "Damage") {
-                    ApplyTool();
-                } 
+            // Check if over plushy
+            if (targetCollider.transform.gameObject.tag == "Damage") {
+                PlushieDamage damageObject = targetCollider.transform.gameObject.GetComponent<PlushieDamage>();
+                ApplyTool(damageObject);
             }
         }
     }
 
-    // Attempt to pick up tool
-    private void PickUpTool() {
-        if (targetCollider && targetCollider.transform.gameObject.tag == "Tool") {
-            selectedTool = targetCollider.transform.gameObject;
-            pickedUp = true;
+    public void ApplyTool(PlushieDamage damageObject) {
+        // On click, check if the collider is a valid damage type for the selected tool
+        switch (toolType) {
+            case (ToolType.Scissors):
+                // Check if large rip or worn stuffing
+                break;
+            case (ToolType.Needle):
+                // Check if small rip
+                // Or large rip that has been stuffed
+                // Or worn stuffing that has been cut and stuffed
+                break;
+            case (ToolType.Stuffing):
+                // Check if large rip
+                // Or worn stuffing that has been cut
+                break;
         }
     }
 
     // Drop tool back on starting position
     private void DropTool() {
-        selectedTool.transform.position = startingPosition;
         pickedUp = false;
-        Debug.Log("DROP");
     }
 
-    public void ApplyTool() {
-        // On click, check if the collider is a valid damage type for the selected tool
-    }
 
     private void OnEnable() {
         EventManager.StartListening("DropTool", DropTool);
@@ -75,4 +82,5 @@ public class ToolController : MonoBehaviour, ITool {
     private void OnDisable() {
         EventManager.StopListening("DropTool", DropTool);
     }
+
 }

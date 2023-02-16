@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Tool
   - ToolSlot
+  - Damage
   layers:
   - Default
   - TransparentFX
@@ -42,6 +43,12 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3231181851
+    locked: 0
+  - name: Workbench
+    uniqueID: 1217128541
     locked: 0
   - name: WorkspaceLayer
     uniqueID: 1754650633

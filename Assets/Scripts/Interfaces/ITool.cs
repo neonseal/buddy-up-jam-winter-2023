@@ -11,6 +11,6 @@ namespace Tool {
     }
 
     public interface ITool {
-        public void ApplyTool();
+        public void ApplyTool(PlushieDamage damageObject);
     }
 }
