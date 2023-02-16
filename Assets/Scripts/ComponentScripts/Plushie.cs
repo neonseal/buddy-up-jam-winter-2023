@@ -19,8 +19,8 @@ public class Plushie : MonoBehaviour
 
         this.plushieRenderer = this.transform.gameObject.GetComponent<Renderer>();
         this.plushieRenderer.sortingLayerID = SortingLayer.NameToID("PlushieLayer");
-        this.AddPlushieDamageToScene(2f, 0f, PlushieDamageType.SmallRip);
-        this.AddPlushieDamageToScene(2.5f, 0.5f, PlushieDamageType.WornStuffing);
+        this.AddPlushieDamageToScene(2f, 0f, PlushieDamageType.SMALL_RIP);
+        this.AddPlushieDamageToScene(2.5f, 0.5f, PlushieDamageType.WORN_STUFFING);
     }
 
     // Update is called once per frame
