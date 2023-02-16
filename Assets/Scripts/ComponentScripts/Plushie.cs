@@ -3,8 +3,7 @@ using DamageScripts;
 
 public class Plushie : MonoBehaviour
 {
-    private SpriteRenderer spriteRenderer;
-    private Renderer plushieRenderer;
+    private SpriteRenderer plushieSpriteRenderer;
     private string spritePath = "Sprites/nuigurumi_bear";
     private Sprite sprite;
 
@@ -13,12 +12,10 @@ public class Plushie : MonoBehaviour
     {
         this.sprite = Resources.Load<Sprite>(spritePath);
 
-        this.transform.gameObject.AddComponent<SpriteRenderer>();
-        this.spriteRenderer = this.transform.gameObject.GetComponent<SpriteRenderer>();
-        this.spriteRenderer.sprite = this.sprite;
+        this.plushieSpriteRenderer = this.transform.gameObject.AddComponent<SpriteRenderer>();
+        this.plushieSpriteRenderer.sprite = this.sprite;
 
-        this.plushieRenderer = this.transform.gameObject.GetComponent<Renderer>();
-        this.plushieRenderer.sortingLayerID = SortingLayer.NameToID("PlushieLayer");
+        this.plushieSpriteRenderer.sortingLayerID = SortingLayer.NameToID("PlushieLayer");
         this.AddPlushieDamageToScene(2f, 0f, PlushieDamageType.SMALL_RIP);
         this.AddPlushieDamageToScene(2.5f, 0.5f, PlushieDamageType.LARGE_RIP);
     }
@@ -39,8 +36,7 @@ public class Plushie : MonoBehaviour
         PlushieDamage plushieDamageScript = plushieDamageGameObject.AddComponent<PlushieDamage>();
 
         // Assign initial fields to plushieDamage child game object
-        plushieDamageScript.plushieDamageType = plushieDamageTypeParameter;
-        plushieDamageScript.plushieDamageSprite = DamageTypes.damageInfoDictionary[plushieDamageTypeParameter].sprite;
+        plushieDamageScript.setDamageType(plushieDamageTypeParameter);
 
         // Set local position of damage to be parameter floats x and y
         plushieDamageGameObject.transform.localPosition = new Vector3(x, y, 1f);

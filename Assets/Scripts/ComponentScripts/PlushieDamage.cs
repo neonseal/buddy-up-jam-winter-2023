@@ -7,24 +7,29 @@ public class PlushieDamage : MonoBehaviour
 {
     // Fields
     internal PlushieDamageType plushieDamageType;
-    internal Sprite plushieDamageSprite;
-    
+
     // Components
-    private SpriteRenderer damageSpriteRenderer;
+    private SpriteRenderer plushieDamageSpriteRenderer;
+
+    void Awake()
+    {
+        this.plushieDamageSpriteRenderer = this.gameObject.AddComponent<SpriteRenderer>();
+        plushieDamageSpriteRenderer.sortingLayerID = SortingLayer.NameToID("PlushieDamageLayer");
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        SpriteRenderer plushieDamageSpriteRenderer = this.gameObject.AddComponent<SpriteRenderer>();
-        plushieDamageSpriteRenderer.sortingLayerID = SortingLayer.NameToID("PlushieDamageLayer");
     }
 
-    public void changeDamageType(PlushieDamageType newDamageType) {
+    public void setDamageType(PlushieDamageType newDamageType)
+    {
         this.plushieDamageType = newDamageType;
-        this.plushieDamageSprite = DamageTypes.damageInfoDictionary[newDamageType].sprite;
+        this.plushieDamageSpriteRenderer.sprite = DamageTypes.damageInfoDictionary[newDamageType].sprite;
     }
 
-    public void deletePlushieDamage() {
+    public void deletePlushieDamage()
+    {
         Object.Destroy(this.gameObject); // F
     }
 
