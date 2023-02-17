@@ -1,11 +1,10 @@
 using UnityEngine;
-using DamageResources;
+using DamageScripts;
 
 public class Plushie : MonoBehaviour
 {
-    private SpriteRenderer spriteRenderer;
-    private Renderer plushieRenderer;
-    private string spritePath = "Sprites/Circle";
+    private SpriteRenderer plushieSpriteRenderer;
+    private string spritePath = "Sprites/nuigurumi_bear";
     private Sprite sprite;
 
     // Start is called before the first frame update
@@ -13,14 +12,12 @@ public class Plushie : MonoBehaviour
     {
         this.sprite = Resources.Load<Sprite>(spritePath);
 
-        this.transform.gameObject.AddComponent<SpriteRenderer>();
-        this.spriteRenderer = this.transform.gameObject.GetComponent<SpriteRenderer>();
-        this.spriteRenderer.sprite = this.sprite;
+        this.plushieSpriteRenderer = this.transform.gameObject.AddComponent<SpriteRenderer>();
+        this.plushieSpriteRenderer.sprite = this.sprite;
 
-        this.plushieRenderer = this.transform.gameObject.GetComponent<Renderer>();
-        this.plushieRenderer.sortingLayerID = SortingLayer.NameToID("PlushieLayer");
-        this.AddPlushieDamageToScene(2f, 0f, PlushieDamageType.SmallRip);
-        this.AddPlushieDamageToScene(2.5f, 0.5f, PlushieDamageType.WornStuffing);
+        this.plushieSpriteRenderer.sortingLayerID = SortingLayer.NameToID("PlushieLayer");
+        this.AddPlushieDamageToScene(2f, 0f, DamageType.SMALL_RIP);
+        this.AddPlushieDamageToScene(2.5f, 0.5f, DamageType.LARGE_RIP);
     }
 
     // Update is called once per frame
@@ -29,29 +26,21 @@ public class Plushie : MonoBehaviour
 
     }
 
-    private void AddPlushieDamageToScene(float x, float y, PlushieDamageType PlushieDamageType)
+    private void AddPlushieDamageToScene(float x, float y, DamageType damageType)
     {
         // Initialize damage as child GameObject
-        GameObject plushieDamage = new GameObject();
-        plushieDamage.name = "PlushieDamage";
+        GameObject plushieDamageGameObject = new GameObject();
 
-        // Modify components
         // Attach script for functions
-        plushieDamage.AddComponent<PlushieDamage>();
-        // Attach SpriteRenderer to add damage spirte
-        plushieDamage.AddComponent<SpriteRenderer>();
+        PlushieDamage plushieDamageScript = plushieDamageGameObject.AddComponent<PlushieDamage>();
 
-        // Add sprite to damage, corresponding to parameter PlushieDamageType
-        SpriteRenderer damageSpriteRenderer = plushieDamage.transform.gameObject.GetComponent<SpriteRenderer>();
-        // Retrieve sprite (or any other information if needed) from dictionary
-        damageSpriteRenderer.sprite = DamageTypes.damageInfoDictionary[PlushieDamageType].sprite;
-
-        
+        // Assign initial type to plushieDamage child game object
+        plushieDamageScript.setDamageType(damageType);
 
         // Set local position of damage to be parameter floats x and y
-        plushieDamage.transform.localPosition = new Vector3(x, y, 1f);
+        plushieDamageGameObject.transform.localPosition = new Vector3(x, y, 1f);
 
         //Add damage as a child GameObject of the plushie
-        plushieDamage.transform.SetParent(this.transform);
+        plushieDamageGameObject.transform.SetParent(this.transform);
     }
 }
