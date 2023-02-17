@@ -16,8 +16,8 @@ public class Plushie : MonoBehaviour
         this.plushieSpriteRenderer.sprite = this.sprite;
 
         this.plushieSpriteRenderer.sortingLayerID = SortingLayer.NameToID("PlushieLayer");
-        this.AddPlushieDamageToScene(2f, 0f, PlushieDamageType.SMALL_RIP);
-        this.AddPlushieDamageToScene(2.5f, 0.5f, PlushieDamageType.LARGE_RIP);
+        this.AddPlushieDamageToScene(2f, 0f, DamageType.SMALL_RIP);
+        this.AddPlushieDamageToScene(2.5f, 0.5f, DamageType.LARGE_RIP);
     }
 
     // Update is called once per frame
@@ -26,17 +26,16 @@ public class Plushie : MonoBehaviour
 
     }
 
-    private void AddPlushieDamageToScene(float x, float y, PlushieDamageType plushieDamageTypeParameter)
+    private void AddPlushieDamageToScene(float x, float y, DamageType damageType)
     {
         // Initialize damage as child GameObject
         GameObject plushieDamageGameObject = new GameObject();
-        plushieDamageGameObject.name = "PlushieDamage";
 
         // Attach script for functions
         PlushieDamage plushieDamageScript = plushieDamageGameObject.AddComponent<PlushieDamage>();
 
-        // Assign initial fields to plushieDamage child game object
-        plushieDamageScript.setDamageType(plushieDamageTypeParameter);
+        // Assign initial type to plushieDamage child game object
+        plushieDamageScript.setDamageType(damageType);
 
         // Set local position of damage to be parameter floats x and y
         plushieDamageGameObject.transform.localPosition = new Vector3(x, y, 1f);

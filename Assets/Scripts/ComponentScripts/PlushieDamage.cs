@@ -6,7 +6,7 @@ using DamageScripts;
 public class PlushieDamage : MonoBehaviour
 {
     // Fields
-    private PlushieDamageType plushieDamageType;
+    private DamageType plushieDamageType;
 
     // Components
     private SpriteRenderer plushieDamageSpriteRenderer;
@@ -20,12 +20,13 @@ public class PlushieDamage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        this.gameObject.name = this.plushieDamageType.ToString();
     }
 
-    public void setDamageType(PlushieDamageType newDamageType)
+    public void setDamageType(DamageType newDamageType)
     {
         this.plushieDamageType = newDamageType;
-        this.plushieDamageSpriteRenderer.sprite = DamageTypes.damageInfoDictionary[newDamageType].sprite;
+        this.plushieDamageSpriteRenderer.sprite = DamageDictionary.damageInfoDictionary[newDamageType].sprite;
     }
 
     public void deletePlushieDamage()
