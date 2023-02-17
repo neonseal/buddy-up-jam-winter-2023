@@ -6,7 +6,7 @@ using DamageScripts;
 public class PlushieDamage : MonoBehaviour
 {
     // Fields
-    internal PlushieDamageType plushieDamageType;
+    private PlushieDamageType plushieDamageType;
 
     // Components
     private SpriteRenderer plushieDamageSpriteRenderer;
