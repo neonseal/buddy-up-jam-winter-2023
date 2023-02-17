@@ -26,7 +26,7 @@ public class PlushieDamage : MonoBehaviour
     public void setDamageType(DamageType newDamageType)
     {
         this.plushieDamageType = newDamageType;
-        this.plushieDamageSpriteRenderer.sprite = DamageDictionary.damageInfoDictionary[newDamageType].sprite;
+        this.plushieDamageSpriteRenderer.sprite = DamageDictionary.damageInformationDictionary[newDamageType].sprite;
     }
 
     public void deletePlushieDamage()
