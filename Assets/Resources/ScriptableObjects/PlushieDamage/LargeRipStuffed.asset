@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 37a150fed1e8c2a48a898a92cd126284, type: 3}
   m_Name: LargeRipStuffed
   m_EditorClassIdentifier: Assembly-CSharp::DamageTypeScriptableObject
   damageType: 3
-  sprite: {fileID: 21300000, guid: 632ddac6f99dc854f9a728d03491e887, type: 3}
-  correctToolType: 1
+  sprite: {fileID: 0}
+  correctToolType: 2
