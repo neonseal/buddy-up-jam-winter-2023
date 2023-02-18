@@ -10,6 +10,5 @@ public class DamageTypeScriptableObject : ScriptableObject
 {
     public DamageType damageType;
     public Sprite sprite;
-    public Collider2D collider;
     public ToolType correctToolType;
 }

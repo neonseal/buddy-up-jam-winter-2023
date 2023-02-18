@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fb99bf504c0fb8428baa8538c22ba57, type: 3}
+  m_Name: SpoolsAndNeedle
+  m_EditorClassIdentifier: 
+  toolSlotSprite: {fileID: 21300000, guid: c954259d685ef0b4d951c854628c7908, type: 3}
+  toolCursorTexture: {fileID: 2800000, guid: eea0ec3a942dc3d45a4ea4cfb7b28a6b, type: 3}
+  toolType: 2
