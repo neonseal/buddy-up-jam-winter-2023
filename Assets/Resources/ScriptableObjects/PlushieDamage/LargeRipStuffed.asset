@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: LargeRipStuffed
   m_EditorClassIdentifier: Assembly-CSharp::DamageTypeScriptableObject
-  damageType: 0
-  sprite: {fileID: 0}
-  collider: {fileID: 0}
-  correctToolType: 0
+  damageType: 3
+  sprite: {fileID: 21300000, guid: 632ddac6f99dc854f9a728d03491e887, type: 3}
+  correctToolType: 1
