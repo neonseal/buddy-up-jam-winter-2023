@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Tool {
     public enum ToolType {
-        NoTool,
         Scissors,
         Needle,
         Stuffing,

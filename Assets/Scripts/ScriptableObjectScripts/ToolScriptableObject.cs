@@ -6,7 +6,7 @@ using Tool;
 [CreateAssetMenu (fileName = "Tool", menuName = "Scriptable Objects/Tool")]
 public class ToolScriptableObject : ScriptableObject
 {
-    public Sprite defaultSprite;
-    public Sprite cursorSprite;
+    public Sprite toolSlotSprite;
+    public Texture2D toolCursorTexture;
     public ToolType toolType;
 }
