@@ -37,7 +37,6 @@ namespace GameUI
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            Debug.Log(Input.mousePosition);
             // If nothing is held, set this gameobject/tool as the tool being held
             if (this.canvasManager.currentTool == null)
             {
