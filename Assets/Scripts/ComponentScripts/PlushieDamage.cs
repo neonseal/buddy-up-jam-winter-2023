@@ -50,5 +50,6 @@ public class PlushieDamage : MonoBehaviour
 
     void OnMouseDown() {
         Debug.Log(this.gameObject.name + " was clicked");
+        this.deletePlushieDamage();
     }
 }
