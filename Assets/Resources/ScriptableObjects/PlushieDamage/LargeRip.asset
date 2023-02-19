@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: LargeRip
   m_EditorClassIdentifier: Assembly-CSharp::DamageTypeScriptableObject
   damageType: 1
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: e8c45a27a429dd8498c4b9410d8612cf, type: 3}
   correctToolType: 2
