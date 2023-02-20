@@ -10,7 +10,7 @@ namespace GameUI
     public class ToolScript : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField]
-        private ToolScriptableObject toolScriptableObject;
+        public ToolScriptableObject toolScriptableObject;
 
         private CanvasManager canvasManager;
         private Image toolImage;
