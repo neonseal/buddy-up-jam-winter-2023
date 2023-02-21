@@ -35,7 +35,7 @@ public class Plushie : MonoBehaviour
         PlushieDamage plushieDamageScript = plushieDamageGameObject.AddComponent<PlushieDamage>();
 
         // Assign initial type to plushieDamage child game object
-        plushieDamageScript.setDamageType(damageType);
+        plushieDamageScript.changeDamageType(damageType);
 
         // Set local position of damage to be parameter floats x and y
         plushieDamageGameObject.transform.localPosition = new Vector3(x, y, 1f);

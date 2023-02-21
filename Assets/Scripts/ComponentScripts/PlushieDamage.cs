@@ -27,7 +27,7 @@ public class PlushieDamage : MonoBehaviour
         this.generateCollider();
     }
 
-    public void setDamageType(DamageType newDamageType)
+    public void changeDamageType(DamageType newDamageType)
     {
         this.plushieDamageType = newDamageType;
         this.plushieDamageSpriteRenderer.sprite = DamageDictionary.damageInfoDictionary[newDamageType].sprite;
@@ -46,6 +46,10 @@ public class PlushieDamage : MonoBehaviour
 
     private void generateCollider()
     {
+        CapsuleCollider2D oldCollider = this.gameObject.GetComponent<CapsuleCollider2D>();
+        if (oldCollider != null) {
+            Object.Destroy(oldCollider);
+        }
         CapsuleCollider2D collider = this.gameObject.AddComponent<CapsuleCollider2D>();
         collider.direction = CapsuleDirection2D.Horizontal;
     }
@@ -56,6 +60,18 @@ public class PlushieDamage : MonoBehaviour
         {
             if (DamageDictionary.damageInfoDictionary[this.plushieDamageType].correctToolType.Equals(CanvasManager.currentTool.GetComponent<ToolScript>().toolScriptableObject.toolType))
             {
+                if (this.plushieDamageType == DamageType.SMALL_RIP) {
+                    this.deletePlushieDamage();
+                }
+                else if (this.plushieDamageType == DamageType.LARGE_RIP) {
+                    this.changeDamageType(DamageType.LARGE_RIP_STUFFED);
+                }
+                else if (this.plushieDamageType == DamageType.LARGE_RIP_STUFFED) {
+                    this.deletePlushieDamage();
+                }
+                else if (this.plushieDamageType == DamageType.WORN_STUFFING) {
+                    this.changeDamageType(DamageType.LARGE_RIP);
+                }
             }
         }
     }
