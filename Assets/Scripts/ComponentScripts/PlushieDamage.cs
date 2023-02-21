@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DamageScripts;
+using GameUI;
 
 public class PlushieDamage : MonoBehaviour
 {
@@ -23,10 +24,10 @@ public class PlushieDamage : MonoBehaviour
         this.gameObject.name = this.plushieDamageType.ToString();
         this.gameObject.tag = "Damage";
         this.gameObject.layer = LayerMask.NameToLayer("Game Workspace");
-        this.generateCollider(); 
+        this.generateCollider();
     }
 
-    public void setDamageType(DamageType newDamageType)
+    public void changeDamageType(DamageType newDamageType)
     {
         this.plushieDamageType = newDamageType;
         this.plushieDamageSpriteRenderer.sprite = DamageDictionary.damageInfoDictionary[newDamageType].sprite;
@@ -43,13 +44,38 @@ public class PlushieDamage : MonoBehaviour
 
     }
 
-    private void generateCollider() {
+    private void generateCollider()
+    {
+        CapsuleCollider2D oldCollider = this.gameObject.GetComponent<CapsuleCollider2D>();
+        if (oldCollider != null) {
+            Object.Destroy(oldCollider);
+        }
         CapsuleCollider2D collider = this.gameObject.AddComponent<CapsuleCollider2D>();
         collider.direction = CapsuleDirection2D.Horizontal;
     }
 
-    void OnMouseDown() {
-        Debug.Log(this.gameObject.name + " was clicked");
-        this.deletePlushieDamage();
+    void OnMouseDown()
+    {
+        // Check if player is holding any tool
+        if (CanvasManager.currentTool != null)
+        {
+            // Check for correct tool type
+            if (DamageDictionary.damageInfoDictionary[this.plushieDamageType].correctToolType.Equals(CanvasManager.currentTool.GetComponent<ToolScript>().toolScriptableObject.toolType))
+            {
+                // Pick correct routine
+                if (this.plushieDamageType == DamageType.SMALL_RIP) {
+                    this.deletePlushieDamage();
+                }
+                else if (this.plushieDamageType == DamageType.LARGE_RIP) {
+                    this.changeDamageType(DamageType.LARGE_RIP_STUFFED);
+                }
+                else if (this.plushieDamageType == DamageType.LARGE_RIP_STUFFED) {
+                    this.deletePlushieDamage();
+                }
+                else if (this.plushieDamageType == DamageType.WORN_STUFFING) {
+                    this.changeDamageType(DamageType.LARGE_RIP);
+                }
+            }
+        }
     }
 }

@@ -11,13 +11,14 @@ namespace GameUI
     {
         [SerializeField]
         public ToolScriptableObject toolScriptableObject;
-
+        [SerializeField]
+        private Canvas canvas;
         private CanvasManager canvasManager;
         private Image toolImage;
 
         void Awake()
         {
-            this.canvasManager = this.GetComponentInParent<CanvasManager>();
+            this.canvasManager = this.canvas.GetComponent<CanvasManager>();
 
             this.toolImage = this.gameObject.GetComponent<Image>();
             this.toolImage.sprite = this.toolScriptableObject.toolSlotSprite;
@@ -38,9 +39,9 @@ namespace GameUI
         public void OnPointerClick(PointerEventData eventData)
         {
             // If nothing is held, set this gameobject/tool as the tool being held
-            if (this.canvasManager.currentTool == null)
+            if (CanvasManager.currentTool == null)
             {
-                this.canvasManager.currentTool = this.gameObject;
+                CanvasManager.currentTool = this.gameObject;
                 Cursor.SetCursor(
                     this.toolScriptableObject.toolCursorTexture, 
                     new Vector2(
@@ -51,15 +52,15 @@ namespace GameUI
                 this.toolImage.color = new Color(1, 1, 1, 0.5f);
             }
             // If you're clicking on the original slot, drops the tool
-            else if (this.gameObject == this.canvasManager.currentTool)
+            else if (this.gameObject == CanvasManager.currentTool)
             {
                 this.deselectTool();
             }
             // If you're click on a new tool, swap to the new tool and return the old tool
             else
             {
-                this.canvasManager.currentTool.GetComponent<ToolScript>().toolImage.color = Color.white;
-                this.canvasManager.currentTool = this.gameObject;
+                CanvasManager.currentTool.GetComponent<ToolScript>().toolImage.color = Color.white;
+                CanvasManager.currentTool = this.gameObject;
                 Cursor.SetCursor(
                     this.toolScriptableObject.toolCursorTexture, new Vector2(
                         this.toolScriptableObject.toolCursorTexture.width, 
@@ -71,7 +72,7 @@ namespace GameUI
         }
 
         public void deselectTool() {
-            this.canvasManager.currentTool = null;
+            CanvasManager.currentTool = null;
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             this.toolImage.color = Color.white;
         }
