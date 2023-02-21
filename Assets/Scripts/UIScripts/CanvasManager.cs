@@ -5,11 +5,11 @@ namespace GameUI
 {
     public class CanvasManager : MonoBehaviour
     {
-        internal GameObject currentTool;
+        internal static GameObject currentTool;
 
         internal void Awake()
         {
-            this.currentTool = null;
+            CanvasManager.currentTool = null;
         }
     }
 }

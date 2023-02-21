@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DamageScripts;
+using GameUI;
 
 public class PlushieDamage : MonoBehaviour
 {
@@ -49,7 +50,8 @@ public class PlushieDamage : MonoBehaviour
     }
 
     void OnMouseDown() {
-        Debug.Log(this.gameObject.name + " was clicked");
-        this.deletePlushieDamage();
+        if (DamageDictionary.damageInfoDictionary[this.plushieDamageType].correctToolType.Equals(CanvasManager.currentTool.GetComponent<ToolScript>().toolScriptableObject.toolType)) {
+            this.deletePlushieDamage();
+        }
     }
 }
