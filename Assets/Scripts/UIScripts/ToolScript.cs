@@ -11,13 +11,14 @@ namespace GameUI
     {
         [SerializeField]
         public ToolScriptableObject toolScriptableObject;
-
+        [SerializeField]
+        private Canvas canvas;
         private CanvasManager canvasManager;
         private Image toolImage;
 
         void Awake()
         {
-            this.canvasManager = this.GetComponentInParent<CanvasManager>();
+            this.canvasManager = this.canvas.GetComponent<CanvasManager>();
 
             this.toolImage = this.gameObject.GetComponent<Image>();
             this.toolImage.sprite = this.toolScriptableObject.toolSlotSprite;
