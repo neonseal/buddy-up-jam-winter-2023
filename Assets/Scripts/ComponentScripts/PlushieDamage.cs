@@ -24,7 +24,7 @@ public class PlushieDamage : MonoBehaviour
         this.gameObject.name = this.plushieDamageType.ToString();
         this.gameObject.tag = "Damage";
         this.gameObject.layer = LayerMask.NameToLayer("Game Workspace");
-        this.generateCollider(); 
+        this.generateCollider();
     }
 
     public void setDamageType(DamageType newDamageType)
@@ -44,14 +44,19 @@ public class PlushieDamage : MonoBehaviour
 
     }
 
-    private void generateCollider() {
+    private void generateCollider()
+    {
         CapsuleCollider2D collider = this.gameObject.AddComponent<CapsuleCollider2D>();
         collider.direction = CapsuleDirection2D.Horizontal;
     }
 
-    void OnMouseDown() {
-        if (DamageDictionary.damageInfoDictionary[this.plushieDamageType].correctToolType.Equals(CanvasManager.currentTool.GetComponent<ToolScript>().toolScriptableObject.toolType)) {
-            this.deletePlushieDamage();
+    void OnMouseDown()
+    {
+        if (CanvasManager.currentTool != null)
+        {
+            if (DamageDictionary.damageInfoDictionary[this.plushieDamageType].correctToolType.Equals(CanvasManager.currentTool.GetComponent<ToolScript>().toolScriptableObject.toolType))
+            {
+            }
         }
     }
 }
