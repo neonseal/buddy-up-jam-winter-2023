@@ -56,10 +56,13 @@ public class PlushieDamage : MonoBehaviour
 
     void OnMouseDown()
     {
+        // Check if player is holding any tool
         if (CanvasManager.currentTool != null)
         {
+            // Check for correct tool type
             if (DamageDictionary.damageInfoDictionary[this.plushieDamageType].correctToolType.Equals(CanvasManager.currentTool.GetComponent<ToolScript>().toolScriptableObject.toolType))
             {
+                // Pick correct routine
                 if (this.plushieDamageType == DamageType.SMALL_RIP) {
                     this.deletePlushieDamage();
                 }
