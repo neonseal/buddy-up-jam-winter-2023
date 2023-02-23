@@ -14,7 +14,7 @@ public class ChecklistStep : MonoBehaviour
 
     void Awake()
     {
-        this.checklistStepIcon = this.gameObject.transform.Find("CheckBackground").GetComponent<Image>();
+        this.checklistStepIcon = this.gameObject.transform.Find("CheckBackground").gameObject.transform.Find("CheckmarkImage").GetComponent<Image>();
         this.checklistStepText = this.gameObject.transform.Find("StepText").GetComponent<TMP_Text>();
     }
 
@@ -40,9 +40,12 @@ public class ChecklistStep : MonoBehaviour
     // Listener method - change status of damage to repair completed
     public void completeStep(PlushieDamage plushieDamage) {
         if (this.plushieDamage.Equals(plushieDamage)) {
-            this.checklistStepText.color = Color.green;
-            this.checklistStepText.text = "Done!";
-            //Change checklistStepIcon to a complete icon
+
+            this.checklistStepIcon.sprite = Resources.Load<Sprite>("Sprites/checkmark");
+            Color visible = this.checklistStepIcon.color;
+            visible.a = 1f;
+            this.checklistStepIcon.color = visible;
+
             CustomEventManager.current.onRepairCompletion -= completeStep;
         }
     }

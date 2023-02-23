@@ -6,16 +6,8 @@ public class RepairWorkspace : MonoBehaviour
 {
     private GameObject plushie;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        this.AddPlushieToScene();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+    private void Start() {
+        CustomEventManager.current.onGameStart += AddPlushieToScene;
     }
 
     private void AddPlushieToScene()
