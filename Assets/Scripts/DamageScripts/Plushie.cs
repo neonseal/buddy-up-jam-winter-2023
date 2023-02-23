@@ -4,17 +4,16 @@ using DamageScripts;
 public class Plushie : MonoBehaviour
 {
     private SpriteRenderer plushieSpriteRenderer;
-    private string spritePath = "Sprites/duck";
-    private Sprite sprite;
+    internal Sprite sprite;
+
+    private void Awake() {
+        this.plushieSpriteRenderer = this.transform.gameObject.AddComponent<SpriteRenderer>();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        this.sprite = Resources.Load<Sprite>(spritePath);
-
-        this.plushieSpriteRenderer = this.transform.gameObject.AddComponent<SpriteRenderer>();
         this.plushieSpriteRenderer.sprite = this.sprite;
-        this.plushieSpriteRenderer.transform.localScale = new Vector3(4, 4, 1);
 
         this.plushieSpriteRenderer.sortingLayerID = SortingLayer.NameToID("PlushieLayer");
         this.AddPlushieDamageToScene(2f, 0f, DamageType.SMALL_RIP);
