@@ -14,20 +14,19 @@ namespace GameUI
         [SerializeField]
         private Canvas canvas;
         private CanvasManager canvasManager;
-        private Image toolImage;
+        private AudioSource[] audioSources;
 
         void Awake()
         {
             this.canvasManager = this.canvas.GetComponent<CanvasManager>();
-
-            this.toolImage = this.gameObject.GetComponent<Image>();
-            this.toolImage.sprite = this.toolScriptableObject.toolSlotSprite;
+            // Array of tool pickup, place, and apply sounds
+            this.audioSources = GetComponents<AudioSource>();
         }
 
         // Start is called before the first frame update
         void Start()
         {
-
+            Debug.Log(audioSources.Length);
         }
 
         // Update is called once per frame
@@ -49,7 +48,8 @@ namespace GameUI
                         this.toolScriptableObject.toolCursorTexture.height
                         ) / 2f, 
                     CursorMode.Auto);
-                this.toolImage.color = new Color(1, 1, 1, 0.5f);
+                // Play pickup sound
+                audioSources[0].Play();
             }
             // If you're clicking on the original slot, drops the tool
             else if (this.gameObject == CanvasManager.currentTool)
@@ -59,7 +59,6 @@ namespace GameUI
             // If you're click on a new tool, swap to the new tool and return the old tool
             else
             {
-                CanvasManager.currentTool.GetComponent<ToolScript>().toolImage.color = Color.white;
                 CanvasManager.currentTool = this.gameObject;
                 Cursor.SetCursor(
                     this.toolScriptableObject.toolCursorTexture, new Vector2(
@@ -67,14 +66,15 @@ namespace GameUI
                         this.toolScriptableObject.toolCursorTexture.height
                         ) / 2f,  
                     CursorMode.Auto);
-                this.toolImage.color = new Color(1, 1, 1, 0.5f);
+                // Play pickup sound
+                audioSources[0].Play();
             }
         }
 
         public void deselectTool() {
             CanvasManager.currentTool = null;
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-            this.toolImage.color = Color.white;
+            audioSources[1].Play();
         }
     }
 }

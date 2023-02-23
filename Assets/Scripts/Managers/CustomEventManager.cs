@@ -6,11 +6,18 @@ using GameUI;
 
 public class CustomEventManager : MonoBehaviour
 {
-    public static CustomEventManager CustomEventManagerInstance;
+    public static CustomEventManager instance;
 
     //Singleton setup
     private void Awake() {
-        CustomEventManagerInstance = this;
+        instance = this;
+    }
+
+    public event Action onGameStart;
+    public void GameStart() {
+        if (onGameStart != null) {
+            onGameStart();
+        }
     }
 }
  
