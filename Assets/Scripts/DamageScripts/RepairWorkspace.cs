@@ -7,7 +7,7 @@ public class RepairWorkspace : MonoBehaviour
     [SerializeField]
     private PlushieSetScriptableObject plushieSetScriptableObject;
     private List<PlushieScriptableObject> plushieList;
-    private byte plushieListCursor;
+    private int plushieListCursor;
 
     private void Awake() {
         // Load in the list of plushie scriptable objects defined in plushieSetScriptableObject
@@ -33,6 +33,10 @@ public class RepairWorkspace : MonoBehaviour
 
         Plushie plushieComponent = plushie.AddComponent<Plushie>();
         plushieComponent.sprite = plushieList[plushieListCursor].plushieSprite;
+
+        for (int i = 0; i < plushieList[plushieListCursor].damageTypeList.Count; i++) {
+            plushieComponent.AddPlushieDamageToScene(plushieList[plushieListCursor].damagePositionList[i], plushieList[plushieListCursor].damageTypeList[i]);
+        }
 
         this.plushieListCursor++;
     }
