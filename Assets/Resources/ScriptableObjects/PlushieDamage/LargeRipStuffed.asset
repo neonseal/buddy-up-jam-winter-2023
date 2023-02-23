@@ -15,3 +15,4 @@ MonoBehaviour:
   damageType: 3
   sprite: {fileID: 21300000, guid: 632ddac6f99dc854f9a728d03491e887, type: 3}
   correctToolType: 1
+  damageChecklistMessage: Sew up the stuffed large rip with needle and threads

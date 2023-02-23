@@ -18,6 +18,6 @@ public class StartMenu : MonoBehaviour
 
     private void StartGame() {
         startButton.gameObject.SetActive(false);
-        CustomEventManager.instance.GameStart();
+        CustomEventManager.current.GameStart();
     }
 }

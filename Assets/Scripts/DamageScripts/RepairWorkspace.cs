@@ -7,7 +7,7 @@ public class RepairWorkspace : MonoBehaviour
     private GameObject plushie;
 
     private void Start() {
-        CustomEventManager.instance.onGameStart += AddPlushieToScene;
+        CustomEventManager.current.onGameStart += AddPlushieToScene;
     }
 
     private void AddPlushieToScene()

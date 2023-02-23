@@ -21,10 +21,14 @@ public class PlushieDamage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        this.initializeDamage();
+        this.generateCollider();
+    }
+
+    private void initializeDamage() {
         this.gameObject.name = this.plushieDamageType.ToString();
         this.gameObject.tag = "Damage";
         this.gameObject.layer = LayerMask.NameToLayer("Game Workspace");
-        this.generateCollider();
     }
 
     public void changeDamageType(DamageType newDamageType)
@@ -65,15 +69,19 @@ public class PlushieDamage : MonoBehaviour
                 // Pick correct routine
                 if (this.plushieDamageType == DamageType.SMALL_RIP) {
                     this.deletePlushieDamage();
+                    CustomEventManager.current.repairCompletionEvent(this);
                 }
                 else if (this.plushieDamageType == DamageType.LARGE_RIP) {
                     this.changeDamageType(DamageType.LARGE_RIP_STUFFED);
+                    CustomEventManager.current.repairEvent(this, DamageType.LARGE_RIP_STUFFED);
                 }
                 else if (this.plushieDamageType == DamageType.LARGE_RIP_STUFFED) {
                     this.deletePlushieDamage();
+                    CustomEventManager.current.repairCompletionEvent(this);
                 }
                 else if (this.plushieDamageType == DamageType.WORN_STUFFING) {
                     this.changeDamageType(DamageType.LARGE_RIP);
+                    CustomEventManager.current.repairEvent(this, DamageType.LARGE_RIP);
                 }
             }
         }

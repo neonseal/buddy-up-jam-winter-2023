@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 using DG.Tweening;
 
 public class CardStackController : MonoBehaviour, IPointerDownHandler {
-    //[SerializeField] private Transform card;
     [SerializeField] private int xPos = 0;
     [SerializeField] private int yPos = 0;
 

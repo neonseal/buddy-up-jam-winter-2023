@@ -40,7 +40,10 @@ public class Plushie : MonoBehaviour
         // Set local position of damage to be parameter floats x and y
         plushieDamageGameObject.transform.localPosition = new Vector3(x, y, 1f);
 
-        //Add damage as a child GameObject of the plushie
+        // Add damage as a child GameObject of the plushie
         plushieDamageGameObject.transform.SetParent(this.transform);
+
+        // Broadcast a damageGenerationEvent
+        CustomEventManager.current.damageGenerationEvent(plushieDamageScript, damageType);
     }
 }
