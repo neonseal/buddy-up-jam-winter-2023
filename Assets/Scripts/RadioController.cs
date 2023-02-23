@@ -13,29 +13,53 @@ public class RadioController : MonoBehaviour {
     };
 
     private Button playPauseButton;
-    private Button volumeButton;
+    private Button volumeKnob;
 
     private AudioSource music;
 
+    private bool volumeDecreasing = true;
+    private float currentVolume;
+
     private void Awake() {
         playPauseButton = GetRadioButton(ButtonTypes.PlayPause);
-        volumeButton = GetRadioButton(ButtonTypes.Volume);
+        volumeKnob = GetRadioButton(ButtonTypes.Volume);
         music = GetComponent<AudioSource>();
+        currentVolume = music.volume;
     }
 
     private void Start() {
         playPauseButton.onClick.AddListener(TogglePlayPause);
-        volumeButton.onClick.AddListener(ChangeVolume);
+        volumeKnob.onClick.AddListener(ChangeVolume);
     }
 
 
     private void TogglePlayPause() {
-        Debug.Log("CLICK");
+        if (music.isPlaying) {
+            music.Pause();
+        } else {
+            music.Play();
+        }
 
     }
 
     private void ChangeVolume() {
-        Debug.Log("CLICKETY CLICK");
+        // If still decreasing, decrement volume and rotate knob
+        if (volumeDecreasing) {
+            music.volume -= 0.25f;
+            volumeKnob.transform.Rotate(Vector3.forward, 45f);
+
+            if (music.volume <= 0f) {
+                volumeDecreasing = false;
+            }
+        } else {
+            // Once reduced to zero, begin increasing until at max volume
+            music.volume += 0.25f;
+            volumeKnob.transform.Rotate(Vector3.forward, -45f);
+
+            if (music.volume >= 1f) {
+                volumeDecreasing = true;
+            }
+        }
 
     }
 
