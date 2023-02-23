@@ -7,8 +7,4 @@ public class CardController : MonoBehaviour
 {
     public CardScriptableObject cardDescriptionData;
 
-    private void Awake() {
-    }
-
-
 }
