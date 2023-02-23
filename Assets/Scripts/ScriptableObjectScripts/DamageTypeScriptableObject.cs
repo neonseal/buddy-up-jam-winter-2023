@@ -11,4 +11,5 @@ public class DamageTypeScriptableObject : ScriptableObject
     public DamageType damageType;
     public Sprite sprite;
     public ToolType correctToolType;
+    public string damageChecklistMessage;
 }

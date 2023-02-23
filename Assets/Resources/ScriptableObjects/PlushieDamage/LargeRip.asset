@@ -15,3 +15,4 @@ MonoBehaviour:
   damageType: 1
   sprite: {fileID: 21300000, guid: e8c45a27a429dd8498c4b9410d8612cf, type: 3}
   correctToolType: 2
+  damageChecklistMessage: Stuff the large rip with cotton

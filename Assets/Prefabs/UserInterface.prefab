@@ -293,6 +293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toolScriptableObject: {fileID: 11400000, guid: b2e8f778d6c3f1541bfdb9b03fac063a, type: 2}
+  canvas: {fileID: 0}
 --- !u!61 &2712663510136128326
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -578,6 +579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toolScriptableObject: {fileID: 11400000, guid: 1bc85c8428b896f42a96f328f97c44ae, type: 2}
+  canvas: {fileID: 0}
 --- !u!61 &5557861980782685194
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -789,6 +791,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a34a1cce106499e4ba78754dee9d1167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checklistItemsObject: {fileID: 0}
+  checklistStepPrefab: {fileID: 0}
 --- !u!1 &5483714193788759059
 GameObject:
   m_ObjectHideFlags: 0
@@ -1176,6 +1180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toolScriptableObject: {fileID: 11400000, guid: c169376ac2350724a8f479d01a50f27f, type: 2}
+  canvas: {fileID: 0}
 --- !u!61 &4957033651840608311
 BoxCollider2D:
   m_ObjectHideFlags: 0

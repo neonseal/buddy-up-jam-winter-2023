@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 504309355}
   - component: {fileID: 504309354}
   m_Layer: 0
-  m_Name: Game Manager
+  m_Name: Event Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -399,6 +399,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1412870405 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1506295108842229307, guid: f00384ca3329665448a5d57174b7ad67, type: 3}
+  m_PrefabInstance: {fileID: 1605207001}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1587497493
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,6 +515,22 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 1605207002}
+    - target: {fileID: 6587806338017162166, guid: f00384ca3329665448a5d57174b7ad67, type: 3}
+      propertyPath: CheckListItems
+      value: 
+      objectReference: {fileID: 1412870405}
+    - target: {fileID: 6587806338017162166, guid: f00384ca3329665448a5d57174b7ad67, type: 3}
+      propertyPath: checklistStepPrefab
+      value: 
+      objectReference: {fileID: 5509794887063404665, guid: e969a62eb4d5dea4d85d485e187ca7b8, type: 3}
+    - target: {fileID: 6587806338017162166, guid: f00384ca3329665448a5d57174b7ad67, type: 3}
+      propertyPath: CheckListItemsObject
+      value: 
+      objectReference: {fileID: 1412870405}
+    - target: {fileID: 6587806338017162166, guid: f00384ca3329665448a5d57174b7ad67, type: 3}
+      propertyPath: checklistItemsObject
+      value: 
+      objectReference: {fileID: 1412870405}
     - target: {fileID: 6932280046700456803, guid: f00384ca3329665448a5d57174b7ad67, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
