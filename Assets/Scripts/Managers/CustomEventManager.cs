@@ -66,5 +66,11 @@ public class CustomEventManager : MonoBehaviour
         }
     }
 
+    public event Action onPlushieInitialization;
+    public void initializePlushieEvent() {
+        if (this.onPlushieInitialization != null) {
+            this.onPlushieInitialization();
+        }
+    }
 }
  
