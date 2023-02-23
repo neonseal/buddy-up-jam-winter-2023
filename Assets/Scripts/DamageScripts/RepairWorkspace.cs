@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class RepairWorkspace : MonoBehaviour
 {
+    [SerializeField]
+    private PlushieSetScriptableObject plushieList;
+
     private GameObject plushie;
 
     private void Start() {
