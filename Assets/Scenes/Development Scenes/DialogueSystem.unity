@@ -1911,6 +1911,7 @@ GameObject:
   - component: {fileID: 959986641}
   - component: {fileID: 959986643}
   - component: {fileID: 959986642}
+  - component: {fileID: 959986644}
   m_Layer: 0
   m_Name: DialogueBox
   m_TagString: Untagged
@@ -1979,6 +1980,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 959986640}
   m_CullTransparentMesh: 1
+--- !u!95 &959986644
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959986640}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3d7ea9c6091f9f8469d5a77e4b0a397a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &1060381534
 GameObject:
   m_ObjectHideFlags: 0
@@ -2732,6 +2753,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef706c8bca4c30248b58be214a1b8468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playPauseButton: {fileID: 1600027164}
+  volumeKnob: {fileID: 7675063}
 --- !u!1 &1289981828
 GameObject:
   m_ObjectHideFlags: 0
@@ -2761,6 +2784,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9414a6d88e292304889a069129c78a5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameText: {fileID: 1900416866}
+  dialogueText: {fileID: 833419086}
+  btn: {fileID: 580474418}
+  animator: {fileID: 959986644}
 --- !u!224 &1289981830
 RectTransform:
   m_ObjectHideFlags: 0
