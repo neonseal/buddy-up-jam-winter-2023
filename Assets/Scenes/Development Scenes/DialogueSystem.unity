@@ -560,6 +560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 118ec92c0b05fe642bd9786123b70de3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  plushieSetScriptableObject: {fileID: 0}
 --- !u!4 &352260209
 Transform:
   m_ObjectHideFlags: 0
