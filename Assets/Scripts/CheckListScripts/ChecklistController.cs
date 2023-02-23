@@ -16,17 +16,20 @@ public class ChecklistController : MonoBehaviour
     private ChecklistStep[] steps;
     private Button btn;
     private int checklistStepcount;
+    private int repairCompletionCount;
 
     private void Awake()
     {
         steps = GetComponentsInChildren<ChecklistStep>();
         btn = GetComponentInChildren<Button>();
         this.checklistStepcount = 0;
+        this.repairCompletionCount = 0;
     }
 
     private void Start()
     {
         CustomEventManager.current.onDamageGeneration += populateChecklist;
+        CustomEventManager.current.onRepairCompletion += incrementRepairCompletionCount;
         btn.onClick.AddListener(HandleButtonClick);
     }
 
@@ -40,7 +43,7 @@ public class ChecklistController : MonoBehaviour
         Debug.Log("CLICK");
     }
 
-    // Listener method
+    // Listener method - add a checklist step to checklistItemsObject for each generation event
     private void populateChecklist(PlushieDamage plushieDamage, DamageType damageType)
     {
         this.addChecklistStep(plushieDamage, damageType);
@@ -59,5 +62,10 @@ public class ChecklistController : MonoBehaviour
         checklistEntry.GetComponent<RectTransform>().localScale = Vector3.one;
         checklistStepComponent.changeStepText(damageType);
         checklistStepComponent.plushieDamage = plushieDamage;
+    }
+
+    // Listener method - increment repair completion count for each repair completion
+    private void incrementRepairCompletionCount(PlushieDamage plushieDamage) {
+        repairCompletionCount++;
     }
 }

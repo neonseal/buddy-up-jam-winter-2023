@@ -25,7 +25,7 @@ public class ChecklistStep : MonoBehaviour
         CustomEventManager.current.onRepair += repairDamage;
     }
 
-    // Listener method
+    // Listener method - change the status of multistep repair to the next step
     public void repairDamage(PlushieDamage plushieDamage, DamageType damageType) {
         if (this.plushieDamage.Equals(plushieDamage)) {
             this.changeStepText(damageType);
@@ -37,7 +37,7 @@ public class ChecklistStep : MonoBehaviour
         this.checklistStepText.text = DamageDictionary.damageInfoDictionary[damageType].damageChecklistMessage;
     }
 
-    // Listener method
+    // Listener method - change status of damage to repair completed
     public void completeStep(PlushieDamage plushieDamage) {
         if (this.plushieDamage.Equals(plushieDamage)) {
             this.checklistStepText.color = Color.green;
