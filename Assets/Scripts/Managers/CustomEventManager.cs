@@ -21,6 +21,14 @@ public class CustomEventManager : MonoBehaviour
         }
     }
 
+    // Dialog Trigger
+    public event Action<Dialogue> onTriggerDialogue;
+    public void TriggerDialogue(Dialogue dialogue) {
+        if (this.onTriggerDialogue != null) {
+            this.onTriggerDialogue(dialogue);
+        }
+    }
+
     // Damage Management Events
     public event Action<PlushieDamage, DamageType> onDamageGeneration;
     public void damageGenerationEvent(PlushieDamage plushieDamage, DamageType damageType) {
