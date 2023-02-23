@@ -12,13 +12,16 @@ public class CustomEventManager : MonoBehaviour
     private void Awake() {
         current = this;
     }
+
+    // High-level Game State Events
     public event Action onGameStart;
     public void GameStart() {
-        if (onGameStart != null) {
-            onGameStart();
+        if (this.onGameStart != null) {
+            this.onGameStart();
         }
     }
 
+    // Damage Management Events
     public event Action<PlushieDamage, DamageType> onDamageGeneration;
     public void damageGenerationEvent(PlushieDamage plushieDamage, DamageType damageType) {
         if (this.onDamageGeneration != null) {
@@ -37,6 +40,21 @@ public class CustomEventManager : MonoBehaviour
     public void repairCompletionEvent(PlushieDamage plushieDamage) {
         if (this.onRepairCompletion != null) {
             this.onRepairCompletion(plushieDamage);
+        }
+    }
+
+    // Music/Sound controls
+    public event Action onPauseMusic;
+    public void PauseMusic() {
+        if (this.onPauseMusic != null) {
+            this.onPauseMusic();
+        }
+    }
+
+    public event Action onChangeVolume;
+    public void ChangeVolume() {
+        if (this.onChangeVolume != null) {
+            this.onChangeVolume();
         }
     }
 

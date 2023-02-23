@@ -23,18 +23,6 @@ namespace GameUI
             this.audioSources = GetComponents<AudioSource>();
         }
 
-        // Start is called before the first frame update
-        void Start()
-        {
-            Debug.Log(audioSources.Length);
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
         public void OnPointerClick(PointerEventData eventData)
         {
             // If nothing is held, set this gameobject/tool as the tool being held

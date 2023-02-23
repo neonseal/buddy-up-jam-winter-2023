@@ -7,6 +7,9 @@ TagManager:
   - Tool
   - ToolSlot
   - Damage
+  - Volume
+  - PlayPause
+  - Skip
   layers:
   - Default
   - TransparentFX
