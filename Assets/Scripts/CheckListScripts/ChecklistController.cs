@@ -29,6 +29,7 @@ public class ChecklistController : MonoBehaviour
         CustomEventManager.current.onDamageGeneration += populateChecklist;
         CustomEventManager.current.onRepairCompletion += incrementRepairCompletionCount;
         btn.onClick.AddListener(HandleButtonClick);
+        this.btn.interactable = false;
     }
 
     private void Update()
@@ -68,8 +69,10 @@ public class ChecklistController : MonoBehaviour
     }
 
     // Listener method - increment repair completion count for each repair completion
-    private void incrementRepairCompletionCount(PlushieDamage plushieDamage)
-    {
-        repairCompletionCount++;
+    private void incrementRepairCompletionCount(PlushieDamage plushieDamage) {
+        this.repairCompletionCount++;
+        if (repairCompletionCount >= checklistStepcount) {
+            this.btn.interactable = true;
+        }
     }
 }
