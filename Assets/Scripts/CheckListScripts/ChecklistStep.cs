@@ -19,20 +19,24 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     void Awake()
     {
+        // Initialize component local fields;
         this.checklistStepIcon = this.gameObject.transform.Find("CheckBackground").gameObject.transform.Find("CheckmarkImage").GetComponent<Image>();
         this.checklistStepText = this.gameObject.transform.Find("StepText").GetComponent<TMP_Text>();
+        this.checklistCollider = this.gameObject.GetComponent<BoxCollider2D>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        // Subscribe to onRepairCompletion event
         CustomEventManager.current.onRepairCompletion += completeStep;
+        // Subscribe to onRepair event
         CustomEventManager.current.onRepair += repairDamage;
-        this.checklistCollider = this.gameObject.GetComponent<BoxCollider2D>();
     }
 
     private void Update()
     {
+        // Run highlighting logic if collider isn't null (i.e. the step hasn't been completed yet)
         if (this.checklistCollider != null) {
             this.highlightDamage(isMouseOver);
         }
@@ -41,10 +45,12 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     // Generate a Rectangular collider for the message
     private void generateCollider()
     {
+        // Get rid of the old collider if there's an existing one in place
         if (this.checklistCollider != null)
         {
             Object.Destroy(this.checklistCollider);
         }
+        // Create a new box collider (with a fit size)
         this.checklistCollider = this.gameObject.AddComponent<BoxCollider2D>();
     }
 
@@ -80,16 +86,19 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
     }
 
+    // Set mouseOver flag to true
     public void OnPointerEnter(PointerEventData eventData)
     {
         this.isMouseOver = true;
     }
 
+    // Set mouseOver flag to false
     public void OnPointerExit(PointerEventData eventData)
     {
         this.isMouseOver = false;
     }
 
+    // When mousing over, changes color of associated damage; otherwise, revert to default color
     private void highlightDamage(bool mouseOverFlag)
     {
         if (mouseOverFlag)
