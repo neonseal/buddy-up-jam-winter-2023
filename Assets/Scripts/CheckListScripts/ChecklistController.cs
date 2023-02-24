@@ -22,8 +22,6 @@ public class ChecklistController : MonoBehaviour
     {
         steps = GetComponentsInChildren<ChecklistStep>();
         btn = GetComponentInChildren<Button>();
-        this.checklistStepcount = 0;
-        this.repairCompletionCount = 0;
     }
 
     private void Start()
@@ -41,7 +39,12 @@ public class ChecklistController : MonoBehaviour
 
     private void HandleButtonClick()
     {
-        Debug.Log("CLICK");
+        // Broadcast a plushie repair completion event
+        CustomEventManager.current.plushieOverallRepairCompletionEvent();
+
+        // Set repair counters to 0
+        this.checklistStepcount = 0;
+        this.repairCompletionCount = 0;
     }
 
     // Listener method - add a checklist step to checklistItemsObject for each generation event
