@@ -81,6 +81,7 @@ public class CustomEventManager : MonoBehaviour
         }
     }
 
+    // Plushie spawning event
     public event Action onPlushieInitialization;
     public void initializePlushieEvent()
     {
@@ -90,6 +91,7 @@ public class CustomEventManager : MonoBehaviour
         }
     }
 
+    // Plushie overall repair complete event
     public event Action onPlushieOverallRepairCompletion;
     public void plushieOverallRepairCompletionEvent()
     {
@@ -99,6 +101,7 @@ public class CustomEventManager : MonoBehaviour
         }
     }
 
+    // Plushie deletion event
     public event Action onPlushieDeletionRequest;
     public void plushieDeletionEvent()
     {
