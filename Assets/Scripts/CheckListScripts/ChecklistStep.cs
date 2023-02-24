@@ -12,9 +12,9 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private TMP_Text checklistStepText;
     // PlushieDamage this step is associated with
     internal PlushieDamage plushieDamage;
-    private Color mouseOverColor = new Color(0.75f, 1f, 0.75f, 1f);
+    private Color mouseOverColor = new Color(0.6f, 1f, 0.6f, 1f);
     private bool isMouseOver = false;
-    private float colorChangeSpeed = 2f;
+    private float colorChangeSpeed = 5f;
 
     void Awake()
     {
@@ -31,7 +31,9 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private void Update()
     {
-        this.highlightDamage(isMouseOver);
+        if (this.plushieDamage != null) {
+            this.highlightDamage(isMouseOver);
+        }
     }
 
     // Generate a Rectangular collider for the message
@@ -103,7 +105,7 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             Color.Lerp(
                 this.plushieDamage.plushieDamageSpriteRenderer.color,
                 Color.white,
-                Time.deltaTime * this.colorChangeSpeed * 2f
+                Time.deltaTime * this.colorChangeSpeed
             );
         }
     }
