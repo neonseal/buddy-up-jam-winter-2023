@@ -12,8 +12,8 @@ public class RadioController : MonoBehaviour {
 
     };
 
-    private Button playPauseButton;
-    private Button volumeKnob;
+    public Button playPauseButton;
+    public Button volumeKnob;
 
     private AudioSource music;
 
@@ -21,8 +21,6 @@ public class RadioController : MonoBehaviour {
     private float currentVolume;
 
     private void Awake() {
-        playPauseButton = GetRadioButton(ButtonTypes.PlayPause);
-        volumeKnob = GetRadioButton(ButtonTypes.Volume);
         music = GetComponent<AudioSource>();
         currentVolume = music.volume;
     }
@@ -61,17 +59,5 @@ public class RadioController : MonoBehaviour {
             }
         }
 
-    }
-
-    private Button GetRadioButton(ButtonTypes tag) {
-        Button[] radioButtons = this.gameObject.GetComponentsInChildren<Button>();
-
-        foreach (Button button in radioButtons) {
-            if (button.tag == tag.ToString()) {
-                return button;
-            }
-        }
-
-        return null;
     }
 }
