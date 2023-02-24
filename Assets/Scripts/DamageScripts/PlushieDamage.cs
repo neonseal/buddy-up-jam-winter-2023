@@ -10,7 +10,7 @@ public class PlushieDamage : MonoBehaviour
     private DamageType plushieDamageType;
 
     // Components
-    private SpriteRenderer plushieDamageSpriteRenderer;
+    internal SpriteRenderer plushieDamageSpriteRenderer;
 
     void Awake()
     {
