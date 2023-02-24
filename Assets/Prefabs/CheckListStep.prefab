@@ -113,7 +113,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -65, y: 0}
-  m_SizeDelta: {x: -134, y: 0}
+  m_SizeDelta: {x: -134, y: -24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5509794886540949059
 CanvasRenderer:
@@ -188,8 +188,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0, y: 0}
-  m_SizeDelta: {x: 110, y: 10}
+  m_AnchoredPosition: {x: 10, y: 0.000048995018}
+  m_SizeDelta: {x: 130, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5509794887059821382
 CanvasRenderer:
@@ -298,6 +298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5509794887063404664}
   - component: {fileID: 9088963857356853350}
+  - component: {fileID: 5455297298687433057}
   m_Layer: 0
   m_Name: CheckListStep
   m_TagString: Untagged
@@ -325,7 +326,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 150, y: 15}
+  m_SizeDelta: {x: 150, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &9088963857356853350
 MonoBehaviour:
@@ -339,3 +340,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eae71f7b7c03dc46bb909dd6ab5e7d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &5455297298687433057
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5509794887063404665}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0

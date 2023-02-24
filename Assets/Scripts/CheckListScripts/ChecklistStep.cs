@@ -15,6 +15,7 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private Color mouseOverColor = new Color(0.6f, 1f, 0.6f, 1f);
     private bool isMouseOver = false;
     private float colorChangeSpeed = 5f;
+    private BoxCollider2D checklistCollider;
 
     void Awake()
     {
@@ -27,11 +28,12 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         CustomEventManager.current.onRepairCompletion += completeStep;
         CustomEventManager.current.onRepair += repairDamage;
+        this.checklistCollider = this.gameObject.GetComponent<BoxCollider2D>();
     }
 
     private void Update()
     {
-        if (this.plushieDamage != null) {
+        if (this.checklistCollider != null) {
             this.highlightDamage(isMouseOver);
         }
     }
@@ -39,12 +41,11 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     // Generate a Rectangular collider for the message
     private void generateCollider()
     {
-        BoxCollider2D oldCollider = this.gameObject.GetComponent<BoxCollider2D>();
-        if (oldCollider != null)
+        if (this.checklistCollider != null)
         {
-            Object.Destroy(oldCollider);
+            Object.Destroy(this.checklistCollider);
         }
-        BoxCollider2D collider = this.gameObject.AddComponent<BoxCollider2D>();
+        this.checklistCollider = this.gameObject.AddComponent<BoxCollider2D>();
     }
 
     // Listener method - change the status of multistep repair to the next step
@@ -74,6 +75,7 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             visible.a = 1f;
             this.checklistStepIcon.color = visible;
 
+            Object.Destroy(this.checklistCollider);
             CustomEventManager.current.onRepairCompletion -= completeStep;
         }
     }
