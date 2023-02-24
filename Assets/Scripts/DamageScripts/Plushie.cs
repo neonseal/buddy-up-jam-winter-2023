@@ -13,6 +13,7 @@ public class Plushie : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        CustomEventManager.current.onPlushieDeletionRequest += deletePlushie;
         this.plushieSpriteRenderer.sprite = this.sprite;
 
         this.plushieSpriteRenderer.sortingLayerID = SortingLayer.NameToID("PlushieLayer");
@@ -43,5 +44,10 @@ public class Plushie : MonoBehaviour
 
         // Broadcast a damageGenerationEvent
         CustomEventManager.current.damageGenerationEvent(plushieDamageScript, damageType);
+    }
+
+    private void deletePlushie() {
+        Object.Destroy(this);
+        CustomEventManager.current.onPlushieDeletionRequest -= deletePlushie;
     }
 }
