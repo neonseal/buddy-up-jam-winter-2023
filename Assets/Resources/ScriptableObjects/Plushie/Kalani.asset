@@ -12,13 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82c4c4978c304494fae9a086060f582a, type: 3}
   m_Name: Kalani
   m_EditorClassIdentifier: 
-  plushieName: 
-  plushieSprite: {fileID: 0}
-  damageTypeList: 
-  damagePositionList: []
+  plushieName: Kalani
+  plushieSprite: {fileID: 21300000, guid: fdfe726b4c3a5324998f68f8025e6376, type: 3}
+  damageTypeList: 03000000
+  damagePositionList:
+  - {x: 0, y: 0}
   issueDialogue:
-    name: 
-    sentences: []
+    name: Kalani
+    sentences:
+    - "Hello, I heard about your shop from one of the mother\u2019s at school."
+    - "I\u2019m not sure if you can help, but I\u2019d greatly appreciate it if you
+      could take a look. As you can see from the large rip and missing stuffing it\u2019s
+      not going to be easy."
   resolutionDialogue:
-    name: 
-    sentences: []
+    name: Kalani
+    sentences:
+    - "You did it\u2026 It looks fantastic! She\u2019ll never even know."
+    - This was all my fault, my daughter loves that thing so as you can imagine it
+      gets its fair amount of use.
+    - Last night, I told her to leave it out so I could throw it in the wash, but
+      then the phone rang and I just kind of got side tracked. The next thing I knew,
+      our dog Rover was chomping down.
+    - Thankfully you were able to save it.

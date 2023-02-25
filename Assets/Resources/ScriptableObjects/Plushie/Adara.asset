@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82c4c4978c304494fae9a086060f582a, type: 3}
+  m_Name: Adara
+  m_EditorClassIdentifier: 
+  plushieName: Adara
+  plushieSprite: {fileID: 21300000, guid: fdfe726b4c3a5324998f68f8025e6376, type: 3}
+  damageTypeList: 0000000002000000
+  damagePositionList:
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  issueDialogue:
+    name: Adara
+    sentences:
+    - "Hello, I was hoping you could take a look at my plushie. I\u2019ve had her
+      now for a few years so the stuffing is pretty worn down."
+    - "On top of that, I accidently ripped one of the seams. I know it seems small,
+      but I\u2019m afraid it\u2019s going to get worse. Do you think you can fix
+      it?"
+  resolutionDialogue:
+    name: Adara
+    sentences:
+    - "It looks just like new, thank you! I\u2019m not a huge plushie fan, but when
+      I was younger I was in the hospital for a few months and my mother gave this
+      to me as a get well present."
+    - "Since then, it\u2019s traveled along with me and\u2026 well it means the world
+      to me. Thank you so much for your help."

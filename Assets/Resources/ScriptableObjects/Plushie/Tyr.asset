@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82c4c4978c304494fae9a086060f582a, type: 3}
+  m_Name: Tyr
+  m_EditorClassIdentifier: 
+  plushieName: Tyr
+  plushieSprite: {fileID: 21300000, guid: 6f819cd0cf8546a438b0d3844c9de999, type: 3}
+  damageTypeList: 03000000000000000000000000000000
+  damagePositionList:
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  issueDialogue:
+    name: Tyr
+    sentences:
+    - Hi, my neighbor was telling me that you repaired plushies. I was hoping you
+      could take a look at this guy.
+    - "He\u2019s been through a lot, five years in the military to be exact. Any
+      help you could provide would be greatly appreciated."
+  resolutionDialogue:
+    name: Tyr
+    sentences:
+    - "You\u2019re probably curious as to why a hardened Veteran like myself is carrying
+      around this fluffy little guy, right?"
+    - "It was a gift actually, from a little girl I\u2019d helped. Her village had
+      flooded and somehow she was separated from her family. It took two days, but
+      we managed to track them down. She was so grateful she gave me her favorite
+      plushie."
+    - "I, of course, tried to decline, but she wouldn\u2019t have it any other way.
+      Over the years I\u2019ve grown quite fond of the little thing. So, thank you
+      for helping me out."
