@@ -67,21 +67,21 @@ public class PlushieDamage : MonoBehaviour
             if (DamageDictionary.damageInfoDictionary[this.plushieDamageType].correctToolType.Equals(CanvasManager.currentTool.GetComponent<ToolScript>().toolScriptableObject.toolType))
             {
                 // Pick correct routine
-                if (this.plushieDamageType == DamageType.SMALL_RIP) {
+                if (this.plushieDamageType == DamageType.SmallRip) {
                     this.deletePlushieDamage();
-                    CustomEventManager.current.repairCompletionEvent(this);
+                    CustomEventManager.Current.repairCompletionEvent(this);
                 }
-                else if (this.plushieDamageType == DamageType.LARGE_RIP) {
-                    this.changeDamageType(DamageType.LARGE_RIP_STUFFED);
-                    CustomEventManager.current.repairEvent(this, DamageType.LARGE_RIP_STUFFED);
+                else if (this.plushieDamageType == DamageType.LargeRip) {
+                    this.changeDamageType(DamageType.LargeRipMissingStuffing);
+                    CustomEventManager.Current.repairEvent(this, DamageType.LargeRipMissingStuffing);
                 }
-                else if (this.plushieDamageType == DamageType.LARGE_RIP_STUFFED) {
+                else if (this.plushieDamageType == DamageType.LargeRipMissingStuffing) {
                     this.deletePlushieDamage();
-                    CustomEventManager.current.repairCompletionEvent(this);
+                    CustomEventManager.Current.repairCompletionEvent(this);
                 }
-                else if (this.plushieDamageType == DamageType.WORN_STUFFING) {
-                    this.changeDamageType(DamageType.LARGE_RIP);
-                    CustomEventManager.current.repairEvent(this, DamageType.LARGE_RIP);
+                else if (this.plushieDamageType == DamageType.WornStuffing) {
+                    this.changeDamageType(DamageType.LargeRip);
+                    CustomEventManager.Current.repairEvent(this, DamageType.LargeRip);
                 }
             }
         }

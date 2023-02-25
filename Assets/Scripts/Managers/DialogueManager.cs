@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class DialogueController : MonoBehaviour
+public class DialogueManager : MonoBehaviour
 {
     public TMP_Text nameText;
     public TMP_Text dialogueText;
@@ -15,7 +15,7 @@ public class DialogueController : MonoBehaviour
     private void Start() {       
         sentences = new Queue<string>();
 
-        CustomEventManager.current.onTriggerDialogue += StartDialogue;
+        CustomEventManager.Current.onTriggerDialogue += StartDialogue;
     }
 
     private void StartDialogue(Dialogue dialogue) {

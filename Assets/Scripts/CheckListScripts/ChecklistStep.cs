@@ -25,13 +25,15 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     // Start is called before the first frame update
     void Start()
     {
-        CustomEventManager.current.onRepairCompletion += completeStep;
-        CustomEventManager.current.onRepair += repairDamage;
+        CustomEventManager.Current.onRepairCompletion += completeStep;
+        CustomEventManager.Current.onRepair += repairDamage;
     }
 
     private void Update()
     {
-        this.highlightDamage(isMouseOver);
+        if (this.plushieDamage != null) {
+            this.highlightDamage();
+        }
     }
 
     // Generate a Rectangular collider for the message
@@ -48,7 +50,7 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     // Listener method - change the status of multistep repair to the next step
     public void repairDamage(PlushieDamage plushieDamage, DamageType damageType)
     {
-        if (this.plushieDamage.Equals(plushieDamage))
+        if (this.plushieDamage != null && this.plushieDamage.Equals(plushieDamage))
         {
             this.changeStepText(damageType);
         }
@@ -72,7 +74,7 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             visible.a = 1f;
             this.checklistStepIcon.color = visible;
 
-            CustomEventManager.current.onRepairCompletion -= completeStep;
+            CustomEventManager.Current.onRepairCompletion -= completeStep;
         }
     }
 
@@ -86,9 +88,9 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         this.isMouseOver = false;
     }
 
-    private void highlightDamage(bool mouseOverFlag)
+    private void highlightDamage()
     {
-        if (mouseOverFlag)
+        if (this.isMouseOver)
         {
             this.plushieDamage.plushieDamageSpriteRenderer.color =
             Color.Lerp(
