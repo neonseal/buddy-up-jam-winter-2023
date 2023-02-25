@@ -25,6 +25,11 @@ public class RepairWorkspace : MonoBehaviour
         CustomEventManager.current.initializePlushieEvent();
     }
 
+    // Update the scene to bring in a new customer's plushie, note, and information
+    private void NextCustomer() {
+
+    }
+
     private void AddPlushieToScene()
     {
         GameObject plushie = new GameObject();
