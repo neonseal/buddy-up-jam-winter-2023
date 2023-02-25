@@ -29,13 +29,7 @@ namespace GameUI
             if (CanvasManager.currentTool == null)
             {
                 CanvasManager.currentTool = this.gameObject;
-                Cursor.SetCursor(
-                    this.toolScriptableObject.toolCursorTexture, 
-                    new Vector2(
-                        this.toolScriptableObject.toolCursorTexture.width, 
-                        this.toolScriptableObject.toolCursorTexture.height
-                        ) / 2f, 
-                    CursorMode.Auto);
+                this.setToolCursor();
                 // Play pickup sound
                 audioSources[0].Play();
             }
@@ -48,18 +42,47 @@ namespace GameUI
             else
             {
                 CanvasManager.currentTool = this.gameObject;
-                Cursor.SetCursor(
-                    this.toolScriptableObject.toolCursorTexture, new Vector2(
-                        this.toolScriptableObject.toolCursorTexture.width, 
-                        this.toolScriptableObject.toolCursorTexture.height
-                        ) / 2f,  
-                    CursorMode.Auto);
+                this.setToolCursor();
                 // Play pickup sound
                 audioSources[0].Play();
             }
         }
 
-        public void deselectTool() {
+        private void setToolCursor()
+        {
+            if (this.toolScriptableObject.toolType.Equals(ToolType.Cleaning) || this.toolScriptableObject.toolType.Equals(ToolType.Stuffing))
+            {
+                // Set cursor at center of sprite
+                Cursor.SetCursor(
+                    this.toolScriptableObject.toolCursorTexture,
+                    new Vector2(
+                        this.toolScriptableObject.toolCursorTexture.width,
+                        this.toolScriptableObject.toolCursorTexture.height
+                    ) / 2f,
+                    CursorMode.Auto
+                );
+            }
+            else {
+                // Set cursor at bottom left of sprite
+                Cursor.SetCursor(
+                    this.toolScriptableObject.toolCursorTexture,
+                    new Vector2(
+                        0f,
+                        this.toolScriptableObject.toolCursorTexture.height
+                    ) / 2f,
+                    CursorMode.Auto
+                );
+            }
+
+        }
+
+        private void setCursorBottomLeft()
+        {
+
+        }
+
+        public void deselectTool()
+        {
             CanvasManager.currentTool = null;
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
             audioSources[1].Play();
