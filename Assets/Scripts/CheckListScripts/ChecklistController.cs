@@ -14,22 +14,22 @@ public class ChecklistController : MonoBehaviour
     private GameObject checklistStepPrefab;
 
     private ChecklistStep[] steps;
-    private Button btn;
+    private Button submitButton;
     private int checklistStepcount;
     private int repairCompletionCount;
 
     private void Awake()
     {
         steps = GetComponentsInChildren<ChecklistStep>();
-        btn = GetComponentInChildren<Button>();
+        submitButton = GetComponentInChildren<Button>();
+        this.submitButton.interactable = false;
     }
 
     private void Start()
     {
-        CustomEventManager.current.onDamageGeneration += populateChecklist;
-        CustomEventManager.current.onRepairCompletion += incrementRepairCompletionCount;
-        btn.onClick.AddListener(HandleButtonClick);
-        this.btn.interactable = false;
+        CustomEventManager.Current.onDamageGeneration += populateChecklist;
+        CustomEventManager.Current.onRepairCompletion += incrementRepairCompletionCount;
+        submitButton.onClick.AddListener(CompleteRepairButtonClick);
     }
 
     private void Update()
@@ -37,10 +37,12 @@ public class ChecklistController : MonoBehaviour
 
     }
 
-    private void HandleButtonClick()
+    // When all damage points have been repaired, the finish/submit button will be activated,
+    // allowing the player to package up the plushie and return it to the customer
+    private void CompleteRepairButtonClick()
     {
         // Broadcast a plushie repair completion event
-        CustomEventManager.current.plushieOverallRepairCompletionEvent();
+        CustomEventManager.Current.plushieOverallRepairCompletionEvent();
 
         // Set repair counters to 0
         this.checklistStepcount = 0;
@@ -72,7 +74,7 @@ public class ChecklistController : MonoBehaviour
     private void incrementRepairCompletionCount(PlushieDamage plushieDamage) {
         this.repairCompletionCount++;
         if (repairCompletionCount >= checklistStepcount) {
-            this.btn.interactable = true;
+            this.submitButton.interactable = true;
         }
     }
 }

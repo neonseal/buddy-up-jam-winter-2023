@@ -69,19 +69,19 @@ public class PlushieDamage : MonoBehaviour
                 // Pick correct routine
                 if (this.plushieDamageType == DamageType.SmallRip) {
                     this.deletePlushieDamage();
-                    CustomEventManager.current.repairCompletionEvent(this);
+                    CustomEventManager.Current.repairCompletionEvent(this);
                 }
                 else if (this.plushieDamageType == DamageType.LargeRip) {
                     this.changeDamageType(DamageType.LargeRipMissingStuffing);
-                    CustomEventManager.current.repairEvent(this, DamageType.LargeRipMissingStuffing);
+                    CustomEventManager.Current.repairEvent(this, DamageType.LargeRipMissingStuffing);
                 }
                 else if (this.plushieDamageType == DamageType.LargeRipMissingStuffing) {
                     this.deletePlushieDamage();
-                    CustomEventManager.current.repairCompletionEvent(this);
+                    CustomEventManager.Current.repairCompletionEvent(this);
                 }
                 else if (this.plushieDamageType == DamageType.WornStuffing) {
                     this.changeDamageType(DamageType.LargeRip);
-                    CustomEventManager.current.repairEvent(this, DamageType.LargeRip);
+                    CustomEventManager.Current.repairEvent(this, DamageType.LargeRip);
                 }
             }
         }

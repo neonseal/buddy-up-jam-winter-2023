@@ -20,11 +20,12 @@ MonoBehaviour:
   issueDialogue:
     name: Reima & Remy
     sentences:
-    - "Hello, my girlfriend and I just moved here from out of state and happened
-      to see one of your fliers. During our move, I may have accidentally damaged
-      one of Remy\u2019s favorite plushies."
-    - "Usually it wouldn\u2019t matter, we could just buy a replacement, but this
-      one is special. Do you think you could take a look?"
+    - Hello, my girlfriend and I just moved here from out of state and happened to
+      see one of your fliers.
+    - "During our move, I may have accidentally damaged one of Remy\u2019s favorite
+      plushies. Usually it wouldn\u2019t matter, we could just buy a replacement,
+      but this one is special. "
+    - Do you think you could take a look?
   resolutionDialogue:
     name: Reima & Remy
     sentences:
