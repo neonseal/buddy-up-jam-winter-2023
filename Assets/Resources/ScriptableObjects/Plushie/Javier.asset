@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82c4c4978c304494fae9a086060f582a, type: 3}
   m_Name: Javier
   m_EditorClassIdentifier: 
+  clientFont: {fileID: 11400000, guid: 9f3e6d00652c5cd4ab3bf8f7a1a59a45, type: 2}
   plushieName: Javier
   plushieSprite: {fileID: 21300000, guid: da8d6814df854944da83d14cdcf284f7, type: 3}
   damageTypeList: 02000000

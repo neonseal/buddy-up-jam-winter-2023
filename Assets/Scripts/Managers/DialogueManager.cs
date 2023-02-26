@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class DialogueManager : MonoBehaviour
-{
-    public TMP_Text nameText;
-    public TMP_Text dialogueText;
-    public Button btn;
-    public Animator animator;
+public class DialogueManager : MonoBehaviour {
+    [SerializeField]
+    private TMP_Text nameText;
+    [SerializeField]
+    private TMP_Text dialogueText;
+    [SerializeField]
+    private Button btn;
+    [SerializeField]
+    private Animator animator;
     private Queue<string> sentences;
 
     private void Start() {       
@@ -67,5 +70,9 @@ public class DialogueManager : MonoBehaviour
 
     private void EndDialogue() {
         animator.SetBool("isOpen", false);
+    }
+
+    public void SetFont(TMP_FontAsset font) {
+        nameText.font = font;
     }
 }

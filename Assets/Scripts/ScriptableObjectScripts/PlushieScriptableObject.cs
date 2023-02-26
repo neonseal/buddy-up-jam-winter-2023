@@ -6,6 +6,7 @@ using DamageScripts;
 [CreateAssetMenu (fileName = "Plushie", menuName = "Scriptable Objects/Plushie")]
 public class PlushieScriptableObject : ScriptableObject
 {
+    public TMPro.TMP_FontAsset clientFont;
     public string plushieName;
     public Sprite plushieSprite;
     public List<DamageType> damageTypeList;
