@@ -67,7 +67,6 @@ public class Plushie : MonoBehaviour
     private void deletePlushie() {
         CustomEventManager.Current.onPlushieOverallRepairCompletion -= this.sendOffPlushie;
         CustomEventManager.Current.plushieDeletionEvent();
-        Debug.Log("Plushie got deleted, F");
         Object.Destroy(this);
     }
 }
