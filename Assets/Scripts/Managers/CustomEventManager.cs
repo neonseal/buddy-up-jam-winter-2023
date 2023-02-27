@@ -113,12 +113,12 @@ public class CustomEventManager : MonoBehaviour
     }
 
     // Plushie deletion event
-    public event Action onPlushieDeletionRequest;
+    public event Action onPlushieDeletionEvent;
     public void plushieDeletionEvent()
     {
-        if (this.onPlushieDeletionRequest != null) { }
+        if (this.onPlushieDeletionEvent != null) { }
         {
-            this.onPlushieDeletionRequest();
+            this.onPlushieDeletionEvent();
         }
 
     }
