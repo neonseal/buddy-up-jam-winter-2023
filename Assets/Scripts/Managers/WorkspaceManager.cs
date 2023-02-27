@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class WorkspaceManager : MonoBehaviour {
+    public GameObject clientCardPrefab;
     [SerializeField]
     private DialogueManager dialogueManager;
     [SerializeField]
     private List<PlushieScriptableObject> plushieList;
     [SerializeField]
     private Button nextCustomerButton;
-    private PlushieScriptableObject currentPlushie;
+    private PlushieScriptableObject currentPlushieScriptableObject;
     private int plushieListCursor;
 
     private void Awake() {
@@ -35,20 +36,20 @@ public class WorkspaceManager : MonoBehaviour {
         this.nextCustomerButton.interactable = false;
 
         // Set current plushie scriptable object
-        currentPlushie = plushieList[plushieListCursor];
+        currentPlushieScriptableObject = plushieList[plushieListCursor];
 
         // Broadcasts an event to initialize a plushie
         this.AddPlushieToScene();
 
         yield return new WaitForSeconds(.5f);
 
-        CustomEventManager.Current.TriggerDialogue(currentPlushie.issueDialogue);
+        CustomEventManager.Current.TriggerDialogue(currentPlushieScriptableObject.issueDialogue);
     }
 
     private void AddPlushieToScene() {
         GameObject plushie = new GameObject();
         plushie.transform.SetParent(this.transform);
-        plushie.name = plushieList[plushieListCursor].plushieName;
+        plushie.name = currentPlushieScriptableObject.plushieObjectName + "Plushie";
         // REMOVE WHEN WE HAVE NEW SPRITES
         plushie.transform.localScale = new Vector3(4, 4, 1);
 
@@ -62,9 +63,6 @@ public class WorkspaceManager : MonoBehaviour {
         this.plushieListCursor++;
     }
 
-    private void OnBecameInvisible() {
-    }
-
     private void PlushieSendoff() {
         StartCoroutine(PlushieSendoffRoutine());
     }
@@ -72,9 +70,17 @@ public class WorkspaceManager : MonoBehaviour {
     IEnumerator PlushieSendoffRoutine() {
         // Play repair complete fanfare
         // Wait briefly
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(.4f);
         // Move plushie off screen
         // Destroy gameobject
+        // Create resolution text object
+        GameObject clientCard = clientCardPrefab;
+        //clientCard.transform.SetParent(this.
+        //transform.GetComponentInChildren<CardStackController>().transform);
+        clientCard.name = currentPlushieScriptableObject.plushieObjectName + "ClientCard";
+        //clientCard.transform.position = new Vector3(0, 0, -1);
+
+        Instantiate(clientCard, new Vector3(0,0,0), Quaternion.identity);
         // Enable next customer button
     }
 }

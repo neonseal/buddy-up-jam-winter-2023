@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea6ec8459c2a3f6458723c2392db99ff, type: 3}
+  m_Name: ReimaAndRemy
+  m_EditorClassIdentifier: 
+  clientCardPrefab: {fileID: 1965901334963109267, guid: 7b71b92f8b3c6bc4ab232a0706f30b35, type: 3}
+  clintName: Reima & Remy
+  sentences:
+  - 'It looks amazing! I bought this for Remy right before she came out to her parents.
+    She was so nervous, in fact when it came time, she just kind of stood there babbling.
+    I gave her this plushie half-way through and everything just kind of clicked.
+    We kind of see it as an inside joke now, but I know this fluffy little guy means
+    a lot to her. Thank you so much!
+
+'
