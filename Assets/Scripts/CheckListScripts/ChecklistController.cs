@@ -55,8 +55,10 @@ public class ChecklistController : MonoBehaviour
         this.addChecklistStep(plushieDamage, damageType);
     }
 
+    // Add a checklist step 
     private void addChecklistStep(PlushieDamage plushieDamage, DamageType damageType)
     {
+        // increment checklistStepcount
         this.checklistStepcount++;
         GameObject checklistEntry = Instantiate(checklistStepPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         checklistEntry.transform.SetParent(checklistItemsObject.transform);
@@ -65,6 +67,7 @@ public class ChecklistController : MonoBehaviour
 
         checklistEntry.name = "Damage " + checklistStepcount + " of type " + damageType;
 
+        // Set the scale of checklistStep to default (otherwise it spawns in tiny)
         checklistEntry.GetComponent<RectTransform>().localScale = Vector3.one;
         checklistStepComponent.changeStepText(damageType);
         checklistStepComponent.plushieDamage = plushieDamage;
