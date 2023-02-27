@@ -27,7 +27,7 @@ public class WorkspaceManager : MonoBehaviour {
         this.clientCardCollection = new List<ClientCard>();
 
         CustomEventManager.Current.onGameStart += this.StartGame;
-        CustomEventManager.Current.onPlushieOverallRepairCompletion += this.PlushieSendoff;
+        CustomEventManager.Current.onPlushieDeletionEvent += this.PlushieSendoff;
         nextCustomerButton.onClick.AddListener(NextCustomer);
     }
 
