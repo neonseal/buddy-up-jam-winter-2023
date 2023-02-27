@@ -15,12 +15,6 @@ public class WorkspaceManager : MonoBehaviour {
     private CardStackController cardStackController;
     [SerializeField]
     private GameObject cardSpawner;
-    [SerializeField]
-    private float cycleLength = 2f;
-    [SerializeField]
-    private Ease easeType = Ease.InOutBack;
-    [SerializeField]
-    private bool snapping = false;
 
     private List<ClientCard> clientCardCollection;
     private PlushieScriptableObject currentPlushieScriptableObject;
@@ -95,7 +89,7 @@ public class WorkspaceManager : MonoBehaviour {
         // Create resolution text object, and instantiate above the screen
         ClientCard clientCard = currentPlushieScriptableObject.resolutionClientCard;
         clientCard.name = currentPlushieScriptableObject.plushieObjectName + "ClientCard";
-        clientCard.gameObject.transform.localScale = new Vector3(6, 8, 1);
+        clientCard.gameObject.transform.localScale = new Vector3(5, 7, 1);
         ClientCard newCard = Instantiate(clientCard, this.cardSpawner.transform.position, Quaternion.identity, this.cardStackController.transform);
 
         //yield return new WaitForSeconds(2f);
@@ -123,7 +117,7 @@ public class WorkspaceManager : MonoBehaviour {
         Debug.Log("TARGET: " + targetY);
 
          Sequence sequence = DOTween.Sequence();
-         sequence.Append(card.transform.DOLocalMove(new Vector3(0,targetY,-1), cycleLength).SetEase(easeType));
+         sequence.Append(card.transform.DOLocalMove(new Vector3(0,targetY,-1), 1.5f).SetEase(Ease.InOutBack));
          DOTween.Play(sequence);
     }
 }
