@@ -57,7 +57,7 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     // Listener method - change the status of multistep repair to the next step
     public void repairDamage(PlushieDamage plushieDamage, DamageType damageType)
     {
-        if (this.plushieDamage.Equals(plushieDamage))
+        if (this.plushieDamage != null && this.plushieDamage.Equals(plushieDamage))
         {
             this.changeStepText(damageType);
         }
@@ -101,7 +101,7 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     // When mousing over, changes color of associated damage; otherwise, revert to default color
     private void highlightDamage(bool mouseOverFlag)
     {
-        if (mouseOverFlag)
+        if (this.isMouseOver)
         {
             this.plushieDamage.plushieDamageSpriteRenderer.color =
             Color.Lerp(

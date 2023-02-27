@@ -8,6 +8,6 @@ public class DialogueTrigger : MonoBehaviour
 
 
     public void TriggerDialogue() {
-        CustomEventManager.current.TriggerDialogue(dialogue);
+        CustomEventManager.Current.TriggerDialogue(dialogue);
     }
 }

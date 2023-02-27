@@ -7,7 +7,18 @@ using DamageScripts;
 public class CustomEventManager : MonoBehaviour
 {
     //Singleton setup
-    public static CustomEventManager current;
+    public static CustomEventManager Current {
+        get {
+            if (current == null)
+                current = FindObjectOfType(typeof(CustomEventManager)) as CustomEventManager;
+
+            return current;
+        }
+        set {
+            current = value;
+        }
+    }
+    private static CustomEventManager current;
 
     private void Awake()
     {

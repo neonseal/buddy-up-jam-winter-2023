@@ -6,9 +6,10 @@ namespace DamageScripts {
     public static class DamageDictionary {
         static DamageDictionary() {
             damageInfoDictionary = new Dictionary<DamageType, DamageTypeScriptableObject>();
-            damageInfoDictionary.Add(DamageType.SMALL_RIP, Resources.Load<DamageTypeScriptableObject>("ScriptableObjects/PlushieDamage/SmallRip"));
-            damageInfoDictionary.Add(DamageType.LARGE_RIP, Resources.Load<DamageTypeScriptableObject>("ScriptableObjects/PlushieDamage/LargeRip"));
-            damageInfoDictionary.Add(DamageType.LARGE_RIP_STUFFED, Resources.Load<DamageTypeScriptableObject>("ScriptableObjects/PlushieDamage/LargeRipStuffed"));
+            damageInfoDictionary.Add(DamageType.SmallRip, Resources.Load<DamageTypeScriptableObject>("ScriptableObjects/PlushieDamage/SmallRip"));
+            damageInfoDictionary.Add(DamageType.LargeRip, Resources.Load<DamageTypeScriptableObject>("ScriptableObjects/PlushieDamage/LargeRip"));
+            damageInfoDictionary.Add(DamageType.LargeRipMissingStuffing, Resources.Load<DamageTypeScriptableObject>("ScriptableObjects/PlushieDamage/LargeRipMissingStuffing"));
+            damageInfoDictionary.Add(DamageType.WornStuffing, Resources.Load<DamageTypeScriptableObject>("ScriptableObjects/PlushieDamage/WornStuffing"));
         }
 
         public static Dictionary<DamageType, DamageTypeScriptableObject> damageInfoDictionary;

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82c4c4978c304494fae9a086060f582a, type: 3}
+  m_Name: Marcus&Trisha
+  m_EditorClassIdentifier: 
+  plushieName: Marcus&Trisha
+  plushieSprite: {fileID: 21300000, guid: da8d6814df854944da83d14cdcf284f7, type: 3}
+  damageTypeList: 000000000000000000000000
+  damagePositionList:
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  issueDialogue:
+    name: Marcus & Trisha
+    sentences:
+    - "Hello, we\u2019d like your help in repairing one of our son\u2019s plushies."
+    - "There\u2019s no major damage, just several small rips here and there. We\u2019d
+      appreciate it very much if you could take a look."
+  resolutionDialogue:
+    name: Marcus & Trisha
+    sentences:
+    - "Amazing, it looks like it did when we bought it. My wife purchased this as
+      a gift for my son\u2019s fifth birthday."
+    - He loved it, and carried it everywhere. Unfortunately, shortly after his birthday
+      we were hit by a drunk driver.
+    - "Our son\u2026 he didn\u2019t make it, so this plushie\u2026 it\u2019s one
+      of the last few things we have left. We cannot express how grateful we are
+      for your help."
