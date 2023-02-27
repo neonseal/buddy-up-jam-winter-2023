@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea6ec8459c2a3f6458723c2392db99ff, type: 3}
   m_Name: ReimaAndRemy
   m_EditorClassIdentifier: 
-  clientCardPrefab: {fileID: 1965901334963109267, guid: 7b71b92f8b3c6bc4ab232a0706f30b35, type: 3}
+  clientCardPrefab: {fileID: 3708409553341289766, guid: 2d4dcde84829e1f49be5b0d2ef020b7d, type: 3}
   clintName: Reima & Remy
   sentences:
   - 'It looks amazing! I bought this for Remy right before she came out to her parents.

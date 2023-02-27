@@ -13,5 +13,5 @@ public class PlushieScriptableObject : ScriptableObject
     public List<DamageType> damageTypeList;
     public List<Vector2> damagePositionList;
     public Dialogue issueDialogue;
-    public ClientCardScriptableObject clientCard;
+    public ClientCard resolutionClientCard;
 }

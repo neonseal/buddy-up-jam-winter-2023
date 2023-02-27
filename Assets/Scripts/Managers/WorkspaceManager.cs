@@ -2,26 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class WorkspaceManager : MonoBehaviour {
-    public GameObject clientCardPrefab;
     [SerializeField]
     private DialogueManager dialogueManager;
     [SerializeField]
     private List<PlushieScriptableObject> plushieList;
     [SerializeField]
     private Button nextCustomerButton;
+    [SerializeField]
+    private CardStackController cardStackController;
+    [SerializeField]
+    private GameObject cardSpawner;
+    [SerializeField]
+    private float cycleLength = 2f;
+    [SerializeField]
+    private Ease easeType = Ease.InOutBack;
+    [SerializeField]
+    private bool snapping = false;
+
+    private List<ClientCard> clientCardCollection;
     private PlushieScriptableObject currentPlushieScriptableObject;
     private int plushieListCursor;
 
     private void Awake() {
+        DOTween.Init();
+        
         this.plushieListCursor = 0;
+        this.clientCardCollection = new List<ClientCard>();
+
         CustomEventManager.Current.onGameStart += this.StartGame;
         CustomEventManager.Current.onPlushieOverallRepairCompletion += this.PlushieSendoff;
         nextCustomerButton.onClick.AddListener(NextCustomer);
-    }
-
-    private void Start() {
     }
 
     private void StartGame() {
@@ -37,6 +50,9 @@ public class WorkspaceManager : MonoBehaviour {
 
         // Set current plushie scriptable object
         currentPlushieScriptableObject = plushieList[plushieListCursor];
+
+        // Set client dialogue font
+        this.dialogueManager.SetClientFont(currentPlushieScriptableObject.clientFont);
 
         // Broadcasts an event to initialize a plushie
         this.AddPlushieToScene();
@@ -68,19 +84,46 @@ public class WorkspaceManager : MonoBehaviour {
     }
 
     IEnumerator PlushieSendoffRoutine() {
+        /* Complete Repair and Send Plushie to Customer */
         // Play repair complete fanfare
         // Wait briefly
         yield return new WaitForSeconds(.4f);
         // Move plushie off screen
         // Destroy gameobject
-        // Create resolution text object
-        GameObject clientCard = clientCardPrefab;
-        //clientCard.transform.SetParent(this.
-        //transform.GetComponentInChildren<CardStackController>().transform);
-        clientCard.name = currentPlushieScriptableObject.plushieObjectName + "ClientCard";
-        //clientCard.transform.position = new Vector3(0, 0, -1);
 
-        Instantiate(clientCard, new Vector3(0,0,0), Quaternion.identity);
+        /* Show Client Resolution Card */
+        // Create resolution text object, and instantiate above the screen
+        ClientCard clientCard = currentPlushieScriptableObject.resolutionClientCard;
+        clientCard.name = currentPlushieScriptableObject.plushieObjectName + "ClientCard";
+        clientCard.gameObject.transform.localScale = new Vector3(6, 8, 1);
+        ClientCard newCard = Instantiate(clientCard, this.cardSpawner.transform.position, Quaternion.identity, this.cardStackController.transform);
+
+        //yield return new WaitForSeconds(2f);
+
+        // Tween the card into view
+         Sequence sequence = DOTween.Sequence();
+         sequence.Append(newCard.transform.DOLocalMove(new Vector3(0,0,-1), 1.5f).SetEase(Ease.OutBack));
+         DOTween.Play(sequence);
+        
+        clientCardCollection.Add(newCard);
+
+        /* Prep Space for Next Customer */
         // Enable next customer button
+    }
+
+    public void PlayCardAnimation() {
+        Debug.Log("PLAY");
+        ClientCard card = clientCardCollection[0];
+        Debug.Log("CARD: " + card.name);
+
+        float yPos = card.transform.localPosition.y;
+        float targetY = yPos == 0f ? 1000f : 0f;
+
+        Debug.Log("CURRENT POSITION: " + card.transform.localPosition);
+        Debug.Log("TARGET: " + targetY);
+
+         Sequence sequence = DOTween.Sequence();
+         sequence.Append(card.transform.DOLocalMove(new Vector3(0,targetY,-1), cycleLength).SetEase(easeType));
+         DOTween.Play(sequence);
     }
 }
