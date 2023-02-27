@@ -47,6 +47,9 @@ public class ChecklistController : MonoBehaviour
         // Set repair counters to 0
         this.checklistStepcount = 0;
         this.repairCompletionCount = 0;
+
+        // Set the button back to uninteractable
+        this.submitButton.interactable = false;
     }
 
     // Listener method - add a checklist step to checklistItemsObject for each generation event
