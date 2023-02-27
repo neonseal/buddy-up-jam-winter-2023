@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea6ec8459c2a3f6458723c2392db99ff, type: 3}
+  m_Name: MarcusAndTrisha
+  m_EditorClassIdentifier: 
+  clientCardPrefab: {fileID: 6139955035223780639, guid: 1f5495df4cbada5408c956f3d431ceb7, type: 3}
+  clintName: Marcus and Trisha
+  sentences:
+  - "Amazing, it looks like it did when we bought it. My wife purchased this as a
+    gift for my son\u2019s fifth birthday. He loved it, and carried it everywhere.
+    Unfortunately, shortly after his birthday we were hit by a drunk driver. Our
+    son, he didn\u2019t make it. So this plushie is one of the last few things we
+    have left. We cannot express how grateful we are for your help. \r\n"

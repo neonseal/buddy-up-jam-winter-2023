@@ -4,18 +4,32 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class DialogueManager : MonoBehaviour
-{
-    public TMP_Text nameText;
-    public TMP_Text dialogueText;
-    public Button btn;
-    public Animator animator;
+public class DialogueManager : MonoBehaviour {
+    [Header("UI Components")]
+    [SerializeField]
+    private TMP_Text nameText;
+    [SerializeField]
+    private TMP_Text dialogueText;
+    [SerializeField]
+    private Button continueButton;
+
+    [Header("Animation Variables")]
+    [SerializeField]
+    private Animator animator;
     private Queue<string> sentences;
+    private bool clientFontVisible;
 
-    private void Start() {       
+    [Header("Font Variables")]
+    private TMP_FontAsset openDyslexicFont;
+    private TMP_FontAsset clientFont;
+
+    private void Awake() {
         sentences = new Queue<string>();
-
+        clientFontVisible = true;
+        openDyslexicFont = Resources.Load<TMP_FontAsset>("Fonts/OpenDyslexic3-Regular SDF");
+        continueButton.onClick.AddListener(DisplayNextSentence);
         CustomEventManager.Current.onTriggerDialogue += StartDialogue;
+
     }
 
     private void StartDialogue(Dialogue dialogue) {
@@ -33,7 +47,7 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(TypeSentence(sentence));
 
         if (sentences.Count == 0) {
-            btn.gameObject.GetComponentInChildren<TMP_Text>().text = "END";
+            continueButton.gameObject.GetComponentInChildren<TMP_Text>().text = "END";
         }
     }
 
@@ -67,5 +81,26 @@ public class DialogueManager : MonoBehaviour
 
     private void EndDialogue() {
         animator.SetBool("isOpen", false);
+    }
+
+    private void SetFont(TMP_FontAsset font) {
+        nameText.font = font;
+        dialogueText.font = font;
+    }
+
+    public void SetClientFont(TMP_FontAsset font) {
+        this.clientFont = font;
+        this.SetFont(font);
+    }
+
+    public void SwitchFonts() {
+        // Switch to Open Dyslexic if showing client specific font
+        if (clientFontVisible) {
+            this.SetFont(openDyslexicFont);
+            this.clientFontVisible = false;
+        } else {
+            this.SetFont(clientFont);
+            this.clientFontVisible = true;
+        }
     }
 }
