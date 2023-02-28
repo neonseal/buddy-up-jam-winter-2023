@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class StartMenu : MonoBehaviour
 {
     private Button startButton;
-
+   
     private void Awake() {
         startButton = GetComponentInChildren<Button>();
     }
@@ -18,6 +18,7 @@ public class StartMenu : MonoBehaviour
 
     private void StartGame() {
         startButton.gameObject.SetActive(false);
+
         CustomEventManager.Current.GameStart();
     }
 }

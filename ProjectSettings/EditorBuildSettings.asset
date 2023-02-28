@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/MainScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Development Scenes/StabilityBuild.unity
-    guid: 24b01f9f61dc54b408f7ec1d16858ccf
+    path: Assets/Scenes/Development Scenes/MendingMiniGames.unity
+    guid: beac1d4b13dabab4982405b510d2d744
   m_configObjects: {}

@@ -7,7 +7,7 @@ public class Dash : MonoBehaviour
     private BoxCollider2D coll2D;
     private SpriteRenderer spriteRenderer;
 
-    [SerializeField] private float colorChangeSpeed = 10f;
+    [SerializeField] private float colorChangeSpeed = 20f;
 
     private bool mouseHeld;
     private bool complete;

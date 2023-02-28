@@ -55,6 +55,13 @@ public class CustomEventManager : MonoBehaviour
         }
     }
 
+    public event Action<PlushieDamage, DamageType> onStartRepairMiniGame;
+    public void startRepairMiniGame(PlushieDamage plushieDamage, DamageType damageType) {
+        if (this.onStartRepairMiniGame != null) {
+            this.onStartRepairMiniGame(plushieDamage, damageType);
+        }
+    }
+
     public event Action<PlushieDamage, DamageType> onRepair;
     public void repairEvent(PlushieDamage plushieDamage, DamageType damageType)
     {

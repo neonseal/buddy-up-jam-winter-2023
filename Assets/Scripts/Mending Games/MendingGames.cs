@@ -8,8 +8,8 @@ public class MendingGames: MonoBehaviour
 {
     private SpriteRenderer lenseSpriteRenderer;
     private List<Vector3> dashPositions;
+    private PlushieDamage plushieDamage;
 
-    [SerializeField] private Button drawLineButton;
     [SerializeField] private List<Dash> dashes;
     [Range(0.01f, 1f)]
     [SerializeField] private float dashSize;
@@ -28,15 +28,15 @@ public class MendingGames: MonoBehaviour
     }
 
     private void Start() {
-        drawLineButton.onClick.AddListener(CreateSewingMiniGame);
     }
 
     private void Update() {
         // Toggle mouse held state
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0)) {
             CustomEventManager.Current.mouseHoldStatusToggle(true);
-        else
+        } else {
             CustomEventManager.Current.mouseHoldStatusToggle(false);
+        }
 
         // Check for complete dash collections
         if (dashes.Count > 0 && !gameComplete) {
@@ -44,11 +44,29 @@ public class MendingGames: MonoBehaviour
         }
     }
 
+    public void CreateSewingMiniGame(PlushieDamage damage) {
+        this.plushieDamage = damage;
+        DestroyAllDashes();
+
+        // Define two points
+        Vector3 parentLocation = this.transform.position;
+        Vector3 startingPoint = new Vector3(parentLocation.x - 2, parentLocation.y, -1);
+        Vector3 endingPoint = new Vector3(parentLocation.x + 2, parentLocation.y, -1);
+
+        // Generate two target sprites representing the target points
+        this.GenerateTarget(startingPoint);
+        this.GenerateTarget(endingPoint);
+
+        GenerateDashPositions(startingPoint, endingPoint);
+
+        RenderLine();
+    }
+
     private void checkIfAllDashesComplete() {
         var incomplete = dashes.Where(dash => dash.Complete == false).ToList();
         if (incomplete.Count == 0) {
             gameComplete = true;
-            //CustomEventManager.Current.repairCompletionEvent();
+            CustomEventManager.Current.repairCompletionEvent(this.plushieDamage);
         }
     }
     private Dash GenerateDash() {
@@ -108,21 +126,5 @@ public class MendingGames: MonoBehaviour
             dashObject.transform.position = dashPosition;
             dashes.Add(dashObject);
         }
-    }
-
-    private void CreateSewingMiniGame() {
-        DestroyAllDashes();
-
-        // Define two points
-        Vector3 startingPoint = new Vector3(-2, 0, -1);
-        Vector3 endingPoint = new Vector3(2, 0, -1);
-
-        // Generate two target sprites representing the target points
-        this.GenerateTarget(startingPoint);
-        this.GenerateTarget(endingPoint);
-
-        GenerateDashPositions(startingPoint, endingPoint);
-
-        RenderLine();
     }
 }

@@ -8,6 +8,12 @@ public class PlushieDamage : MonoBehaviour
 {
     // Fields
     private DamageType plushieDamageType;
+    private bool gameActive = false;
+
+    public bool GameActive {
+        get { return gameActive; }
+        set { gameActive = value; }
+    }
 
     // Components
     internal SpriteRenderer plushieDamageSpriteRenderer;
@@ -39,7 +45,7 @@ public class PlushieDamage : MonoBehaviour
 
     public void deletePlushieDamage()
     {
-        Object.Destroy(this.gameObject); // F
+        Object.Destroy(this.gameObject);
     }
 
     // Update is called once per frame
@@ -61,27 +67,31 @@ public class PlushieDamage : MonoBehaviour
     void OnMouseDown()
     {
         // Check if player is holding any tool
-        if (CanvasManager.currentTool != null)
+        if (CanvasManager.currentTool != null && !gameActive)
         {
             // Check for correct tool type
             if (DamageDictionary.damageInfoDictionary[this.plushieDamageType].correctToolType.Equals(CanvasManager.currentTool.GetComponent<ToolScript>().toolScriptableObject.toolType))
             {
                 // Pick correct routine
                 if (this.plushieDamageType == DamageType.SmallRip) {
-                    this.deletePlushieDamage();
-                    CustomEventManager.Current.repairCompletionEvent(this);
+                    //this.deletePlushieDamage();
+                    gameActive = true;
+                    CustomEventManager.Current.startRepairMiniGame(this, DamageType.SmallRip);
                 }
                 else if (this.plushieDamageType == DamageType.LargeRip) {
-                    this.changeDamageType(DamageType.LargeRipMissingStuffing);
-                    CustomEventManager.Current.repairEvent(this, DamageType.LargeRipMissingStuffing);
+                    //this.changeDamageType(DamageType.LargeRipMissingStuffing);
+                    gameActive = true;
+                    CustomEventManager.Current.startRepairMiniGame(this, DamageType.LargeRip);
                 }
                 else if (this.plushieDamageType == DamageType.LargeRipMissingStuffing) {
-                    this.deletePlushieDamage();
-                    CustomEventManager.Current.repairCompletionEvent(this);
+                    //this.deletePlushieDamage();
+                    gameActive = true;
+                    CustomEventManager.Current.startRepairMiniGame(this, DamageType.LargeRipMissingStuffing);
                 }
                 else if (this.plushieDamageType == DamageType.WornStuffing) {
-                    this.changeDamageType(DamageType.LargeRip);
-                    CustomEventManager.Current.repairEvent(this, DamageType.LargeRip);
+                    //this.changeDamageType(DamageType.LargeRip);
+                    gameActive = true;
+                    CustomEventManager.Current.startRepairMiniGame(this, DamageType.WornStuffing);
                 }
             }
         }

@@ -69,7 +69,7 @@ namespace GameUI
                     new Vector2(
                         0f,
                         this.toolScriptableObject.toolCursorTexture.height
-                    ) / 2f,
+                    ),
                     CursorMode.Auto
                 );
             }
