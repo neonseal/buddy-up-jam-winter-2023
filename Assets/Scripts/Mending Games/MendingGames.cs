@@ -2,24 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class MendingGames: MonoBehaviour
 {
     private SpriteRenderer lenseSpriteRenderer;
-    private LineRenderer lineRenderer;
     private List<Vector3> dashPositions;
 
     [SerializeField] private Button drawLineButton;
-    [SerializeField] private List<GameObject> dashes;
+    [SerializeField] private List<Dash> dashes;
     [Range(0.01f, 1f)]
     [SerializeField] private float dashSize;
     [Range(0.1f, 2f)]
     [SerializeField] private float delta;
 
+    private bool gameComplete;
+
     private void Awake() {
         this.lenseSpriteRenderer = GetComponent<SpriteRenderer>();
-        this.lineRenderer = GetComponent<LineRenderer>();
-        dashes = new List<GameObject>();
+        dashes = new List<Dash>();
         dashPositions = new List<Vector3>();
 
         dashSize = 0.125f;
@@ -30,29 +31,50 @@ public class MendingGames: MonoBehaviour
         drawLineButton.onClick.AddListener(CreateSewingMiniGame);
     }
 
-    private GameObject GenerateDash() {
+    private void Update() {
+        // Toggle mouse held state
+        if (Input.GetMouseButton(0))
+            CustomEventManager.Current.mouseHoldStatusToggle(true);
+        else
+            CustomEventManager.Current.mouseHoldStatusToggle(false);
+
+        // Check for complete dash collections
+        if (dashes.Count > 0 && !gameComplete) {
+            checkIfAllDashesComplete();
+        }
+    }
+
+    private void checkIfAllDashesComplete() {
+        var incomplete = dashes.Where(dash => dash.Complete == false).ToList();
+        if (incomplete.Count == 0) {
+            gameComplete = true;
+            //CustomEventManager.Current.repairCompletionEvent();
+        }
+    }
+    private Dash GenerateDash() {
         // Generate base object
-        GameObject dash = new GameObject();
-        dash.transform.localScale = Vector3.one * dashSize;
-        dash.transform.parent = this.transform;
+        GameObject gameObject = new GameObject();
+        gameObject.transform.localScale = Vector3.one * dashSize;
+        gameObject.transform.parent = this.transform;
 
         // Add dash sprite
-        SpriteRenderer spriteRenderer = dash.AddComponent<SpriteRenderer>();
+        SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/dash");
         spriteRenderer.sortingLayerName = this.lenseSpriteRenderer.sortingLayerName;
         spriteRenderer.sortingOrder = 10;
         spriteRenderer.color = Color.black;
 
         // Add collider for completing mini game
-        dash.AddComponent<BoxCollider2D>();
+        BoxCollider2D addCollider = gameObject.AddComponent<BoxCollider2D>();
 
         // Add dash C# class
+        Dash dash = gameObject.AddComponent<Dash>();
 
         return dash;
     }
 
     private void DestroyAllDashes() {
-        foreach (GameObject dash in dashes) {
+        foreach (Dash dash in dashes) {
             Destroy(dash);
         }
         dashPositions.Clear();
@@ -82,7 +104,7 @@ public class MendingGames: MonoBehaviour
 
     private void RenderLine() {
         foreach (Vector3 dashPosition in dashPositions) {
-            GameObject dashObject = GenerateDash();
+            Dash dashObject = GenerateDash();
             dashObject.transform.position = dashPosition;
             dashes.Add(dashObject);
         }

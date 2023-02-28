@@ -120,6 +120,13 @@ public class CustomEventManager : MonoBehaviour
         {
             this.onPlushieDeletionRequest();
         }
+    }
 
+    // Mouse Held event
+    public event Action<bool>onMouseHoldStatusToggle;
+    public void mouseHoldStatusToggle(bool mouseHeld) {
+        if (this.onMouseHoldStatusToggle != null) {
+            this.onMouseHoldStatusToggle(mouseHeld);
+        } 
     }
 }
