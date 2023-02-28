@@ -551,7 +551,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &27131294
 RectTransform:
   m_ObjectHideFlags: 0
@@ -691,7 +691,7 @@ GameObject:
   - component: {fileID: 118347523}
   - component: {fileID: 118347522}
   m_Layer: 0
-  m_Name: PlayCardAnimationButton
+  m_Name: DrawDashedLineButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -927,6 +927,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 273962517}
+  - component: {fileID: 273962520}
   - component: {fileID: 273962518}
   - component: {fileID: 273962519}
   m_Layer: 0
@@ -1102,6 +1103,22 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &273962520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273962516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 213b304bfa3ddc1438a3ce13d7cc8f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drawLineButton: {fileID: 118347523}
+  dashes: []
+  dashSize: 0.125
+  delta: 0.5
 --- !u!1 &410875519
 GameObject:
   m_ObjectHideFlags: 0
@@ -3005,7 +3022,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1180532160
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3699,7 +3716,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1445445940
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4093,7 +4110,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1544988304
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4865,7 +4882,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1926350249
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4985,7 +5002,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Play Animation
+  m_text: Re-draw Line
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5091,7 +5108,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2354b47640738af4fba3df483beaf613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomLense: {fileID: 273962518}
 --- !u!4 &1951409467
 Transform:
   m_ObjectHideFlags: 0
@@ -5214,7 +5230,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2022215940
 Transform:
   m_ObjectHideFlags: 0
@@ -5247,7 +5263,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2051540321
 RectTransform:
   m_ObjectHideFlags: 0

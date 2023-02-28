@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MendingGameController : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer zoomLense;
 
     private void Awake() {
         
