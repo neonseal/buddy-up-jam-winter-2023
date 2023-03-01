@@ -10,8 +10,6 @@ public class WorkspaceManager : MonoBehaviour {
     [SerializeField]
     private List<PlushieScriptableObject> plushieList;
     [SerializeField]
-    private Button nextCustomerButton;
-    [SerializeField]
     private CardStackController cardStackController;
     [SerializeField]
     private GameObject cardSpawner;
@@ -27,21 +25,15 @@ public class WorkspaceManager : MonoBehaviour {
         this.clientCardCollection = new List<ClientCard>();
 
         CustomEventManager.Current.onGameStart += this.StartGame;
-        CustomEventManager.Current.onPlushieDeletionEvent += this.PlushieSendoff;
-        nextCustomerButton.onClick.AddListener(NextCustomer);
-    }
-
-    private void StartGame() {
+        CustomEventManager.Current.onPlushieOverallRepairCompletion += this.PlushieSendoff;
     }
 
     // Update the scene to bring in a new customer's plushie, note, and information
-    public void NextCustomer() {
+    private void StartGame() {
         StartCoroutine(StartNextCustomerRoutine());
     }
 
     IEnumerator StartNextCustomerRoutine() {
-        this.nextCustomerButton.interactable = false;
-
         // Set current plushie scriptable object
         currentPlushieScriptableObject = plushieList[plushieListCursor];
 

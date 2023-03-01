@@ -55,6 +55,13 @@ public class CustomEventManager : MonoBehaviour
         }
     }
 
+    public event Action<PlushieDamage, DamageType> onStartRepairMiniGame;
+    public void startRepairMiniGame(PlushieDamage plushieDamage, DamageType damageType) {
+        if (this.onStartRepairMiniGame != null) {
+            this.onStartRepairMiniGame(plushieDamage, damageType);
+        }
+    }
+
     public event Action<PlushieDamage, DamageType> onRepair;
     public void repairEvent(PlushieDamage plushieDamage, DamageType damageType)
     {
@@ -120,6 +127,13 @@ public class CustomEventManager : MonoBehaviour
         {
             this.onPlushieDeletionEvent();
         }
+    }
 
+    // Mouse Held event
+    public event Action<bool>onMouseHoldStatusToggle;
+    public void mouseHoldStatusToggle(bool mouseHeld) {
+        if (this.onMouseHoldStatusToggle != null) {
+            this.onMouseHoldStatusToggle(mouseHeld);
+        } 
     }
 }
