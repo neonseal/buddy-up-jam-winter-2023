@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DamageScripts;
+using GameData;
 
 [CreateAssetMenu (fileName = "Plushie", menuName = "Scriptable Objects/Plushie")]
 public class PlushieScriptableObject : ScriptableObject

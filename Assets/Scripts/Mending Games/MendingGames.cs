@@ -66,7 +66,7 @@ public class MendingGames: MonoBehaviour
         var incomplete = dashes.Where(dash => dash.Complete == false).ToList();
         if (incomplete.Count == 0) {
             gameComplete = true;
-            CustomEventManager.Current.repairCompletionEvent(this.plushieDamage);
+            CustomEventManager.Current.repairDamage_Complete(this.plushieDamage);
         }
     }
     private Dash GenerateDash() {
