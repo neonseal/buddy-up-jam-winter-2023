@@ -70,7 +70,7 @@ public class PlushieDamage : MonoBehaviour
         if (CanvasManager.currentTool != null && !gameActive)
         {
             // Check for correct tool type
-            if (DamageDictionary.damageInfoDictionary[this.plushieDamageType].correctToolType.Equals(CanvasManager.currentTool.GetComponent<ToolScript>().toolScriptableObject.toolType))
+            if (DamageDictionary.damageInfoDictionary[this.plushieDamageType].correctToolType.Equals(CanvasManager.currentTool.GetComponent<Tool>().toolScriptableObject.toolType))
             {
                 // Pick correct routine
                 if (this.plushieDamageType == DamageType.SmallRip) {

@@ -7,7 +7,7 @@ using GameData;
 
 namespace GameUI
 {
-    public class ToolScript : MonoBehaviour, IPointerClickHandler
+    public class Tool : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField]
         public ToolScriptableObject toolScriptableObject;
