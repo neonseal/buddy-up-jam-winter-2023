@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DamageScripts;
-using Tool;
-
+using GameData;
 
 [CreateAssetMenu (fileName = "Damage Type", menuName = "Scriptable Objects/Damage Type")]
 public class DamageTypeScriptableObject : ScriptableObject
