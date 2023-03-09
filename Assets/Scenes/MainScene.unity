@@ -1087,7 +1087,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 213b304bfa3ddc1438a3ce13d7cc8f97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drawLineButton: {fileID: 0}
   dashes: []
   dashSize: 0.125
   delta: 0.5
@@ -3990,7 +3989,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1037bb6a2bbcb0446ab9c37d558d863c, type: 2}
   - {fileID: 11400000, guid: 2c44d6e22b08a7e4e812914c36e9d905, type: 2}
   - {fileID: 11400000, guid: 85bb0b7c92d0b5c44bc6d465f920172c, type: 2}
-  nextCustomerButton: {fileID: 0}
   cardStackController: {fileID: 1515784746}
   cardSpawner: {fileID: 1846207110}
 --- !u!4 &1633168129
