@@ -100,12 +100,12 @@ public class CustomEventManager : MonoBehaviour
     }
 
     // Plushie spawning event
-    public event Action onSpawnPlushie;
-    public void spawnPlushie()
+    public event Action<PlushieScriptableObject> onGeneratePlushie;
+    public void generatePlushie(PlushieScriptableObject plushieScriptableObject)
     {
-        if (this.onSpawnPlushie != null)
+        if (this.onGeneratePlushie != null)
         {
-            this.onSpawnPlushie();
+            this.onGeneratePlushie(plushieScriptableObject);
         }
     }
 
