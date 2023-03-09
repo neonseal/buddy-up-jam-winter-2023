@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using DamageScripts;
+using GameData;
 using UnityEngine.EventSystems;
 
 public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler

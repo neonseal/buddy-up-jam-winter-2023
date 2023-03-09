@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DamageScripts;
+using GameData;
 using DG.Tweening;
 
 public class MendingGameController : MonoBehaviour

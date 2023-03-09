@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Tool {
+namespace GameData {
     public enum ToolType {
         Scissors,
         Needle,

@@ -1,5 +1,5 @@
 using UnityEngine;
-using DamageScripts;
+using GameData;
 
 public class Plushie : MonoBehaviour
 {

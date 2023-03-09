@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DamageScripts;
+using GameData;
 using GameUI;
 
 public class PlushieDamage : MonoBehaviour

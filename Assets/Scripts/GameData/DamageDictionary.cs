@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DamageScripts {
+namespace GameData {
     public static class DamageDictionary {
         static DamageDictionary() {
             damageInfoDictionary = new Dictionary<DamageType, DamageTypeScriptableObject>();

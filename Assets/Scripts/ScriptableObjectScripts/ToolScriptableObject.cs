@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Tool;
+using GameData;
 
 [CreateAssetMenu (fileName = "Tool", menuName = "Scriptable Objects/Tool")]
 public class ToolScriptableObject : ScriptableObject
