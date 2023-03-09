@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class WorkspaceManager : MonoBehaviour {
+public class GameLoopManager : MonoBehaviour {
     [SerializeField]
     private DialogueManager dialogueManager;
     [SerializeField]
@@ -20,10 +20,14 @@ public class WorkspaceManager : MonoBehaviour {
 
     private void Awake() {
         DOTween.Init();
-        
+    }
+
+    private void Start() {
+        // Initialize plushie list cursor
         this.plushieListCursor = 0;
         this.clientCardCollection = new List<ClientCard>();
 
+        // Subscribe methods to event triggers
         CustomEventManager.Current.onGameStart += this.StartGame;
         CustomEventManager.Current.onPlushieOverallRepairCompletion += this.PlushieSendoff;
     }
