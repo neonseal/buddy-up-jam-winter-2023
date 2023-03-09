@@ -10,7 +10,7 @@ public class WorkspaceManager : MonoBehaviour {
     [SerializeField]
     private List<PlushieScriptableObject> plushieList;
     [SerializeField]
-    private CardStackController cardStackController;
+    private CardStack cardStackController;
     [SerializeField]
     private GameObject cardSpawner;
 

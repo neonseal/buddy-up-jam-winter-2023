@@ -5,6 +5,6 @@ using UnityEngine.EventSystems;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class CardStackController : MonoBehaviour {
+public class CardStack : MonoBehaviour {
 
 }

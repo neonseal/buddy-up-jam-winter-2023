@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DamageScripts;
 
-public class ChecklistController : MonoBehaviour
+public class ChecklistManager : MonoBehaviour
 {
     // Game object that stores all the CheckListSteps
     [SerializeField]
