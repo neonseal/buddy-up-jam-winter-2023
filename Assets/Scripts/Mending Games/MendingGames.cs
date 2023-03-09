@@ -6,96 +6,38 @@ using System.Linq;
 
 public class MendingGames: MonoBehaviour
 {
+    /* Lense Sprite on which we'll render the dashed line */
     private SpriteRenderer lenseSpriteRenderer;
-    private List<Vector3> dashPositions;
-    private PlushieDamage plushieDamage;
+    /* Collection of dashed lines, each represented by a list of Dash objects */
+    private List<List<Dash>> dashSetCollections;
 
-    [SerializeField] private List<Dash> dashes;
+    /* Dash Rendering Variables */
     [Range(0.01f, 1f)]
     [SerializeField] private float dashSize;
     [Range(0.1f, 2f)]
     [SerializeField] private float delta;
 
-    private bool gameComplete;
-
     private void Awake() {
-        this.lenseSpriteRenderer = GetComponent<SpriteRenderer>();
-        dashes = new List<Dash>();
-        dashPositions = new List<Vector3>();
+        lenseSpriteRenderer = GetComponent<SpriteRenderer>();
+        dashSetCollections = new List<List<Dash>>();
 
-        dashSize = 0.125f;
+        dashSize = 0.1f;
         delta = 0.5f;
     }
 
-    private void Start() {
-    }
+    public void GenerateNewSewingGame(List<Vector3> targetPositions) {
+        // Create targets and dashed lines
+        for (int i = 0; i < targetPositions.Count; i++) {
+            // Establish target points
+            GenerateTarget(targetPositions[i]);
 
-    private void Update() {
-        // Toggle mouse held state
-        if (Input.GetMouseButton(0)) {
-            CustomEventManager.Current.mouseHoldStatusToggle(true);
-        } else {
-            CustomEventManager.Current.mouseHoldStatusToggle(false);
+            // Generate dash positions between each pair of targets and render to screen
+            if (i != targetPositions.Count - 1) {
+                List<Vector3> dashPositions = GenerateDashPositions(targetPositions[i], targetPositions[i+1]);
+                List<Dash> dashes = RenderLine(dashPositions, targetPositions[i], targetPositions[i + 1]);
+            }
         }
 
-        // Check for complete dash collections
-        if (dashes.Count > 0 && !gameComplete) {
-            checkIfAllDashesComplete();
-        }
-    }
-
-    public void CreateSewingMiniGame(PlushieDamage damage) {
-        this.plushieDamage = damage;
-        DestroyAllDashes();
-
-        // Define two points
-        Vector3 parentLocation = this.transform.position;
-        Vector3 startingPoint = new Vector3(parentLocation.x - 2, parentLocation.y, -1);
-        Vector3 endingPoint = new Vector3(parentLocation.x + 2, parentLocation.y, -1);
-
-        // Generate two target sprites representing the target points
-        this.GenerateTarget(startingPoint);
-        this.GenerateTarget(endingPoint);
-
-        GenerateDashPositions(startingPoint, endingPoint);
-
-        RenderLine();
-    }
-
-    private void checkIfAllDashesComplete() {
-        var incomplete = dashes.Where(dash => dash.Complete == false).ToList();
-        if (incomplete.Count == 0) {
-            gameComplete = true;
-            CustomEventManager.Current.repairCompletionEvent(this.plushieDamage);
-        }
-    }
-    private Dash GenerateDash() {
-        // Generate base object
-        GameObject gameObject = new GameObject();
-        gameObject.transform.localScale = Vector3.one * dashSize;
-        gameObject.transform.parent = this.transform;
-
-        // Add dash sprite
-        SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
-        spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/dash");
-        spriteRenderer.sortingLayerName = this.lenseSpriteRenderer.sortingLayerName;
-        spriteRenderer.sortingOrder = 10;
-        spriteRenderer.color = Color.black;
-
-        // Add collider for completing mini game
-        BoxCollider2D addCollider = gameObject.AddComponent<BoxCollider2D>();
-
-        // Add dash C# class
-        Dash dash = gameObject.AddComponent<Dash>();
-
-        return dash;
-    }
-
-    private void DestroyAllDashes() {
-        foreach (Dash dash in dashes) {
-            Destroy(dash);
-        }
-        dashPositions.Clear();
     }
 
     private void GenerateTarget(Vector3 targetPosition) {
@@ -110,21 +52,109 @@ public class MendingGames: MonoBehaviour
         targetObject.transform.SetParent(this.lenseSpriteRenderer.transform);
     }
 
-    private void GenerateDashPositions(Vector3 start, Vector3 end) {
+    private List<Vector3> GenerateDashPositions(Vector3 start, Vector3 end) {
+        List<Vector3> positions = new List<Vector3>();
         // Triangulate a straight line between both point
         Vector3 direction = (end - start).normalized;
         Vector3 dash = start += (direction * delta);
+
+        
+        // Incrementally calculate dash positions until we reach the end position
         while ((end - start).magnitude > (dash - start).magnitude) {
-            dashPositions.Add(dash);
+            // If within threshold of the ending position
+
+            positions.Add(dash);
             dash += (direction * delta);
         }
+
+        return positions;
     }
 
-    private void RenderLine() {
+    private List<Dash> RenderLine(List<Vector3> dashPositions, Vector3 start, Vector3 end) {
+        List<Dash> dashes = new List<Dash>();
         foreach (Vector3 dashPosition in dashPositions) {
-            Dash dashObject = GenerateDash();
+            Dash dashObject = GenerateDash(start, end);
             dashObject.transform.position = dashPosition;
             dashes.Add(dashObject);
         }
+        return dashes;
     }
-}
+    
+    private Dash GenerateDash(Vector3 start, Vector3 end) {
+        // Generate base object
+        GameObject gameObject = new GameObject();
+        gameObject.transform.localScale = Vector3.one * dashSize;
+        gameObject.transform.parent = this.transform;
+
+
+        Vector3 normalizedTarget = (end - start).normalized;
+        float angle = Mathf.Atan2(normalizedTarget.x, normalizedTarget.y) * Mathf.Rad2Deg;
+        gameObject.transform.rotation = Quaternion.Euler(Vector3.forward * (-Mathf.Sign(end.x) * angle));
+
+        // Add dash sprite
+        SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
+        spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/dash");
+        spriteRenderer.sortingLayerName = this.lenseSpriteRenderer.sortingLayerName;
+        spriteRenderer.sortingOrder = 10;
+        spriteRenderer.color = Color.black;
+
+        // Add collider for completing mini game
+        BoxCollider2D dashCollider = gameObject.AddComponent<BoxCollider2D>();
+        dashCollider.size = new Vector2(1.2f, 1.2f);
+
+        // Add dash C# class
+        Dash dash = gameObject.AddComponent<Dash>();
+
+        return dash;
+    }
+
+
+        /* 
+         private PlushieDamage plushieDamage;
+
+
+         private bool gameComplete;
+
+
+         private void Update() {
+             // Toggle mouse held state
+             if (Input.GetMouseButton(0)) {
+                 CustomEventManager.Current.mouseHoldStatusToggle(true);
+             } else {
+                 CustomEventManager.Current.mouseHoldStatusToggle(false);
+             }
+
+             // Check for complete dash collections
+             if (dashes.Count > 0 && !gameComplete) {
+                 checkIfAllDashesComplete();
+             }
+         }
+
+         private void checkIfAllDashesComplete() {
+             var incomplete = dashes.Where(dash => dash.Complete == false).ToList();
+             if (incomplete.Count == 0) {
+                 gameComplete = true;
+                 CustomEventManager.Current.repairCompletionEvent(this.plushieDamage);
+             }
+         }
+
+         private void DestroyAllDashes() {
+             foreach (Dash dash in dashes) {
+                 Destroy(dash);
+             }
+             dashPositions.Clear();
+         }
+
+
+
+         private void GenerateDashPositions(Vector3 start, Vector3 end) {
+             // Triangulate a straight line between both point
+             Vector3 direction = (end - start).normalized;
+             Vector3 dash = start += (direction * delta);
+             while ((end - start).magnitude > (dash - start).magnitude) {
+                 dashPositions.Add(dash);
+                 dash += (direction * delta);
+             }
+         }
+        */
+    }

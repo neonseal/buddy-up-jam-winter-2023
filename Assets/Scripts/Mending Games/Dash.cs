@@ -2,10 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dash : MonoBehaviour
-{
-    private BoxCollider2D coll2D;
+public class Dash : MonoBehaviour {
     private SpriteRenderer spriteRenderer;
+
+    private void Awake() {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+    }
+
+
+
+
+
+    /*private BoxCollider2D coll2D;
 
     [SerializeField] private float colorChangeSpeed = 20f;
 
@@ -17,7 +26,6 @@ public class Dash : MonoBehaviour
     }
 
     private void Awake() {
-        spriteRenderer = GetComponent<SpriteRenderer>();
 
         mouseHeld = false;
         complete = false;
@@ -44,5 +52,5 @@ public class Dash : MonoBehaviour
     private void Reset() {
         this.complete = false;
         this.spriteRenderer.color = Color.black;
-    }
+    }*/
 }
