@@ -8,5 +8,7 @@ public class ToolScriptableObject : ScriptableObject
 {
     public Sprite toolSlotSprite;
     public Texture2D toolCursorTexture;
+    public Sprite standardToolImage;
+    public Sprite selectedToolImage;
     public ToolType toolType;
 }
