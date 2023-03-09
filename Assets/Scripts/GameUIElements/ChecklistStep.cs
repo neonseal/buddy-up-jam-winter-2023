@@ -29,9 +29,9 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     void Start()
     {
         // Subscribe to onRepairCompletion event
-        CustomEventManager.Current.onRepairCompletion += completeStep;
+        CustomEventManager.Current.onRepairDamage_Complete += completeStep;
         // Subscribe to onRepair event
-        CustomEventManager.Current.onRepair += repairDamage;
+        CustomEventManager.Current.onRepairDamage_Partial += repairDamage;
     }
 
     private void Update()
@@ -82,7 +82,7 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             this.checklistStepIcon.color = visible;
 
             Object.Destroy(this.checklistCollider);
-            CustomEventManager.Current.onRepairCompletion -= completeStep;
+            CustomEventManager.Current.onRepairDamage_Complete -= completeStep;
         }
     }
 

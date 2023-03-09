@@ -15,7 +15,7 @@ public class MendingGameController : MonoBehaviour
         mendingGame = GetComponentInChildren<MendingGames>();
         startingPosition = this.transform.position;
         CustomEventManager.Current.onStartRepairMiniGame += StartRepairMiniGame;
-        CustomEventManager.Current.onRepairCompletion += StopRepairMiniGame;
+        CustomEventManager.Current.onRepairDamage_Complete += StopRepairMiniGame;
     }
 
     private void StartRepairMiniGame(PlushieDamage plushieDamage, DamageType damageType) {

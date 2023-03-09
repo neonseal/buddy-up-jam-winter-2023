@@ -17,7 +17,7 @@ public class Plushie : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CustomEventManager.Current.onPlushieOverallRepairCompletion += sendOffPlushie;
+        CustomEventManager.Current.onFinishPlushieRepair += sendOffPlushie;
         this.plushieSpriteRenderer.sprite = this.sprite;
 
         this.plushieSpriteRenderer.sortingLayerID = SortingLayer.NameToID("PlushieLayer");
@@ -56,7 +56,7 @@ public class Plushie : MonoBehaviour
         plushieDamageGameObject.transform.SetParent(this.transform);
 
         // Broadcast a damageGenerationEvent
-        CustomEventManager.Current.damageGenerationEvent(plushieDamageScript, damageType);
+        CustomEventManager.Current.generateDamage(plushieDamageScript, damageType);
     }
 
     private void sendOffPlushie() {
@@ -65,8 +65,8 @@ public class Plushie : MonoBehaviour
     }
 
     private void deletePlushie() {
-        CustomEventManager.Current.onPlushieOverallRepairCompletion -= this.sendOffPlushie;
-        CustomEventManager.Current.plushieDeletionEvent();
+        CustomEventManager.Current.onFinishPlushieRepair -= this.sendOffPlushie;
+        CustomEventManager.Current.deletePlushie();
         Object.Destroy(this);
     }
 }

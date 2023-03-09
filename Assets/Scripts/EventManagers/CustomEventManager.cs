@@ -46,12 +46,12 @@ public class CustomEventManager : MonoBehaviour
     }
 
     // Damage Management Events
-    public event Action<PlushieDamage, DamageType> onDamageGeneration;
-    public void damageGenerationEvent(PlushieDamage plushieDamage, DamageType damageType)
+    public event Action<PlushieDamage, DamageType> onGenerateDamage;
+    public void generateDamage(PlushieDamage plushieDamage, DamageType damageType)
     {
-        if (this.onDamageGeneration != null)
+        if (this.onGenerateDamage != null)
         {
-            this.onDamageGeneration(plushieDamage, damageType);
+            this.onGenerateDamage(plushieDamage, damageType);
         }
     }
 
@@ -62,21 +62,21 @@ public class CustomEventManager : MonoBehaviour
         }
     }
 
-    public event Action<PlushieDamage, DamageType> onRepair;
-    public void repairEvent(PlushieDamage plushieDamage, DamageType damageType)
+    public event Action<PlushieDamage, DamageType> onRepairDamage_Partial;
+    public void repairDamage_Partial(PlushieDamage plushieDamage, DamageType damageType)
     {
-        if (this.onRepair != null)
+        if (this.onRepairDamage_Partial != null)
         {
-            this.onRepair(plushieDamage, damageType);
+            this.onRepairDamage_Partial(plushieDamage, damageType);
         }
     }
 
-    public event Action<PlushieDamage> onRepairCompletion;
-    public void repairCompletionEvent(PlushieDamage plushieDamage)
+    public event Action<PlushieDamage> onRepairDamage_Complete;
+    public void repairDamage_Complete(PlushieDamage plushieDamage)
     {
-        if (this.onRepairCompletion != null)
+        if (this.onRepairDamage_Complete != null)
         {
-            this.onRepairCompletion(plushieDamage);
+            this.onRepairDamage_Complete(plushieDamage);
         }
     }
 
@@ -100,32 +100,32 @@ public class CustomEventManager : MonoBehaviour
     }
 
     // Plushie spawning event
-    public event Action onPlushieInitialization;
-    public void initializePlushieEvent()
+    public event Action onSpawnPlushie;
+    public void spawnPlushie()
     {
-        if (this.onPlushieInitialization != null)
+        if (this.onSpawnPlushie != null)
         {
-            this.onPlushieInitialization();
+            this.onSpawnPlushie();
         }
     }
 
     // Plushie overall repair complete event
-    public event Action onPlushieOverallRepairCompletion;
-    public void plushieOverallRepairCompletionEvent()
+    public event Action onFinishPlushieRepair;
+    public void finishPlushieRepair()
     {
-        if (this.onPlushieOverallRepairCompletion != null)
+        if (this.onFinishPlushieRepair != null)
         {
-            this.onPlushieOverallRepairCompletion();
+            this.onFinishPlushieRepair();
         }
     }
 
     // Plushie deletion event
-    public event Action onPlushieDeletionEvent;
-    public void plushieDeletionEvent()
+    public event Action onDeletePlushie;
+    public void deletePlushie()
     {
-        if (this.onPlushieDeletionEvent != null) { }
+        if (this.onDeletePlushie != null) { }
         {
-            this.onPlushieDeletionEvent();
+            this.onDeletePlushie();
         }
     }
 

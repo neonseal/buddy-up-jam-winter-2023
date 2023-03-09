@@ -27,8 +27,8 @@ public class ChecklistManager : MonoBehaviour
 
     private void Start()
     {
-        CustomEventManager.Current.onDamageGeneration += populateChecklist;
-        CustomEventManager.Current.onRepairCompletion += incrementRepairCompletionCount;
+        CustomEventManager.Current.onGenerateDamage += populateChecklist;
+        CustomEventManager.Current.onRepairDamage_Complete += incrementRepairCompletionCount;
         submitButton.onClick.AddListener(CompleteRepairButtonClick);
     }
 
@@ -42,7 +42,7 @@ public class ChecklistManager : MonoBehaviour
     private void CompleteRepairButtonClick()
     {
         // Broadcast a plushie repair completion event
-        CustomEventManager.Current.plushieOverallRepairCompletionEvent();
+        CustomEventManager.Current.finishPlushieRepair();
 
         // Set repair counters to 0
         this.checklistStepcount = 0;
