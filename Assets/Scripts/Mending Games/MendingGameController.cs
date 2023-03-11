@@ -34,7 +34,7 @@ public class MendingGameController : MonoBehaviour {
             new Vector3(lensePosition.x + 1, lensePosition.y, -1),
             new Vector3(lensePosition.x - 1, lensePosition.y - 2, -1),
         };
-        mendingGame.GenerateNewSewingGame(targetPositions);
+        mendingGame.GenerateNewSewingGame(targetPositions, plushieDamage);
 
         this.transform.DOLocalMove(new Vector3(0, 0, -1), duration).SetEase(easeType);
     }

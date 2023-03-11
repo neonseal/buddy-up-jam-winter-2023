@@ -27,7 +27,7 @@ public class Dash : MonoBehaviour {
 
     private void Update() {
         if (this.spriteRenderer.color.r > 0.5f && this.spriteRenderer.color.g > 0.5f) {
-            CompleteDash();
+            CompleteDash(); 
         }
     }
 
@@ -37,7 +37,7 @@ public class Dash : MonoBehaviour {
             this.spriteRenderer.color = Color.Lerp(this.spriteRenderer.color, Color.yellow, Time.deltaTime * this.colorChangeSpeed);
         }
     }
-    private void Reset() {
+    public void Reset() {
         this.complete = false;
         this.spriteRenderer.color = Color.black;
     }

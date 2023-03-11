@@ -5,10 +5,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using GameData;
 
-namespace GameUI
-{
-    public class Tool : MonoBehaviour, IPointerClickHandler
-    {
+namespace GameUI {
+    public class Tool : MonoBehaviour, IPointerClickHandler {
         public Image image;
         [SerializeField]
         public ToolScriptableObject toolScriptableObject;
@@ -34,7 +32,7 @@ namespace GameUI
                 float speed = 150f;
                 crosshair.transform.position = Vector3.Lerp(transform.position, mousePos, speed * Time.deltaTime);
             }
-            
+
         }
 
         public void OnPointerClick(PointerEventData eventData) {
@@ -52,13 +50,15 @@ namespace GameUI
                 crosshairSprite.transform.SetParent(this.canvas.transform);
                 crosshairSprite.sprite = Resources.Load<Sprite>("Sprites/Circle");
                 crosshairSprite.sortingLayerName = "UILayer";
-                crosshairSprite.sortingOrder = 5;
+                crosshairSprite.sortingOrder = 50;
                 crosshairSprite.color = Color.black;
 
                 // Set crosshair position
                 Vector2 mousePosition = Input.mousePosition;
                 Camera mainCam = Camera.main;
-                Vector3 mouseWorldPosition = mainCam.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, mainCam.nearClipPlane));
+                Vector3 mouseWorldPosition = mainCam.ScreenToWorldPoint(
+                    new Vector3(mousePosition.x, mousePosition.y, mainCam.nearClipPlane)
+                );
                 this.crosshair.transform.position = mouseWorldPosition;
                 this.crosshair.transform.localScale = new Vector3(0.1f, 0.1f, 1);
 

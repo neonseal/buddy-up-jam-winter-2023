@@ -11,6 +11,8 @@ public class MendingGames : MonoBehaviour {
     const string targetColliderName = "GameTarget";
     const string dashColliderName = "DashComponent";
 
+    /* Plushie damage component to be repaired and passed on when game is complete */
+    private PlushieDamage plushieDamage;
     /* Lense Sprite on which we'll render the dashed line */
     private SpriteRenderer lenseSpriteRenderer;
     /* Collection of dashed lines, each represented by a list of Dash objects */
@@ -33,7 +35,6 @@ public class MendingGames : MonoBehaviour {
     private int activeDashSetIndex;
     private int nextTargetIndex;
     private bool gameActive;
-    private bool lineComplete;
 
     private void Awake() {
         lenseSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -46,7 +47,6 @@ public class MendingGames : MonoBehaviour {
         activeDashSetIndex = -1;
         nextTargetIndex = 0;
         gameActive = false;
-        lineComplete = false;
     }
 
     void Update() {
@@ -56,55 +56,84 @@ public class MendingGames : MonoBehaviour {
 
         //If the left mouse button is clicked.
         if (Input.GetMouseButtonDown(0) && hit.collider != null) {
+            TryStartNextDashSection(hit);
+        }
 
-            // Hit taret point, check which state
-            if (hit.collider.name == targetColliderName) {
-                // Player clicks starting target - start game
-                if (hit.collider.Equals(startingTargetCollider) && !gameActive) {
-                    // Activate first dash collection
-                    gameActive = true;
-                    activeDashSetIndex++;
-                    nextTargetIndex++;
-                    hit.collider.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
-                    dashSetCollections[activeDashSetIndex].ForEach(dash => dash.Active = true);
-                } else if (hit.collider.Equals(targetColliders[nextTargetIndex])) {
-                    // Player is starting the next line
-                    activeDashSetIndex++;
-                    nextTargetIndex++;
-                    dashSetCollections[activeDashSetIndex].ForEach(dash => dash.Active = true);
+        // When the left mouse button is lifed, check collider
+        if (Input.GetMouseButtonUp(0) && gameActive) {
+            // If on a target, we check if the dash set is complete
+            if (hit.collider != null) {
+                CheckDashSectionCompletion(hit);
+            } else {
+                // If released off a line or target collider, reset current line
+                foreach (Dash dash in dashSetCollections[activeDashSetIndex]) {
+                    dash.Reset();
                 }
             }
         }
-        
-        // When the left mouse button is lifed, if on a target, we check if the dash set is complete
-        if (Input.GetMouseButtonUp(0) && hit.collider != null) {
-            if (hit.collider.name == targetColliderName && hit.collider.Equals(targetColliders[nextTargetIndex])) {
-                if (lineComplete) {
-                    // Complete any incomplete dashes in current line
-                    foreach (Dash dash in dashSetCollections[activeDashSetIndex].Where(dash => !dash.Complete).ToList()) {
-                        dash.CompleteDash();
-                    }
-                    hit.collider.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
 
-                    // Check if the target index was the final target to complete the game
-                    if (hit.collider.Equals(endingingTargetCollider)) {
-                        // Triggger game complete
-                        Debug.Log("GAME COMPLETE");
-                    }
+    }
+
+    private void TryStartNextDashSection(RaycastHit2D hit) {
+        // Hit taret point, check which state
+        if (hit.collider.name == targetColliderName) {
+            // Player clicks starting target - start game
+            if (hit.collider.Equals(startingTargetCollider) && !gameActive) {
+                // Activate first dash collection
+                gameActive = true;
+                activeDashSetIndex++;
+                nextTargetIndex++;
+                hit.collider.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+                dashSetCollections[activeDashSetIndex].ForEach(dash => dash.Active = true);
+            } else if (hit.collider.Equals(targetColliders[nextTargetIndex]) && nextTargetIndex != targetColliders.Count -1) {
+                // Player is starting the next line
+                activeDashSetIndex++;
+                nextTargetIndex++;
+                dashSetCollections[activeDashSetIndex].ForEach(dash => dash.Active = true);
+            }
+        }
+    }
+
+    private void CheckDashSectionCompletion(RaycastHit2D hit) {
+        if (hit.collider.name == targetColliderName && hit.collider.Equals(targetColliders[nextTargetIndex])) {
+            bool lineComplete = CheckCurrentLineStatus();
+            if (lineComplete) {
+                // Complete any incomplete dashes in current line
+                foreach (Dash dash in dashSetCollections[activeDashSetIndex].Where(dash => !dash.Complete).ToList()) {
+                    dash.CompleteDash();
                 }
-            } 
+                hit.collider.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+
+                // Check if the target index was the final target to complete the game
+                if (hit.collider.Equals(endingingTargetCollider)) {
+                    // Triggger game complete
+                    CustomEventManager.Current.repairDamage_Complete(this.plushieDamage);
+                }
+            }
         }
 
+    }
+
+    private bool CheckCurrentLineStatus() {
+        bool complete = false;
         // If a dash set is active, check if > 90% of dashes are complete
         if (gameActive) {
             List<Dash> currentDashSet = dashSetCollections[activeDashSetIndex];
             int countComplete = currentDashSet.Where(dash => dash.Complete == true).ToList().Count;
             float percentComplete = (float)countComplete / currentDashSet.Count;
-            lineComplete = percentComplete >= 0.8f;
+            complete = percentComplete >= 0.8f;
         }
+        return complete;
     }
 
-    public void GenerateNewSewingGame(List<Vector3> targetPositions) {
+    public void GenerateNewSewingGame(List<Vector3> targetPositions, PlushieDamage damage) {
+        this.plushieDamage = damage;
+
+        // Clear dashes if necessary
+        if (dashSetCollections.Count > 0) {
+            DestroyAllDashes();
+        } 
+
         // Create targets and dashed lines
         for (int i = 0; i < targetPositions.Count; i++) {
             // Establish target points
@@ -193,41 +222,11 @@ public class MendingGames : MonoBehaviour {
         return dash;
     }
 
-
-    /* 
-     private PlushieDamage plushieDamage;
-
-
-     private bool gameComplete;
-
-
-     private void Update() {
-         // Toggle mouse held state
-         if (Input.GetMouseButton(0)) {
-             CustomEventManager.Current.mouseHoldStatusToggle(true);
-         } else {
-             CustomEventManager.Current.mouseHoldStatusToggle(false);
-         }
-
-         // Check for complete dash collections
-         if (dashes.Count > 0 && !gameComplete) {
-             checkIfAllDashesComplete();
-         }
-     }
-
-     private void checkIfAllDashesComplete() {
-         var incomplete = dashes.Where(dash => dash.Complete == false).ToList();
-         if (incomplete.Count == 0) {
-             gameComplete = true;
-             CustomEventManager.Current.repairCompletionEvent(this.plushieDamage);
-         }
-     }
-
-     private void DestroyAllDashes() {
-         foreach (Dash dash in dashes) {
-             Destroy(dash);
-         }
-         dashPositions.Clear();
-     }
-    */
+    private void DestroyAllDashes() {
+        foreach (List<Dash> dashes in dashSetCollections) {
+            foreach (Dash dash in dashes) {
+                Destroy(dash);
+            }
+        }
+    }
 }
