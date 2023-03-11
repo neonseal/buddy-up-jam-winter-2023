@@ -5,10 +5,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using GameData;
 
-namespace GameUI
-{
-    public class Tool : MonoBehaviour, IPointerClickHandler
-    {
+namespace GameUI {
+    public class Tool : MonoBehaviour, IPointerClickHandler {
         public Image image;
         [SerializeField]
         public ToolScriptableObject toolScriptableObject;
@@ -17,6 +15,7 @@ namespace GameUI
         private CanvasManager canvasManager;
         private AudioSource[] audioSources;
         private ToolRoll toolRoll;
+        private GameObject crosshair;
 
         void Awake() {
             this.canvasManager = this.canvas.GetComponent<CanvasManager>();
@@ -26,6 +25,16 @@ namespace GameUI
             this.audioSources = GetComponents<AudioSource>();
         }
 
+        private void FixedUpdate() {
+            if (crosshair != null) {
+                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                mousePos.z = 0;
+                float speed = 150f;
+                crosshair.transform.position = Vector3.Lerp(transform.position, mousePos, speed * Time.deltaTime);
+            }
+
+        }
+
         public void OnPointerClick(PointerEventData eventData) {
             // If nothing is held, set this gameobject/tool as the tool being held
             if (CanvasManager.currentTool == null) {
@@ -33,10 +42,32 @@ namespace GameUI
                 this.SetToolCursor();
                 // Play pickup sound
                 audioSources[0].Play();
+
+                // Instantiate a new crosshair only when no tool is held
+                this.crosshair = new GameObject();
+                this.crosshair.name = "ToolCursorCrosshair";
+                SpriteRenderer crosshairSprite = this.crosshair.AddComponent<SpriteRenderer>();
+                crosshairSprite.transform.SetParent(this.canvas.transform);
+                crosshairSprite.sprite = Resources.Load<Sprite>("Sprites/Circle");
+                crosshairSprite.sortingLayerName = "UILayer";
+                crosshairSprite.sortingOrder = 50;
+                crosshairSprite.color = Color.black;
+
+                // Set crosshair position
+                Vector2 mousePosition = Input.mousePosition;
+                Camera mainCam = Camera.main;
+                Vector3 mouseWorldPosition = mainCam.ScreenToWorldPoint(
+                    new Vector3(mousePosition.x, mousePosition.y, mainCam.nearClipPlane)
+                );
+                this.crosshair.transform.position = mouseWorldPosition;
+                this.crosshair.transform.localScale = new Vector3(0.1f, 0.1f, 1);
+
+
             }
             // If you're clicking on the original slot, drops the tool
             else if (this.gameObject == CanvasManager.currentTool) {
                 this.deselectTool();
+                Destroy(crosshair);
             }
             // If you're click on a new tool, swap to the new tool and return the old tool
             else {
