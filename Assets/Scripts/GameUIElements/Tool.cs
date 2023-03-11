@@ -14,7 +14,6 @@ namespace GameUI
         public ToolScriptableObject toolScriptableObject;
         [SerializeField]
         private Canvas canvas;
-
         private CanvasManager canvasManager;
         private AudioSource[] audioSources;
         private ToolRoll toolRoll;
@@ -32,7 +31,7 @@ namespace GameUI
             if (crosshair != null) {
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 mousePos.z = 0;
-                float speed = 300f;
+                float speed = 150f;
                 crosshair.transform.position = Vector3.Lerp(transform.position, mousePos, speed * Time.deltaTime);
             }
             

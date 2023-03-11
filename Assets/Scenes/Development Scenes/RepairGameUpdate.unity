@@ -773,6 +773,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dashSize: 0
   delta: 0
+  targetPrefab: {fileID: 9087557310337048614, guid: 32264638a4133e2419d0b5f5d53ac3d2, type: 3}
 --- !u!1 &486499074
 GameObject:
   m_ObjectHideFlags: 0

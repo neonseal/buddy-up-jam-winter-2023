@@ -7,10 +7,6 @@ using GameData;
 public class ToolRoll : MonoBehaviour
 {
     private Tool[] tools;
-    [SerializeField]
-    public int width = 100;
-    [SerializeField]
-    public int height = 100;
 
     private void Awake() {
         tools = GetComponentsInChildren<Tool>();

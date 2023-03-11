@@ -2,12 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Dash Class Definition
+// Elements that make up the sewing and cutting games 
 public class Dash : MonoBehaviour {
+    [SerializeField] private float colorChangeSpeed = 20f;
     private SpriteRenderer spriteRenderer;
+    private BoxCollider2D dashCollider;
+    private bool active;
+    private bool complete;
 
+    public bool Active {
+        get { return this.active; }
+        set { this.active = value; }
+    }
+    public bool Complete {
+        get { return this.complete; }
+        set { this.complete = value; }
+    }
     private void Awake() {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        active = false;
+        complete = false;
+    }
 
+    private void Update() {
+        if (this.spriteRenderer.color.r > 0.8f && this.spriteRenderer.color.g > 0.8f) {
+            this.complete = true;
+        }
+    }
+
+    private void OnMouseOver() {
+        // If we are over the dash, and the dash is active, complete the dash
+        if (Input.GetMouseButtonDown(0) && this.active) {
+            this.spriteRenderer.color = Color.Lerp(this.spriteRenderer.color, Color.yellow, Time.deltaTime * this.colorChangeSpeed);
+        }
+    }
+    private void Reset() {
+        this.complete = false;
+        this.spriteRenderer.color = Color.black;
     }
 
 
