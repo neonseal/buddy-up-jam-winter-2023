@@ -26,14 +26,14 @@ public class Dash : MonoBehaviour {
     }
 
     private void Update() {
-        if (this.spriteRenderer.color.r > 0.8f && this.spriteRenderer.color.g > 0.8f) {
+        if (this.spriteRenderer.color.r > 0.5f && this.spriteRenderer.color.g > 0.5f) {
             this.complete = true;
         }
     }
 
     private void OnMouseOver() {
-        // If we are over the dash, and the dash is active, complete the dash
-        if (Input.GetMouseButtonDown(0) && this.active) {
+        // If we are holding the mouse down over the dash, and the dash is active, complete the dash
+        if (Input.GetMouseButton(0) && this.active) {
             this.spriteRenderer.color = Color.Lerp(this.spriteRenderer.color, Color.yellow, Time.deltaTime * this.colorChangeSpeed);
         }
     }
