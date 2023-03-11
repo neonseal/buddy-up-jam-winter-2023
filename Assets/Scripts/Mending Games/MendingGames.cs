@@ -15,8 +15,8 @@ public class MendingGames : MonoBehaviour {
     private SpriteRenderer lenseSpriteRenderer;
     /* Collection of dashed lines, each represented by a list of Dash objects */
     private List<List<Dash>> dashSetCollections;
-    /* Collection of game targets */
-    private List<GameObject> targets;
+    /* Collection of game target colliders */
+    private List<BoxCollider2D> targetColliders;
     /* Starting and ending target collider to begin game */
     private BoxCollider2D startingTargetCollider;
     private BoxCollider2D endingingTargetCollider;
@@ -38,7 +38,7 @@ public class MendingGames : MonoBehaviour {
     private void Awake() {
         lenseSpriteRenderer = GetComponent<SpriteRenderer>();
         dashSetCollections = new List<List<Dash>>();
-        targets = new List<GameObject>();
+        targetColliders = new List<BoxCollider2D>();
 
         dashSize = 0.1f;
         delta = 0.5f;
@@ -50,31 +50,49 @@ public class MendingGames : MonoBehaviour {
     }
 
     void Update() {
+        // Get the mouse position on the screen and send a raycast into the game world from that position.
+        Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
+
         //If the left mouse button is clicked.
-        if (Input.GetMouseButtonDown(0)) {
-            //Get the mouse position on the screen and send a raycast into the game world from that position.
-            Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
+        if (Input.GetMouseButtonDown(0) && hit.collider != null) {
 
             // Hit taret point, check which state
-            if (hit.collider != null && hit.collider.name == targetColliderName) {
+            if (hit.collider.name == targetColliderName) {
                 // Player clicks starting target - start game
                 if (hit.collider.Equals(startingTargetCollider) && !gameActive) {
-                    // Active first dash collection
+                    // Activate first dash collection
                     gameActive = true;
                     activeDashSetIndex++;
                     nextTargetIndex++;
                     hit.collider.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
                     dashSetCollections[activeDashSetIndex].ForEach(dash => dash.Active = true);
-                } else if (hit.collider.Equals(targets[nextTargetIndex])) {
+                } else if (hit.collider.Equals(targetColliders[nextTargetIndex])) {
                     // Player is starting the next line
+                    activeDashSetIndex++;
+                    nextTargetIndex++;
+                    dashSetCollections[activeDashSetIndex].ForEach(dash => dash.Active = true);
                 }
             }
         }
         
         // When the left mouse button is lifed, if on a target, we check if the dash set is complete
-        if (Input.GetMouseButtonUp(0)) {
+        if (Input.GetMouseButtonUp(0) && hit.collider != null) {
+            if (hit.collider.name == targetColliderName && hit.collider.Equals(targetColliders[nextTargetIndex])) {
+                if (lineComplete) {
+                    // Complete any incomplete dashes in current line
+                    foreach (Dash dash in dashSetCollections[activeDashSetIndex].Where(dash => !dash.Complete).ToList()) {
+                        dash.CompleteDash();
+                    }
+                    hit.collider.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
 
+                    // Check if the target index was the final target to complete the game
+                    if (hit.collider.Equals(endingingTargetCollider)) {
+                        // Triggger game complete
+                        Debug.Log("GAME COMPLETE");
+                    }
+                }
+            } 
         }
 
         // If a dash set is active, check if > 90% of dashes are complete
@@ -114,7 +132,7 @@ public class MendingGames : MonoBehaviour {
             endingingTargetCollider = targetCollider;
         }
 
-        targets.Add(target);
+        targetColliders.Add(target.GetComponent<BoxCollider2D>());
     }
 
     private List<Vector3> GenerateDashPositions(Vector3 start, Vector3 end) {
