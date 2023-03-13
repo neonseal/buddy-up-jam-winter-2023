@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameData;
+using GameUI;
 
 // Dash Class Definition
 // Elements that make up the sewing and cutting games 
@@ -10,6 +12,7 @@ public class Dash : MonoBehaviour {
     private BoxCollider2D dashCollider;
     private bool active;
     private bool complete;
+    private ToolType requiredToolType;
 
     public bool Active {
         get { return this.active; }
@@ -19,6 +22,11 @@ public class Dash : MonoBehaviour {
         get { return this.complete; }
         set { this.complete = value; }
     }
+    public ToolType requiredToolTypeType {
+        get { return this.requiredToolType; }
+        set { this.requiredToolType = value; }
+    }
+
     private void Awake() {
         spriteRenderer = GetComponent<SpriteRenderer>();
         active = false;
@@ -32,8 +40,12 @@ public class Dash : MonoBehaviour {
     }
 
     private void OnMouseOver() {
-        // If we are holding the mouse down over the dash, and the dash is active, complete the dash
-        if (Input.GetMouseButton(0) && this.active) {
+        // If we are holding the mouse down over the dash with the correct tool,
+        // and the dash is active, complete the dash
+        if (Input.GetMouseButton(0) 
+            && this.active 
+            && CanvasManager.currentTool != null
+            && CanvasManager.toolType == this.requiredToolType) {
             this.spriteRenderer.color = Color.Lerp(this.spriteRenderer.color, Color.yellow, Time.deltaTime * this.colorChangeSpeed);
         }
     }
