@@ -13,7 +13,7 @@ public class MendingGameController : MonoBehaviour {
 
     private Vector3 homePosition;
     private Vector3 centerPosition;
-    [SerializeField] private float duration = 2f;
+    [SerializeField] private float duration = 150f;
     private float startTime;
 
     private void Awake() {
@@ -57,7 +57,7 @@ public class MendingGameController : MonoBehaviour {
         float fracComplete = (Time.time - startTime) / duration;
 
         // Perform position Slerp
-        for (float t = 0f; t < duration; t += (Time.time - startTime) / duration) {
+        for (float t = 0f; t < duration; t += (Time.time - startTime) / duration*2f) {
             this.transform.position = Vector3.Slerp(startRelCenter, endRelCenter, t);
 
             this.transform.position += center;

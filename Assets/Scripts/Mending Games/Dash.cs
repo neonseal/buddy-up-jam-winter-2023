@@ -22,7 +22,7 @@ public class Dash : MonoBehaviour {
         get { return this.complete; }
         set { this.complete = value; }
     }
-    public ToolType requiredToolTypeType {
+    public ToolType RequiredToolType {
         get { return this.requiredToolType; }
         set { this.requiredToolType = value; }
     }

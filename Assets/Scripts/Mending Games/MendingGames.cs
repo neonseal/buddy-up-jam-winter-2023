@@ -191,7 +191,7 @@ public class MendingGames : MonoBehaviour {
 
 
         // Incrementally calculate dash positions until we reach the end position
-        while ((end - start).magnitude > (dash - start - (direction * delta)).magnitude) {
+        while ((end - start).magnitude > (dash - start + (direction * delta * 0.45f)).magnitude) {
             // If within threshold of the ending position
 
             positions.Add(dash);
@@ -237,7 +237,7 @@ public class MendingGames : MonoBehaviour {
 
         // Add dash C# class
         Dash dash = gameObject.AddComponent<Dash>();
-        dash.requiredToolType = this.requiredToolType;
+        dash.RequiredToolType = this.requiredToolType;
 
         return dash;
     }
