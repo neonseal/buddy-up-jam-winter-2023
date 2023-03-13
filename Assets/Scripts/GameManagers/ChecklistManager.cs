@@ -10,7 +10,9 @@ public class ChecklistManager : MonoBehaviour {
     [SerializeField] private Button clickableNotepad;
     // Game object that stores all the CheckListSteps
     [SerializeField]
-    private GameObject checklistItemsObject;
+    private GameObject checklist;
+    [SerializeField]
+    private GameObject checklistItemsArea;
     // Prefab of ChecklistStep
     [SerializeField]
     private GameObject checklistStepPrefab;
@@ -22,7 +24,7 @@ public class ChecklistManager : MonoBehaviour {
 
     private void Awake() {
         steps = GetComponentsInChildren<ChecklistStep>();
-        submitButton = checklistItemsObject.GetComponentInChildren<Button>();
+        submitButton = checklist.GetComponentInChildren<Button>();
         this.submitButton.interactable = false;
         this.clickableNotepad.onClick.AddListener(HandleNotepadClick);
     }
@@ -39,15 +41,15 @@ public class ChecklistManager : MonoBehaviour {
 
         if (
             Input.GetMouseButtonDown(0) &&
-            this.checklistItemsObject.activeInHierarchy && 
+            this.checklist.activeInHierarchy && 
             (hit.collider == null || hit.collider.name != "Checklist")
         ) {
-            this.checklistItemsObject.SetActive(false);
+            this.checklist.SetActive(false);
         }
     }
 
     private void HandleNotepadClick() {
-        this.checklistItemsObject.SetActive(true);
+        this.checklist.SetActive(true);
     }
 
     // When all damage points have been repaired, the finish/submit button will be activated,
@@ -74,7 +76,7 @@ public class ChecklistManager : MonoBehaviour {
         // increment checklistStepcount
         this.checklistStepcount++;
         GameObject checklistEntry = Instantiate(checklistStepPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-        checklistEntry.transform.SetParent(checklistItemsObject.transform);
+        checklistEntry.transform.SetParent(checklistItemsArea.transform);
 
         ChecklistStep checklistStepComponent = checklistEntry.GetComponent<ChecklistStep>();
 
