@@ -12,6 +12,10 @@ public class DialogueManager : MonoBehaviour {
     private TMP_Text dialogueText;
     [SerializeField]
     private Button continueButton;
+    [SerializeField]
+    private Slider fontToggle;
+    [SerializeField]
+    private TMP_Text clientFontToggleText;
 
     [Header("Animation Variables")]
     [SerializeField]
@@ -22,14 +26,46 @@ public class DialogueManager : MonoBehaviour {
     [Header("Font Variables")]
     private TMP_FontAsset openDyslexicFont;
     private TMP_FontAsset clientFont;
+    [SerializeField]
+    private int clientTitleSize;
+    public int ClientTitleSize {
+        set { clientTitleSize = value; }
+    }
+    [SerializeField]
+    private int clientFontSize;
+    public int ClientFontSize {
+        set { clientFontSize = value; }
+    }
+    [SerializeField]
+    private int openDyslexicTitleSize;
+    [SerializeField]
+    private int openDyslexicFontSize;
+
+    // Setup singleton pattern
+    private static DialogueManager current;
+    public static DialogueManager Current {
+        get {
+            if (current == null) {
+                current = FindAnyObjectByType(typeof(DialogueManager)) as DialogueManager;
+            }
+            return current;
+        }
+        set { current = value; }
+    }
 
     private void Awake() {
         sentences = new Queue<string>();
         clientFontVisible = true;
         openDyslexicFont = Resources.Load<TMP_FontAsset>("Fonts/OpenDyslexic3-Regular SDF");
+        openDyslexicTitleSize = 40;
+        openDyslexicFontSize = 28;
         continueButton.onClick.AddListener(DisplayNextSentence);
         CustomEventManager.Current.onTriggerDialogue += StartDialogue;
+        fontToggle.onValueChanged.AddListener(delegate { SwitchFonts(); });
+    }
 
+    private void Update() {
+        
     }
 
     private void StartDialogue(Dialogue dialogue) {
@@ -83,24 +119,25 @@ public class DialogueManager : MonoBehaviour {
         animator.SetBool("isOpen", false);
     }
 
-    private void SetFont(TMP_FontAsset font) {
+    private void SetFont(TMP_FontAsset font, bool clientFont) {
         nameText.font = font;
         dialogueText.font = font;
+
+        nameText.fontSize = clientFont ? clientTitleSize : openDyslexicTitleSize;
+        dialogueText.fontSize = clientFont ? clientFontSize : openDyslexicFontSize;
     }
 
-    public void SetClientFont(TMP_FontAsset font) {
+    public void SetClientFont(TMP_FontAsset font, int dialogueFontSize, int dialogueTitleSize) {
         this.clientFont = font;
-        this.SetFont(font);
+        this.clientFontSize = dialogueFontSize;
+        this.clientTitleSize = dialogueTitleSize;
+        this.SetFont(font, true);
+        this.clientFontVisible = true;
     }
 
     public void SwitchFonts() {
         // Switch to Open Dyslexic if showing client specific font
-        if (clientFontVisible) {
-            this.SetFont(openDyslexicFont);
-            this.clientFontVisible = false;
-        } else {
-            this.SetFont(clientFont);
-            this.clientFontVisible = true;
-        }
+        TMP_FontAsset nextFont = clientFontVisible ? openDyslexicFont : clientFont;
+        this.SetFont(nextFont, !clientFontVisible);
     }
 }

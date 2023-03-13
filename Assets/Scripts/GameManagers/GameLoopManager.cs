@@ -42,12 +42,16 @@ public class GameLoopManager : MonoBehaviour {
         currentPlushieScriptableObject = plushieList[plushieListCursor];
 
         // Set client dialogue font
-        this.dialogueManager.SetClientFont(currentPlushieScriptableObject.clientFont);
+        this.dialogueManager.SetClientFont(
+            currentPlushieScriptableObject.clientFont, 
+            currentPlushieScriptableObject.dialogueFontSize, 
+            currentPlushieScriptableObject.dialogueTitleFontSize
+        );
 
         // Broadcasts an event to initialize a plushie
         CustomEventManager.Current.generatePlushie(currentPlushieScriptableObject);
 
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.25f);
 
         CustomEventManager.Current.TriggerDialogue(currentPlushieScriptableObject.issueDialogue);
     }
