@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class DialogueManager : MonoBehaviour {
     [Header("UI Components")]
@@ -20,6 +21,10 @@ public class DialogueManager : MonoBehaviour {
     [Header("Animation Variables")]
     [SerializeField]
     private Animator animator;
+    [SerializeField]
+    private float defaultAnimationDelay;
+    private float animationDelay;
+    private bool animationPlaying;
     private Queue<string> sentences;
     private bool clientFontVisible;
 
@@ -55,17 +60,26 @@ public class DialogueManager : MonoBehaviour {
 
     private void Awake() {
         sentences = new Queue<string>();
+        defaultAnimationDelay = 0.025f;
+        animationDelay = defaultAnimationDelay;
+        animationPlaying = false;
         clientFontVisible = true;
+
         openDyslexicFont = Resources.Load<TMP_FontAsset>("Fonts/OpenDyslexic3-Regular SDF");
         openDyslexicTitleSize = 40;
         openDyslexicFontSize = 28;
-        continueButton.onClick.AddListener(DisplayNextSentence);
+
         CustomEventManager.Current.onTriggerDialogue += StartDialogue;
+        continueButton.onClick.AddListener(DisplayNextSentence);
         fontToggle.onValueChanged.AddListener(delegate { SwitchFonts(); });
     }
 
     private void Update() {
-        
+        RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector2.zero);
+
+        if (Input.GetMouseButtonDown(0) && animationPlaying && (hit.collider != null && hit.collider.name == "DialogueBox")) {
+            animationDelay = 0f;
+        }
     }
 
     private void StartDialogue(Dialogue dialogue) {
@@ -107,12 +121,17 @@ public class DialogueManager : MonoBehaviour {
     }
 
     IEnumerator TypeSentence(string sentence) {
+        animationDelay = defaultAnimationDelay;
+        animationPlaying = true;
+
         dialogueText.text = "";
 
         foreach (char letter in sentence.ToCharArray()) {
             dialogueText.text += letter;
-            yield return new WaitForSeconds(0.025f);
+            yield return new WaitForSeconds(animationDelay);
         }
+
+        animationPlaying = false;
     }
 
     private void EndDialogue() {
@@ -125,6 +144,8 @@ public class DialogueManager : MonoBehaviour {
 
         nameText.fontSize = clientFont ? clientTitleSize : openDyslexicTitleSize;
         dialogueText.fontSize = clientFont ? clientFontSize : openDyslexicFontSize;
+
+        this.clientFontVisible = clientFont;
     }
 
     public void SetClientFont(TMP_FontAsset font, int dialogueFontSize, int dialogueTitleSize) {
@@ -132,7 +153,6 @@ public class DialogueManager : MonoBehaviour {
         this.clientFontSize = dialogueFontSize;
         this.clientTitleSize = dialogueTitleSize;
         this.SetFont(font, true);
-        this.clientFontVisible = true;
     }
 
     public void SwitchFonts() {
@@ -140,4 +160,5 @@ public class DialogueManager : MonoBehaviour {
         TMP_FontAsset nextFont = clientFontVisible ? openDyslexicFont : clientFont;
         this.SetFont(nextFont, !clientFontVisible);
     }
+
 }

@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 7695265}
   - component: {fileID: 7695267}
   - component: {fileID: 7695266}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Roll Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,7 +352,7 @@ GameObject:
   - component: {fileID: 229672734}
   - component: {fileID: 229672736}
   - component: {fileID: 229672735}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: RadioImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -527,7 +527,7 @@ GameObject:
   - component: {fileID: 358759376}
   - component: {fileID: 358759375}
   - component: {fileID: 358759374}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ContinueButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -553,7 +553,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 390, y: -126}
-  m_SizeDelta: {x: 75, y: 40}
+  m_SizeDelta: {x: 100, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &358759374
 MonoBehaviour:
@@ -661,7 +661,7 @@ GameObject:
   - component: {fileID: 477897547}
   - component: {fileID: 477897546}
   - component: {fileID: 477897545}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: OpenDyslexic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -795,7 +795,7 @@ GameObject:
   - component: {fileID: 543103148}
   - component: {fileID: 543103147}
   - component: {fileID: 543103146}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -990,7 +990,7 @@ GameObject:
   m_Component:
   - component: {fileID: 641395241}
   - component: {fileID: 641395242}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Checklist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1050,7 +1050,7 @@ GameObject:
   - component: {fileID: 692015989}
   - component: {fileID: 692015988}
   - component: {fileID: 692015987}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ScissorsTool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1552,7 +1552,7 @@ GameObject:
   - component: {fileID: 719806524}
   - component: {fileID: 719806523}
   - component: {fileID: 719806522}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ClientFont
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1688,7 +1688,7 @@ GameObject:
   - component: {fileID: 792150404}
   - component: {fileID: 792150403}
   - component: {fileID: 792150402}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UIElements
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1918,7 +1918,7 @@ GameObject:
   - component: {fileID: 827824315}
   - component: {fileID: 827824314}
   - component: {fileID: 827824313}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Volume
   m_TagString: Volume
   m_Icon: {fileID: 0}
@@ -2039,7 +2039,8 @@ GameObject:
   - component: {fileID: 896493969}
   - component: {fileID: 896493968}
   - component: {fileID: 896493967}
-  m_Layer: 0
+  - component: {fileID: 896493970}
+  m_Layer: 5
   m_Name: DialogueBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2128,6 +2129,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 896493965}
   m_CullTransparentMesh: 1
+--- !u!61 &896493970
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896493965}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1000, y: 450}
+  m_EdgeRadius: 0
 --- !u!1 &915403243
 GameObject:
   m_ObjectHideFlags: 0
@@ -2138,7 +2165,7 @@ GameObject:
   m_Component:
   - component: {fileID: 915403244}
   - component: {fileID: 915403245}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: FontToggleArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2204,7 +2231,7 @@ GameObject:
   m_Component:
   - component: {fileID: 938392454}
   - component: {fileID: 938392455}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: FontSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2296,7 +2323,7 @@ GameObject:
   - component: {fileID: 1010234239}
   - component: {fileID: 1010234240}
   - component: {fileID: 1010234241}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2544,7 +2571,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1060622395}
   - component: {fileID: 1060622396}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ToolRoll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2683,7 +2710,7 @@ GameObject:
   - component: {fileID: 1130210344}
   - component: {fileID: 1130210346}
   - component: {fileID: 1130210345}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Radio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3064,7 +3091,7 @@ GameObject:
   - component: {fileID: 1289539756}
   - component: {fileID: 1289539758}
   - component: {fileID: 1289539757}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3194,7 +3221,7 @@ GameObject:
   - component: {fileID: 1312952028}
   - component: {fileID: 1312952030}
   - component: {fileID: 1312952029}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3330,7 +3357,7 @@ GameObject:
   - component: {fileID: 1321981342}
   - component: {fileID: 1321981341}
   - component: {fileID: 1321981340}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: NotepadClickable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3566,7 +3593,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1348935637}
   - component: {fileID: 1348935638}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ChecklistItems
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3664,7 +3691,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1431828865}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UserInterface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3699,7 +3726,7 @@ GameObject:
   - component: {fileID: 1499915150}
   - component: {fileID: 1499915149}
   - component: {fileID: 1499915148}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3820,7 +3847,7 @@ GameObject:
   - component: {fileID: 1552279924}
   - component: {fileID: 1552279926}
   - component: {fileID: 1552279925}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3955,7 +3982,7 @@ GameObject:
   - component: {fileID: 1571968256}
   - component: {fileID: 1571968258}
   - component: {fileID: 1571968257}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: DialogueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3980,7 +4007,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -5}
-  m_SizeDelta: {x: 850, y: 200}
+  m_SizeDelta: {x: 850, y: 175}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1571968257
 MonoBehaviour:
@@ -4031,8 +4058,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28
-  m_fontSizeBase: 28
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4098,7 +4125,7 @@ GameObject:
   - component: {fileID: 1588919787}
   - component: {fileID: 1588919786}
   - component: {fileID: 1588919785}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: NeedleTool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4599,7 +4626,7 @@ GameObject:
   - component: {fileID: 1595872409}
   - component: {fileID: 1595872411}
   - component: {fileID: 1595872410}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4699,10 +4726,11 @@ MonoBehaviour:
   fontToggle: {fileID: 938392455}
   clientFontToggleText: {fileID: 1010234241}
   animator: {fileID: 896493967}
+  defaultAnimationDelay: 0
   clientTitleSize: 50
   clientFontSize: 36
   openDyslexicTitleSize: 40
-  openDyslexicFontSize: 28
+  openDyslexicFontSize: 24
 --- !u!224 &1756294428
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4739,7 +4767,7 @@ GameObject:
   - component: {fileID: 1778653659}
   - component: {fileID: 1778653658}
   - component: {fileID: 1778653657}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: StuffingTool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5142,7 +5170,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1807786656}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5381,7 +5409,7 @@ GameObject:
   - component: {fileID: 1824565367}
   - component: {fileID: 1824565369}
   - component: {fileID: 1824565368}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5514,7 +5542,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1896962847}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5553,7 +5581,7 @@ GameObject:
   - component: {fileID: 1917236171}
   - component: {fileID: 1917236173}
   - component: {fileID: 1917236172}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5688,7 +5716,7 @@ GameObject:
   - component: {fileID: 1974973947}
   - component: {fileID: 1974973949}
   - component: {fileID: 1974973948}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Backing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5764,7 +5792,7 @@ GameObject:
   - component: {fileID: 2004192610}
   - component: {fileID: 2004192612}
   - component: {fileID: 2004192611}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5899,7 +5927,7 @@ GameObject:
   - component: {fileID: 2050489154}
   - component: {fileID: 2050489156}
   - component: {fileID: 2050489155}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5975,7 +6003,7 @@ GameObject:
   - component: {fileID: 2117465444}
   - component: {fileID: 2117465446}
   - component: {fileID: 2117465445}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6111,7 +6139,7 @@ GameObject:
   - component: {fileID: 2123179986}
   - component: {fileID: 2123179985}
   - component: {fileID: 2123179984}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PlayPause
   m_TagString: PlayPause
   m_Icon: {fileID: 0}
