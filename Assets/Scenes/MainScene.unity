@@ -206,7 +206,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 481497}
   toolScriptableObject: {fileID: 11400000, guid: 1bc85c8428b896f42a96f328f97c44ae, type: 2}
-  canvas: {fileID: 0}
+  canvas: {fileID: 792150401}
 --- !u!82 &481494
 AudioSource:
   m_ObjectHideFlags: 0
@@ -886,7 +886,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 288555874}
   toolScriptableObject: {fileID: 11400000, guid: b2e8f778d6c3f1541bfdb9b03fac063a, type: 2}
-  canvas: {fileID: 0}
+  canvas: {fileID: 792150401}
 --- !u!82 &288555870
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2567,7 +2567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 850872517}
   toolScriptableObject: {fileID: 11400000, guid: c169376ac2350724a8f479d01a50f27f, type: 2}
-  canvas: {fileID: 0}
+  canvas: {fileID: 792150401}
 --- !u!82 &850872513
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4945,7 +4945,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -677, y: 402}
+  m_AnchoredPosition: {x: -615, y: 402}
   m_SizeDelta: {x: 750, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2004192611
