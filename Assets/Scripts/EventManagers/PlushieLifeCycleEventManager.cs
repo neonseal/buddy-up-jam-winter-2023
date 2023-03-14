@@ -1,5 +1,4 @@
 using System;
-using GameData;
 
 public sealed class PlushieLifeCycleEventManager    
 {    
@@ -15,7 +14,7 @@ public sealed class PlushieLifeCycleEventManager
     {    
         get    
         {    
-            return instance;    
+            return PlushieLifeCycleEventManager.instance;    
         }    
     }   
 
