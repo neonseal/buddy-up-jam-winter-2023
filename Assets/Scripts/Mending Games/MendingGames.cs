@@ -107,7 +107,7 @@ public class MendingGames : MonoBehaviour {
                 // Check if the target index was the final target to complete the game
                 if (hit.collider.Equals(endingingTargetCollider)) {
                     // Triggger game complete
-                    CustomEventManager.Current.repairDamage_Complete(this.plushieDamage);
+                    DamageLifeCycleEventManager.Current.repairDamage_Complete(this.plushieDamage);
                 }
             }
         }
