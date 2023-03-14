@@ -8,6 +8,8 @@ public class GameLoopManager : MonoBehaviour {
     [SerializeField]
     private DialogueManager dialogueManager;
     [SerializeField]
+    private Animator clientDialogueAnimator;
+    [SerializeField]
     private List<PlushieScriptableObject> plushieList;
     [SerializeField]
     private CardStack cardStackController;
@@ -53,7 +55,7 @@ public class GameLoopManager : MonoBehaviour {
 
         yield return new WaitForSeconds(.25f);
 
-        CustomEventManager.Current.TriggerDialogue(currentPlushieScriptableObject.issueDialogue);
+        this.dialogueManager.StartDialogue(currentPlushieScriptableObject.issueDialogue, this.clientDialogueAnimator);
     }
 
     private void PlushieSendoff() {

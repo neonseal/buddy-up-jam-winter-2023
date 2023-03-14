@@ -20,9 +20,8 @@ public class DialogueManager : MonoBehaviour {
 
     [Header("Animation Variables")]
     [SerializeField]
-    private Animator animator;
-    [SerializeField]
     private float defaultAnimationDelay;
+    private Animator animator;
     private float animationDelay;
     private bool animationPlaying;
     private Queue<string> sentences;
@@ -69,7 +68,6 @@ public class DialogueManager : MonoBehaviour {
         openDyslexicTitleSize = 40;
         openDyslexicFontSize = 28;
 
-        CustomEventManager.Current.onTriggerDialogue += StartDialogue;
         continueButton.onClick.AddListener(DisplayNextSentence);
         fontToggle.onValueChanged.AddListener(delegate { SwitchFonts(); });
     }
@@ -77,12 +75,13 @@ public class DialogueManager : MonoBehaviour {
     private void Update() {
         RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector2.zero);
 
-        if (Input.GetMouseButtonDown(0) && animationPlaying && (hit.collider != null && hit.collider.name == "DialogueBox")) {
+        if (Input.GetMouseButtonDown(0) && animationPlaying && (hit.collider != null && hit.collider.name == "ClientDialogueBox")) {
             animationDelay = 0f;
         }
     }
 
-    private void StartDialogue(Dialogue dialogue) {
+    public void StartDialogue(Dialogue dialogue, Animator inputAnimator) {
+        this.animator = inputAnimator;
         StartCoroutine(StartDialogueRoutine(dialogue));
     }
 
@@ -106,9 +105,11 @@ public class DialogueManager : MonoBehaviour {
         nameText.text = dialogue.name;
         dialogueText.text = "";
 
-        animator.SetBool("isOpen", true);
-        // Pause briefly to allow animation to finish before rendering text
-        yield return new WaitForSeconds(.5f);
+        if (this.animator.name == "ClientDialogueBox") {
+            this.animator.SetBool("isOpen", true);
+            // Pause briefly to allow animation to finish before rendering text
+            yield return new WaitForSeconds(.5f);
+        }
 
 
         sentences.Clear();
@@ -135,7 +136,7 @@ public class DialogueManager : MonoBehaviour {
     }
 
     private void EndDialogue() {
-        animator.SetBool("isOpen", false);
+        this.animator.SetBool("isOpen", false);
     }
 
     private void SetFont(TMP_FontAsset font, bool clientFont) {
