@@ -34,6 +34,14 @@ public sealed class PlushieLifeCycleEventManager
         }
     }
 
+    // Plushie sendoff event
+    public event Action onSendOffPlushie;
+    public void sendOffPlushie() {
+        if (this.onSendOffPlushie != null) {
+            this.onSendOffPlushie();
+        }
+    }
+
     // Plushie deletion event
     public event Action onDeletePlushie;
     public void deletePlushie() {

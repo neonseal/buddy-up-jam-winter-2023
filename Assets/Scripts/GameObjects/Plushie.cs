@@ -17,7 +17,7 @@ public class Plushie : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PlushieLifeCycleEventManager.Current.onFinishPlushieRepair += sendOffPlushie;
+        PlushieLifeCycleEventManager.Current.onSendOffPlushie += sendOffPlushie;
         this.plushieSpriteRenderer.sprite = this.sprite;
 
         this.plushieSpriteRenderer.sortingLayerID = SortingLayer.NameToID("PlushieLayer");

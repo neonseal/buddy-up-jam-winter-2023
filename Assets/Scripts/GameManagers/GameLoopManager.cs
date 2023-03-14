@@ -58,8 +58,8 @@ public class GameLoopManager : MonoBehaviour {
         // Play repair complete fanfare
         // Wait briefly
         yield return new WaitForSeconds(.4f);
-        // Move plushie off screen
-        // Destroy gameobject
+        // Move plushie off screen and destroy it
+        PlushieLifeCycleEventManager.Current.sendOffPlushie();
 
         /* Show Client Resolution Card */
         // Create resolution text object, and instantiate above the screen
