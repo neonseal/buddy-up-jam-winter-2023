@@ -12,7 +12,7 @@ public class GameLoopManager : MonoBehaviour {
     [SerializeField]
     private List<PlushieScriptableObject> plushieList;
     [SerializeField]
-    private CardStack cardStackController;
+    private GameObject clientCardCanvas;
     [SerializeField]
     private GameObject cardSpawner;
 
@@ -75,7 +75,7 @@ public class GameLoopManager : MonoBehaviour {
         ClientCard clientCard = currentPlushieScriptableObject.resolutionClientCard;
         clientCard.name = currentPlushieScriptableObject.plushieObjectName + "ClientCard";
         clientCard.gameObject.transform.localScale = new Vector3(5, 7, 1);
-        ClientCard newCard = Instantiate(clientCard, this.cardSpawner.transform.position, Quaternion.identity, this.cardStackController.transform);
+        ClientCard newCard = Instantiate(clientCard, this.cardSpawner.transform.position, Quaternion.identity, this.clientCardCanvas.transform);
 
         //yield return new WaitForSeconds(2f);
 
