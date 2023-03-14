@@ -32,10 +32,10 @@ public class CustomEventManager : MonoBehaviour {
     }
 
     // Dialog Trigger
-    public event Action<Dialogue> onTriggerDialogue;
-    public void TriggerDialogue(Dialogue dialogue) {
+    public event Action<PlushieScriptableObject> onTriggerDialogue;
+    public void TriggerDialogue(PlushieScriptableObject plushieScriptableObject) {
         if (this.onTriggerDialogue != null) {
-            this.onTriggerDialogue(dialogue);
+            this.onTriggerDialogue(plushieScriptableObject);
         }
     }
 

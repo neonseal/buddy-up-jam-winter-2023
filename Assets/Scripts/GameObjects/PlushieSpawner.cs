@@ -18,6 +18,9 @@ public class PlushieSpawner: MonoBehaviour
     }
 
     private void AddPlushie(PlushieScriptableObject plushieScriptableObject) {
+        if (plushieScriptableObject == null) {
+            Debug.LogError("Plushie Scriptable Object must not be null");
+        }
         GameObject plushie = new GameObject();
         plushie.transform.SetParent(this.transform);
         plushie.name = plushieScriptableObject.plushieObjectName + "Plushie";
