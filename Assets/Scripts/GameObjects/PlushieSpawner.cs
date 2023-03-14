@@ -8,7 +8,7 @@ public class PlushieSpawner: MonoBehaviour
     void Start()
     {
         // Subscribe methods to event triggers
-        CustomEventManager.Current.onGeneratePlushie += this.AddPlushie;
+        PlushieLifeCycleEventManager.Current.onGeneratePlushie += this.AddPlushie;
     }
 
     // Update is called once per frame

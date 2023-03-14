@@ -83,30 +83,6 @@ public class CustomEventManager : MonoBehaviour {
         }
     }
 
-    // Plushie spawning event
-    public event Action<PlushieScriptableObject> onGeneratePlushie;
-    public void generatePlushie(PlushieScriptableObject plushieScriptableObject) {
-        if (this.onGeneratePlushie != null) {
-            this.onGeneratePlushie(plushieScriptableObject);
-        }
-    }
-
-    // Plushie overall repair complete event
-    public event Action onFinishPlushieRepair;
-    public void finishPlushieRepair() {
-        if (this.onFinishPlushieRepair != null) {
-            this.onFinishPlushieRepair();
-        }
-    }
-
-    // Plushie deletion event
-    public event Action onDeletePlushie;
-    public void deletePlushie() {
-        if (this.onDeletePlushie != null) {
-            this.onDeletePlushie();
-        }
-    }
-
     // Mouse Held event
     public event Action<bool> onMouseHoldStatusToggle;
     public void mouseHoldStatusToggle(bool mouseHeld) {

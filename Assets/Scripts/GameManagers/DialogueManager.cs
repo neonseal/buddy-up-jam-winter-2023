@@ -85,7 +85,7 @@ public class DialogueManager : MonoBehaviour {
     private void EndDialogue() {
         animator.SetBool("isOpen", false);
         // Broadcasts an event to initialize a plushie
-        CustomEventManager.Current.generatePlushie(currentPlushie);
+        PlushieLifeCycleEventManager.Current.generatePlushie(currentPlushie);
     }
 
     private void SetFont(TMP_FontAsset font) {

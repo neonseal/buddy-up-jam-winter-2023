@@ -42,7 +42,7 @@ public class ChecklistManager : MonoBehaviour
     private void CompleteRepairButtonClick()
     {
         // Broadcast a plushie repair completion event
-        CustomEventManager.Current.finishPlushieRepair();
+        PlushieLifeCycleEventManager.Current.finishPlushieRepair();
 
         // Set repair counters to 0
         this.checklistStepcount = 0;
