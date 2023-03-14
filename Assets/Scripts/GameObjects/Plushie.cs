@@ -56,7 +56,7 @@ public class Plushie : MonoBehaviour
         plushieDamageGameObject.transform.SetParent(this.transform);
 
         // Broadcast a damageGenerationEvent
-        CustomEventManager.Current.generateDamage(plushieDamageScript, damageType);
+        DamageLifeCycleEventManager.Current.generateDamage(plushieDamageScript, damageType);
     }
 
     private void sendOffPlushie() {

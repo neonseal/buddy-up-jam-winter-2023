@@ -20,8 +20,8 @@ public class MendingGameController : MonoBehaviour {
         lenseSpriteRenderer = mendingGame.gameObject.GetComponent<SpriteRenderer>();
 
         startingPosition = this.transform.position;
-        CustomEventManager.Current.onStartRepairMiniGame += StartRepairMiniGame;
-        CustomEventManager.Current.onRepairDamage_Complete += StopRepairMiniGame;
+        DamageLifeCycleEventManager.Current.onStartRepairMiniGame += StartRepairMiniGame;
+        DamageLifeCycleEventManager.Current.onRepairDamage_Complete += StopRepairMiniGame;
     }
 
     private void StartRepairMiniGame(PlushieDamage plushieDamage, DamageType damageType) {
