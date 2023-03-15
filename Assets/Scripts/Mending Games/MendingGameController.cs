@@ -22,8 +22,8 @@ public class MendingGameController : MonoBehaviour {
 
         homePosition = this.transform.position;
         centerPosition = new Vector3(0, 0, -1);
-        CustomEventManager.Current.onStartRepairMiniGame += StartRepairMiniGame;
-        CustomEventManager.Current.onRepairDamage_Complete += StopRepairMiniGame;
+        DamageLifeCycleEventManager.Current.onStartRepairMiniGame += StartRepairMiniGame;
+        DamageLifeCycleEventManager.Current.onRepairDamage_Complete += StopRepairMiniGame;
     }
 
 

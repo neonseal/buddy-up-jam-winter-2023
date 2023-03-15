@@ -29,7 +29,7 @@ public class GameLoopManager : MonoBehaviour {
 
         // Subscribe methods to event triggers
         CustomEventManager.Current.onGameStart += this.StartGame;
-        CustomEventManager.Current.onFinishPlushieRepair += this.PlushieSendoff;
+        PlushieLifeCycleEventManager.Current.onFinishPlushieRepair += this.PlushieSendoff;
     }
 
     // Update the scene to bring in a new customer's plushie, note, and information
@@ -44,12 +44,9 @@ public class GameLoopManager : MonoBehaviour {
         // Set client dialogue font
         this.dialogueManager.SetClientFont(currentPlushieScriptableObject.clientFont);
 
-        // Broadcasts an event to initialize a plushie
-        CustomEventManager.Current.generatePlushie(currentPlushieScriptableObject);
-
         yield return new WaitForSeconds(.5f);
 
-        CustomEventManager.Current.TriggerDialogue(currentPlushieScriptableObject.issueDialogue);
+        CustomEventManager.Current.TriggerDialogue(currentPlushieScriptableObject);
     }
 
     private void PlushieSendoff() {
@@ -61,8 +58,8 @@ public class GameLoopManager : MonoBehaviour {
         // Play repair complete fanfare
         // Wait briefly
         yield return new WaitForSeconds(.4f);
-        // Move plushie off screen
-        // Destroy gameobject
+        // Move plushie off screen and destroy it
+        PlushieLifeCycleEventManager.Current.sendOffPlushie();
 
         /* Show Client Resolution Card */
         // Create resolution text object, and instantiate above the screen

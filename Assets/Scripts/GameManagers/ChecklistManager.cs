@@ -29,9 +29,10 @@ public class ChecklistManager : MonoBehaviour {
         this.clickableNotepad.onClick.AddListener(HandleNotepadClick);
     }
 
-    private void Start() {
-        CustomEventManager.Current.onGenerateDamage += populateChecklist;
-        CustomEventManager.Current.onRepairDamage_Complete += incrementRepairCompletionCount;
+    private void Start()
+    {
+        DamageLifeCycleEventManager.Current.onGenerateDamage += populateChecklist;
+        DamageLifeCycleEventManager.Current.onRepairDamage_Complete += incrementRepairCompletionCount;
         submitButton.onClick.AddListener(CompleteRepairButtonClick);
     }
 
@@ -56,7 +57,7 @@ public class ChecklistManager : MonoBehaviour {
     // allowing the player to package up the plushie and return it to the customer
     private void CompleteRepairButtonClick() {
         // Broadcast a plushie repair completion event
-        CustomEventManager.Current.finishPlushieRepair();
+        PlushieLifeCycleEventManager.Current.finishPlushieRepair();
 
         // Set repair counters to 0
         this.checklistStepcount = 0;
