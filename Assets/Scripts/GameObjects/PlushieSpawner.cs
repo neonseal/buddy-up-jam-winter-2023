@@ -8,7 +8,7 @@ public class PlushieSpawner: MonoBehaviour
     void Start()
     {
         // Subscribe methods to event triggers
-        CustomEventManager.Current.onGeneratePlushie += this.AddPlushie;
+        PlushieLifeCycleEventManager.Current.onGeneratePlushie += this.AddPlushie;
     }
 
     // Update is called once per frame
@@ -18,6 +18,9 @@ public class PlushieSpawner: MonoBehaviour
     }
 
     private void AddPlushie(PlushieScriptableObject plushieScriptableObject) {
+        if (plushieScriptableObject == null) {
+            Debug.LogError("Plushie Scriptable Object must not be null");
+        }
         GameObject plushie = new GameObject();
         plushie.transform.SetParent(this.transform);
         plushie.name = plushieScriptableObject.plushieObjectName + "Plushie";

@@ -23,6 +23,8 @@ public class DialogueManager : MonoBehaviour {
     private TMP_FontAsset openDyslexicFont;
     private TMP_FontAsset clientFont;
 
+    private PlushieScriptableObject currentPlushie;
+
     private void Awake() {
         sentences = new Queue<string>();
         clientFontVisible = true;
@@ -32,8 +34,9 @@ public class DialogueManager : MonoBehaviour {
 
     }
 
-    private void StartDialogue(Dialogue dialogue) {
-        StartCoroutine(StartDialogueRoutine(dialogue));
+    private void StartDialogue(PlushieScriptableObject plushieScriptableObject) {
+        this.currentPlushie = plushieScriptableObject;
+        StartCoroutine(StartDialogueRoutine(currentPlushie.issueDialogue));
     }
 
     public void DisplayNextSentence() {
@@ -81,6 +84,8 @@ public class DialogueManager : MonoBehaviour {
 
     private void EndDialogue() {
         animator.SetBool("isOpen", false);
+        // Broadcasts an event to initialize a plushie
+        PlushieLifeCycleEventManager.Current.generatePlushie(currentPlushie);
     }
 
     private void SetFont(TMP_FontAsset font) {
