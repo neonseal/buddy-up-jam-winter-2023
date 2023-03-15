@@ -72,6 +72,8 @@ namespace GameUI {
             // If you're click on a new tool, swap to the new tool and return the old tool
             else {
                 CanvasManager.currentTool = this.gameObject;
+                CanvasManager.toolType = this.toolScriptableObject.toolType;
+
                 this.toolRoll.ResetOtherToolSprite(this);
                 this.SetToolCursor();
                 // Play pickup sound

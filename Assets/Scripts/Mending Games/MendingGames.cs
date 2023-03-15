@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.EventSystems;
+using GameData; 
+using GameUI;
 
 // Primary Mending Repair Game Class
 // Handles generation and updating state during mini games
@@ -13,6 +15,8 @@ public class MendingGames : MonoBehaviour {
 
     /* Plushie damage component to be repaired and passed on when game is complete */
     private PlushieDamage plushieDamage;
+    /* Required tool to perform repair */
+    private ToolType requiredToolType;
     /* Lense Sprite on which we'll render the dashed line */
     private SpriteRenderer lenseSpriteRenderer;
     /* Collection of dashed lines, each represented by a list of Dash objects */
@@ -77,19 +81,24 @@ public class MendingGames : MonoBehaviour {
     private void TryStartNextDashSection(RaycastHit2D hit) {
         // Hit taret point, check which state
         if (hit.collider.name == targetColliderName) {
-            // Player clicks starting target - start game
-            if (hit.collider.Equals(startingTargetCollider) && !gameActive) {
-                // Activate first dash collection
-                gameActive = true;
-                activeDashSetIndex++;
-                nextTargetIndex++;
-                hit.collider.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
-                dashSetCollections[activeDashSetIndex].ForEach(dash => dash.Active = true);
-            } else if (hit.collider.Equals(targetColliders[nextTargetIndex]) && nextTargetIndex != targetColliders.Count -1) {
-                // Player is starting the next line
-                activeDashSetIndex++;
-                nextTargetIndex++;
-                dashSetCollections[activeDashSetIndex].ForEach(dash => dash.Active = true);
+            // Check if player is holding the correct tool
+            if (CanvasManager.currentTool == null || CanvasManager.toolType == this.requiredToolType) {
+                // Player clicks starting target - start game
+                if (hit.collider.Equals(startingTargetCollider) && !gameActive) {
+                    // Activate first dash collection
+                    gameActive = true;
+                    activeDashSetIndex++;
+                    nextTargetIndex++;
+                    hit.collider.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+                    dashSetCollections[activeDashSetIndex].ForEach(dash => dash.Active = true);
+                } else if (hit.collider.Equals(targetColliders[nextTargetIndex]) && nextTargetIndex != targetColliders.Count - 1) {
+                    // Player is starting the next line
+                    activeDashSetIndex++;
+                    nextTargetIndex++;
+                    dashSetCollections[activeDashSetIndex].ForEach(dash => dash.Active = true);
+                }
+            } else {
+                // Show player tool tip to remind them to use the correct tool
             }
         }
     }
@@ -128,11 +137,12 @@ public class MendingGames : MonoBehaviour {
 
     public void GenerateNewSewingGame(List<Vector3> targetPositions, PlushieDamage damage) {
         this.plushieDamage = damage;
+        this.requiredToolType = ToolType.Needle;
 
-        // Clear dashes if necessary
+        // Clear game elements if necessary
         if (dashSetCollections.Count > 0) {
-            DestroyAllDashes();
-        } 
+            DestroyAllGameElements();
+        }
 
         // Create targets and dashed lines
         for (int i = 0; i < targetPositions.Count; i++) {
@@ -146,7 +156,16 @@ public class MendingGames : MonoBehaviour {
                 dashSetCollections.Add(dashes);
             }
         }
-
+    }
+    public void DestroyAllGameElements() {
+        foreach (List<Dash> dashes in dashSetCollections) {
+            foreach (Dash dash in dashes) {
+                Debug.Log("DESTROYING");
+                Destroy(dash);
+            }
+        }
+        dashSetCollections = new List<List<Dash>>();
+        targetColliders = new List<BoxCollider2D>();
     }
 
     private void GenerateTarget(Vector3 targetPosition, bool startingTarget = false, bool finalTarget = false) {
@@ -172,7 +191,7 @@ public class MendingGames : MonoBehaviour {
 
 
         // Incrementally calculate dash positions until we reach the end position
-        while ((end - start).magnitude > (dash - start).magnitude) {
+        while ((end - start).magnitude > (dash - start + (direction * delta * 0.45f)).magnitude) {
             // If within threshold of the ending position
 
             positions.Add(dash);
@@ -218,15 +237,8 @@ public class MendingGames : MonoBehaviour {
 
         // Add dash C# class
         Dash dash = gameObject.AddComponent<Dash>();
+        dash.RequiredToolType = this.requiredToolType;
 
         return dash;
-    }
-
-    private void DestroyAllDashes() {
-        foreach (List<Dash> dashes in dashSetCollections) {
-            foreach (Dash dash in dashes) {
-                Destroy(dash);
-            }
-        }
     }
 }

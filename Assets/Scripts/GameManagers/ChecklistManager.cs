@@ -4,11 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using GameData;
 
-public class ChecklistManager : MonoBehaviour
-{
+public class ChecklistManager : MonoBehaviour {
+    [Header("Checklist Components")]
+    // Notepad sprite to show checklist on click
+    [SerializeField] private Button clickableNotepad;
     // Game object that stores all the CheckListSteps
     [SerializeField]
-    private GameObject checklistItemsObject;
+    private GameObject checklist;
+    [SerializeField]
+    private GameObject checklistItemsArea;
     // Prefab of ChecklistStep
     [SerializeField]
     private GameObject checklistStepPrefab;
@@ -18,11 +22,11 @@ public class ChecklistManager : MonoBehaviour
     private int checklistStepcount;
     private int repairCompletionCount;
 
-    private void Awake()
-    {
+    private void Awake() {
         steps = GetComponentsInChildren<ChecklistStep>();
-        submitButton = GetComponentInChildren<Button>();
+        submitButton = checklist.GetComponentInChildren<Button>();
         this.submitButton.interactable = false;
+        this.clickableNotepad.onClick.AddListener(HandleNotepadClick);
     }
 
     private void Start()
@@ -32,15 +36,26 @@ public class ChecklistManager : MonoBehaviour
         submitButton.onClick.AddListener(CompleteRepairButtonClick);
     }
 
-    private void Update()
-    {
+    private void Update() {
+        // Check if player clicks anywhere outside of the checklist, and hide the checklist
+        RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector2.zero);
 
+        if (
+            Input.GetMouseButtonDown(0) &&
+            this.checklist.activeInHierarchy && 
+            (hit.collider == null || hit.collider.name != "Checklist")
+        ) {
+            this.checklist.SetActive(false);
+        }
+    }
+
+    private void HandleNotepadClick() {
+        this.checklist.SetActive(true);
     }
 
     // When all damage points have been repaired, the finish/submit button will be activated,
     // allowing the player to package up the plushie and return it to the customer
-    private void CompleteRepairButtonClick()
-    {
+    private void CompleteRepairButtonClick() {
         // Broadcast a plushie repair completion event
         PlushieLifeCycleEventManager.Current.finishPlushieRepair();
 
@@ -53,18 +68,16 @@ public class ChecklistManager : MonoBehaviour
     }
 
     // Listener method - add a checklist step to checklistItemsObject for each generation event
-    private void populateChecklist(PlushieDamage plushieDamage, DamageType damageType)
-    {
+    private void populateChecklist(PlushieDamage plushieDamage, DamageType damageType) {
         this.addChecklistStep(plushieDamage, damageType);
     }
 
     // Add a checklist step 
-    private void addChecklistStep(PlushieDamage plushieDamage, DamageType damageType)
-    {
+    private void addChecklistStep(PlushieDamage plushieDamage, DamageType damageType) {
         // increment checklistStepcount
         this.checklistStepcount++;
         GameObject checklistEntry = Instantiate(checklistStepPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-        checklistEntry.transform.SetParent(checklistItemsObject.transform);
+        checklistEntry.transform.SetParent(checklistItemsArea.transform);
 
         ChecklistStep checklistStepComponent = checklistEntry.GetComponent<ChecklistStep>();
 
