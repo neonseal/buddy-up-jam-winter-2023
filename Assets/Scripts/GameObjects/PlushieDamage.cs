@@ -4,8 +4,7 @@ using UnityEngine;
 using GameData;
 using GameUI;
 
-public class PlushieDamage : MonoBehaviour
-{
+public class PlushieDamage : MonoBehaviour {
     // Fields
     private DamageType plushieDamageType;
     private bool gameActive = false;
@@ -18,15 +17,13 @@ public class PlushieDamage : MonoBehaviour
     // Components
     internal SpriteRenderer plushieDamageSpriteRenderer;
 
-    void Awake()
-    {
+    void Awake() {
         this.plushieDamageSpriteRenderer = this.gameObject.AddComponent<SpriteRenderer>();
         plushieDamageSpriteRenderer.sortingLayerID = SortingLayer.NameToID("PlushieDamageLayer");
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         this.initializeDamage();
         this.generateCollider();
     }
@@ -37,25 +34,21 @@ public class PlushieDamage : MonoBehaviour
         this.gameObject.layer = LayerMask.NameToLayer("Game Workspace");
     }
 
-    public void changeDamageType(DamageType newDamageType)
-    {
+    public void changeDamageType(DamageType newDamageType) {
         this.plushieDamageType = newDamageType;
         this.plushieDamageSpriteRenderer.sprite = DamageDictionary.damageInfoDictionary[newDamageType].sprite;
     }
 
-    public void deletePlushieDamage()
-    {
+    public void deletePlushieDamage() {
         Object.Destroy(this.gameObject);
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
 
     }
 
-    private void generateCollider()
-    {
+    private void generateCollider() {
         CapsuleCollider2D oldCollider = this.gameObject.GetComponent<CapsuleCollider2D>();
         if (oldCollider != null) {
             Object.Destroy(oldCollider);
@@ -64,26 +57,28 @@ public class PlushieDamage : MonoBehaviour
         collider.direction = CapsuleDirection2D.Horizontal;
     }
 
-    void OnMouseDown()
-    {
-        // Pick correct routine
-        if (this.plushieDamageType == DamageType.SmallRip) {
-            //this.deletePlushieDamage();
-            gameActive = true;
-            DamageLifeCycleEventManager.Current.startRepairMiniGame(this, DamageType.SmallRip);
-        } else if (this.plushieDamageType == DamageType.LargeRip) {
-            //this.changeDamageType(DamageType.LargeRipMissingStuffing);
-            gameActive = true;
-            DamageLifeCycleEventManager.Current.startRepairMiniGame(this, DamageType.LargeRip);
-        } else if (this.plushieDamageType == DamageType.LargeRipMissingStuffing) {
-            //this.deletePlushieDamage();
-            gameActive = true;
-            DamageLifeCycleEventManager.Current.startRepairMiniGame(this, DamageType.LargeRipMissingStuffing);
-        } else if (this.plushieDamageType == DamageType.WornStuffing) {
-            //this.changeDamageType(DamageType.LargeRip);
-            gameActive = true;
-            DamageLifeCycleEventManager.Current.startRepairMiniGame(this, DamageType.WornStuffing);
+    void OnMouseDown() {
+        if (!gameActive) {
+            // Pick correct routine
+            if (this.plushieDamageType == DamageType.SmallRip) {
+                //this.deletePlushieDamage();
+                gameActive = true;
+                DamageLifeCycleEventManager.Current.startRepairMiniGame(this, DamageType.SmallRip);
+            } else if (this.plushieDamageType == DamageType.LargeRip) {
+                //this.changeDamageType(DamageType.LargeRipMissingStuffing);
+                gameActive = true;
+                DamageLifeCycleEventManager.Current.startRepairMiniGame(this, DamageType.LargeRip);
+            } else if (this.plushieDamageType == DamageType.LargeRipMissingStuffing) {
+                //this.deletePlushieDamage();
+                gameActive = true;
+                DamageLifeCycleEventManager.Current.startRepairMiniGame(this, DamageType.LargeRipMissingStuffing);
+            } else if (this.plushieDamageType == DamageType.WornStuffing) {
+                //this.changeDamageType(DamageType.LargeRip);
+                gameActive = true;
+                DamageLifeCycleEventManager.Current.startRepairMiniGame(this, DamageType.WornStuffing);
+            }
         }
+
 
         // Check if player is holding any tool
         /*if (CanvasManager.currentTool != null && !gameActive)
