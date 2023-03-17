@@ -19,6 +19,13 @@ public class MendingGameEventManager {
         }
     }
 
+    public event Action onDashTriggered;
+    public void DashTriggered() {
+        if (this.onDashTriggered != null) {
+            this.onDashTriggered();
+        }
+    }
+
     // Mending Game Complete 
     public event Action onMendingGameComplete;
     public void MendingGameComplete() {

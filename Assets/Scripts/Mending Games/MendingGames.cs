@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.EventSystems;
-using GameData; 
+using GameData;
 using GameUI;
 
 
@@ -26,15 +26,16 @@ public class MendingGames : MonoBehaviour {
     // Set of nodes the player must make contact with while completing a dashed line
     List<GameObject> nodes;
     // Set of dashes making up the line to be followed
-    List<GameObject> dashes;
+    List<List<GameObject>> dashSets;
 
     [Header("Game Progression Variables")]
     int targetNodeIndex;
+    ToolType requiredToolType;
 
     private void Awake() {
         // Instantiate lists
         nodes = new List<GameObject>();
-        dashes = new List<GameObject>();
+        dashSets = new List<List<GameObject>>();
 
         // Set rendering variables 
         dashSize = 0.1f;
@@ -48,38 +49,43 @@ public class MendingGames : MonoBehaviour {
     }
 
     private void Update() {
-        
+
     }
 
     public void CreateSewingGame(List<Vector3> targetPositions) {
         gameInProgress = true;
+        requiredToolType = ToolType.Needle;
 
         // Reset node collection
-        if (nodes.Count > 0 || dashes.Count > 0) {
+        if (nodes.Count > 0 || dashSets.Count > 0) {
             Reset();
         }
 
         // Create the set of nodes for this game
         nodes = GenerateNodes(targetPositions);
 
+
         // Generate dashes in between each pair of nodes
         for (int i = 0; i < nodes.Count - 1; i++) {
             Vector3 startingNodePos = nodes[i].transform.position;
             Vector3 endingNodePos = nodes[i + 1].transform.position;
             List<Vector3> dashPositions = GenerateDashPositions(startingNodePos, endingNodePos);
-            dashes = RenderLine(dashPositions, startingNodePos, endingNodePos);
+            List<GameObject> dashes = RenderLine(dashPositions, startingNodePos, endingNodePos);
+
+            // Add to total dash set 
+            dashSets.Add(dashes);
         }
     }
 
-    
-     /* Instantiate new node prefabs at the designated positions,
-     *  setting up the starting node */
+
+    /* Instantiate new node prefabs at the designated positions,
+    *  setting up the starting node */
     private List<GameObject> GenerateNodes(List<Vector3> positions) {
         List<GameObject> outputNodes = new List<GameObject>();
 
         for (int i = 0; i < positions.Count; i++) {
             GameObject node = Instantiate(targetPrefab, positions[i], Quaternion.identity, this.transform);
-            
+
             if (i == 0) {
                 node.GetComponent<Node>().targetNode = true;
             }
@@ -121,17 +127,18 @@ public class MendingGames : MonoBehaviour {
         return dashes;
     }
 
-    private GameObject GenerateDash(Vector3 start, Vector3 end) {
+    /* Instantiate a new Dash object and calculate rotation between given node posisitons */
+    private GameObject GenerateDash(Vector3 startingNodePos, Vector3 endingNodePos) {
         // Generate base object
         GameObject gameObject = new GameObject();
         gameObject.name = "DashComponent";
         gameObject.transform.localScale = Vector3.one * dashSize;
         gameObject.transform.parent = this.transform;
 
-
-        Vector3 normalizedNode = (end - start).normalized;
+        // Calculate the appropriate rotation for the given node positions
+        Vector3 normalizedNode = (endingNodePos - startingNodePos).normalized;
         float angle = Mathf.Atan2(normalizedNode.x, normalizedNode.y) * Mathf.Rad2Deg;
-        gameObject.transform.rotation = Quaternion.Euler(Vector3.forward * (-Mathf.Sign(end.x) * angle));
+        gameObject.transform.rotation = Quaternion.Euler(Vector3.forward * (-Mathf.Sign(endingNodePos.x) * angle));
 
         // Add dash sprite
         SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
@@ -143,11 +150,10 @@ public class MendingGames : MonoBehaviour {
         // Add collider for completing mini game
         BoxCollider2D dashCollider = gameObject.AddComponent<BoxCollider2D>();
         dashCollider.size = new Vector2(3f, 2f);
-       // dashCollider.name = dashColliderName;
 
         // Add dash C# class
         Dash dash = gameObject.AddComponent<Dash>();
-        //dash.RequiredToolType = this.requiredToolType;
+        dash.requiredToolType = this.requiredToolType;
 
         return gameObject;
     }
@@ -165,6 +171,9 @@ public class MendingGames : MonoBehaviour {
         if (targetNodeIndex == nodes.Count - 1) {
             MendingGameEventManager.Current.MendingGameComplete();
         } else {
+            // Activate corresponding line of dashes
+            dashSets[targetNodeIndex].ForEach(dObj => dObj.GetComponent<Dash>().dashActive = true);
+
             // Increment target node
             targetNodeIndex++;
 
@@ -176,16 +185,18 @@ public class MendingGames : MonoBehaviour {
     /* Clear all game elements and reset indexes */
     private void Reset() {
         // Destroy elements on screen
-        for (int i = 0; i < nodes.Count; i++) {
+        for (int i = nodes.Count - 1; i >= 0; i--) {
             Destroy(nodes[i]);
         }
-        for (int j = 0; j < dashes.Count; j++) {
-            Destroy(dashes[j]);
+        for (int j = dashSets.Count - 1; j >= 0; j--) {
+            for (int k = dashSets[j].Count - 1; k >= 0; k--) {
+                Destroy(dashSets[j][k]);
+            }
         }
 
         // Clear element collections
         nodes.Clear();
-        dashes.Clear();
+        dashSets.Clear();
 
         // Reset target index
         targetNodeIndex = 0;

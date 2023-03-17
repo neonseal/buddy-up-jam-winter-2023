@@ -7,23 +7,37 @@ using GameUI;
 // Dash Class Definition
 // Elements that make up the sewing and cutting games 
 public class Dash : MonoBehaviour {
-    public bool active { get; set; }
+    public bool dashActive { get; set; }
     public bool triggered { get; set; }
+    public ToolType requiredToolType { get; set; }
 
     private SpriteRenderer spriteRenderer;
 
+
+    private bool logged = false;
+
     private void Awake() {
         // Set state flags
-        active = false;
+        dashActive = false;
         triggered = false;
 
         // Get components
         spriteRenderer = this.GetComponent<SpriteRenderer>();
     }
 
+    private void Update() {
+        if (dashActive && !logged) {
+            Debug.Log("ACTIVE");
+            logged = true;
+        }
+    }
+
     private void OnMouseOver() {
-        if (Input.GetMouseButton(0) && active && !triggered) {
+
+        if (Input.GetMouseButton(0) && dashActive && !triggered) {
             spriteRenderer.color = Color.yellow;
+            triggered = true;
+
         }
     }
 

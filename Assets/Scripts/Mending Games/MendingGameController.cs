@@ -34,11 +34,11 @@ public class MendingGameController : MonoBehaviour {
 
     private void CreateSewingGame() {
         if (!mendingGame.gameInProgress) {
-            // new Vector3(lensePosition.x - 1, lensePosition.y - 2, -1),
             Vector3 lensePosition = lenseSpriteRenderer.transform.position;
             List<Vector3> targetPositions = new List<Vector3> {
                 new Vector3(lensePosition.x - 1, lensePosition.y + 2, -1),
-                new Vector3(lensePosition.x + 1, lensePosition.y, -1)
+                new Vector3(lensePosition.x + 1, lensePosition.y, -1),
+                new Vector3(lensePosition.x - 1, lensePosition.y - 2, -1)
             };
             mendingGame.CreateSewingGame(targetPositions);
         }
