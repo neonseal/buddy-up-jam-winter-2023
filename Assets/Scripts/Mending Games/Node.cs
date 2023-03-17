@@ -5,7 +5,6 @@ using UnityEngine;
 public class Node : MonoBehaviour {
     public bool targetNode { get; set; }
     public bool triggered { get; set; }
-    public int index { get; set; }
 
     private void Awake() {
         targetNode = false;
@@ -17,7 +16,6 @@ public class Node : MonoBehaviour {
         if (!triggered && targetNode) {
             triggered = true;
             MendingGameEventManager.Current.NodeTriggered(this);
-            Debug.Log("GAME START");
         }
     }
 
@@ -25,7 +23,6 @@ public class Node : MonoBehaviour {
         if (Input.GetMouseButton(0) && !triggered && targetNode) {
             triggered = true;
             MendingGameEventManager.Current.NodeTriggered(this);
-            Debug.Log("NODE TRIGGERED");
         }
     }
 }

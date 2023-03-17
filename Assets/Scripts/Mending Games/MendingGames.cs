@@ -14,9 +14,13 @@ public class MendingGames : MonoBehaviour {
     // Game Active state to ensure we don't start extra games on accident
     public bool gameInProgress { get; private set; }
 
-    [Header("Game Component Prfabs")]
+    [Header("Game Component Rendering")]
     [SerializeField] private GameObject targetPrefab;
     [SerializeField] private GameObject dashPrefab;
+    [Range(0.01f, 1f)]
+    [SerializeField] private float dashSize;
+    [Range(0.1f, 2f)]
+    [SerializeField] private float delta;
 
     [Header("Game Component Collections")]
     // Set of nodes the player must make contact with while completing a dashed line
@@ -31,6 +35,10 @@ public class MendingGames : MonoBehaviour {
         // Instantiate lists
         nodes = new List<GameObject>();
         dashes = new List<GameObject>();
+
+        // Set rendering variables 
+        dashSize = 0.1f;
+        delta = 0.5f;
 
         // Set progression variables
         targetNodeIndex = 0;
@@ -52,9 +60,15 @@ public class MendingGames : MonoBehaviour {
         }
 
         // Create the set of nodes for this game
-        GenerateNodes(targetPositions);
+        nodes = GenerateNodes(targetPositions);
 
         // Generate dashes in between each pair of nodes
+        for (int i = 0; i < nodes.Count - 1; i++) {
+            Vector3 startingNodePos = nodes[i].transform.position;
+            Vector3 endingNodePos = nodes[i + 1].transform.position;
+            List<Vector3> dashPositions = GenerateDashPositions(startingNodePos, endingNodePos);
+            dashes = RenderLine(dashPositions, startingNodePos, endingNodePos);
+        }
     }
 
     
@@ -69,7 +83,6 @@ public class MendingGames : MonoBehaviour {
             if (i == 0) {
                 node.GetComponent<Node>().targetNode = true;
             }
-            node.GetComponent<Node>().index = i;
             outputNodes.Add(node);
         }
 
@@ -78,15 +91,69 @@ public class MendingGames : MonoBehaviour {
 
     /* Calculate dash positions between pairs of nodes where we will generate dash objects */
     private List<Vector3> GenerateDashPositions(Vector3 start, Vector3 end) {
-        List<Vector3> dashPositions = new List<Vector3>();
+        List<Vector3> positions = new List<Vector3>();
+        // Triangulate a straight line between both point
+        Vector3 direction = (end - start).normalized;
+        Vector3 dash = start += (direction * delta);
 
 
+        // Incrementally calculate dash positions until we reach the end position
+        while ((end - start).magnitude > (dash - start + (direction * delta * 0.65f)).magnitude) {
+            // If within threshold of the ending position
 
-        return dashPositions;
+            positions.Add(dash);
+            dash += (direction * delta);
+        }
+
+        return positions;
     }
 
-     /* When a given node is triggered, we need to update the goal node and 
-     *  corresponding set of dashes */
+    private List<GameObject> RenderLine(List<Vector3> dashPositions, Vector3 start, Vector3 end) {
+        List<GameObject> dashes = new List<GameObject>();
+
+        // Instantiate line of dashes between nodes
+        foreach (Vector3 dashPosition in dashPositions) {
+            GameObject dashObject = GenerateDash(start, end);
+            dashObject.transform.position = dashPosition;
+            dashes.Add(dashObject);
+        }
+
+        return dashes;
+    }
+
+    private GameObject GenerateDash(Vector3 start, Vector3 end) {
+        // Generate base object
+        GameObject gameObject = new GameObject();
+        gameObject.name = "DashComponent";
+        gameObject.transform.localScale = Vector3.one * dashSize;
+        gameObject.transform.parent = this.transform;
+
+
+        Vector3 normalizedNode = (end - start).normalized;
+        float angle = Mathf.Atan2(normalizedNode.x, normalizedNode.y) * Mathf.Rad2Deg;
+        gameObject.transform.rotation = Quaternion.Euler(Vector3.forward * (-Mathf.Sign(end.x) * angle));
+
+        // Add dash sprite
+        SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
+        spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/dash");
+        spriteRenderer.sortingLayerName = this.GetComponent<SpriteRenderer>().sortingLayerName;
+        spriteRenderer.sortingOrder = 10;
+        spriteRenderer.color = Color.black;
+
+        // Add collider for completing mini game
+        BoxCollider2D dashCollider = gameObject.AddComponent<BoxCollider2D>();
+        dashCollider.size = new Vector2(3f, 2f);
+       // dashCollider.name = dashColliderName;
+
+        // Add dash C# class
+        Dash dash = gameObject.AddComponent<Dash>();
+        //dash.RequiredToolType = this.requiredToolType;
+
+        return gameObject;
+    }
+
+    /* When a given node is triggered, we need to update the goal node and 
+    *  corresponding set of dashes */
     private void HandleNodeTrigger(Node triggeredNode) {
         // Check if line of dashes completed successfully
 
@@ -106,6 +173,7 @@ public class MendingGames : MonoBehaviour {
         }
     }
 
+    /* Clear all game elements and reset indexes */
     private void Reset() {
         // Destroy elements on screen
         for (int i = 0; i < nodes.Count; i++) {
@@ -122,6 +190,15 @@ public class MendingGames : MonoBehaviour {
         // Reset target index
         targetNodeIndex = 0;
     }
+
+
+
+
+
+
+
+
+
 
 
 
