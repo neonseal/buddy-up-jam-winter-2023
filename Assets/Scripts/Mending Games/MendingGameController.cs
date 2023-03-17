@@ -11,6 +11,9 @@ public class MendingGameController : MonoBehaviour {
     /* Lense Sprite on which we'll render the dashed line */
     private SpriteRenderer lenseSpriteRenderer;
 
+    [SerializeField]
+    private Button sewingGameButton;
+
     private Vector3 homePosition;
     private Vector3 centerPosition;
     [SerializeField] private float duration = 150f;
@@ -24,34 +27,53 @@ public class MendingGameController : MonoBehaviour {
         centerPosition = new Vector3(0, 0, -1);
         DamageLifeCycleEventManager.Current.onStartRepairMiniGame += StartRepairMiniGame;
         DamageLifeCycleEventManager.Current.onRepairDamage_Complete += StopRepairMiniGame;
+
+        sewingGameButton.onClick.AddListener(CreateSewingGame);
     }
 
 
-    private void Update() {
-
+    private void CreateSewingGame() {
+        if (!mendingGame.gameInProgress) {
+            // new Vector3(lensePosition.x - 1, lensePosition.y - 2, -1),
+            Vector3 lensePosition = lenseSpriteRenderer.transform.position;
+            List<Vector3> targetPositions = new List<Vector3> {
+                new Vector3(lensePosition.x - 1, lensePosition.y + 2, -1),
+                new Vector3(lensePosition.x + 1, lensePosition.y, -1)
+            };
+            mendingGame.CreateSewingGame(targetPositions);
+        }
+        StartCoroutine(MoveLenseIntoFocus(homePosition, centerPosition));
     }
 
     private void StartRepairMiniGame(PlushieDamage plushieDamage, DamageType damageType) {
-        Vector3 lensePosition = lenseSpriteRenderer.transform.position;
+        /*Vector3 lensePosition = lenseSpriteRenderer.transform.position;
         List<Vector3> targetPositions = new List<Vector3> {
             new Vector3(lensePosition.x - 1, lensePosition.y + 2, -1),
             new Vector3(lensePosition.x + 1, lensePosition.y, -1),
             new Vector3(lensePosition.x - 1, lensePosition.y - 2, -1),
-        };
-        mendingGame.GenerateNewSewingGame(targetPositions, plushieDamage);
+        };*/
+        //mendingGame.GenerateNewSewingGame(targetPositions, plushieDamage);
         StartCoroutine(MoveLenseIntoFocus(homePosition, centerPosition));
     }
 
     private IEnumerator MoveLenseIntoFocus(Vector3 start, Vector3 end) {
+        Vector3 startingPosition = start;
+        Vector3 endingPosition = end;
+
+        if (this.transform.position == end) {
+            startingPosition = end;
+            endingPosition = start;
+        }
+
         startTime = Time.time;
 
         // Calculate the center of the arc
-        Vector3 center = (start + end) * 0.5F;
+        Vector3 center = (startingPosition + endingPosition) * 0.5F;
         center -= new Vector3(2, 6, 0);
 
         // Interpolate over the arc relative to center
-        Vector3 startRelCenter = start - center;
-        Vector3 endRelCenter = end - center;
+        Vector3 startRelCenter = startingPosition - center;
+        Vector3 endRelCenter = endingPosition - center;
 
         // Calculate the fraction of animation that has been completed so far
         float fracComplete = (Time.time - startTime) / duration;
@@ -69,6 +91,6 @@ public class MendingGameController : MonoBehaviour {
     private void StopRepairMiniGame(PlushieDamage plushieDamage) {
         StartCoroutine(MoveLenseIntoFocus(centerPosition, homePosition));
         plushieDamage.deletePlushieDamage();
-        mendingGame.DestroyAllGameElements();
+        //mendingGame.DestroyAllGameElements();
     }
 }

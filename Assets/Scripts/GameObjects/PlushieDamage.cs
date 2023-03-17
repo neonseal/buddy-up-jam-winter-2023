@@ -70,19 +70,19 @@ public class PlushieDamage : MonoBehaviour
         if (this.plushieDamageType == DamageType.SmallRip) {
             //this.deletePlushieDamage();
             gameActive = true;
-            CustomEventManager.Current.startRepairMiniGame(this, DamageType.SmallRip);
+            DamageLifeCycleEventManager.Current.startRepairMiniGame(this, DamageType.SmallRip);
         } else if (this.plushieDamageType == DamageType.LargeRip) {
             //this.changeDamageType(DamageType.LargeRipMissingStuffing);
             gameActive = true;
-            CustomEventManager.Current.startRepairMiniGame(this, DamageType.LargeRip);
+            DamageLifeCycleEventManager.Current.startRepairMiniGame(this, DamageType.LargeRip);
         } else if (this.plushieDamageType == DamageType.LargeRipMissingStuffing) {
             //this.deletePlushieDamage();
             gameActive = true;
-            CustomEventManager.Current.startRepairMiniGame(this, DamageType.LargeRipMissingStuffing);
+            DamageLifeCycleEventManager.Current.startRepairMiniGame(this, DamageType.LargeRipMissingStuffing);
         } else if (this.plushieDamageType == DamageType.WornStuffing) {
             //this.changeDamageType(DamageType.LargeRip);
             gameActive = true;
-            CustomEventManager.Current.startRepairMiniGame(this, DamageType.WornStuffing);
+            DamageLifeCycleEventManager.Current.startRepairMiniGame(this, DamageType.WornStuffing);
         }
 
         // Check if player is holding any tool
