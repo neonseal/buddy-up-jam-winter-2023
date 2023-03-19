@@ -4019,7 +4019,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2354b47640738af4fba3df483beaf613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0.25
+  duration: 0.35
+  checklist: {fileID: 1705798577}
 --- !u!4 &1505220148
 Transform:
   m_ObjectHideFlags: 0

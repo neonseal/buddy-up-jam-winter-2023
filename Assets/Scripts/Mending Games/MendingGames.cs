@@ -105,7 +105,7 @@ public class MendingGames : MonoBehaviour {
 
         for (int i = 0; i < positions.Count; i++) {
             GameObject node = Instantiate(targetPrefab, positions[i], Quaternion.identity, this.transform);
-            
+
             // Set starting node as first target
             if (i == 0) {
                 node.GetComponent<Node>().targetNode = true;
@@ -198,6 +198,9 @@ public class MendingGames : MonoBehaviour {
         } else {
             // Triggered target node -> check if active line was completed >= 80%
             if (CalculatePercentComplete() >= 0.8f) {
+                // Make sure all dashes are colored in
+                dashSets[activeDashSetIndex].ForEach(d => d.GetComponent<Dash>().spriteRenderer.color = Color.yellow);
+
                 // Line complete -> Check if final node was triggered to complete game
                 if (targetNodeIndex == nodes.Count - 1) {
                     // Update current target node

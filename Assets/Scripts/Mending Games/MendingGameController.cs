@@ -14,7 +14,7 @@ public class MendingGameController : MonoBehaviour {
     private Vector3 homePosition;
     private Vector3 centerPosition;
     [SerializeField] private float duration;
-    private float startTime;
+    [SerializeField] private GameObject checklist;
 
     private void Awake() {
         DOTween.Init();
@@ -41,7 +41,7 @@ public class MendingGameController : MonoBehaviour {
         mendingGame.CreateSewingGame(targetPositions, plushieDamage);
 
         this.transform.DOLocalMove(new Vector3(0, 0, -1), duration).SetEase(Ease.InCirc);
-        //StartCoroutine(MoveLense(homePosition, centerPosition));
+        this.checklist.SetActive(true);
     }
 
     private void StopRepairMiniGame(PlushieDamage plushieDamage) {
@@ -52,5 +52,7 @@ public class MendingGameController : MonoBehaviour {
 
         // Update checklist
         DamageLifeCycleEventManager.Current.repairDamage_Complete(plushieDamage);
+        this.checklist.SetActive(true);
+
     }
 }

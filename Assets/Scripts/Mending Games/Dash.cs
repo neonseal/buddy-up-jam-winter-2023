@@ -10,7 +10,7 @@ public class Dash : MonoBehaviour {
     public bool dashActive { get; set; }
     public bool triggered { get; set; }
     public ToolType requiredToolType { get; set; }
-    private SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer { get; set; }
 
     private void Awake() {
         // Set state flags
