@@ -11,86 +11,46 @@ public class MendingGameController : MonoBehaviour {
     /* Lense Sprite on which we'll render the dashed line */
     private SpriteRenderer lenseSpriteRenderer;
 
-    [SerializeField]
-    private Button sewingGameButton;
-
     private Vector3 homePosition;
     private Vector3 centerPosition;
-    [SerializeField] private float duration = 150f;
+    [SerializeField] private float duration;
     private float startTime;
 
     private void Awake() {
+        DOTween.Init();
+        duration = 0.35f;
+
         mendingGame = GetComponentInChildren<MendingGames>();
         lenseSpriteRenderer = mendingGame.gameObject.GetComponent<SpriteRenderer>();
 
         homePosition = this.transform.position;
         centerPosition = new Vector3(0, 0, -1);
         DamageLifeCycleEventManager.Current.onStartRepairMiniGame += StartRepairMiniGame;
-        DamageLifeCycleEventManager.Current.onRepairDamage_Complete += StopRepairMiniGame;
-
-        sewingGameButton.onClick.AddListener(CreateSewingGame);
-    }
-
-
-    private void CreateSewingGame() {
-        if (!mendingGame.gameInProgress) {
-            Vector3 lensePosition = lenseSpriteRenderer.transform.position;
-            List<Vector3> targetPositions = new List<Vector3> {
-                new Vector3(lensePosition.x - 1, lensePosition.y + 2, -1),
-                new Vector3(lensePosition.x + 1, lensePosition.y, -1),
-                new Vector3(lensePosition.x - 1, lensePosition.y - 2, -1)
-            };
-            mendingGame.CreateSewingGame(targetPositions);
-        }
-        StartCoroutine(MoveLenseIntoFocus(homePosition, centerPosition));
+        MendingGameEventManager.Current.onMendingGameComplete += StopRepairMiniGame;
     }
 
     private void StartRepairMiniGame(PlushieDamage plushieDamage, DamageType damageType) {
-        /*Vector3 lensePosition = lenseSpriteRenderer.transform.position;
+        // Check damage type to determine which repair game to create
+
+        Vector3 lensePosition = lenseSpriteRenderer.transform.position;
         List<Vector3> targetPositions = new List<Vector3> {
             new Vector3(lensePosition.x - 1, lensePosition.y + 2, -1),
             new Vector3(lensePosition.x + 1, lensePosition.y, -1),
             new Vector3(lensePosition.x - 1, lensePosition.y - 2, -1),
-        };*/
-        //mendingGame.GenerateNewSewingGame(targetPositions, plushieDamage);
-        StartCoroutine(MoveLenseIntoFocus(homePosition, centerPosition));
-    }
+        };
+        mendingGame.CreateSewingGame(targetPositions, plushieDamage);
 
-    private IEnumerator MoveLenseIntoFocus(Vector3 start, Vector3 end) {
-        Vector3 startingPosition = start;
-        Vector3 endingPosition = end;
-
-        if (this.transform.position == end) {
-            startingPosition = end;
-            endingPosition = start;
-        }
-
-        startTime = Time.time;
-
-        // Calculate the center of the arc
-        Vector3 center = (startingPosition + endingPosition) * 0.5F;
-        center -= new Vector3(2, 6, 0);
-
-        // Interpolate over the arc relative to center
-        Vector3 startRelCenter = startingPosition - center;
-        Vector3 endRelCenter = endingPosition - center;
-
-        // Calculate the fraction of animation that has been completed so far
-        float fracComplete = (Time.time - startTime) / duration;
-
-        // Perform position Slerp
-        for (float t = 0f; t < duration; t += (Time.time - startTime) / duration*2f) {
-            this.transform.position = Vector3.Slerp(startRelCenter, endRelCenter, t);
-
-            this.transform.position += center;
-
-            yield return null;
-        }
+        this.transform.DOLocalMove(new Vector3(0, 0, -1), duration).SetEase(Ease.InCirc);
+        //StartCoroutine(MoveLense(homePosition, centerPosition));
     }
 
     private void StopRepairMiniGame(PlushieDamage plushieDamage) {
-        StartCoroutine(MoveLenseIntoFocus(centerPosition, homePosition));
+        // Move and clear repair game
+        this.transform.DOLocalMove(homePosition, duration).SetEase(Ease.InCirc);
         plushieDamage.deletePlushieDamage();
-        //mendingGame.DestroyAllGameElements();
+        mendingGame.ResetAllElements();
+
+        // Update checklist
+        DamageLifeCycleEventManager.Current.repairDamage_Complete(plushieDamage);
     }
 }

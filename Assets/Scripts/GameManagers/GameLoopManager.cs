@@ -70,6 +70,10 @@ public class GameLoopManager : MonoBehaviour {
         // Move plushie off screen and destroy it
         PlushieLifeCycleEventManager.Current.sendOffPlushie();
 
+
+        // Wait briefly
+        yield return new WaitForSeconds(.65f);
+
         /* Show Client Resolution Card */
         // Create resolution text object, and instantiate above the screen
         ClientCard clientCard = currentPlushieScriptableObject.resolutionClientCard;

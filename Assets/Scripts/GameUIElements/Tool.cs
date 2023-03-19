@@ -39,6 +39,8 @@ namespace GameUI {
             // If nothing is held, set this gameobject/tool as the tool being held
             if (CanvasManager.currentTool == null) {
                 CanvasManager.currentTool = this.gameObject;
+                CanvasManager.toolType = this.toolScriptableObject.toolType;
+
                 this.SetToolCursor();
                 // Play pickup sound
                 audioSources[0].Play();
@@ -79,7 +81,6 @@ namespace GameUI {
                 // Play pickup sound
                 audioSources[0].Play();
             }
-
             ToggleToolSprite();
         }
 

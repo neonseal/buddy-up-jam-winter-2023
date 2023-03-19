@@ -26,13 +26,18 @@ public class Dash : MonoBehaviour {
         spriteRenderer.color = Color.blue;
     }
 
-    public void Reset() {
+    public void Reset(bool active) {
         triggered = false;
+        dashActive = active;
         spriteRenderer.color = Color.black;
     }
 
     private void OnMouseOver() {
-        if (Input.GetMouseButton(0) && dashActive && !triggered) {
+        if (Input.GetMouseButton(0) &&
+            dashActive &&
+            !triggered &&
+            CanvasManager.toolType == requiredToolType
+        ) {
             spriteRenderer.color = Color.yellow;
             triggered = true;
 

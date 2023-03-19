@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using System.Linq;
-using UnityEngine.EventSystems;
 using GameData;
 using GameUI;
 
@@ -27,10 +25,13 @@ public class MendingGames : MonoBehaviour {
     List<GameObject> nodes;
     // Set of dashes making up the line to be followed
     List<List<GameObject>> dashSets;
+    // Current type of plushie damange being repaired
+    PlushieDamage currentPlushieDamage;
 
     [Header("Game Progression Variables")]
     int targetNodeIndex;
     int activeDashSetIndex;
+    bool linePreviouslyReset;
     ToolType requiredToolType;
 
     private void Awake() {
@@ -45,12 +46,14 @@ public class MendingGames : MonoBehaviour {
         // Set progression variables
         targetNodeIndex = 0;
         activeDashSetIndex = 0;
+        linePreviouslyReset = false;
 
         // Setup mending game event listeners
         MendingGameEventManager.Current.onNodeTriggered += HandleNodeTrigger;
     }
 
-    public void CreateSewingGame(List<Vector3> targetPositions) {
+    public void CreateSewingGame(List<Vector3> targetPositions, PlushieDamage plushieDamage) {
+        currentPlushieDamage = plushieDamage;
         gameInProgress = true;
         requiredToolType = ToolType.Needle;
 
@@ -75,6 +78,25 @@ public class MendingGames : MonoBehaviour {
         }
     }
 
+    /* Clear all game elements and reset indexes */
+    public void ResetAllElements() {
+        // Destroy elements on screen
+        for (int i = nodes.Count - 1; i >= 0; i--) {
+            Destroy(nodes[i]);
+        }
+        for (int j = dashSets.Count - 1; j >= 0; j--) {
+            for (int k = dashSets[j].Count - 1; k >= 0; k--) {
+                Destroy(dashSets[j][k]);
+            }
+        }
+
+        // Clear element collections
+        nodes.Clear();
+        dashSets.Clear();
+
+        // Reset target index
+        targetNodeIndex = 0;
+    }
 
     /* Instantiate new node prefabs at the designated positions,
     *  setting up the starting node */
@@ -88,6 +110,7 @@ public class MendingGames : MonoBehaviour {
             if (i == 0) {
                 node.GetComponent<Node>().targetNode = true;
             }
+            node.GetComponent<Node>().requiredToolType = this.requiredToolType;
             outputNodes.Add(node);
         }
 
@@ -160,45 +183,29 @@ public class MendingGames : MonoBehaviour {
     /* When a given node is triggered, we need to update the goal node and 
     *  corresponding set of dashes */
     private void HandleNodeTrigger(Node triggeredNode) {
-        // Check if we are activating the first node to start the game
-        if (targetNodeIndex == 0) {
-            Debug.Log("ACTIVATING FIRST LINE OF DASHES");
+        // Check if we are activating the first node to start the game or restarting a reset line
+        if (targetNodeIndex == 0 || linePreviouslyReset) {
             // Set all dashes in new set to active
             dashSets[activeDashSetIndex].ForEach(d => d.GetComponent<Dash>().Activate());
+            nodes[targetNodeIndex].GetComponent<Node>().TriggerNode(false);
 
-
-            Debug.Log("TRIGGERING FIRST TARGET");
-            nodes[targetNodeIndex].GetComponent<SpriteRenderer>().color = Color.blue;
-            nodes[targetNodeIndex].GetComponent<Node>().targetNode = false;
-
-
-            Debug.Log("INCREMENTING TARGET");
             targetNodeIndex++;
             nodes[targetNodeIndex].GetComponent<Node>().targetNode = true;
-        } else {
-            Debug.Log("TRIGGERING NON-START TARGET");
 
+            if (linePreviouslyReset) {
+                linePreviouslyReset = false;
+            }
+        } else {
             // Triggered target node -> check if active line was completed >= 80%
             if (CalculatePercentComplete() >= 0.8f) {
-
-                Debug.Log("MORE THAN 80% COMPLETE");
-
                 // Line complete -> Check if final node was triggered to complete game
                 if (targetNodeIndex == nodes.Count - 1) {
-
-                    Debug.Log("GAME COMPLETE");
                     // Update current target node
-                    nodes[targetNodeIndex].GetComponent<SpriteRenderer>().color = Color.blue;
-                    nodes[targetNodeIndex].GetComponent<Node>().targetNode = false;
-
-                    MendingGameEventManager.Current.MendingGameComplete();
+                    nodes[targetNodeIndex].GetComponent<Node>().TriggerNode(false);
+                    MendingGameEventManager.Current.MendingGameComplete(currentPlushieDamage);
                 } else {
-
-                    Debug.Log("INCREMENTING TARGETS AND ACTIVE DASH SET");
-
                     // Update current target node
-                    nodes[targetNodeIndex].GetComponent<SpriteRenderer>().color = Color.blue;
-                    nodes[targetNodeIndex].GetComponent<Node>().targetNode = false;
+                    nodes[targetNodeIndex].GetComponent<Node>().TriggerNode(false);
 
                     // Increment targets
                     activeDashSetIndex++;
@@ -206,17 +213,19 @@ public class MendingGames : MonoBehaviour {
 
                     targetNodeIndex++;
                     nodes[targetNodeIndex].GetComponent<Node>().targetNode = true;
-
                 }
             } else {
-                Debug.Log("DASH SET INCOMPLETE - RESETTING");
-
                 // Line not completed sufficiently -> Reset line and target node
-                ResetDashSet(activeDashSetIndex);
+                ResetDashSet(activeDashSetIndex, true);
 
                 // Update current target node
-                nodes[targetNodeIndex].GetComponent<SpriteRenderer>().color = Color.black;
-                nodes[targetNodeIndex].GetComponent<Node>().targetNode = true;
+                nodes[targetNodeIndex].GetComponent<Node>().Reset(false);
+
+                // Decrement target node to reset line and previous node as target
+                targetNodeIndex--;
+                nodes[targetNodeIndex].GetComponent<Node>().Reset(true);
+
+                linePreviouslyReset = true;
             }
         }
     }
@@ -231,31 +240,11 @@ public class MendingGames : MonoBehaviour {
     }
 
     /* Reset a given set of dashes */
-    private void ResetDashSet(int index) {
+    private void ResetDashSet(int index, bool active) {
         Debug.Assert(index < dashSets.Count);
 
         foreach (GameObject dash in dashSets[index]) {
-            dash.GetComponent<Dash>().Reset();
+            dash.GetComponent<Dash>().Reset(active);
         }
-    }
-
-    /* Clear all game elements and reset indexes */
-    private void ResetAllElements() {
-        // Destroy elements on screen
-        for (int i = nodes.Count - 1; i >= 0; i--) {
-            Destroy(nodes[i]);
-        }
-        for (int j = dashSets.Count - 1; j >= 0; j--) {
-            for (int k = dashSets[j].Count - 1; k >= 0; k--) {
-                Destroy(dashSets[j][k]);
-            }
-        }
-
-        // Clear element collections
-        nodes.Clear();
-        dashSets.Clear();
-
-        // Reset target index
-        targetNodeIndex = 0;
     }
 }

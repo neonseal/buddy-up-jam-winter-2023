@@ -78,16 +78,5 @@ public class PlushieDamage : MonoBehaviour {
                 DamageLifeCycleEventManager.Current.startRepairMiniGame(this, DamageType.WornStuffing);
             }
         }
-
-
-        // Check if player is holding any tool
-        /*if (CanvasManager.currentTool != null && !gameActive)
-        {
-            // Check for correct tool type
-            if (DamageDictionary.damageInfoDictionary[this.plushieDamageType].correctToolType.Equals(CanvasManager.currentTool.GetComponent<Tool>().toolScriptableObject.toolType))
-            {
-                
-            }
-        }*/
     }
 }

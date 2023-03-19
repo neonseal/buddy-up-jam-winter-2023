@@ -23,16 +23,12 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         this.checklistStepIcon = this.gameObject.transform.Find("CheckBackground").gameObject.transform.Find("CheckmarkImage").GetComponent<Image>();
         this.checklistStepText = this.gameObject.transform.Find("StepText").GetComponent<TMP_Text>();
         this.checklistCollider = this.gameObject.GetComponent<BoxCollider2D>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
         // Subscribe to onRepairCompletion event
         DamageLifeCycleEventManager.Current.onRepairDamage_Complete += completeStep;
         // Subscribe to onRepair event
         DamageLifeCycleEventManager.Current.onRepairDamage_Partial += repairDamage;
     }
+
 
     private void Update()
     {
@@ -99,25 +95,23 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     }
 
     // When mousing over, changes color of associated damage; otherwise, revert to default color
-    private void highlightDamage(bool mouseOverFlag)
-    {
-        if (this.isMouseOver)
-        {
-            this.plushieDamage.plushieDamageSpriteRenderer.color =
-            Color.Lerp(
-                this.plushieDamage.plushieDamageSpriteRenderer.color,
-                this.mouseOverColor,
-                Time.deltaTime * this.colorChangeSpeed
-            );
-        }
-        else
-        {
-            this.plushieDamage.plushieDamageSpriteRenderer.color =
-            Color.Lerp(
-                this.plushieDamage.plushieDamageSpriteRenderer.color,
-                Color.white,
-                Time.deltaTime * this.colorChangeSpeed
-            );
+    private void highlightDamage(bool mouseOverFlag) {
+        if (this.plushieDamage != null) {
+            if (this.isMouseOver) {
+                this.plushieDamage.plushieDamageSpriteRenderer.color =
+                Color.Lerp(
+                    this.plushieDamage.plushieDamageSpriteRenderer.color,
+                    this.mouseOverColor,
+                    Time.deltaTime * this.colorChangeSpeed
+                );
+            } else {
+                this.plushieDamage.plushieDamageSpriteRenderer.color =
+                Color.Lerp(
+                    this.plushieDamage.plushieDamageSpriteRenderer.color,
+                    Color.white,
+                    Time.deltaTime * this.colorChangeSpeed
+                );
+            }
         }
     }
 }

@@ -27,10 +27,10 @@ public class MendingGameEventManager {
     }
 
     // Mending Game Complete 
-    public event Action onMendingGameComplete;
-    public void MendingGameComplete() {
+    public event Action<PlushieDamage> onMendingGameComplete;
+    public void MendingGameComplete(PlushieDamage plushieDamage) {
         if (this.onMendingGameComplete != null) {
-            this.onMendingGameComplete();
+            this.onMendingGameComplete(plushieDamage);
         }
     }
 }
