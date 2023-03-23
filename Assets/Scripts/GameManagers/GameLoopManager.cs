@@ -18,6 +18,15 @@ public class GameLoopManager : MonoBehaviour {
     private PlushieScriptableObject currentPlushieScriptableObject;
     private int plushieListCursor;
 
+    #if UNITY_EDITOR
+        [UnityEditor.Callbacks.DidReloadScripts]
+        private static void OnScriptsReloaded() {
+            if (UnityEditor.EditorApplication.isPlaying) {
+                SceneHelper.ReloadScene();
+            }
+        }
+    #endif
+
     private void Awake() {
         DOTween.Init();
     }
@@ -61,6 +70,10 @@ public class GameLoopManager : MonoBehaviour {
         // Move plushie off screen and destroy it
         PlushieLifeCycleEventManager.Current.sendOffPlushie();
 
+
+        // Wait briefly
+        yield return new WaitForSeconds(.65f);
+
         /* Show Client Resolution Card */
         // Create resolution text object, and instantiate above the screen
         ClientCard clientCard = currentPlushieScriptableObject.resolutionClientCard;
@@ -71,14 +84,11 @@ public class GameLoopManager : MonoBehaviour {
         //yield return new WaitForSeconds(2f);
 
         // Tween the card into view
-         Sequence sequence = DOTween.Sequence();
-         sequence.Append(newCard.transform.DOLocalMove(new Vector3(0,0,-1), 1.5f).SetEase(Ease.OutBack));
-         DOTween.Play(sequence);
-        
-        clientCardCollection.Add(newCard);
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(newCard.transform.DOLocalMove(new Vector3(0, 0, -1), 1.5f).SetEase(Ease.OutBack));
+        DOTween.Play(sequence);
 
-        /* Prep Space for Next Customer */
-        // Enable next customer button
+        clientCardCollection.Add(newCard);
     }
 
     public void PlayCardAnimation() {
@@ -92,8 +102,8 @@ public class GameLoopManager : MonoBehaviour {
         Debug.Log("CURRENT POSITION: " + card.transform.localPosition);
         Debug.Log("TARGET: " + targetY);
 
-         Sequence sequence = DOTween.Sequence();
-         sequence.Append(card.transform.DOLocalMove(new Vector3(0,targetY,-1), 1.5f).SetEase(Ease.InOutBack));
-         DOTween.Play(sequence);
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(card.transform.DOLocalMove(new Vector3(0, targetY, -1), 1.5f).SetEase(Ease.InOutBack));
+        DOTween.Play(sequence);
     }
 }
