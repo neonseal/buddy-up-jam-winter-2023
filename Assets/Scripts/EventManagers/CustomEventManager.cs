@@ -39,6 +39,15 @@ public class CustomEventManager : MonoBehaviour {
         }
     }
 
+    // Tutorial Sequence
+    public event Action<TutorialSequence> onStartTutorialSequence;
+    public void StartTutorialSequence(TutorialSequence tutorialSequence) {
+        if (this.onStartTutorialSequence != null) {
+            this.onStartTutorialSequence(tutorialSequence);
+        }
+    }
+
+
     // Music/Sound controls
     public event Action onPauseMusic;
     public void PauseMusic() {

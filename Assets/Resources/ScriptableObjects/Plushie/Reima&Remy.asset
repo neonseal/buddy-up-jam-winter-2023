@@ -29,3 +29,5 @@ MonoBehaviour:
       but this one is special. "
     - Do you think you could take a look?
   resolutionClientCard: {fileID: 3708409553341289766, guid: 2d4dcde84829e1f49be5b0d2ef020b7d, type: 3}
+  hasTutorialDialogue: 1
+  tutorialSequence: {fileID: 11400000, guid: 5c73e73bb582b9545b93b877c4c1d481, type: 2}

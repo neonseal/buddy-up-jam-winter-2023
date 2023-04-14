@@ -2,19 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlushieSpawner: MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
+public class PlushieSpawner : MonoBehaviour {
+
+    void Start() {
         // Subscribe methods to event triggers
         PlushieLifeCycleEventManager.Current.onGeneratePlushie += this.AddPlushie;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void AddPlushie(PlushieScriptableObject plushieScriptableObject) {
@@ -32,6 +24,11 @@ public class PlushieSpawner: MonoBehaviour
 
         for (int i = 0; i < plushieScriptableObject.damageTypeList.Count; i++) {
             plushieComponent.AddPlushieDamageToScene(plushieScriptableObject.damagePositionList[i], plushieScriptableObject.damageTypeList[i]);
+        }
+
+        // Trigger tutorial sequence if needed
+        if (plushieScriptableObject.hasTutorialDialogue) {
+            CustomEventManager.Current.StartTutorialSequence(plushieScriptableObject.tutorialSequence);
         }
     }
 }

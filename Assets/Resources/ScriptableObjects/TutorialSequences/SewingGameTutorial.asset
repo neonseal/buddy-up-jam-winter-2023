@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6079decdfbb6e3043a1c23bb7a56470f, type: 3}
+  m_Name: SewingGameTutorial
+  m_EditorClassIdentifier: 
+  sequenceName: Sewing Game Tutorial
+  sentences:
+  - Welcome to Stuffie Workshop!
+  - "This stuffed animal has a small cut. To repair it, you\u2019ll need to sew the
+    tear shut."
+  - Click on the damaged area to apply the magnifying lens.
+  - Click the needle from your tools to pick it up.
+  - "Draw a line between the X\u2019s from top to bottom to pull the thread through."
+  - "Return the needle to the tool roll when you\u2019re done to finish the repair.
+    If the lens doesn\u2019t go away, try sewing the plushie again."
+  - Great! All the repairs are now complete.
+  - "You can view required repairs here. Since all the repairs are done, click \u201CComplete
+    Job\u201D to return the plushie to its owner."
+  dialoguePositions:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  arrowPositions:
+  - {x: -1, y: -1, z: -1}
+  - {x: -1, y: -1, z: -1}
+  - {x: -1, y: -1, z: -1}
+  - {x: -1, y: -1, z: -1}
+  - {x: -1, y: -1, z: -1}
+  - {x: -1, y: -1, z: -1}
+  - {x: -1, y: -1, z: -1}
+  - {x: -1, y: -1, z: -1}
+  arrowRotations:
+  - {x: -1, y: -1, z: -1}
+  - {x: -1, y: -1, z: -1}
+  - {x: -1, y: -1, z: -1}
+  - {x: -1, y: -1, z: -1}
+  - {x: -1, y: -1, z: -1}
+  - {x: -1, y: -1, z: -1}
+  - {x: -1, y: -1, z: -1}
+  - {x: -1, y: -1, z: -1}

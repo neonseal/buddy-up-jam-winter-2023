@@ -92,15 +92,10 @@ public class GameLoopManager : MonoBehaviour {
     }
 
     public void PlayCardAnimation() {
-        Debug.Log("PLAY");
         ClientCard card = clientCardCollection[0];
-        Debug.Log("CARD: " + card.name);
 
         float yPos = card.transform.localPosition.y;
         float targetY = yPos == 0f ? 1000f : 0f;
-
-        Debug.Log("CURRENT POSITION: " + card.transform.localPosition);
-        Debug.Log("TARGET: " + targetY);
 
         Sequence sequence = DOTween.Sequence();
         sequence.Append(card.transform.DOLocalMove(new Vector3(0, targetY, -1), 1.5f).SetEase(Ease.InOutBack));
