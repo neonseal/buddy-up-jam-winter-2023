@@ -18,33 +18,38 @@ public class TutorialSequenceManager : MonoBehaviour {
     }
 
     [Header("Tutorial Sequence Progress Trackers")]
-    private TutorialSequence currentTutorialSequence;
-    private int currentStep;
+    private TutorialSequenceScriptableObject currentTutorialSequenceScriptableObject;
+    private int currentStepIndex;
 
     [Header("UI Elements")]
-    [SerializeField] private GameObject tutorialSequenceParent;
+    [SerializeField] private GameObject parentObject;
     [SerializeField] private GameObject tutorialStepPrefab;
+    private GameObject tutorialDialogue;
 
     [Header("Test Elements")]
     [SerializeField] private Button startTutorialButton;
-    [SerializeField] private TutorialSequence testSequence;
+    [SerializeField] private TutorialSequenceScriptableObject testSequence;
     
     private void Awake() {
         tutorialActive = false;
-        currentStep = 0;
+        currentStepIndex = 0;
 
         CustomEventManager.Current.onStartTutorialSequence += StartTutorialSequence;
         startTutorialButton.onClick.AddListener(delegate { StartTutorialSequence(testSequence); });
     }
 
-    public void StartTutorialSequence(TutorialSequence newTutorialSequence) {
+    public void StartTutorialSequence(TutorialSequenceScriptableObject newTutorialSequence) {
         if (newTutorialSequence == null) {
             Debug.LogError("Tutorial Sequence Scriptable Object must not be null");
         }
 
-        this.currentTutorialSequence = newTutorialSequence;
+        this.currentTutorialSequenceScriptableObject = newTutorialSequence;
 
-        tutorialStepPrefab.GetComponent<TMP_Text>().text = newTutorialSequence.sentences[0];
-        Instantiate(tutorialStepPrefab, new Vector3(0, 0), Quaternion.identity, tutorialSequenceParent.transform);
+        // Update tutorial step text
+        tutorialStepPrefab.GetComponentInChildren<TMP_Text>().text = newTutorialSequence.sentences[this.currentStepIndex];
+
+        // Instantiate and position tutorial step dialogue box under UI parent
+        this.tutorialDialogue = Instantiate(tutorialStepPrefab, new Vector3(0, 0), Quaternion.identity);
+        this.tutorialDialogue.transform.SetParent(parentObject.transform, false);
     }
 }

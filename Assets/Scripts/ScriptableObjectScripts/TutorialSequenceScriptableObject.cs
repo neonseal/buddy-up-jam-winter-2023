@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu (fileName = "Tutorial Sequence", menuName = "Scriptable Objects/Tutorial Sequence")]
-public class TutorialSequence : ScriptableObject
+public class TutorialSequenceScriptableObject : ScriptableObject
 {
     public string sequenceName;
 

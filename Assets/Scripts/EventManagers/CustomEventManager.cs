@@ -40,10 +40,10 @@ public class CustomEventManager : MonoBehaviour {
     }
 
     // Tutorial Sequence
-    public event Action<TutorialSequence> onStartTutorialSequence;
-    public void StartTutorialSequence(TutorialSequence tutorialSequence) {
+    public event Action<TutorialSequenceScriptableObject> onStartTutorialSequence;
+    public void StartTutorialSequence(TutorialSequenceScriptableObject TutorialSequenceScriptableObject) {
         if (this.onStartTutorialSequence != null) {
-            this.onStartTutorialSequence(tutorialSequence);
+            this.onStartTutorialSequence(TutorialSequenceScriptableObject);
         }
     }
 

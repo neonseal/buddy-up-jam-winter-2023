@@ -15,5 +15,5 @@ public class PlushieScriptableObject : ScriptableObject
     public Dialogue issueDialogue;
     public ClientCard resolutionClientCard;
     public bool hasTutorialDialogue;
-    public TutorialSequence tutorialSequence; 
+    public TutorialSequenceScriptableObject TutorialSequenceScriptableObject; 
 }
