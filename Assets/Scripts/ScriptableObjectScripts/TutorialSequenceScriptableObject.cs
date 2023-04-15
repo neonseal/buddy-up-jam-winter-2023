@@ -1,16 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using GameData;
 
 [CreateAssetMenu (fileName = "Tutorial Sequence", menuName = "Scriptable Objects/Tutorial Sequence")]
 public class TutorialSequenceScriptableObject : ScriptableObject
 {
     public string sequenceName;
 
-    [TextArea(3, 10)]
-    public string[] sentences;
+    public bool hasRequiredTool;
+    public ToolType requiredToolType;
 
-    public Vector3[] dialoguePositions;
-    public Vector3[] arrowPositions;
-    public Vector3[] arrowRotations;
+    [TextArea(3, 10)]
+    public string[] stepTextSet;
+    public Vector2[] tutorialDialogueLocations;
+    public Vector2[] tutorialArrowLocations;
+    public int[] arrowZRotationValue;
 }

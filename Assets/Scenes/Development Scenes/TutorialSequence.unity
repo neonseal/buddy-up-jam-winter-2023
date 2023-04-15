@@ -4593,6 +4593,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentObject: {fileID: 515473571}
   tutorialStepPrefab: {fileID: 6000077438314716359, guid: 7ac9e3831bf26a644b7e56f019f31ce6, type: 3}
+  tutorialArrowPrefab: {fileID: 815703068292625465, guid: 2b3d0d2333d40c24687706d74e5224a9, type: 3}
   startTutorialButton: {fileID: 1952565415}
   testSequence: {fileID: 11400000, guid: 5c73e73bb582b9545b93b877c4c1d481, type: 2}
 --- !u!1 &1816598626
