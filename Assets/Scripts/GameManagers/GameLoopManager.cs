@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class GameLoopManager : MonoBehaviour {
     [SerializeField]
-    private DialogueManager dialogueManager;
+    private ClientDialogueManager dialogueManager;
     [SerializeField]
     private List<PlushieScriptableObject> plushieList;
     [SerializeField]
@@ -51,7 +51,7 @@ public class GameLoopManager : MonoBehaviour {
         currentPlushieScriptableObject = plushieList[plushieListCursor];
 
         // Set client dialogue font
-        this.dialogueManager.SetClientFont(currentPlushieScriptableObject.clientFont);
+        this.dialogueManager.SetClientStyling(currentPlushieScriptableObject);
 
         yield return new WaitForSeconds(.5f);
 

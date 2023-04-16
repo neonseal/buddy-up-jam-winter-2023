@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class DialogueManager : MonoBehaviour {
+public class ClientDialogueManager : MonoBehaviour {
     [Header("UI Components")]
     [SerializeField]
     private TMP_Text nameText;
@@ -12,23 +12,52 @@ public class DialogueManager : MonoBehaviour {
     private TMP_Text dialogueText;
     [SerializeField]
     private Button continueButton;
+    [SerializeField]
+    private Slider fontToggle;
 
     [Header("Animation Variables")]
     [SerializeField]
     private Animator animator;
+    private float defaultAnimationDelay;
+    private float animationDelay;
+    private bool animationPlaying;
     private Queue<string> sentences;
     private bool clientFontVisible;
 
     [Header("Font Variables")]
     private TMP_FontAsset openDyslexicFont;
     private TMP_FontAsset clientFont;
+    private int clientTitleSize;
+    private int clientFontSize;
+    private int openDyslexicTitleSize;
+    private int openDyslexicFontSize;
+
 
     private PlushieScriptableObject currentPlushie;
 
+    // Setup singleton pattern
+    private static ClientDialogueManager current;
+    public static ClientDialogueManager Current {
+        get {
+            if (current == null) {
+                current = FindAnyObjectByType(typeof(ClientDialogueManager)) as ClientDialogueManager;
+            }
+            return current;
+        }
+        set { current = value; }
+    }
+
     private void Awake() {
         sentences = new Queue<string>();
+        defaultAnimationDelay = 0.025f;
+        animationDelay = defaultAnimationDelay;
+        animationPlaying = false;
+
         clientFontVisible = true;
         openDyslexicFont = Resources.Load<TMP_FontAsset>("Fonts/OpenDyslexic3-Regular SDF");
+        openDyslexicTitleSize = 40;
+        openDyslexicFontSize = 28;
+
         continueButton.onClick.AddListener(DisplayNextSentence);
         CustomEventManager.Current.onTriggerDialogue += StartDialogue;
 
@@ -88,24 +117,27 @@ public class DialogueManager : MonoBehaviour {
         PlushieLifeCycleEventManager.Current.generatePlushie(currentPlushie);
     }
 
-    private void SetFont(TMP_FontAsset font) {
-        nameText.font = font;
-        dialogueText.font = font;
+    private void SetFont(bool clientFontVisibility) {
+        // Update client font visible boolean 
+        this.clientFontVisible = clientFontVisibility;
+
+        nameText.font = this.clientFontVisible ? this.clientFont : this.openDyslexicFont;
+        nameText.fontSize = this.clientFontVisible ? this.clientTitleSize : this.openDyslexicTitleSize;
+
+        dialogueText.font = this.clientFontVisible ? this.clientFont : this.openDyslexicFont;
+        dialogueText.fontSize = this.clientFontVisible ? this.clientFontSize : this.openDyslexicFontSize;
     }
 
-    public void SetClientFont(TMP_FontAsset font) {
-        this.clientFont = font;
-        this.SetFont(font);
+    public void SetClientStyling(PlushieScriptableObject clientPlushieObject) {
+        this.clientFontVisible = true;
+        this.clientFont = clientPlushieObject.clientFont;
+        this.clientFontSize = clientPlushieObject.dialogueFontSize;
+        this.clientTitleSize = clientPlushieObject.nameFontSize;
+        this.SetFont(this.clientFont);
     }
 
     public void SwitchFonts() {
         // Switch to Open Dyslexic if showing client specific font
-        if (clientFontVisible) {
-            this.SetFont(openDyslexicFont);
-            this.clientFontVisible = false;
-        } else {
-            this.SetFont(clientFont);
-            this.clientFontVisible = true;
-        }
+        this.SetFont(!clientFontVisible);
     }
 }
