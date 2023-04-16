@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using GameData;
 
 public class CustomEventManager : MonoBehaviour {
     //Singleton setup
@@ -39,15 +38,6 @@ public class CustomEventManager : MonoBehaviour {
         }
     }
 
-    // Tutorial Sequence
-    public event Action<TutorialSequenceScriptableObject> onStartTutorialSequence;
-    public void StartTutorialSequence(TutorialSequenceScriptableObject TutorialSequenceScriptableObject) {
-        if (this.onStartTutorialSequence != null) {
-            this.onStartTutorialSequence(TutorialSequenceScriptableObject);
-        }
-    }
-
-
     // Music/Sound controls
     public event Action onPauseMusic;
     public void PauseMusic() {
@@ -60,14 +50,6 @@ public class CustomEventManager : MonoBehaviour {
     public void ChangeVolume() {
         if (this.onChangeVolume != null) {
             this.onChangeVolume();
-        }
-    }
-
-    // Mouse Held event
-    public event Action<bool> onMouseHoldStatusToggle;
-    public void mouseHoldStatusToggle(bool mouseHeld) {
-        if (this.onMouseHoldStatusToggle != null) {
-            this.onMouseHoldStatusToggle(mouseHeld);
         }
     }
 }

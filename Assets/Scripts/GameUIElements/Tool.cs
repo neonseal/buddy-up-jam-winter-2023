@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using GameData;
+using TutorialSequence;
 
 namespace GameUI {
     public class Tool : MonoBehaviour, IPointerClickHandler {
@@ -17,12 +18,23 @@ namespace GameUI {
         private ToolRoll toolRoll;
         private GameObject crosshair;
 
+        [Header("Tutorial Interaction Variables")]
+        private bool tutorialActionRequired;
+        private enum TutorialActionType { Select, Deselect };
+        private TutorialActionType requiredActionType;
+        private ToolType requiredToolType;
+
         void Awake() {
+            this.tutorialActionRequired = false;
+
             this.canvasManager = this.canvas.GetComponent<CanvasManager>();
             this.image = GetComponent<Image>();
             this.toolRoll = GetComponentInParent<ToolRoll>();
             // Array of tool pickup, place, and apply sounds
             this.audioSources = GetComponents<AudioSource>();
+
+            TutorialSequenceEventManager.Current.onRequireToolPickupContinueAction += SetupToolPickupRequiredAction;
+            TutorialSequenceEventManager.Current.onRequireToolDropContinueAction += SetupToolDropRequiredAction;
         }
 
         private void FixedUpdate() {
@@ -32,10 +44,16 @@ namespace GameUI {
                 float speed = 150f;
                 crosshair.transform.position = Vector3.Lerp(transform.position, mousePos, speed * Time.deltaTime);
             }
-
         }
 
         public void OnPointerClick(PointerEventData eventData) {
+            // Check if there is an required tutorial tool pickup action and user selecting wrong tool
+            if ((TutorialSequenceManager.tutorialActive && !tutorialActionRequired) ||
+                (tutorialActionRequired && this.toolScriptableObject.toolType != this.requiredToolType)
+            ) { 
+                return;
+            }
+
             // If nothing is held, set this gameobject/tool as the tool being held
             if (CanvasManager.currentTool == null) {
                 CanvasManager.currentTool = this.gameObject;
@@ -63,16 +81,12 @@ namespace GameUI {
                 );
                 this.crosshair.transform.position = mouseWorldPosition;
                 this.crosshair.transform.localScale = new Vector3(0.1f, 0.1f, 1);
-
-
-            }
-            // If you're clicking on the original slot, drops the tool
-            else if (this.gameObject == CanvasManager.currentTool) {
+            } else if (this.gameObject == CanvasManager.currentTool) {
+                // If you're clicking on the original slot, drops the tool
                 this.deselectTool();
                 Destroy(crosshair);
-            }
-            // If you're click on a new tool, swap to the new tool and return the old tool
-            else {
+            } else {
+                // If you're click on a new tool, swap to the new tool and return the old tool
                 CanvasManager.currentTool = this.gameObject;
                 CanvasManager.toolType = this.toolScriptableObject.toolType;
 
@@ -82,6 +96,18 @@ namespace GameUI {
                 audioSources[0].Play();
             }
             ToggleToolSprite();
+
+            // Check if tutorial interaction is required
+            if (tutorialActionRequired) {
+                tutorialActionRequired = false;
+                StartCoroutine(TutorialSequenceEventManager.Current.HandleTutorialRequiredActionCompletion());
+            }
+        }
+
+        public void deselectTool() {
+            CanvasManager.currentTool = null;
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            audioSources[1].Play();
         }
 
         private void SetToolCursor() {
@@ -138,10 +164,15 @@ namespace GameUI {
             }
         }
 
-        public void deselectTool() {
-            CanvasManager.currentTool = null;
-            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-            audioSources[1].Play();
+        private void SetupToolPickupRequiredAction(ToolType toolType) {
+            tutorialActionRequired = true;
+            requiredActionType = TutorialActionType.Select;
+            requiredToolType = toolType;
+        }
+        private void SetupToolDropRequiredAction(ToolType toolType) {
+            tutorialActionRequired = true;
+            requiredActionType = TutorialActionType.Deselect;
+            requiredToolType = toolType;
         }
     }
 }

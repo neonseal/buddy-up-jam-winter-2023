@@ -16,18 +16,26 @@ public class MendingGameController : MonoBehaviour {
     [SerializeField] private float duration;
     [SerializeField] private GameObject checklist;
 
+    [Header("Tutorial Interaction Variables")]
+    private bool tutorialActionRequired;
+
     private void Awake() {
         DOTween.Init();
-        duration = 0.35f;
+        duration = 0.85f;
 
         mendingGame = GetComponentInChildren<MendingGames>();
         lenseSpriteRenderer = mendingGame.gameObject.GetComponent<SpriteRenderer>();
 
         homePosition = this.transform.position;
         centerPosition = new Vector3(0, 0, -1);
+
+        tutorialActionRequired = false;
+
         DamageLifeCycleEventManager.Current.onStartRepairMiniGame += StartRepairMiniGame;
         MendingGameEventManager.Current.onMendingGameComplete += StopRepairMiniGame;
+        TutorialSequenceEventManager.Current.onRequiredRepairCompletionAction += () => { tutorialActionRequired = true; } ;
     }
+
 
     private void StartRepairMiniGame(PlushieDamage plushieDamage, DamageType damageType) {
         // Check damage type to determine which repair game to create
@@ -54,5 +62,9 @@ public class MendingGameController : MonoBehaviour {
         DamageLifeCycleEventManager.Current.repairDamage_Complete(plushieDamage);
         this.checklist.SetActive(true);
 
+        if (tutorialActionRequired) {
+            tutorialActionRequired = false;
+            StartCoroutine(TutorialSequenceEventManager.Current.HandleTutorialRequiredActionCompletion());
+        }
     }
 }

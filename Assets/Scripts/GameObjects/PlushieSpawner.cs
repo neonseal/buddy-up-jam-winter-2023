@@ -28,7 +28,7 @@ public class PlushieSpawner : MonoBehaviour {
 
         // Trigger tutorial sequence if needed
         if (plushieScriptableObject.hasTutorialDialogue) {
-            CustomEventManager.Current.StartTutorialSequence(plushieScriptableObject.TutorialSequenceScriptableObject);
+            TutorialSequenceEventManager.Current.StartTutorialSequence(plushieScriptableObject.TutorialSequenceScriptableObject);
         }
     }
 }
