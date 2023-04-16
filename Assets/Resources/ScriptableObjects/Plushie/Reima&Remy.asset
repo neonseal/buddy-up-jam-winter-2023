@@ -16,7 +16,7 @@ MonoBehaviour:
   clientName: Reima & Remy
   clientFont: {fileID: 11400000, guid: 96ccb3f7823cb054dab436d699160ba1, type: 2}
   nameFontSize: 40
-  dialogueFontSize: 36
+  dialogueFontSize: 32
   lineSpacingValue: 0
   bolded: 0
   plushieSprite: {fileID: 21300000, guid: 6f819cd0cf8546a438b0d3844c9de999, type: 3}

@@ -55,12 +55,25 @@ public class ClientDialogueManager : MonoBehaviour {
 
         clientFontVisible = true;
         openDyslexicFont = Resources.Load<TMP_FontAsset>("Fonts/OpenDyslexic3-Regular SDF");
-        openDyslexicTitleSize = 40;
-        openDyslexicFontSize = 28;
+        openDyslexicTitleSize = 26;
+        openDyslexicFontSize = 22;
 
         continueButton.onClick.AddListener(DisplayNextSentence);
         CustomEventManager.Current.onTriggerDialogue += StartDialogue;
+        fontToggle.onValueChanged.AddListener(delegate { SwitchFonts(); });
+    }
 
+    private void Update() {
+        RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector2.zero);
+        if (hit.collider != null) {
+            Debug.Log(hit.collider.name);
+        }
+        
+
+        if (Input.GetMouseButtonDown(0) && animationPlaying && (hit.collider != null && hit.collider.name == "ClientDialogueBox")) {
+            //animationDelay = 0f;
+            Debug.Log("CLICK");
+        }
     }
 
     private void StartDialogue(PlushieScriptableObject plushieScriptableObject) {
@@ -104,11 +117,14 @@ public class ClientDialogueManager : MonoBehaviour {
 
     IEnumerator TypeSentence(string sentence) {
         dialogueText.text = "";
+        animationPlaying = true;
 
         foreach (char letter in sentence.ToCharArray()) {
             dialogueText.text += letter;
             yield return new WaitForSeconds(0.025f);
         }
+
+        animationPlaying = false;
     }
 
     private void EndDialogue() {

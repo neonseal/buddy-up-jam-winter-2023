@@ -20,8 +20,6 @@ namespace GameUI {
 
         [Header("Tutorial Interaction Variables")]
         private bool tutorialActionRequired;
-        private enum TutorialActionType { Select, Deselect };
-        private TutorialActionType requiredActionType;
         private ToolType requiredToolType;
 
         void Awake() {
@@ -33,8 +31,8 @@ namespace GameUI {
             // Array of tool pickup, place, and apply sounds
             this.audioSources = GetComponents<AudioSource>();
 
-            TutorialSequenceEventManager.Current.onRequireToolPickupContinueAction += SetupToolPickupRequiredAction;
-            TutorialSequenceEventManager.Current.onRequireToolDropContinueAction += SetupToolDropRequiredAction;
+            TutorialSequenceEventManager.Current.onRequireToolPickupContinueAction += SetupToolInteractionRequiredAction;
+            TutorialSequenceEventManager.Current.onRequireToolDropContinueAction += SetupToolInteractionRequiredAction;
         }
 
         private void FixedUpdate() {
@@ -164,14 +162,8 @@ namespace GameUI {
             }
         }
 
-        private void SetupToolPickupRequiredAction(ToolType toolType) {
+        private void SetupToolInteractionRequiredAction(ToolType toolType) {
             tutorialActionRequired = true;
-            requiredActionType = TutorialActionType.Select;
-            requiredToolType = toolType;
-        }
-        private void SetupToolDropRequiredAction(ToolType toolType) {
-            tutorialActionRequired = true;
-            requiredActionType = TutorialActionType.Deselect;
             requiredToolType = toolType;
         }
     }
