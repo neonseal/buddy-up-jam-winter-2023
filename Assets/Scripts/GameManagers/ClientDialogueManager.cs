@@ -14,6 +14,9 @@ public class ClientDialogueManager : MonoBehaviour {
     private Button continueButton;
     [SerializeField]
     private Slider fontToggle;
+    [SerializeField]
+    private Slider fontSizeToggle;
+
 
     [Header("Animation Variables")]
     [SerializeField]
@@ -31,7 +34,7 @@ public class ClientDialogueManager : MonoBehaviour {
     private int clientFontSize;
     private int openDyslexicTitleSize;
     private int openDyslexicFontSize;
-
+    private int largeFontSize;
 
     private PlushieScriptableObject currentPlushie;
 
@@ -57,28 +60,20 @@ public class ClientDialogueManager : MonoBehaviour {
         openDyslexicFont = Resources.Load<TMP_FontAsset>("Fonts/OpenDyslexic3-Regular SDF");
         openDyslexicTitleSize = 26;
         openDyslexicFontSize = 22;
+        largeFontSize = 50;
 
         continueButton.onClick.AddListener(DisplayNextSentence);
         CustomEventManager.Current.onTriggerDialogue += StartDialogue;
         fontToggle.onValueChanged.AddListener(delegate { SwitchFonts(); });
+        fontSizeToggle.onValueChanged.AddListener(delegate { SwitchFontSize(); });
     }
 
     private void Update() {
         RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector2.zero);
-        if (hit.collider != null) {
-            Debug.Log(hit.collider.name);
-        }
-        
 
         if (Input.GetMouseButtonDown(0) && animationPlaying && (hit.collider != null && hit.collider.name == "ClientDialogueBox")) {
-            //animationDelay = 0f;
-            Debug.Log("CLICK");
+            animationDelay = 0f;
         }
-    }
-
-    private void StartDialogue(PlushieScriptableObject plushieScriptableObject) {
-        this.currentPlushie = plushieScriptableObject;
-        StartCoroutine(StartDialogueRoutine(currentPlushie.issueDialogue));
     }
 
     public void DisplayNextSentence() {
@@ -86,6 +81,7 @@ public class ClientDialogueManager : MonoBehaviour {
             EndDialogue();
             return;
         }
+        animationDelay = defaultAnimationDelay;
 
         string sentence = sentences.Dequeue();
         StopAllCoroutines();
@@ -94,6 +90,19 @@ public class ClientDialogueManager : MonoBehaviour {
         if (sentences.Count == 0) {
             continueButton.gameObject.GetComponentInChildren<TMP_Text>().text = "END";
         }
+    }
+
+    public void SetClientStyling(PlushieScriptableObject clientPlushieObject) {
+        this.clientFontVisible = true;
+        this.clientFont = clientPlushieObject.clientFont;
+        this.clientFontSize = clientPlushieObject.dialogueFontSize;
+        this.clientTitleSize = clientPlushieObject.nameFontSize;
+        this.SetFont(this.clientFont);
+    }
+
+    private void StartDialogue(PlushieScriptableObject plushieScriptableObject) {
+        this.currentPlushie = plushieScriptableObject;
+        StartCoroutine(StartDialogueRoutine(currentPlushie.issueDialogue));
     }
 
     IEnumerator StartDialogueRoutine(Dialogue dialogue) {
@@ -121,7 +130,7 @@ public class ClientDialogueManager : MonoBehaviour {
 
         foreach (char letter in sentence.ToCharArray()) {
             dialogueText.text += letter;
-            yield return new WaitForSeconds(0.025f);
+            yield return new WaitForSeconds(animationDelay);
         }
 
         animationPlaying = false;
@@ -144,16 +153,15 @@ public class ClientDialogueManager : MonoBehaviour {
         dialogueText.fontSize = this.clientFontVisible ? this.clientFontSize : this.openDyslexicFontSize;
     }
 
-    public void SetClientStyling(PlushieScriptableObject clientPlushieObject) {
-        this.clientFontVisible = true;
-        this.clientFont = clientPlushieObject.clientFont;
-        this.clientFontSize = clientPlushieObject.dialogueFontSize;
-        this.clientTitleSize = clientPlushieObject.nameFontSize;
-        this.SetFont(this.clientFont);
-    }
-
-    public void SwitchFonts() {
+    private void SwitchFonts() {
         // Switch to Open Dyslexic if showing client specific font
         this.SetFont(!clientFontVisible);
+    }
+
+    private void SwitchFontSize() {
+        bool largeFontSelected = this.fontSizeToggle.value > 0;
+        int smallFontSize = this.clientFontVisible ? this.clientFontSize : this.openDyslexicFontSize;
+
+        dialogueText.fontSize = largeFontSelected ? this.largeFontSize : smallFontSize;
     }
 }
