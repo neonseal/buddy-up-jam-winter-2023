@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 using GameData;
 using GameUI;
-
+using UnityEngine.UI;
 
 // Primary Mending Repair Game Class
 // Handles generation and updating state during mini games
@@ -20,6 +20,13 @@ public class MendingGames : MonoBehaviour {
     [Range(0.1f, 2f)]
     [SerializeField] private float delta;
 
+    [Header("Stuffing Shader Textures")]
+    [SerializeField] private Texture2D unstuffedMaskBase;
+    [SerializeField] private Texture2D brush;
+    [SerializeField] private Material stuffingShader;
+    private Material currentMaterial;
+    private Texture2D templateStuffingMask;
+
     [Header("Game Component Collections")]
     // Set of nodes the player must make contact with while completing a dashed line
     List<GameObject> nodes;
@@ -33,6 +40,8 @@ public class MendingGames : MonoBehaviour {
     int activeDashSetIndex;
     bool linePreviouslyReset;
     ToolType requiredToolType;
+
+    [SerializeField] private Button stuffingGameButton;
 
     private void Awake() {
         // Instantiate lists
@@ -50,6 +59,8 @@ public class MendingGames : MonoBehaviour {
 
         // Setup mending game event listeners
         MendingGameEventManager.Current.onNodeTriggered += HandleNodeTrigger;
+
+        stuffingGameButton.onClick.AddListener(CreateStuffingGame);
     }
 
     public void CreateSewingGame(List<Vector3> targetPositions, PlushieDamage plushieDamage) {
@@ -76,6 +87,16 @@ public class MendingGames : MonoBehaviour {
             // Add to total dash set 
             dashSets.Add(dashes);
         }
+    }
+
+    public void CreateStuffingGame() {
+        Debug.Log("STUFFING GAME");
+        currentMaterial = GetComponent<SpriteRenderer>().material;
+        GetComponent<SpriteRenderer>().material.SetTexture("Unstuffed", unstuffedMaskBase);
+    }
+
+    private void CreateTexture() {
+
     }
 
     /* Clear all game elements and reset indexes */
