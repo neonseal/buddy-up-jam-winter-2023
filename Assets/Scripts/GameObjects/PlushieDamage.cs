@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GameData;
-using GameUI;
+using TutorialSequence;
 
 public class PlushieDamage : MonoBehaviour {
     // Fields
     private DamageType plushieDamageType;
-    private bool gameActive = false;
-
+    private bool tutorialActionRequired;
+    private bool gameActive;
     public bool GameActive {
         get { return gameActive; }
         set { gameActive = value; }
@@ -18,20 +18,19 @@ public class PlushieDamage : MonoBehaviour {
     internal SpriteRenderer plushieDamageSpriteRenderer;
 
     void Awake() {
+        tutorialActionRequired = false;
+        gameActive = false;
+
         this.plushieDamageSpriteRenderer = this.gameObject.AddComponent<SpriteRenderer>();
         plushieDamageSpriteRenderer.sortingLayerID = SortingLayer.NameToID("PlushieDamageLayer");
+
+        TutorialSequenceEventManager.Current.onRequireDamageSelectContinueAction += () => { tutorialActionRequired = true; };
     }
 
     // Start is called before the first frame update
     void Start() {
         this.initializeDamage();
         this.generateCollider();
-    }
-
-    private void initializeDamage() {
-        this.gameObject.name = this.plushieDamageType.ToString();
-        this.gameObject.tag = "Damage";
-        this.gameObject.layer = LayerMask.NameToLayer("Game Workspace");
     }
 
     public void changeDamageType(DamageType newDamageType) {
@@ -43,9 +42,10 @@ public class PlushieDamage : MonoBehaviour {
         Object.Destroy(this.gameObject);
     }
 
-    // Update is called once per frame
-    void Update() {
-
+    private void initializeDamage() {
+        this.gameObject.name = this.plushieDamageType.ToString();
+        this.gameObject.tag = "Damage";
+        this.gameObject.layer = LayerMask.NameToLayer("Game Workspace");
     }
 
     private void generateCollider() {
@@ -57,26 +57,38 @@ public class PlushieDamage : MonoBehaviour {
         collider.direction = CapsuleDirection2D.Horizontal;
     }
 
-    void OnMouseDown() {
-        if (!gameActive) {
-            // Pick correct routine
-            if (this.plushieDamageType == DamageType.SmallRip) {
-                //this.deletePlushieDamage();
-                gameActive = true;
-                DamageLifeCycleEventManager.Current.startRepairMiniGame(this, DamageType.SmallRip);
-            } else if (this.plushieDamageType == DamageType.LargeRip) {
-                //this.changeDamageType(DamageType.LargeRipMissingStuffing);
-                gameActive = true;
-                DamageLifeCycleEventManager.Current.startRepairMiniGame(this, DamageType.LargeRip);
-            } else if (this.plushieDamageType == DamageType.LargeRipMissingStuffing) {
-                //this.deletePlushieDamage();
-                gameActive = true;
-                DamageLifeCycleEventManager.Current.startRepairMiniGame(this, DamageType.LargeRipMissingStuffing);
-            } else if (this.plushieDamageType == DamageType.WornStuffing) {
-                //this.changeDamageType(DamageType.LargeRip);
-                gameActive = true;
-                DamageLifeCycleEventManager.Current.startRepairMiniGame(this, DamageType.WornStuffing);
-            }
+    private void OnMouseDown() {
+        // Don't open if already open on a tutorial is active and action is not yet required
+        if (gameActive || (TutorialSequenceManager.tutorialActive && !tutorialActionRequired)) {
+            return;
         }
+
+
+        // Pick correct routine
+        if (this.plushieDamageType == DamageType.SmallRip) {
+            //this.deletePlushieDamage();
+            gameActive = true;
+            DamageLifeCycleEventManager.Current.startRepairMiniGame(this, DamageType.SmallRip);
+        } else if (this.plushieDamageType == DamageType.LargeRip) {
+            //this.changeDamageType(DamageType.LargeRipMissingStuffing);
+            gameActive = true;
+            DamageLifeCycleEventManager.Current.startRepairMiniGame(this, DamageType.LargeRip);
+        } else if (this.plushieDamageType == DamageType.LargeRipMissingStuffing) {
+            //this.deletePlushieDamage();
+            gameActive = true;
+            DamageLifeCycleEventManager.Current.startRepairMiniGame(this, DamageType.LargeRipMissingStuffing);
+        } else if (this.plushieDamageType == DamageType.WornStuffing) {
+            //this.changeDamageType(DamageType.LargeRip);
+            gameActive = true;
+            DamageLifeCycleEventManager.Current.startRepairMiniGame(this, DamageType.WornStuffing);
+        }
+
+        // Check if tutorial interaction is required
+        if (tutorialActionRequired) {
+            tutorialActionRequired = false;
+            StartCoroutine(TutorialSequenceEventManager.Current.HandleTutorialRequiredActionCompletion());
+        }
+
     }
+
 }

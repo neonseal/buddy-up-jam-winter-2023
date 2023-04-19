@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using GameData;
+using TutorialSequence;
 
 public class ChecklistManager : MonoBehaviour {
     [Header("Checklist Components")]
@@ -14,27 +15,27 @@ public class ChecklistManager : MonoBehaviour {
     private GameObject checklist;
     [SerializeField]
     private GameObject checklistItemsArea;
+    [SerializeField] 
+    private Button submitButton;
     // Prefab of ChecklistStep
     [SerializeField]
     private GameObject checklistStepPrefab;
 
     private ChecklistStep[] steps;
-    private Button submitButton;
     private int checklistStepcount;
     private int repairCompletionCount;
+    private bool tutorialActionRequired;
 
     private void Awake() {
+        this.tutorialActionRequired = false;
         steps = GetComponentsInChildren<ChecklistStep>();
-        submitButton = checklist.GetComponentInChildren<Button>();
         this.submitButton.interactable = false;
         this.clickableNotepad.onClick.AddListener(HandleNotepadClick);
-    }
+        submitButton.onClick.AddListener(CompleteRepairButtonClick);
 
-    private void Start()
-    {
         DamageLifeCycleEventManager.Current.onGenerateDamage += populateChecklist;
         DamageLifeCycleEventManager.Current.onRepairDamage_Complete += incrementRepairCompletionCount;
-        submitButton.onClick.AddListener(CompleteRepairButtonClick);
+        TutorialSequenceEventManager.Current.onRequireJobCompletionAction += () => tutorialActionRequired = true;
     }
 
     private void Update() {
@@ -44,7 +45,9 @@ public class ChecklistManager : MonoBehaviour {
         if (
             Input.GetMouseButtonDown(0) &&
             this.checklist.activeInHierarchy && 
-            (hit.collider == null || hit.collider.name != "Checklist")
+            (hit.collider == null || hit.collider.name != "Checklist") &&
+            // If a tutorial is active, we don't want to hide the checklist prematurely
+            !TutorialSequenceManager.tutorialActive
         ) {
             this.checklist.SetActive(false);
         }
@@ -52,6 +55,7 @@ public class ChecklistManager : MonoBehaviour {
 
     private void HandleNotepadClick() {
         this.checklist.SetActive(true);
+        StartCoroutine(TutorialSequenceEventManager.Current.HandleTutorialRequiredActionCompletion());
     }
 
     // When all damage points have been repaired, the finish/submit button will be activated,
@@ -66,6 +70,11 @@ public class ChecklistManager : MonoBehaviour {
 
         // Set the button back to uninteractable
         this.submitButton.interactable = false;
+
+        if (tutorialActionRequired) {
+            tutorialActionRequired = false;
+            StartCoroutine(TutorialSequenceEventManager.Current.HandleTutorialRequiredActionCompletion());
+        }
     }
 
     // Listener method - add a checklist step to checklistItemsObject for each generation event
