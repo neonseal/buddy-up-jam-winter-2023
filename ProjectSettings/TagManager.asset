@@ -68,9 +68,9 @@ TagManager:
   - name: ToolLayer
     uniqueID: 650574839
     locked: 0
-  - name: MendingGameLayer
-    uniqueID: 1412819781
-    locked: 0
   - name: UILayer
     uniqueID: 1658616955
+    locked: 0
+  - name: MendingGameLayer
+    uniqueID: 1412819781
     locked: 0

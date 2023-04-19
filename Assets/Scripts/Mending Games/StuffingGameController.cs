@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class StuffingGameController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    [SerializeField] private Texture2D mainTex;
+    [SerializeField] private Texture2D unstuffedTex;
+
+    private void Start() {
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void OnMouseDown() {
+        Debug.Log("CLICK");
     }
 }
