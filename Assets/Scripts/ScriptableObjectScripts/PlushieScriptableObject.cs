@@ -19,8 +19,12 @@ public class PlushieScriptableObject : ScriptableObject
 
     [Header("Plushie/Damage Elements")]
     public Sprite plushieSprite;
+    public Vector3 plushieScale;
+
     public List<DamageType> damageTypeList;
+    public List<Vector2> damageColliderSizeList;
     public List<Vector2> damagePositionList;
+    public List<int> damageZRotationList;
 
     [Header("Issue and Resolution Elements")]
     public Dialogue issueDialogue;
