@@ -23,12 +23,6 @@ public class Plushie : MonoBehaviour
         this.plushieSpriteRenderer.sortingLayerID = SortingLayer.NameToID("PlushieLayer");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private void FixedUpdate() {
         if (this.isSendingOff) {
             this.transform.position = Vector2.Lerp(this.transform.position, this.sendOffDestinationCoordinate, Time.deltaTime * this.sendOffSpeed);
@@ -38,25 +32,26 @@ public class Plushie : MonoBehaviour
         }
     }
 
-    internal void AddPlushieDamageToScene(Vector2 position, DamageType damageType)
+    internal void AddPlushieDamageToScene(PlushieScriptableObject plushieScriptableObject, int index)
     {
         // Initialize damage as child GameObject
         GameObject plushieDamageGameObject = new GameObject();
 
         // Attach script for functions
         PlushieDamage plushieDamageScript = plushieDamageGameObject.AddComponent<PlushieDamage>();
+        plushieDamageScript.generateCollider(plushieScriptableObject.damageColliderSizeList[index], plushieScriptableObject.damageZRotationList[index]);
 
         // Assign initial type to plushieDamage child game object
-        plushieDamageScript.changeDamageType(damageType);
+        plushieDamageScript.changeDamageType(plushieScriptableObject.damageTypeList[index]);
 
         // Set local position of damage to be parameter floats x and y
-        plushieDamageGameObject.transform.localPosition = position;
+        plushieDamageGameObject.transform.localPosition = plushieScriptableObject.damagePositionList[index];
 
         // Add damage as a child GameObject of the plushie
         plushieDamageGameObject.transform.SetParent(this.transform);
 
         // Broadcast a damageGenerationEvent
-        DamageLifeCycleEventManager.Current.generateDamage(plushieDamageScript, damageType);
+        DamageLifeCycleEventManager.Current.generateDamage(plushieDamageScript, plushieScriptableObject.damageTypeList[index]);
     }
 
     private void sendOffPlushie() {

@@ -13,6 +13,10 @@ public class GameLoopManager : MonoBehaviour {
     private CardStack cardStackController;
     [SerializeField]
     private GameObject cardSpawner;
+    [SerializeField]
+    private Button startButton;
+    [SerializeField]
+    private GameObject title;
 
     private List<ClientCard> clientCardCollection;
     private PlushieScriptableObject currentPlushieScriptableObject;
@@ -43,6 +47,8 @@ public class GameLoopManager : MonoBehaviour {
 
     // Update the scene to bring in a new customer's plushie, note, and information
     private void StartGame() {
+        startButton.gameObject.SetActive(false);
+        title.SetActive(false);
         StartCoroutine(StartNextCustomerRoutine());
     }
 

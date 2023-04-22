@@ -30,12 +30,11 @@ public class PlushieDamage : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         this.initializeDamage();
-        this.generateCollider();
     }
 
     public void changeDamageType(DamageType newDamageType) {
         this.plushieDamageType = newDamageType;
-        this.plushieDamageSpriteRenderer.sprite = DamageDictionary.damageInfoDictionary[newDamageType].sprite;
+        //this.plushieDamageSpriteRenderer.sprite = DamageDictionary.damageInfoDictionary[newDamageType].sprite;
     }
 
     public void deletePlushieDamage() {
@@ -48,12 +47,14 @@ public class PlushieDamage : MonoBehaviour {
         this.gameObject.layer = LayerMask.NameToLayer("Game Workspace");
     }
 
-    private void generateCollider() {
+    public void generateCollider(Vector3 scale, int zRotation) {
         CapsuleCollider2D oldCollider = this.gameObject.GetComponent<CapsuleCollider2D>();
         if (oldCollider != null) {
             Object.Destroy(oldCollider);
         }
         CapsuleCollider2D collider = this.gameObject.AddComponent<CapsuleCollider2D>();
+        collider.transform.localScale = scale;
+        collider.transform.rotation = Quaternion.Euler(0, 0, zRotation);
         collider.direction = CapsuleDirection2D.Horizontal;
     }
 

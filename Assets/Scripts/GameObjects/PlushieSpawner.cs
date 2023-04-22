@@ -16,14 +16,13 @@ public class PlushieSpawner : MonoBehaviour {
         GameObject plushie = new GameObject();
         plushie.transform.SetParent(this.transform);
         plushie.name = plushieScriptableObject.plushieObjectName + "Plushie";
-        // REMOVE WHEN WE HAVE NEW SPRITES
-        plushie.transform.localScale = new Vector3(4, 4, 1);
+        plushie.transform.localScale = plushieScriptableObject.plushieScale;
 
         Plushie plushieComponent = plushie.AddComponent<Plushie>();
         plushieComponent.sprite = plushieScriptableObject.plushieSprite;
 
         for (int i = 0; i < plushieScriptableObject.damageTypeList.Count; i++) {
-            plushieComponent.AddPlushieDamageToScene(plushieScriptableObject.damagePositionList[i], plushieScriptableObject.damageTypeList[i]);
+            plushieComponent.AddPlushieDamageToScene(plushieScriptableObject, i);
         }
 
         // Trigger tutorial sequence if needed
