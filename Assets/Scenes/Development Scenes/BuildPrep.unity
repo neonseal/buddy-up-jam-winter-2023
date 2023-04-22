@@ -2556,7 +2556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickableNotepad: {fileID: 1902090894}
-  checklist: {fileID: 1902090892}
+  checklist: {fileID: 1016214616}
   checklistItemsArea: {fileID: 670234054}
   submitButton: {fileID: 813228017}
   checklistStepPrefab: {fileID: 5509794887063404665, guid: e969a62eb4d5dea4d85d485e187ca7b8, type: 3}
