@@ -48,7 +48,7 @@ public class MendingGameController : MonoBehaviour {
         };
         mendingGame.CreateSewingGame(targetPositions, plushieDamage);
 
-        this.transform.DOLocalMove(new Vector3(0, 0, -1), duration).SetEase(Ease.InCirc);
+        this.transform.DOLocalMove(new Vector3(-4.375f, 0, -1), duration).SetEase(Ease.InCirc);
         this.checklist.SetActive(true);
     }
 

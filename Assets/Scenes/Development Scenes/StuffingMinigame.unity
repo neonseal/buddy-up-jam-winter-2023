@@ -420,7 +420,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &113262340
 GameObject:
@@ -1538,7 +1538,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1981,6 +1981,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 85bb0b7c92d0b5c44bc6d465f920172c, type: 2}
   cardStackController: {fileID: 830442740}
   cardSpawner: {fileID: 1060796256}
+  startButton: {fileID: 2047841248}
+  title: {fileID: 1143475569}
 --- !u!4 &487327339
 Transform:
   m_ObjectHideFlags: 0
@@ -1994,7 +1996,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &582363600
 GameObject:
@@ -2101,7 +2103,7 @@ GameObject:
   - component: {fileID: 594913220}
   - component: {fileID: 594913223}
   - component: {fileID: 594913224}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ZoomLense
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2304,7 +2306,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainTex: {fileID: 2800000, guid: 3f75341b31a1d7844b259504f79c8f18, type: 3}
-  unstuffedTex: {fileID: 2800000, guid: 5b285c4891fdd19448a66dbcfe633dce, type: 3}
+  unstuffedTexBase: {fileID: 2800000, guid: af8bc8d3acf58e249860e1603d706181, type: 3}
+  stuffingBrush: {fileID: 2800000, guid: 31ef6652248efb04a8c2cf604b05fd9d, type: 3}
+  material: {fileID: 2100000, guid: fbb4ccd8a85d3524d8d944a86ce66f16, type: 2}
 --- !u!58 &594913224
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2318,7 +2322,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.000000052154064, y: -0.000000074505806}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.51
 --- !u!1 &652796749
@@ -2588,7 +2592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickableNotepad: {fileID: 1902090894}
-  checklist: {fileID: 1902090892}
+  checklist: {fileID: 1016214616}
   checklistItemsArea: {fileID: 670234054}
   submitButton: {fileID: 813228017}
   checklistStepPrefab: {fileID: 5509794887063404665, guid: e969a62eb4d5dea4d85d485e187ca7b8, type: 3}
@@ -2732,7 +2736,7 @@ Transform:
   m_Children:
   - {fileID: 1464325349}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &708446379
 GameObject:
@@ -3003,7 +3007,7 @@ RectTransform:
   m_Children:
   - {fileID: 1060796257}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4340,7 +4344,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1016214616
 GameObject:
@@ -5562,7 +5566,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1417274134}
   - component: {fileID: 1417274135}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: ZoomBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5577,7 +5581,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1417274133}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.89, y: -10.47, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.35, y: 0.35, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6513,7 +6517,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1816598626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: 10, z: 0}
+  m_LocalPosition: {x: -4.375, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6741,7 +6745,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1922354855
 GameObject:
@@ -7183,7 +7187,7 @@ Transform:
   m_Children:
   - {fileID: 367159580}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2047841245
 GameObject:
