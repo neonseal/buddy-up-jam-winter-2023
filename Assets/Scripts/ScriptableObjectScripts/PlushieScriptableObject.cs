@@ -18,7 +18,8 @@ public class PlushieScriptableObject : ScriptableObject
     public bool bolded;
 
     [Header("Plushie/Damage Elements")]
-    public Sprite plushieSprite;
+    public Sprite damagedPlushieSprite;
+    public Sprite repairedPlushieSprite;
     public Vector3 plushieScale;
 
     public List<DamageType> damageTypeList;

@@ -34,8 +34,6 @@ public class MendingGames : MonoBehaviour {
     bool linePreviouslyReset;
     ToolType requiredToolType;
 
-    [SerializeField] private Button stuffingGameButton;
-
     private void Awake() {
         // Instantiate lists
         nodes = new List<GameObject>();
