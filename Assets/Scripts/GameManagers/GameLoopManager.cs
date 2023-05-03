@@ -21,6 +21,7 @@ public class GameLoopManager : MonoBehaviour {
     private List<ClientCard> clientCardCollection;
     private PlushieScriptableObject currentPlushieScriptableObject;
     private int plushieListCursor;
+    private bool _isWorkingOnPlushie;
 
     #if UNITY_EDITOR
         [UnityEditor.Callbacks.DidReloadScripts]
@@ -38,11 +39,13 @@ public class GameLoopManager : MonoBehaviour {
     private void Start() {
         // Initialize plushie list cursor
         this.plushieListCursor = 0;
+        this._isWorkingOnPlushie = false;
         this.clientCardCollection = new List<ClientCard>();
 
         // Subscribe methods to event triggers
         CustomEventManager.Current.onGameStart += this.StartGame;
         PlushieLifeCycleEventManager.Current.onFinishPlushieRepair += this.PlushieSendoff;
+        PlushieLifeCycleEventManager.Current.onRingBell += this.receiveBellRing;
     }
 
     // Update the scene to bring in a new customer's plushie, note, and information
@@ -55,6 +58,7 @@ public class GameLoopManager : MonoBehaviour {
     IEnumerator StartNextCustomerRoutine() {
         // Set current plushie scriptable object
         currentPlushieScriptableObject = plushieList[plushieListCursor];
+        this._isWorkingOnPlushie = true;
 
         // Set client dialogue font
         this.dialogueManager.SetClientStyling(currentPlushieScriptableObject);
@@ -75,6 +79,7 @@ public class GameLoopManager : MonoBehaviour {
         yield return new WaitForSeconds(.4f);
         // Move plushie off screen and destroy it
         PlushieLifeCycleEventManager.Current.sendOffPlushie();
+        this._isWorkingOnPlushie = false;
 
 
         // Wait briefly
@@ -106,5 +111,11 @@ public class GameLoopManager : MonoBehaviour {
         Sequence sequence = DOTween.Sequence();
         sequence.Append(card.transform.DOLocalMove(new Vector3(0, targetY, -1), 1.5f).SetEase(Ease.InOutBack));
         DOTween.Play(sequence);
+    }
+
+    private void receiveBellRing() {
+        if (!this._isWorkingOnPlushie) {
+            this.StartCoroutine(StartNextCustomerRoutine());
+        }
     }
 }

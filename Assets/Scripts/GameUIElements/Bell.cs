@@ -20,5 +20,6 @@ public class Bell : MonoBehaviour
     private void bellClick()
     {
         Debug.Log("Ding!");
+        PlushieLifeCycleEventManager.Current.ringBell();
     }
 }
