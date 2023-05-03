@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using GameData;
-using GameUI;
-using UnityEngine.UI;
 
 // Primary Mending Repair Game Class
 // Handles generation and updating state during mini games

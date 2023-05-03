@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameData;
+using GameUI;
 
 public class StuffingGames : MonoBehaviour {
     [Header("Texture Variables")]
@@ -19,24 +21,7 @@ public class StuffingGames : MonoBehaviour {
     private float unstuffedAreaTotal;
     private float unstuffedAreaCurrent;
     private bool gameActive;
-
-    private void Awake() {
-        gameActive = true;
-        targets = new List<StuffingTarget>();
-
-        stuffingMaskTexture = new Texture2D(unstuffedTexBase.width, unstuffedTexBase.height);
-        stuffingMaskTexture.SetPixels(unstuffedTexBase.GetPixels());
-        stuffingMaskTexture.Apply();
-        material.SetTexture("_Mask", stuffingMaskTexture);
-
-        unstuffedAreaTotal = 0f;
-        for (int x = 0; x < unstuffedTexBase.width; x++) {
-            for (int y = 0; y < unstuffedTexBase.height; y++) {
-                unstuffedAreaTotal += unstuffedTexBase.GetPixel(x, y).g;
-            }
-        }
-        unstuffedAreaCurrent = unstuffedAreaTotal;
-    }
+    private ToolType requiredToolType;
 
     // Update for multiple smaller targets
     /* private void Update() {
@@ -115,8 +100,8 @@ public class StuffingGames : MonoBehaviour {
 
     // Update for a single large target
     private void Update() {
-        if (Input.GetMouseButton(0) && gameActive) {
-            if (GetStuffedAmount() > 0.15f) {
+        if (Input.GetMouseButton(0) && gameActive && CanvasManager.toolType == requiredToolType) {
+            if (GetStuffedAmount() > 0.05f) {
                 Vector3 position = Input.mousePosition;
                 position.z = 0.0f;
                 position = Camera.main.ScreenToWorldPoint(position);
@@ -124,10 +109,11 @@ public class StuffingGames : MonoBehaviour {
 
                 if (hit.collider != null) {
                     // Determine mouse position as percentage of collider extents 
-                    Vector2 targetPosition = this.transform.position;
-
-                    float percentX = position.x < 0 ? (position.x + 2.8f) / 2.8f : position.x / 2.8f;
-                    float percentY = position.y < 0 ? (position.y + 2.8f) / 2.8f : position.y / 2.8f;
+                    //float percentX = position.x < 0 ? (position.x + 2.8f) / 2.8f : position.x / 2.8f;
+                    //float percentY = position.y < 0 ? (position.y + 2.8f) / 2.8f : position.y / 2.8f;
+                   
+                    float percentX = (position.x + 4.15f) / 8.2f;
+                    float percentY = (position.y + 4.15f) / 8.2f;
 
                     int pixelX = (int)(percentX * 300);
                     int pixelY = (int)(percentY * 300);
@@ -167,7 +153,7 @@ public class StuffingGames : MonoBehaviour {
                 }
 
             } else {
-                // More than 85% cleaned -> Set remaining pixels and end game
+                // More than 95% cleaned -> Set remaining pixels and end game
                 gameActive = false;
                 Color32 stuffedColor = new Color32(0, 0, 0, 0);
                 Color32[] colors = stuffingMaskTexture.GetPixels32();
@@ -213,6 +199,35 @@ public class StuffingGames : MonoBehaviour {
             StuffingTarget stuffingTarget = new StuffingTarget(target, unstuffedAreaTotal, stuffingMaskTexture);
             targets.Add(stuffingTarget);
         }
+    }
+
+    public void StartGameRoutine() {
+        StartCoroutine(CreateStuffingGame());
+    }
+
+    public IEnumerator CreateStuffingGame() {
+        requiredToolType = ToolType.Stuffing;
+        targets = new List<StuffingTarget>();
+
+        stuffingMaskTexture = new Texture2D(unstuffedTexBase.width, unstuffedTexBase.height);
+        stuffingMaskTexture.SetPixels(unstuffedTexBase.GetPixels());
+        stuffingMaskTexture.Apply();
+
+        material.SetTexture("_Mask", stuffingMaskTexture);
+
+        this.gameObject.GetComponent<SpriteRenderer>().material = material;
+
+        unstuffedAreaTotal = 0f;
+        for (int x = 0; x < unstuffedTexBase.width; x++) {
+            for (int y = 0; y < unstuffedTexBase.height; y++) {
+                unstuffedAreaTotal += unstuffedTexBase.GetPixel(x, y).g;
+            }
+        }
+        unstuffedAreaCurrent = unstuffedAreaTotal;
+
+        // Wait briefly to allow game to animate and populate
+        yield return new WaitForSeconds(0.25f);
+        gameActive = true;
     }
 
     private float GetStuffedAmount() {

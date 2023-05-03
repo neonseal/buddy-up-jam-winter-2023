@@ -54,11 +54,7 @@ public class MendingGameController : MonoBehaviour {
                 mendingGame.CreateSewingGame(targetPositions, plushieDamage);
                 break;
             case DamageType.LargeRipMissingStuffing:
-                /*targetPositions = new List<Vector3> {
-                    new Vector3(lensePosition.x - 1.25f, lensePosition.y + 1.25f, -1),
-                    new Vector3(lensePosition.x + 1.25f, lensePosition.y - 1.25f, -1)
-                };
-                stuffingGame.CreateStuffingGameMultipleTargets(targetPositions, plushieDamage);*/
+                stuffingGame.StartGameRoutine();
                 break;
             case DamageType.WornStuffing:
                 break;

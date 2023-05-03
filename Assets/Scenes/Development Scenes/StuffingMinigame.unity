@@ -2322,7 +2322,7 @@ GameObject:
   - component: {fileID: 594913223}
   - component: {fileID: 594913224}
   m_Layer: 3
-  m_Name: ZoomLense_FullArea
+  m_Name: ZoomLense
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2462,7 +2462,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fbb4ccd8a85d3524d8d944a86ce66f16, type: 2}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2524,7 +2524,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainTex: {fileID: 2800000, guid: 3f75341b31a1d7844b259504f79c8f18, type: 3}
   unstuffedTexBase: {fileID: 2800000, guid: af8bc8d3acf58e249860e1603d706181, type: 3}
-  stuffingBrush: {fileID: 2800000, guid: 2b9edc97c8d39f547be8987bb7512fec, type: 3}
+  stuffingBrush: {fileID: 2800000, guid: 3668ddff5f5f3484f8b4d194a9194e57, type: 3}
   material: {fileID: 2100000, guid: fbb4ccd8a85d3524d8d944a86ce66f16, type: 2}
   stuffingTargetPrefab: {fileID: 6179064308317248151, guid: 265d74d065365ed459cbc09e41b0abcd, type: 3}
 --- !u!58 &594913224
@@ -2542,7 +2542,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.51
+  m_Radius: 1.5
 --- !u!1 &652796749
 GameObject:
   m_ObjectHideFlags: 0
