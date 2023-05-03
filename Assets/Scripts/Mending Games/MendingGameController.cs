@@ -54,7 +54,7 @@ public class MendingGameController : MonoBehaviour {
                 mendingGame.CreateSewingGame(targetPositions, plushieDamage);
                 break;
             case DamageType.LargeRipMissingStuffing:
-                stuffingGame.StartGameRoutine();
+                stuffingGame.StartGameRoutine(mendingGame, plushieDamage);
                 break;
             case DamageType.WornStuffing:
                 break;

@@ -10,10 +10,12 @@ public class StuffingGames : MonoBehaviour {
     [SerializeField] private Texture2D unstuffedTexBase;
     [SerializeField] private Texture2D stuffingBrush;
     [SerializeField] private Material material;
+    [SerializeField] private Material defaultMaterial;
 
-    [Header("Game Component Collections")]
+    [Header("Game Components")]
     [SerializeField] GameObject stuffingTargetPrefab;
     List<StuffingTarget> targets;
+    PlushieDamage currentPlushieDamage;
 
     [Header("State Management Variables")]
     private Texture2D stuffingMaskTexture;
@@ -22,6 +24,8 @@ public class StuffingGames : MonoBehaviour {
     private float unstuffedAreaCurrent;
     private bool gameActive;
     private ToolType requiredToolType;
+
+    private MendingGames mendingGameForTransfer;
 
     // Update for multiple smaller targets
     /* private void Update() {
@@ -164,8 +168,24 @@ public class StuffingGames : MonoBehaviour {
 
                 stuffingMaskTexture.SetPixels32(colors);
                 stuffingMaskTexture.Apply();
+
+                TransferToSewingGame();
             }
         }
+    }
+
+    private void TransferToSewingGame() {
+        SpriteRenderer spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
+        spriteRenderer.material = defaultMaterial;
+        Vector3 lensePosition = spriteRenderer.transform.position;
+        Debug.Log(lensePosition);
+
+        List<Vector3> targetPositions = new List<Vector3> {
+                    new Vector3(lensePosition.x - 1, lensePosition.y + 2, -1),
+                    new Vector3(lensePosition.x + 1, lensePosition.y, -1),
+                    new Vector3(lensePosition.x - 1, lensePosition.y - 2, -1),
+                };
+        mendingGameForTransfer.CreateSewingGame(targetPositions, currentPlushieDamage);
     }
 
     public void CreateStuffingGameMultipleTargets(List<Vector3> targetPositions, PlushieDamage plushieDamage) {
@@ -201,12 +221,14 @@ public class StuffingGames : MonoBehaviour {
         }
     }
 
-    public void StartGameRoutine() {
-        StartCoroutine(CreateStuffingGame());
+    public void StartGameRoutine(MendingGames mendingGame, PlushieDamage plushieDamage) {
+        StartCoroutine(CreateStuffingGame(mendingGame, plushieDamage));
     }
 
-    public IEnumerator CreateStuffingGame() {
+    public IEnumerator CreateStuffingGame(MendingGames mendingGame, PlushieDamage plushieDamage) {
         requiredToolType = ToolType.Stuffing;
+        mendingGameForTransfer = mendingGame;
+        currentPlushieDamage = plushieDamage;
         targets = new List<StuffingTarget>();
 
         stuffingMaskTexture = new Texture2D(unstuffedTexBase.width, unstuffedTexBase.height);
