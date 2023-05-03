@@ -41,8 +41,4 @@ public class ClientCard : MonoBehaviour, IPointerDownHandler {
         }
 
     }
-
-    private void OnBecameInvisible() {
-        Debug.Log("INVISIBLE");
-    }
 }

@@ -17,11 +17,23 @@ public class GameLoopManager : MonoBehaviour {
     private Button startButton;
     [SerializeField]
     private GameObject title;
+    [SerializeField]
+    private TutorialSequenceScriptableObject StartingTutorial;
 
     private List<ClientCard> clientCardCollection;
     private PlushieScriptableObject currentPlushieScriptableObject;
-    private int plushieListCursor;
+    private bool gameActive;
     private bool _isWorkingOnPlushie;
+
+    private int plushieListIndex;
+    public int PlushitListIndex {
+        get {
+            return plushieListIndex;
+        }
+        set {
+            plushieListIndex = value;
+        }
+    }
 
     #if UNITY_EDITOR
         [UnityEditor.Callbacks.DidReloadScripts]
@@ -33,12 +45,13 @@ public class GameLoopManager : MonoBehaviour {
     #endif
 
     private void Awake() {
+        gameActive = false;
         DOTween.Init();
     }
 
     private void Start() {
         // Initialize plushie list cursor
-        this.plushieListCursor = 0;
+        this.plushieListIndex = -1;
         this._isWorkingOnPlushie = false;
         this.clientCardCollection = new List<ClientCard>();
 
@@ -52,12 +65,14 @@ public class GameLoopManager : MonoBehaviour {
     private void StartGame() {
         startButton.gameObject.SetActive(false);
         title.SetActive(false);
-        StartCoroutine(StartNextCustomerRoutine());
+        gameActive = true;
+        TutorialSequenceEventManager.Current.StartTutorialSequence(StartingTutorial);
     }
 
     IEnumerator StartNextCustomerRoutine() {
+        plushieListIndex++;
         // Set current plushie scriptable object
-        currentPlushieScriptableObject = plushieList[plushieListCursor];
+        currentPlushieScriptableObject = plushieList[plushieListIndex];
         this._isWorkingOnPlushie = true;
 
         // Set client dialogue font
@@ -114,7 +129,7 @@ public class GameLoopManager : MonoBehaviour {
     }
 
     private void receiveBellRing() {
-        if (!this._isWorkingOnPlushie) {
+        if (!this._isWorkingOnPlushie && gameActive) {
             this.StartCoroutine(StartNextCustomerRoutine());
         }
     }

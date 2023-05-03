@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6079decdfbb6e3043a1c23bb7a56470f, type: 3}
-  m_Name: SewingGameTutorial
+  m_Name: SewingGame
   m_EditorClassIdentifier: 
   sequenceName: Sewing Game Tutorial
   hasRequiredTool: 1
   requiredToolType: 1
   stepTextSet:
-  - Welcome to Stuffie Workshop!
   - "This stuffed animal has a small cut. To repair it, you\u2019ll need to sew the
     tear shut."
   - Click on the damaged area to apply the magnifying lens.
@@ -27,9 +26,8 @@ MonoBehaviour:
   - Great! All the repairs are now complete.
   - "You can view required repairs here. Since all the repairs are done, click \u201CComplete
     Job\u201D to return the plushie to its owner."
-  requiredContinueActionSet: 0000000000000000010000000200000004000000030000000000000005000000
+  requiredContinueActionSet: 00000000020000000300000005000000040000000000000006000000
   tutorialDialogueLocations:
-  - {x: 0, y: -225}
   - {x: 0, y: -225}
   - {x: 450, y: 20}
   - {x: -490, y: -35}
@@ -39,11 +37,10 @@ MonoBehaviour:
   - {x: 100, y: -95}
   tutorialArrowLocations:
   - {x: -1, y: -1}
-  - {x: -1, y: -1}
   - {x: 140, y: -135}
   - {x: -780, y: -205}
   - {x: -205, y: 135}
   - {x: -780, y: -205}
   - {x: -1, y: -1}
   - {x: 420, y: -240}
-  arrowZRotationValue: ffffffffffffffff280000003700000074ffffff37000000ffffffff24ffffff
+  arrowZRotationValue: ffffffff280000003700000074ffffff37000000ffffffff24ffffff
