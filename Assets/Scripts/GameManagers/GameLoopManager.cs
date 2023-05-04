@@ -4,133 +4,129 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class GameLoopManager : MonoBehaviour {
-    [SerializeField]
-    private ClientDialogueManager dialogueManager;
-    [SerializeField]
-    private List<PlushieScriptableObject> plushieList;
-    [SerializeField]
-    private CardStack cardStackController;
-    [SerializeField]
-    private GameObject cardSpawner;
-    [SerializeField]
-    private Button startButton;
-    [SerializeField]
-    private GameObject title;
-    [SerializeField]
-    private TutorialSequenceScriptableObject StartingTutorial;
+namespace GameLoop {
+    public class GameLoopManager : MonoBehaviour {
+        internal static PlushieScriptableObject currentPlushieScriptableObject;
 
-    private List<ClientCard> clientCardCollection;
-    private PlushieScriptableObject currentPlushieScriptableObject;
-    private bool gameActive;
-    private bool _isWorkingOnPlushie;
+        [SerializeField]
+        private ClientDialogueManager dialogueManager;
+        [SerializeField]
+        private List<PlushieScriptableObject> plushieList;
+        [SerializeField]
+        private CardStack cardStackController;
+        [SerializeField]
+        private GameObject cardSpawner;
+        [SerializeField]
+        private Button startButton;
+        [SerializeField]
+        private GameObject title;
+        [SerializeField]
+        private TutorialSequenceScriptableObject StartingTutorial;
 
-    private int plushieListIndex;
-    public int PlushitListIndex {
-        get {
-            return plushieListIndex;
-        }
-        set {
-            plushieListIndex = value;
-        }
-    }
+        private List<ClientCard> clientCardCollection;
+        private bool gameActive;
+        private bool _isWorkingOnPlushie;
+        private int plushieListIndex;
 
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
         [UnityEditor.Callbacks.DidReloadScripts]
         private static void OnScriptsReloaded() {
             if (UnityEditor.EditorApplication.isPlaying) {
                 SceneHelper.ReloadScene();
             }
         }
-    #endif
+#endif
 
-    private void Awake() {
-        gameActive = false;
-        DOTween.Init();
-    }
+        private void Awake() {
+            gameActive = false;
+            DOTween.Init();
+        }
 
-    private void Start() {
-        // Initialize plushie list cursor
-        this.plushieListIndex = -1;
-        this._isWorkingOnPlushie = false;
-        this.clientCardCollection = new List<ClientCard>();
+        private void Start() {
+            // Initialize plushie list cursor
+            this.plushieListIndex = -1;
+            this._isWorkingOnPlushie = false;
+            this.clientCardCollection = new List<ClientCard>();
 
-        // Subscribe methods to event triggers
-        CustomEventManager.Current.onGameStart += this.StartGame;
-        PlushieLifeCycleEventManager.Current.onFinishPlushieRepair += this.PlushieSendoff;
-        PlushieLifeCycleEventManager.Current.onRingBell += this.receiveBellRing;
-    }
+            // Subscribe methods to event triggers
+            CustomEventManager.Current.onGameStart += this.StartGame;
+            PlushieLifeCycleEventManager.Current.onFinishPlushieRepair += this.PlushieSendoff;
+            PlushieLifeCycleEventManager.Current.onRingBell += this.receiveBellRing;
+        }
 
-    // Update the scene to bring in a new customer's plushie, note, and information
-    private void StartGame() {
-        startButton.gameObject.SetActive(false);
-        title.SetActive(false);
-        gameActive = true;
-        TutorialSequenceEventManager.Current.StartTutorialSequence(StartingTutorial);
-    }
+        // Update the scene to bring in a new customer's plushie, note, and information
+        private void StartGame() {
+            startButton.gameObject.SetActive(false);
+            title.SetActive(false);
+            gameActive = true;
+            TutorialSequenceEventManager.Current.StartTutorialSequence(StartingTutorial);
+        }
 
-    IEnumerator StartNextCustomerRoutine() {
-        plushieListIndex++;
-        // Set current plushie scriptable object
-        currentPlushieScriptableObject = plushieList[plushieListIndex];
-        this._isWorkingOnPlushie = true;
+        IEnumerator StartNextCustomerRoutine() {
+            plushieListIndex++;
+            // Set current plushie scriptable object
+            currentPlushieScriptableObject = plushieList[plushieListIndex];
+            this._isWorkingOnPlushie = true;
 
-        // Set client dialogue font
-        this.dialogueManager.SetClientStyling(currentPlushieScriptableObject);
+            // Set client dialogue font
+            this.dialogueManager.SetClientStyling(currentPlushieScriptableObject);
 
-        yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(.5f);
 
-        CustomEventManager.Current.TriggerDialogue(currentPlushieScriptableObject);
-    }
+            CustomEventManager.Current.TriggerDialogue(currentPlushieScriptableObject);
+        }
 
-    private void PlushieSendoff() {
-        StartCoroutine(PlushieSendoffRoutine());
-    }
+        private void PlushieSendoff() {
+            StartCoroutine(PlushieSendoffRoutine());
+        }
 
-    IEnumerator PlushieSendoffRoutine() {
-        /* Complete Repair and Send Plushie to Customer */
-        // Play repair complete fanfare
-        // Wait briefly
-        yield return new WaitForSeconds(.4f);
-        // Move plushie off screen and destroy it
-        PlushieLifeCycleEventManager.Current.sendOffPlushie();
-        this._isWorkingOnPlushie = false;
+        IEnumerator PlushieSendoffRoutine() {
+            /* Complete Repair and Send Plushie to Customer */
+            // Play repair complete fanfare
+            // Wait briefly
+            yield return new WaitForSeconds(.4f);
+            // Move plushie off screen and destroy it
+            PlushieLifeCycleEventManager.Current.sendOffPlushie();
+            this._isWorkingOnPlushie = false;
 
 
-        // Wait briefly
-        yield return new WaitForSeconds(.65f);
+            // Wait briefly
+            yield return new WaitForSeconds(.65f);
 
-        /* Show Client Resolution Card */
-        // Create resolution text object, and instantiate above the screen
-        ClientCard clientCard = currentPlushieScriptableObject.resolutionClientCard;
-        clientCard.name = currentPlushieScriptableObject.plushieObjectName + "ClientCard";
-        clientCard.gameObject.transform.localScale = new Vector3(5, 7, 1);
-        ClientCard newCard = Instantiate(clientCard, this.cardSpawner.transform.position, Quaternion.identity, this.cardStackController.transform);
+            /* Show Client Resolution Card */
+            // Create resolution text object, and instantiate above the screen
+            ClientCard clientCard = currentPlushieScriptableObject.resolutionClientCard;
+            clientCard.name = currentPlushieScriptableObject.plushieObjectName + "ClientCard";
+            clientCard.gameObject.transform.localScale = new Vector3(5, 7, 1);
+            ClientCard newCard = Instantiate(clientCard, this.cardSpawner.transform.position, Quaternion.identity, this.cardStackController.transform);
 
-        //yield return new WaitForSeconds(2f);
+            //yield return new WaitForSeconds(2f);
 
-        // Tween the card into view
-        Sequence sequence = DOTween.Sequence();
-        sequence.Append(newCard.transform.DOLocalMove(new Vector3(0, 0, -1), 1.5f).SetEase(Ease.OutBack));
-        DOTween.Play(sequence);
+            // Tween the card into view
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(newCard.transform.DOLocalMove(new Vector3(0, 0, -1), 1.5f).SetEase(Ease.OutBack));
+            DOTween.Play(sequence);
 
-        clientCardCollection.Add(newCard);
-    }
+            clientCardCollection.Add(newCard);
+        }
 
-    public void PlayCardAnimation() {
-        ClientCard card = clientCardCollection[0];
+        public void PlayCardAnimation() {
+            ClientCard card = clientCardCollection[0];
 
-        float yPos = card.transform.localPosition.y;
-        float targetY = yPos == 0f ? 1000f : 0f;
+            float yPos = card.transform.localPosition.y;
+            float targetY = yPos == 0f ? 1000f : 0f;
 
-        Sequence sequence = DOTween.Sequence();
-        sequence.Append(card.transform.DOLocalMove(new Vector3(0, targetY, -1), 1.5f).SetEase(Ease.InOutBack));
-        DOTween.Play(sequence);
-    }
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(card.transform.DOLocalMove(new Vector3(0, targetY, -1), 1.5f).SetEase(Ease.InOutBack));
+            DOTween.Play(sequence);
+        }
 
-    private void receiveBellRing() {
-        if (!this._isWorkingOnPlushie && gameActive) {
-            this.StartCoroutine(StartNextCustomerRoutine());
+        private void receiveBellRing() {
+            if (!this._isWorkingOnPlushie && gameActive) {
+                this.StartCoroutine(StartNextCustomerRoutine());
+            }
         }
     }
+
+
 }

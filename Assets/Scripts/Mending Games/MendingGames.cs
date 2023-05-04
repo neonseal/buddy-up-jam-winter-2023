@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using GameData;
+using GameLoop;
 
 // Primary Mending Repair Game Class
 // Handles generation and updating state during mini games
@@ -17,6 +18,7 @@ public class MendingGames : MonoBehaviour {
     [SerializeField] private float dashSize;
     [Range(0.1f, 2f)]
     [SerializeField] private float delta;
+    private SpriteRenderer spriteRenderer;
 
     [Header("Game Component Collections")]
     // Set of nodes the player must make contact with while completing a dashed line
@@ -36,6 +38,7 @@ public class MendingGames : MonoBehaviour {
         // Instantiate lists
         nodes = new List<GameObject>();
         dashSets = new List<List<GameObject>>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         // Set rendering variables 
         dashSize = 0.1f;
@@ -51,9 +54,14 @@ public class MendingGames : MonoBehaviour {
     }
 
     public void CreateSewingGame(List<Vector3> targetPositions, PlushieDamage plushieDamage) {
+        PlushieScriptableObject currentPlushie = GameLoopManager.currentPlushieScriptableObject;
+
         currentPlushieDamage = plushieDamage;
         gameInProgress = true;
         requiredToolType = ToolType.Needle;
+
+        this.spriteRenderer.sprite = currentPlushie.damageSprite;
+        int zRotation = currentPlushie.spriteZRotationValue;
 
         // Reset node collection
         if (nodes.Count > 0 || dashSets.Count > 0) {

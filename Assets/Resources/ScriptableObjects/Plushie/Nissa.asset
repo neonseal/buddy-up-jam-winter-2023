@@ -10,36 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 82c4c4978c304494fae9a086060f582a, type: 3}
-  m_Name: Tyr
+  m_Name: Nissa
   m_EditorClassIdentifier: 
-  plushieObjectName: Tyr
-  clientName: Tyr
-  clientFont: {fileID: 11400000, guid: 94f6219dad92e684eb9c7fac2998b705, type: 2}
-  nameFontSize: 50
-  dialogueFontSize: 36
+  plushieObjectName: Nissa
+  clientName: Nissa
+  clientFont: {fileID: 11400000, guid: 17cbf07fd66b0ec4da1047a66731af0d, type: 2}
+  nameFontSize: 48
+  dialogueFontSize: 38
   nameBolded: 0
   dialogueBolded: 0
-  lineSpacingValue: 0
-  characterSpacingValue: 0
+  lineSpacingValue: -14
+  characterSpacingValue: 2
   wordSpacingValue: 0
   damagedPlushieSprite: {fileID: 0}
   repairedPlushieSprite: {fileID: 0}
   plushieScale: {x: 0, y: 0, z: 0}
-  damageTypeList: 03000000000000000000000000000000
+  damageTypeList: 
   damageColliderSizeList: []
-  damagePositionList:
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
+  damagePositionList: []
   damageZRotationList: 
   issueDialogue:
-    name: Tyr
-    sentences:
-    - Hi, my neighbor was telling me that you repaired plushies. I was hoping you
-      could take a look at this guy.
-    - "He\u2019s been through a lot, five years in the military to be exact. Any
-      help you could provide would be greatly appreciated."
+    name: 
+    sentences: []
   resolutionClientCard: {fileID: 0}
   hasTutorialDialogue: 0
   TutorialSequenceScriptableObject: {fileID: 0}
