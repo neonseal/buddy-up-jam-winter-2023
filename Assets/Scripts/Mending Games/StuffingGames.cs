@@ -27,81 +27,6 @@ public class StuffingGames : MonoBehaviour {
 
     private MendingGames mendingGameForTransfer;
 
-    // Update for multiple smaller targets
-    /* private void Update() {
-         if (Input.GetMouseButton(0) && gameActive) {
-             Debug.Log("CLICK");
-             foreach (StuffingTarget target in targets) {
-                 Debug.Log(target.GetStuffedAmount());
-                 if (target.GetStuffedAmount() > 0.15f) {
-                     Vector3 position = Input.mousePosition;
-                     position.z = 0.0f;
-                     position = Camera.main.ScreenToWorldPoint(position);
-                     RaycastHit2D hit = Physics2D.Raycast(position, Vector2.zero);
-
-                     if (hit.collider != null) {
-                         // Determine mouse position as percentage of collider extents 
-                         Vector2 targetPosition = this.transform.position;
-
-                         float percentX = position.x < 0 ? (position.x + 2.8f) / 2.8f : position.x / 2.8f;
-                         float percentY = position.y < 0 ? (position.y + 2.8f) / 2.8f : position.y / 2.8f;
-
-                         int pixelX = (int)(percentX * 300);
-                         int pixelY = (int)(percentY * 300);
-
-
-                         Vector2Int paintPixelPosition = new Vector2Int(pixelX, pixelY);
-
-                         int paintPixelDistance = Mathf.Abs(paintPixelPosition.x - lastPaintPixelPosition.x) + Mathf.Abs(paintPixelPosition.y - lastPaintPixelPosition.y);
-                         int maxPaintDistance = 7;
-                         if (paintPixelDistance < maxPaintDistance) {
-                             // Painting too close to last position
-                             return;
-                         }
-                         lastPaintPixelPosition = paintPixelPosition;
-
-                         int pixelXOffset = pixelX - (stuffingBrush.width / 2);
-                         int pixelYOffset = pixelY - (stuffingBrush.height / 2);
-
-
-                         for (int x = 0; x < stuffingBrush.width; x++) {
-                             for (int y = 0; y < stuffingBrush.height; y++) {
-                                 Color pixelDirt = stuffingBrush.GetPixel(x, y);
-                                 Color pixelDirtMask = target.stuffingMaskTexture.GetPixel(pixelXOffset + x, pixelYOffset + y);
-
-                                 float removedAmount = pixelDirtMask.g - (pixelDirtMask.g * pixelDirt.g);
-                                 target.unstuffedAreaCurrent -= removedAmount;
-
-                                 target.stuffingMaskTexture.SetPixel(
-                                     pixelXOffset + x,
-                                     pixelYOffset + y,
-                                     new Color(0, pixelDirtMask.g * pixelDirt.g, 0)
-                                 );
-                             }
-                         }
-
-                         target.stuffingMaskTexture.Apply();
-                     }
-                 } else {
-                     // More than 85% cleaned -> Set remaining pixels and end game
-                     target.complete = true;
-                     Color32 stuffedColor = new Color32(0, 0, 0, 0);
-                     Color32[] colors = target.stuffingMaskTexture.GetPixels32();
-
-                     for (int i = 0; i < colors.Length; i++) {
-                         colors[i] = stuffedColor;
-                     }
-
-                     target.stuffingMaskTexture.SetPixels32(colors);
-                     target.stuffingMaskTexture.Apply();
-                 }
-             }
-         }
-
-         // Check if game is still active
-         gameActive = targets.FindIndex(t => t.complete == true) > -1;
-     }*/
-
     // Update for a single large target
     private void Update() {
         if (Input.GetMouseButton(0) && gameActive && CanvasManager.toolType == requiredToolType) {
@@ -113,11 +38,11 @@ public class StuffingGames : MonoBehaviour {
 
                 if (hit.collider != null) {
                     // Determine mouse position as percentage of collider extents 
-                    //float percentX = position.x < 0 ? (position.x + 2.8f) / 2.8f : position.x / 2.8f;
-                    //float percentY = position.y < 0 ? (position.y + 2.8f) / 2.8f : position.y / 2.8f;
+                    float percentX = position.x < 0 ? (position.x + 3.5f) / 3.5f : position.x / 3.5f;
+                    float percentY = position.y < 0 ? (position.y + 3.5f) / 3.5f : position.y / 3.5f;
                    
-                    float percentX = (position.x + 4.15f) / 8.2f;
-                    float percentY = (position.y + 4.15f) / 8.2f;
+                    //float percentX = (position.x + 4.2f) / 8.2f;
+                    //float percentY = (position.y + 4.2f) / 8.2f;
 
                     int pixelX = (int)(percentX * 300);
                     int pixelY = (int)(percentY * 300);

@@ -32,8 +32,8 @@ MonoBehaviour:
   damageColliderSizeList:
   - {x: 4, y: 1}
   damagePositionList:
-  - {x: -8.5, y: 0}
-  damageZRotationList: 5a000000
+  - {x: -3, y: -0.2}
+  damageZRotationList: 41000000
   issueDialogue:
     name: Reima & Remy
     sentences:

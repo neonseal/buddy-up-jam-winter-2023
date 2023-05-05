@@ -5182,7 +5182,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 3.02, y: 3.02}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -5216,7 +5216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59fbf0a5f8bc1a1499e5e12c328a8883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainTex: {fileID: 2800000, guid: 3f75341b31a1d7844b259504f79c8f18, type: 3}
+  mainTex: {fileID: 2800000, guid: e3feaf97fe22ead45927ba4af276b5c2, type: 3}
   unstuffedTexBase: {fileID: 2800000, guid: af8bc8d3acf58e249860e1603d706181, type: 3}
   stuffingBrush: {fileID: 2800000, guid: 3668ddff5f5f3484f8b4d194a9194e57, type: 3}
   material: {fileID: 2100000, guid: fbb4ccd8a85d3524d8d944a86ce66f16, type: 2}
