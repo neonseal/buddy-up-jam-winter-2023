@@ -12,15 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82c4c4978c304494fae9a086060f582a, type: 3}
   m_Name: Tyr
   m_EditorClassIdentifier: 
+  plushieObjectName: Tyr
+  clientName: Tyr
   clientFont: {fileID: 11400000, guid: 94f6219dad92e684eb9c7fac2998b705, type: 2}
-  plushieName: Tyr
-  plushieSprite: {fileID: 21300000, guid: 6f819cd0cf8546a438b0d3844c9de999, type: 3}
+  nameFontSize: 50
+  dialogueFontSize: 36
+  nameBolded: 0
+  dialogueBolded: 0
+  lineSpacingValue: 0
+  characterSpacingValue: 0
+  wordSpacingValue: 0
+  damagedPlushieSprite: {fileID: 0}
+  repairedPlushieSprite: {fileID: 0}
+  plushieScale: {x: 0, y: 0, z: 0}
   damageTypeList: 03000000000000000000000000000000
+  damageColliderSizeList: []
   damagePositionList:
   - {x: 0, y: 0}
   - {x: 0, y: 0}
   - {x: 0, y: 0}
   - {x: 0, y: 0}
+  damageZRotationList: 
   issueDialogue:
     name: Tyr
     sentences:
@@ -28,15 +40,6 @@ MonoBehaviour:
       could take a look at this guy.
     - "He\u2019s been through a lot, five years in the military to be exact. Any
       help you could provide would be greatly appreciated."
-  resolutionDialogue:
-    name: Tyr
-    sentences:
-    - "You\u2019re probably curious as to why a hardened Veteran like myself is carrying
-      around this fluffy little guy, right?"
-    - "It was a gift actually, from a little girl I\u2019d helped. Her village had
-      flooded and somehow she was separated from her family. It took two days, but
-      we managed to track them down. She was so grateful she gave me her favorite
-      plushie."
-    - "I, of course, tried to decline, but she wouldn\u2019t have it any other way.
-      Over the years I\u2019ve grown quite fond of the little thing. So, thank you
-      for helping me out."
+  resolutionClientCard: {fileID: 0}
+  hasTutorialDialogue: 0
+  TutorialSequenceScriptableObject: {fileID: 0}

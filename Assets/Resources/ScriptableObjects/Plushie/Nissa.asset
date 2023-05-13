@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82c4c4978c304494fae9a086060f582a, type: 3}
+  m_Name: Nissa
+  m_EditorClassIdentifier: 
+  plushieObjectName: Nissa
+  clientName: Nissa
+  clientFont: {fileID: 11400000, guid: 17cbf07fd66b0ec4da1047a66731af0d, type: 2}
+  nameFontSize: 48
+  dialogueFontSize: 38
+  nameBolded: 0
+  dialogueBolded: 0
+  lineSpacingValue: -14
+  characterSpacingValue: 2
+  wordSpacingValue: 0
+  damagedPlushieSprite: {fileID: 0}
+  repairedPlushieSprite: {fileID: 0}
+  plushieScale: {x: 0, y: 0, z: 0}
+  damageTypeList: 
+  damageColliderSizeList: []
+  damagePositionList: []
+  damageZRotationList: 
+  issueDialogue:
+    name: 
+    sentences: []
+  resolutionClientCard: {fileID: 0}
+  hasTutorialDialogue: 0
+  TutorialSequenceScriptableObject: {fileID: 0}
