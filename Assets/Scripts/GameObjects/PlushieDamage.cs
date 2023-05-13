@@ -24,7 +24,7 @@ public class PlushieDamage : MonoBehaviour {
         this.plushieDamageSpriteRenderer = this.gameObject.AddComponent<SpriteRenderer>();
         plushieDamageSpriteRenderer.sortingLayerID = SortingLayer.NameToID("PlushieDamageLayer");
 
-        TutorialSequenceEventManager.Current.onRequireDamageSelectContinueAction += () => { tutorialActionRequired = true; };
+        TutorialSequenceEventManager.Current.onRequireDamageSelectContinueAction += () => {tutorialActionRequired = true; };
     }
 
     // Start is called before the first frame update
@@ -60,10 +60,9 @@ public class PlushieDamage : MonoBehaviour {
 
     private void OnMouseDown() {
         // Don't open if already open on a tutorial is active and action is not yet required
-        if (gameActive || (TutorialSequenceManager.tutorialActive && !tutorialActionRequired)) {
+        if (gameActive || (TutorialSequenceManager.tutorialActive && !tutorialActionRequired)) { 
             return;
         }
-
 
         // Pick correct routine
         if (this.plushieDamageType == DamageType.SmallRip) {
@@ -89,7 +88,8 @@ public class PlushieDamage : MonoBehaviour {
             tutorialActionRequired = false;
             StartCoroutine(TutorialSequenceEventManager.Current.HandleTutorialRequiredActionCompletion());
         }
-
     }
+
+
 
 }

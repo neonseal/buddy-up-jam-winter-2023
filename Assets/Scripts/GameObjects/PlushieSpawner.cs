@@ -19,7 +19,7 @@ public class PlushieSpawner : MonoBehaviour {
         plushie.transform.localScale = plushieScriptableObject.plushieScale;
 
         Plushie plushieComponent = plushie.AddComponent<Plushie>();
-        plushieComponent.sprite = plushieScriptableObject.plushieSprite;
+        plushieComponent.sprite = plushieScriptableObject.damagedPlushieSprite;
 
         for (int i = 0; i < plushieScriptableObject.damageTypeList.Count; i++) {
             plushieComponent.AddPlushieDamageToScene(plushieScriptableObject, i);

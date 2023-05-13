@@ -12,13 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82c4c4978c304494fae9a086060f582a, type: 3}
   m_Name: Adara
   m_EditorClassIdentifier: 
+  plushieObjectName: Adara
+  clientName: Adara
   clientFont: {fileID: 11400000, guid: e71f969454a436d4090e473de784dace, type: 2}
-  plushieName: Adara
-  plushieSprite: {fileID: 21300000, guid: fdfe726b4c3a5324998f68f8025e6376, type: 3}
+  nameFontSize: 56
+  dialogueFontSize: 38
+  nameBolded: 1
+  dialogueBolded: 1
+  lineSpacingValue: -8
+  characterSpacingValue: 0
+  wordSpacingValue: 0
+  damagedPlushieSprite: {fileID: 0}
+  repairedPlushieSprite: {fileID: 0}
+  plushieScale: {x: 0, y: 0, z: 0}
   damageTypeList: 0000000002000000
+  damageColliderSizeList: []
   damagePositionList:
   - {x: 0, y: 0}
   - {x: 0, y: 0}
+  damageZRotationList: 
   issueDialogue:
     name: Adara
     sentences:
@@ -27,11 +39,6 @@ MonoBehaviour:
     - "On top of that, I accidently ripped one of the seams. I know it seems small,
       but I\u2019m afraid it\u2019s going to get worse. Do you think you can fix
       it?"
-  resolutionDialogue:
-    name: Adara
-    sentences:
-    - "It looks just like new, thank you! I\u2019m not a huge plushie fan, but when
-      I was younger I was in the hospital for a few months and my mother gave this
-      to me as a get well present."
-    - "Since then, it\u2019s traveled along with me and\u2026 well it means the world
-      to me. Thank you so much for your help."
+  resolutionClientCard: {fileID: 0}
+  hasTutorialDialogue: 0
+  TutorialSequenceScriptableObject: {fileID: 0}

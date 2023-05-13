@@ -9,6 +9,7 @@ namespace TutorialSequence {
     // Some tutorial steps require a specifc action to progress the sequence
     public enum TutorialActionRequiredContinueType {
         None,
+        RingBell,
         SelectDamage,
         SelectTool,
         DropTool,
@@ -44,6 +45,9 @@ namespace TutorialSequence {
         }
 
         public void StartTutorialSequence(TutorialSequenceScriptableObject newTutorialSequence) {
+            Destroy(this.tutorialDialogue);
+            Destroy(this.tutorialArrow);
+
             if (newTutorialSequence == null) {
                 Debug.LogError("Tutorial Sequence Scriptable Object must not be null");
             }
@@ -157,6 +161,9 @@ namespace TutorialSequence {
 
             // Check which type of action is required
             switch (this.currentTutorialSequence.requiredContinueActionSet[this.currentStepIndex]) {
+                case TutorialActionRequiredContinueType.RingBell:
+                    TutorialSequenceEventManager.Current.RequireRingBellContinueAction();
+                    break;
                 case TutorialActionRequiredContinueType.SelectDamage:
                     TutorialSequenceEventManager.Current.RequireDamageSelectContinueAction();
                     break;

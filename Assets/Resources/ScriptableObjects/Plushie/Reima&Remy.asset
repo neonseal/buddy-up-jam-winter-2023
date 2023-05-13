@@ -17,23 +17,30 @@ MonoBehaviour:
   clientFont: {fileID: 11400000, guid: 96ccb3f7823cb054dab436d699160ba1, type: 2}
   nameFontSize: 40
   dialogueFontSize: 32
+  nameBolded: 0
+  dialogueBolded: 0
   lineSpacingValue: 0
-  bolded: 0
-  plushieSprite: {fileID: 21300000, guid: 8a09c26c39bba3a498334bf5bc4f5f63, type: 3}
+  characterSpacingValue: 0
+  wordSpacingValue: 0
+  damagedPlushieSprite: {fileID: 21300000, guid: 68fc6f8a6d8f5654fb7912cde728580e, type: 3}
+  repairedPlushieSprite: {fileID: 21300000, guid: df8f78f54872bb3488ee38225d7ff1e0, type: 3}
   plushieScale: {x: 0.35, y: 0.35, z: 1}
+  damageSprite: {fileID: 21300000, guid: 81eef797521db4b42ab256d43d62eaa6, type: 3}
+  repairedSprite: {fileID: 21300000, guid: 4791330c79f41634d9082614de5d217c, type: 3}
+  spriteZRotationValue: -30
   damageTypeList: 00000000
   damageColliderSizeList:
   - {x: 4, y: 1}
   damagePositionList:
-  - {x: 0, y: -2}
-  damageZRotationList: 5a000000
+  - {x: -3, y: -0.2}
+  damageZRotationList: 41000000
   issueDialogue:
     name: Reima & Remy
     sentences:
     - Hello, my girlfriend and I just moved here from out of state and happened to
       see one of your fliers.
     - "During our move, I may have accidentally damaged one of Remy\u2019s favorite
-      plushies. Usually it wouldn\u2019t matter, we could just buy a replacement,
+      plushies.  Usually it wouldn\u2019t matter, we could just buy a replacement,
       but this one is special. "
     - Do you think you could take a look?
   resolutionClientCard: {fileID: 3708409553341289766, guid: 2d4dcde84829e1f49be5b0d2ef020b7d, type: 3}
