@@ -28,6 +28,14 @@ public sealed class PlushieLifeCycleEventManager
         }
     }
 
+    // All damage elements have been fixed - Update plushie sprite
+    public event Action onAllRepairsComplete;
+    public void allRepairsComplete() {
+        if (this.onAllRepairsComplete != null) {
+            this.onAllRepairsComplete();
+        }
+    }
+
     // Plushie overall repair complete event
     public event Action onFinishPlushieRepair;
     public void finishPlushieRepair()

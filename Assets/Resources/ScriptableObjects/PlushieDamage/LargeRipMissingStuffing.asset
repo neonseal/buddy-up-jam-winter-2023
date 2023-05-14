@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DamageTypeScriptableObject
   damageType: 3
   sprite: {fileID: 21300000, guid: 632ddac6f99dc854f9a728d03491e887, type: 3}
+  repairIncompleteTexture: {fileID: 0}
+  repairCompleteTexture: {fileID: 0}
   correctToolType: 1
-  damageChecklistMessage: Sew up the stuffed rip
+  damageChecklistMessage: Stuff and sew up the large rip

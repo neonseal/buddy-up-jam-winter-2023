@@ -17,11 +17,21 @@ MonoBehaviour:
   clientFont: {fileID: 11400000, guid: 7a1a354fbfc8a7649af4c1b26217fb75, type: 2}
   nameFontSize: 44
   dialogueFontSize: 36
+  nameBolded: 0
+  dialogueBolded: 0
   lineSpacingValue: 4
-  bolded: 1
-  damagedPlushieSprite: {fileID: 21300000, guid: 7c914641cfaf34943a160d1e5004eec1, type: 3}
-  repairedPlushieSprite: {fileID: 21300000, guid: 1b51e8c52ac91454b9c29320f0df4706, type: 3}
+  characterSpacingValue: 0
+  wordSpacingValue: 0
+  sewingIncompleteSprite: {fileID: 21300000, guid: 8e1477657686e174893dba5c69570383, type: 3}
+  sewingCompleteSprite: {fileID: 21300000, guid: 6b2dddf714e0d6e43b1a9b8709603460, type: 3}
+  stuffingIncompleteSprite: {fileID: 21300000, guid: c7b0c9a997a5ab34181ddb86ff614aed, type: 3}
+  stuffingCompleteSprite: {fileID: 21300000, guid: eaff31f775d744c40aed271bc9f102e4, type: 3}
+  cuttingIncompleteSprite: {fileID: 0}
+  cuttingCompleteSprite: {fileID: 0}
+  damagedPlushieSprite: {fileID: 21300000, guid: 883c6b5459e89384ba944438b7509116, type: 3}
+  repairedPlushieSprite: {fileID: 21300000, guid: f9c3e87947dd77b41ac4c511e3b42a46, type: 3}
   plushieScale: {x: 0.275, y: 0.275, z: 1}
+  spriteZRotationValue: 0
   damageTypeList: 03000000
   damageColliderSizeList:
   - {x: 2, y: 2}
