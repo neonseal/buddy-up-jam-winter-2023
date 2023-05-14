@@ -167,9 +167,11 @@ public class MendingGames : MonoBehaviour {
 
         // Calculate the appropriate rotation for the given node positions
         Vector3 normalizedNode = (endingNodePos - startingNodePos).normalized;
-        float angle = Mathf.Atan2(normalizedNode.x, normalizedNode.y) * Mathf.Rad2Deg;
-        gameObject.transform.rotation = Quaternion.Euler(Vector3.forward * (-Mathf.Sign(endingNodePos.x) * angle));
+        /*float angle = Mathf.Atan2(normalizedNode.x, normalizedNode.y) * Mathf.Rad2Deg;
+        float sign = -Mathf.Sign(endingNodePos.x);*/
+        float angle = endingNodePos.x > 0 ? 135 : -135;
 
+        gameObject.transform.rotation = Quaternion.Euler(Vector3.forward * (angle));
         // Add dash sprite
         SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/dash");
@@ -179,7 +181,7 @@ public class MendingGames : MonoBehaviour {
 
         // Add collider for completing mini game
         BoxCollider2D dashCollider = gameObject.AddComponent<BoxCollider2D>();
-        dashCollider.size = new Vector2(3f, 2f);
+        dashCollider.size = new Vector2(9f, 3f);
 
         // Add dash C# class
         Dash dash = gameObject.AddComponent<Dash>();

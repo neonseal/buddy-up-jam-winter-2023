@@ -41,16 +41,11 @@ public class Node : MonoBehaviour {
     }
 
     private void OnMouseOver() {
-        Debug.Log(Input.GetMouseButton(0) &&
-            !triggered &&
-            targetNode &&
-            CanvasManager.toolType == requiredToolType);
         if (Input.GetMouseButton(0) && 
             !triggered && 
             targetNode && 
             CanvasManager.toolType == requiredToolType
         ) {
-            Debug.Log("CLICK");
             triggered = true;
             MendingGameEventManager.Current.NodeTriggered(this);
         }
