@@ -20,6 +20,13 @@ public class PlushieScriptableObject : ScriptableObject
     public int characterSpacingValue;
     public int wordSpacingValue;
 
+    [Header("Plushie Texture Elements")]
+    public Texture2D sewingIncompleteTexture;
+    public Texture2D sewingCompleteTexture;
+    public Texture2D stuffingIncompleteTexture;
+    public Texture2D stuffingCompleteTexture;
+    public Texture2D cuttingIncompleteTexture;
+    public Texture2D cuttingCompleteTexture;
 
     [Header("Plushie/Damage Elements")]
     public Sprite damagedPlushieSprite;

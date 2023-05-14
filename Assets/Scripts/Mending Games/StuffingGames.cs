@@ -99,7 +99,6 @@ public class StuffingGames : MonoBehaviour {
         SpriteRenderer spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
         spriteRenderer.material = defaultMaterial;
         Vector3 lensePosition = spriteRenderer.transform.position;
-        Debug.Log(lensePosition);
 
         List<Vector3> targetPositions = new List<Vector3> {
                     new Vector3(lensePosition.x - 1, lensePosition.y + 2, -1),
