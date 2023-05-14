@@ -5202,8 +5202,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPrefab: {fileID: 9087557310337048614, guid: 32264638a4133e2419d0b5f5d53ac3d2, type: 3}
   dashPrefab: {fileID: 1891405508311996228, guid: ae4b126baad3d17439e280a8554d2676, type: 3}
-  dashSize: 0.1
-  delta: 0.5
+  dashSize: 0.04
+  delta: 0.4
 --- !u!114 &1215053122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5653,9 +5653,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueManager: {fileID: 1307563854}
   plushieList:
-  - {fileID: 11400000, guid: db43f4ace07ede94fb35023d3c4afad1, type: 2}
   - {fileID: 11400000, guid: 0aecdac5b4a82284ebb72c4ec63d03d6, type: 2}
   - {fileID: 11400000, guid: 69d5de8a6d5ad554f9b0f1052ecd0337, type: 2}
+  - {fileID: 11400000, guid: db43f4ace07ede94fb35023d3c4afad1, type: 2}
   - {fileID: 11400000, guid: 1037bb6a2bbcb0446ab9c37d558d863c, type: 2}
   - {fileID: 11400000, guid: 2c44d6e22b08a7e4e812914c36e9d905, type: 2}
   - {fileID: 11400000, guid: 85bb0b7c92d0b5c44bc6d465f920172c, type: 2}

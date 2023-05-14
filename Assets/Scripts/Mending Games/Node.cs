@@ -8,7 +8,7 @@ public class Node : MonoBehaviour {
     public bool targetNode { get; set; }
     public bool triggered { get; set; }
     public ToolType requiredToolType { get; set; }
-    private SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer { get; set; }
 
 
     private void Awake() {
@@ -41,11 +41,16 @@ public class Node : MonoBehaviour {
     }
 
     private void OnMouseOver() {
+        Debug.Log(Input.GetMouseButton(0) &&
+            !triggered &&
+            targetNode &&
+            CanvasManager.toolType == requiredToolType);
         if (Input.GetMouseButton(0) && 
             !triggered && 
             targetNode && 
             CanvasManager.toolType == requiredToolType
         ) {
+            Debug.Log("CLICK");
             triggered = true;
             MendingGameEventManager.Current.NodeTriggered(this);
         }

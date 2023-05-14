@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using GameData;
 using GameLoop;
+using UnityEngine.UI;
 
 // Primary Mending Repair Game Class
 // Handles generation and updating state during mini games
@@ -41,8 +42,8 @@ public class MendingGames : MonoBehaviour {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         // Set rendering variables 
-        dashSize = 0.1f;
-        delta = 0.5f;
+        dashSize = 0.04f;
+        delta = 0.4f;
 
         // Set progression variables
         targetNodeIndex = 0;
@@ -60,7 +61,7 @@ public class MendingGames : MonoBehaviour {
         gameInProgress = true;
         requiredToolType = ToolType.Needle;
 
-        this.spriteRenderer.sprite = currentPlushie.damageSprite;
+        this.spriteRenderer.sprite = currentPlushie.sewingIncompleteSprite;
         int zRotation = currentPlushie.spriteZRotationValue;
 
         // Reset node collection
@@ -115,6 +116,7 @@ public class MendingGames : MonoBehaviour {
             // Set starting node as first target
             if (i == 0) {
                 node.GetComponent<Node>().targetNode = true;
+                node.GetComponent<Node>().spriteRenderer.color = Color.blue;
             }
             node.GetComponent<Node>().requiredToolType = this.requiredToolType;
             outputNodes.Add(node);

@@ -22,11 +22,15 @@ MonoBehaviour:
   lineSpacingValue: 0
   characterSpacingValue: 0
   wordSpacingValue: 0
-  damagedPlushieSprite: {fileID: 21300000, guid: 68fc6f8a6d8f5654fb7912cde728580e, type: 3}
-  repairedPlushieSprite: {fileID: 21300000, guid: df8f78f54872bb3488ee38225d7ff1e0, type: 3}
+  sewingIncompleteSprite: {fileID: 21300000, guid: 54dc395d19b920f47bb5ae7bbac786fa, type: 3}
+  sewingCompleteSprite: {fileID: 21300000, guid: 544a3c0a29709464c9b613cfa101291c, type: 3}
+  stuffingIncompleteSprite: {fileID: 0}
+  stuffingCompleteSprite: {fileID: 0}
+  cuttingIncompleteSprite: {fileID: 0}
+  cuttingCompleteSprite: {fileID: 0}
+  damagedPlushieSprite: {fileID: 21300000, guid: 23a2469a333b94d4fa27b8ad342aef4a, type: 3}
+  repairedPlushieSprite: {fileID: 21300000, guid: b213de11068798245a93d177fecb20c9, type: 3}
   plushieScale: {x: 0.35, y: 0.35, z: 1}
-  damageSprite: {fileID: 21300000, guid: 81eef797521db4b42ab256d43d62eaa6, type: 3}
-  repairedSprite: {fileID: 21300000, guid: 4791330c79f41634d9082614de5d217c, type: 3}
   spriteZRotationValue: -30
   damageTypeList: 00000000
   damageColliderSizeList:
