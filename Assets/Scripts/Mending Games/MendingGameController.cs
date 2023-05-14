@@ -23,7 +23,7 @@ public class MendingGameController : MonoBehaviour {
 
     private void Awake() {
         DOTween.Init();
-        duration = 0.85f;
+        duration = .9f;
 
         mendingGame = GetComponentInChildren<MendingGames>();
         stuffingGame = GetComponentInChildren<StuffingGames>();
@@ -69,8 +69,7 @@ public class MendingGameController : MonoBehaviour {
     private void StopRepairMiniGame(PlushieDamage plushieDamage) {
         // Move and clear repair game
         this.transform.DOLocalMove(homePosition, duration).SetEase(Ease.InCirc);
-        plushieDamage.deletePlushieDamage();
-        mendingGame.ResetAllElements();
+        StartCoroutine(WaitAndClearLens(plushieDamage));
 
         // Update checklist
         DamageLifeCycleEventManager.Current.repairDamage_Complete(plushieDamage);
@@ -80,5 +79,11 @@ public class MendingGameController : MonoBehaviour {
             tutorialActionRequired = false;
             StartCoroutine(TutorialSequenceEventManager.Current.HandleTutorialRequiredActionCompletion());
         }
+    }
+
+    private IEnumerator WaitAndClearLens(PlushieDamage plushieDamage) {
+        yield return new WaitForSeconds(2f);
+        plushieDamage.deletePlushieDamage();
+        mendingGame.ResetAllElements();
     }
 }

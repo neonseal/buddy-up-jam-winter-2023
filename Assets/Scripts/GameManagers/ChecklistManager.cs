@@ -102,8 +102,11 @@ public class ChecklistManager : MonoBehaviour {
     // Listener method - increment repair completion count for each repair completion
     private void incrementRepairCompletionCount(PlushieDamage plushieDamage) {
         this.repairCompletionCount++;
+
+        // Check if all repairs are complete
         if (repairCompletionCount >= checklistStepcount) {
             this.submitButton.interactable = true;
+            PlushieLifeCycleEventManager.Current.allRepairsComplete();
         }
     }
 }

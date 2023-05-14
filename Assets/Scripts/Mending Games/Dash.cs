@@ -43,7 +43,7 @@ public class Dash : MonoBehaviour {
             spriteRenderer.color = Color.yellow;
             triggered = true;
             Sequence sequence = DOTween.Sequence();
-            sequence.Append(this.gameObject.transform.DOScale(.2f, 0.5f));
+            sequence.Append(this.gameObject.transform.DOScale(.15f, 0.25f));
             sequence.SetLoops(2, LoopType.Yoyo);
         }
     }

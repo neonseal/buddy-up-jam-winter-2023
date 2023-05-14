@@ -19,6 +19,7 @@ public class MendingGames : MonoBehaviour {
     [SerializeField] private float dashSize;
     [Range(0.1f, 2f)]
     [SerializeField] private float delta;
+    [SerializeField] private Material defaultMaterial;
     private SpriteRenderer spriteRenderer;
 
     [Header("Game Component Collections")]
@@ -56,6 +57,9 @@ public class MendingGames : MonoBehaviour {
 
     public void CreateSewingGame(List<Vector3> targetPositions, PlushieDamage plushieDamage) {
         PlushieScriptableObject currentPlushie = GameLoopManager.currentPlushieScriptableObject;
+
+        SpriteRenderer spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
+        spriteRenderer.material = defaultMaterial;
 
         currentPlushieDamage = plushieDamage;
         gameInProgress = true;
@@ -169,7 +173,7 @@ public class MendingGames : MonoBehaviour {
         Vector3 normalizedNode = (endingNodePos - startingNodePos).normalized;
         /*float angle = Mathf.Atan2(normalizedNode.x, normalizedNode.y) * Mathf.Rad2Deg;
         float sign = -Mathf.Sign(endingNodePos.x);*/
-        float angle = endingNodePos.x > 0 ? 135 : -135;
+        float angle = endingNodePos.x > startingNodePos.x ? 135 : -135;
 
         gameObject.transform.rotation = Quaternion.Euler(Vector3.forward * (angle));
         // Add dash sprite

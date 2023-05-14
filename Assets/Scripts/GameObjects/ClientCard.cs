@@ -14,13 +14,13 @@ public class ClientCard : MonoBehaviour, IPointerDownHandler {
 
     private void Awake() {
         DOTween.Init();
-        cycleLength = 1.5f;
+        cycleLength = 2f;
         inCenterView = true;
     }
 
     private void Start() {
         centerPosition = new Vector3(0, 0, -1);
-        boardPosition = new Vector3(775, 375, -1);
+        boardPosition = new Vector3(560, 325, -1);
     }
 
     private void Update() {
@@ -29,8 +29,8 @@ public class ClientCard : MonoBehaviour, IPointerDownHandler {
     public void OnPointerDown(PointerEventData eventData) {
         Sequence sequence = DOTween.Sequence();
         if (inCenterView) {
-            sequence.Append(this.gameObject.transform.DOScaleX(2f, cycleLength / 2));
-            sequence.Insert(0, this.gameObject.transform.DOScaleY(2.5f, cycleLength / 2));
+            sequence.Append(this.gameObject.transform.DOScaleX(1f, cycleLength / 2));
+            sequence.Insert(0, this.gameObject.transform.DOScaleY(1.25f, cycleLength / 2));
             sequence.Insert(0, this.gameObject.transform.DOLocalMove(boardPosition, cycleLength)).SetEase(Ease.InOutSine);
             inCenterView = false;
         } else {
