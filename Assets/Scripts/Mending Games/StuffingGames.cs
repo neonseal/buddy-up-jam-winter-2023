@@ -14,6 +14,7 @@ public class StuffingGames : MonoBehaviour {
 
     [Header("Game Components")]
     [SerializeField] GameObject stuffingTargetPrefab;
+    [SerializeField] float texturePosModifier = 3f;
     List<StuffingTarget> targets;
     PlushieDamage currentPlushieDamage;
 
@@ -30,7 +31,7 @@ public class StuffingGames : MonoBehaviour {
     // Update for a single large target
     private void Update() {
         if (Input.GetMouseButton(0) && gameActive && CanvasManager.toolType == requiredToolType) {
-            if (GetStuffedAmount() > 0.05f) {
+            if (GetStuffedAmount() > 0.1f) {
                 Vector3 position = Input.mousePosition;
                 position.z = 0.0f;
                 position = Camera.main.ScreenToWorldPoint(position);
@@ -38,15 +39,11 @@ public class StuffingGames : MonoBehaviour {
 
                 if (hit.collider != null) {
                     // Determine mouse position as percentage of collider extents 
-                    float percentX = position.x < 0 ? (position.x + 3.5f) / 3.5f : position.x / 3.5f;
-                    float percentY = position.y < 0 ? (position.y + 3.5f) / 3.5f : position.y / 3.5f;
-                   
-                    //float percentX = (position.x + 4.2f) / 8.2f;
-                    //float percentY = (position.y + 4.2f) / 8.2f;
+                    float percentX = position.x < 0 ? (position.x + texturePosModifier) / texturePosModifier : position.x / texturePosModifier;
+                    float percentY = position.y < 0 ? (position.y + texturePosModifier) / texturePosModifier : position.y / texturePosModifier;
 
                     int pixelX = (int)(percentX * 300);
                     int pixelY = (int)(percentY * 300);
-
 
                     Vector2Int paintPixelPosition = new Vector2Int(pixelX, pixelY);
 
@@ -60,7 +57,6 @@ public class StuffingGames : MonoBehaviour {
 
                     int pixelXOffset = pixelX - (stuffingBrush.width / 2);
                     int pixelYOffset = pixelY - (stuffingBrush.height / 2);
-
 
                     for (int x = 0; x < stuffingBrush.width; x++) {
                         for (int y = 0; y < stuffingBrush.height; y++) {

@@ -5156,7 +5156,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: fbb4ccd8a85d3524d8d944a86ce66f16, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5177,15 +5177,15 @@ SpriteRenderer:
   m_SortingLayerID: 1412819781
   m_SortingLayer: 9
   m_SortingOrder: 1
-  m_Sprite: {fileID: 0}
-  m_Color: {r: 1, g: 0.48584908, b: 0.78330076, a: 1}
+  m_Sprite: {fileID: 21300000, guid: c7b0c9a997a5ab34181ddb86ff614aed, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.02, y: 3.02}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &1215053121
@@ -5216,8 +5216,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59fbf0a5f8bc1a1499e5e12c328a8883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainTex: {fileID: 2800000, guid: e3feaf97fe22ead45927ba4af276b5c2, type: 3}
-  unstuffedTexBase: {fileID: 2800000, guid: af8bc8d3acf58e249860e1603d706181, type: 3}
+  mainTex: {fileID: 2800000, guid: c7b0c9a997a5ab34181ddb86ff614aed, type: 3}
+  unstuffedTexBase: {fileID: 2800000, guid: 0381897c4dc4dc542943db9c9a6feeca, type: 3}
   stuffingBrush: {fileID: 2800000, guid: 3668ddff5f5f3484f8b4d194a9194e57, type: 3}
   material: {fileID: 2100000, guid: fbb4ccd8a85d3524d8d944a86ce66f16, type: 2}
   defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
@@ -5237,7 +5237,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.5
+  m_Radius: 10
 --- !u!1 &1229305634
 GameObject:
   m_ObjectHideFlags: 0
@@ -5652,9 +5652,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueManager: {fileID: 1307563854}
   plushieList:
+  - {fileID: 11400000, guid: db43f4ace07ede94fb35023d3c4afad1, type: 2}
   - {fileID: 11400000, guid: 0aecdac5b4a82284ebb72c4ec63d03d6, type: 2}
   - {fileID: 11400000, guid: 69d5de8a6d5ad554f9b0f1052ecd0337, type: 2}
-  - {fileID: 11400000, guid: db43f4ace07ede94fb35023d3c4afad1, type: 2}
   - {fileID: 11400000, guid: 1037bb6a2bbcb0446ab9c37d558d863c, type: 2}
   - {fileID: 11400000, guid: 2c44d6e22b08a7e4e812914c36e9d905, type: 2}
   - {fileID: 11400000, guid: 85bb0b7c92d0b5c44bc6d465f920172c, type: 2}
