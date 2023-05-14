@@ -46,6 +46,7 @@ public class Node : MonoBehaviour {
             targetNode && 
             CanvasManager.toolType == requiredToolType
         ) {
+            spriteRenderer.color = Color.yellow;
             triggered = true;
             MendingGameEventManager.Current.NodeTriggered(this);
         }

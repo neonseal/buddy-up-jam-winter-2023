@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageType: 2
   sprite: {fileID: 0}
+  repairIncompleteTexture: {fileID: 0}
+  repairCompleteTexture: {fileID: 0}
   correctToolType: 0
-  damageChecklistMessage: Cut open the area with worn stuffing
+  damageChecklistMessage: Cut open and replace the worn stuffing
