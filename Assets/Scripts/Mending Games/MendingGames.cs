@@ -170,8 +170,8 @@ public class MendingGames : MonoBehaviour {
         gameObject.transform.parent = this.transform;
 
         // Calculate the appropriate rotation for the given node positions
-        Vector3 normalizedNode = (endingNodePos - startingNodePos).normalized;
-        /*float angle = Mathf.Atan2(normalizedNode.x, normalizedNode.y) * Mathf.Rad2Deg;
+        /*Vector3 normalizedNode = (endingNodePos - startingNodePos).normalized;
+        float angle = Mathf.Atan2(normalizedNode.x, normalizedNode.y) * Mathf.Rad2Deg;
         float sign = -Mathf.Sign(endingNodePos.x);*/
         float angle = endingNodePos.x > startingNodePos.x ? 135 : -135;
 
@@ -183,7 +183,10 @@ public class MendingGames : MonoBehaviour {
         spriteRenderer.sortingOrder = 10;
         spriteRenderer.color = Color.black;
 
-        // Add collider for completing mini game
+        // Add collider and rigidbody for completing mini game
+        Rigidbody2D rgbd2d = gameObject.AddComponent<Rigidbody2D>();
+        rgbd2d.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
+
         BoxCollider2D dashCollider = gameObject.AddComponent<BoxCollider2D>();
         dashCollider.size = new Vector2(9f, 3f);
 

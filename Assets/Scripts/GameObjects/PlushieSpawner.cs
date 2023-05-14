@@ -37,7 +37,6 @@ public class PlushieSpawner : MonoBehaviour {
     }
 
     private void UpdatePlushieOnRepair() {
-        Debug.Log("COMPLETE");
         this.currentPlushieObject.GetComponent<SpriteRenderer>().sprite = GameLoopManager.currentPlushieScriptableObject.repairedPlushieSprite;
     }
 }
