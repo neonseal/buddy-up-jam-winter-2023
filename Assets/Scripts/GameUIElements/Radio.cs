@@ -20,6 +20,8 @@ public class Radio : MonoBehaviour {
     private bool volumeDecreasing = true;
     private float currentVolume;
 
+    private float _volumneIncrementAngle = 57.4125f;
+
     private void Awake() {
         music = GetComponent<AudioSource>();
         currentVolume = music.volume;
@@ -40,11 +42,11 @@ public class Radio : MonoBehaviour {
 
     }
 
-    private void ChangeVolume() {
+    private void ChangeVolume() { //100 Volume: -145.75; 0 Volume: 83.9
         // If still decreasing, decrement volume and rotate knob
         if (volumeDecreasing) {
             music.volume -= 0.25f;
-            volumeKnob.transform.Rotate(Vector3.forward, 45f);
+            volumeKnob.transform.Rotate(Vector3.forward, this._volumneIncrementAngle);
 
             if (music.volume <= 0f) {
                 volumeDecreasing = false;
@@ -52,7 +54,7 @@ public class Radio : MonoBehaviour {
         } else {
             // Once reduced to zero, begin increasing until at max volume
             music.volume += 0.25f;
-            volumeKnob.transform.Rotate(Vector3.forward, -45f);
+            volumeKnob.transform.Rotate(Vector3.forward, -this._volumneIncrementAngle);
 
             if (music.volume >= 1f) {
                 volumeDecreasing = true;
