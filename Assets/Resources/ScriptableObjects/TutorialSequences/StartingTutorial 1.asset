@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6079decdfbb6e3043a1c23bb7a56470f, type: 3}
+  m_Name: StartingTutorial 1
+  m_EditorClassIdentifier: 
+  sequenceName: Game Start Tutorial
+  hasRequiredTool: 0
+  requiredToolType: 1
+  stepTextSet:
+  - Welcome to Stuffie Workshop!
+  - Here in your workshop, you repair your clients' stuffed animals, helping to bring
+    their best friends back to the former glory!
+  - Ring the bell to welcome your next client into the shop.
+  requiredContinueActionSet: 000000000000000001000000
+  tutorialDialogueLocations:
+  - {x: 0, y: -225}
+  - {x: 0, y: -225}
+  - {x: -25, y: -140}
+  tutorialArrowLocations:
+  - {x: -1, y: -1}
+  - {x: -1, y: -1}
+  - {x: 285, y: -295}
+  arrowZRotationValue: ffffffffffffffff87000000

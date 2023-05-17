@@ -14,12 +14,25 @@ public class PlushieScriptableObject : ScriptableObject
     public TMPro.TMP_FontAsset clientFont;
     public int nameFontSize;
     public int dialogueFontSize;
+    public bool nameBolded;
+    public bool dialogueBolded;
     public int lineSpacingValue;
-    public bool bolded;
+    public int characterSpacingValue;
+    public int wordSpacingValue;
+
+    [Header("Plushie Sprite Elements")]
+    public Sprite sewingIncompleteSprite;
+    public Sprite sewingCompleteSprite;
+    public Sprite stuffingIncompleteSprite;
+    public Sprite stuffingCompleteSprite;
+    public Sprite cuttingIncompleteSprite;
+    public Sprite cuttingCompleteSprite;
 
     [Header("Plushie/Damage Elements")]
-    public Sprite plushieSprite;
+    public Sprite damagedPlushieSprite;
+    public Sprite repairedPlushieSprite;
     public Vector3 plushieScale;
+    public int spriteZRotationValue;
 
     public List<DamageType> damageTypeList;
     public List<Vector2> damageColliderSizeList;

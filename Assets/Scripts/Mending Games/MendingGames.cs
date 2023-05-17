@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using GameData;
-using GameUI;
-
+using GameLoop;
+using UnityEngine.UI;
 
 // Primary Mending Repair Game Class
 // Handles generation and updating state during mini games
@@ -19,6 +19,8 @@ public class MendingGames : MonoBehaviour {
     [SerializeField] private float dashSize;
     [Range(0.1f, 2f)]
     [SerializeField] private float delta;
+    [SerializeField] private Material defaultMaterial;
+    private SpriteRenderer spriteRenderer;
 
     [Header("Game Component Collections")]
     // Set of nodes the player must make contact with while completing a dashed line
@@ -38,10 +40,11 @@ public class MendingGames : MonoBehaviour {
         // Instantiate lists
         nodes = new List<GameObject>();
         dashSets = new List<List<GameObject>>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         // Set rendering variables 
-        dashSize = 0.1f;
-        delta = 0.5f;
+        dashSize = 0.04f;
+        delta = 0.4f;
 
         // Set progression variables
         targetNodeIndex = 0;
@@ -53,9 +56,17 @@ public class MendingGames : MonoBehaviour {
     }
 
     public void CreateSewingGame(List<Vector3> targetPositions, PlushieDamage plushieDamage) {
+        PlushieScriptableObject currentPlushie = GameLoopManager.currentPlushieScriptableObject;
+
+        SpriteRenderer spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
+        spriteRenderer.material = defaultMaterial;
+
         currentPlushieDamage = plushieDamage;
         gameInProgress = true;
         requiredToolType = ToolType.Needle;
+
+        this.spriteRenderer.sprite = currentPlushie.sewingIncompleteSprite;
+        int zRotation = currentPlushie.spriteZRotationValue;
 
         // Reset node collection
         if (nodes.Count > 0 || dashSets.Count > 0) {
@@ -109,6 +120,7 @@ public class MendingGames : MonoBehaviour {
             // Set starting node as first target
             if (i == 0) {
                 node.GetComponent<Node>().targetNode = true;
+                node.GetComponent<Node>().spriteRenderer.color = Color.blue;
             }
             node.GetComponent<Node>().requiredToolType = this.requiredToolType;
             outputNodes.Add(node);
@@ -158,10 +170,12 @@ public class MendingGames : MonoBehaviour {
         gameObject.transform.parent = this.transform;
 
         // Calculate the appropriate rotation for the given node positions
-        Vector3 normalizedNode = (endingNodePos - startingNodePos).normalized;
+        /*Vector3 normalizedNode = (endingNodePos - startingNodePos).normalized;
         float angle = Mathf.Atan2(normalizedNode.x, normalizedNode.y) * Mathf.Rad2Deg;
-        gameObject.transform.rotation = Quaternion.Euler(Vector3.forward * (-Mathf.Sign(endingNodePos.x) * angle));
+        float sign = -Mathf.Sign(endingNodePos.x);*/
+        float angle = endingNodePos.x > startingNodePos.x ? 135 : -135;
 
+        gameObject.transform.rotation = Quaternion.Euler(Vector3.forward * (angle));
         // Add dash sprite
         SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/dash");
@@ -169,9 +183,12 @@ public class MendingGames : MonoBehaviour {
         spriteRenderer.sortingOrder = 10;
         spriteRenderer.color = Color.black;
 
-        // Add collider for completing mini game
+        // Add collider and rigidbody for completing mini game
+        Rigidbody2D rgbd2d = gameObject.AddComponent<Rigidbody2D>();
+        rgbd2d.constraints = RigidbodyConstraints2D.FreezePosition | RigidbodyConstraints2D.FreezeRotation;
+
         BoxCollider2D dashCollider = gameObject.AddComponent<BoxCollider2D>();
-        dashCollider.size = new Vector2(3f, 2f);
+        dashCollider.size = new Vector2(9f, 3f);
 
         // Add dash C# class
         Dash dash = gameObject.AddComponent<Dash>();

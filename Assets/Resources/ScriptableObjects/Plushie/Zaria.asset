@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82c4c4978c304494fae9a086060f582a, type: 3}
+  m_Name: Zaria
+  m_EditorClassIdentifier: 
+  plushieObjectName: Zaria
+  clientName: Zaria
+  clientFont: {fileID: 11400000, guid: 18b35a798da0c7d45ab71228491145b0, type: 2}
+  nameFontSize: 52
+  dialogueFontSize: 42
+  nameBolded: 0
+  dialogueBolded: 0
+  lineSpacingValue: 0
+  characterSpacingValue: 0
+  wordSpacingValue: 4
+  damagedPlushieSprite: {fileID: 0}
+  repairedPlushieSprite: {fileID: 0}
+  plushieScale: {x: 0, y: 0, z: 0}
+  damageTypeList: 
+  damageColliderSizeList: []
+  damagePositionList: []
+  damageZRotationList: 
+  issueDialogue:
+    name: 
+    sentences: []
+  resolutionClientCard: {fileID: 0}
+  hasTutorialDialogue: 0
+  TutorialSequenceScriptableObject: {fileID: 0}

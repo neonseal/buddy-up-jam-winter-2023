@@ -12,12 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82c4c4978c304494fae9a086060f582a, type: 3}
   m_Name: Kalani
   m_EditorClassIdentifier: 
+  plushieObjectName: Kalani
+  clientName: Kalani
   clientFont: {fileID: 11400000, guid: 7a1a354fbfc8a7649af4c1b26217fb75, type: 2}
-  plushieName: Kalani
-  plushieSprite: {fileID: 21300000, guid: fdfe726b4c3a5324998f68f8025e6376, type: 3}
+  nameFontSize: 44
+  dialogueFontSize: 36
+  nameBolded: 0
+  dialogueBolded: 0
+  lineSpacingValue: 4
+  characterSpacingValue: 0
+  wordSpacingValue: 0
+  sewingIncompleteSprite: {fileID: 21300000, guid: 8e1477657686e174893dba5c69570383, type: 3}
+  sewingCompleteSprite: {fileID: 21300000, guid: 6b2dddf714e0d6e43b1a9b8709603460, type: 3}
+  stuffingIncompleteSprite: {fileID: 21300000, guid: c7b0c9a997a5ab34181ddb86ff614aed, type: 3}
+  stuffingCompleteSprite: {fileID: 21300000, guid: eaff31f775d744c40aed271bc9f102e4, type: 3}
+  cuttingIncompleteSprite: {fileID: 0}
+  cuttingCompleteSprite: {fileID: 0}
+  damagedPlushieSprite: {fileID: 21300000, guid: 883c6b5459e89384ba944438b7509116, type: 3}
+  repairedPlushieSprite: {fileID: 21300000, guid: f9c3e87947dd77b41ac4c511e3b42a46, type: 3}
+  plushieScale: {x: 0.275, y: 0.275, z: 1}
+  spriteZRotationValue: 0
   damageTypeList: 03000000
+  damageColliderSizeList:
+  - {x: 2, y: 2}
   damagePositionList:
   - {x: 0, y: 0}
+  damageZRotationList: 00000000
   issueDialogue:
     name: Kalani
     sentences:
@@ -25,13 +45,6 @@ MonoBehaviour:
     - "I\u2019m not sure if you can help, but I\u2019d greatly appreciate it if you
       could take a look. As you can see from the large rip and missing stuffing it\u2019s
       not going to be easy."
-  resolutionDialogue:
-    name: Kalani
-    sentences:
-    - "You did it\u2026 It looks fantastic! She\u2019ll never even know."
-    - This was all my fault, my daughter loves that thing so as you can imagine it
-      gets its fair amount of use.
-    - Last night, I told her to leave it out so I could throw it in the wash, but
-      then the phone rang and I just kind of got side tracked. The next thing I knew,
-      our dog Rover was chomping down.
-    - Thankfully you were able to save it.
+  resolutionClientCard: {fileID: 0}
+  hasTutorialDialogue: 0
+  TutorialSequenceScriptableObject: {fileID: 0}

@@ -37,6 +37,13 @@ public class TutorialSequenceEventManager {
     }
 
     // Set up Required Continue Actions
+    public event Action onRequireRingBellContinueAction;
+    public void RequireRingBellContinueAction() {
+        if (this.onRequireRingBellContinueAction != null) {
+            this.onRequireRingBellContinueAction();
+        }
+    }
+
     public event Action onRequireDamageSelectContinueAction;
     public void RequireDamageSelectContinueAction() {
         if (this.onRequireDamageSelectContinueAction != null) {
