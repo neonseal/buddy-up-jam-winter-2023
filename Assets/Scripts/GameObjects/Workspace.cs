@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using GameLoop;
 using UnityEngine;
 
-public class PlushieSpawner : MonoBehaviour {
+public class Workspace : MonoBehaviour {
     private GameObject currentPlushieObject;
 
     private void Awake() {
