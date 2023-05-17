@@ -22,6 +22,8 @@ public class Radio : MonoBehaviour {
 
     private float _volumneIncrementAngle = 57.4125f;
 
+    private float _playKnobPauseRotation = 55.74f;
+
     private void Awake() {
         music = GetComponent<AudioSource>();
         currentVolume = music.volume;
@@ -35,8 +37,10 @@ public class Radio : MonoBehaviour {
 
     private void TogglePlayPause() {
         if (music.isPlaying) {
+            playPauseButton.transform.Rotate(Vector3.forward, -this._playKnobPauseRotation);
             music.Pause();
         } else {
+            playPauseButton.transform.Rotate(Vector3.forward, this._playKnobPauseRotation);
             music.Play();
         }
 
