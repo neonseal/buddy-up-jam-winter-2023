@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Scissor
   m_EditorClassIdentifier: 
   toolSlotSprite: {fileID: 21300000, guid: ad1899f3fc4fa2445a40657872715d40, type: 3}
-  toolCursorTexture: {fileID: 2800000, guid: 54a700a876b0c524e928191690b81e16, type: 3}
+  toolCursorTexture: {fileID: 2800000, guid: 4873e665317a93c4aa2b01fd793a84f3, type: 3}
   standardToolImage: {fileID: 21300000, guid: 56a92fbe5b7ff8843879fff640efc811, type: 3}
   selectedToolImage: {fileID: 0}
   toolType: 0

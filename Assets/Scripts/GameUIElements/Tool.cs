@@ -117,17 +117,17 @@ namespace GameUI {
                         this.toolScriptableObject.toolCursorTexture.width,
                         this.toolScriptableObject.toolCursorTexture.height
                     ) / 2f,
-                    CursorMode.Auto
+                    CursorMode.ForceSoftware
                 );
             } else {
-                // Set cursor at bottom left of sprite
+                // Set cursor at center of crosshair
                 Cursor.SetCursor(
                     this.toolScriptableObject.toolCursorTexture,
                     new Vector2(
-                        0f,
-                        this.toolScriptableObject.toolCursorTexture.height
+                        30f,
+                        30f
                     ),
-                    CursorMode.Auto
+                    CursorMode.ForceSoftware
                 );
             }
         }
