@@ -120,12 +120,12 @@ namespace GameUI {
                     CursorMode.ForceSoftware
                 );
             } else {
-                // Set cursor at center of crosshair
+                // Set cursor at crosshair
                 Cursor.SetCursor(
                     this.toolScriptableObject.toolCursorTexture,
                     new Vector2(
-                        30f,
-                        30f
+                        40f,
+                        29f
                     ),
                     CursorMode.ForceSoftware
                 );
