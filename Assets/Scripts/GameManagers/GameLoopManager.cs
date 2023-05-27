@@ -129,4 +129,12 @@ namespace GameLoop {
     }
 
 
+        private void OnDestroy()
+        {
+            // Unsubscribe all methods from event managers
+            CustomEventManager.Current.onGameStart -= this.StartGame;
+            PlushieLifeCycleEventManager.Current.onFinishPlushieRepair -= this.PlushieSendoff;
+            PlushieLifeCycleEventManager.Current.onRingBell -= this.receiveBellRing;
+        }
+    }
 }
