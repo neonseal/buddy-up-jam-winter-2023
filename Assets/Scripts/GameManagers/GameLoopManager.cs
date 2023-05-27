@@ -26,7 +26,7 @@ namespace GameLoop
         private TutorialSequenceScriptableObject StartingTutorial;
 
         private List<ClientCard> clientCardCollection;
-        private bool gameActive;
+        private bool isGameActive;
         private bool _isWorkingOnPlushie;
         private int plushieListIndex;
 
@@ -43,37 +43,40 @@ namespace GameLoop
 
         private void Awake()
         {
-            gameActive = false;
+            isGameActive = false;
             DOTween.Init();
-        }
-
-        private void Start()
-        {
             // Initialize plushie list cursor
             this.plushieListIndex = -1;
             this._isWorkingOnPlushie = false;
             this.clientCardCollection = new List<ClientCard>();
-
             // Subscribe methods to event triggers
             CustomEventManager.Current.onGameStart += this.StartGame;
+            // Send off plushie when repair is complete
             PlushieLifeCycleEventManager.Current.onFinishPlushieRepair += this.PlushieSendoff;
+            // Check for whether to send in next plushie or not (the bell rings regardless)
             PlushieLifeCycleEventManager.Current.onRingBell += this.receiveBellRing;
+        }
+
+        private void Start()
+        {
+
         }
 
         // Update the scene to bring in a new customer's plushie, note, and information
         private void StartGame()
         {
-            startButton.gameObject.SetActive(false);
-            title.SetActive(false);
-            gameActive = true;
+            this.startButton.gameObject.SetActive(false);
+            this.title.SetActive(false);
+            this.isGameActive = true;
+            // Start first tutorial
             TutorialSequenceEventManager.Current.StartTutorialSequence(StartingTutorial);
         }
 
         IEnumerator StartNextCustomerRoutine()
         {
-            plushieListIndex++;
+            this.plushieListIndex++;
             // Set current plushie scriptable object
-            currentPlushieScriptableObject = plushieList[plushieListIndex];
+            currentPlushieScriptableObject = this.plushieList[plushieListIndex];
             this._isWorkingOnPlushie = true;
 
             // Set client dialogue font
@@ -134,7 +137,7 @@ namespace GameLoop
 
         private void receiveBellRing()
         {
-            if (!this._isWorkingOnPlushie && gameActive)
+            if (!this._isWorkingOnPlushie && isGameActive)
             {
                 this.StartCoroutine(StartNextCustomerRoutine());
             }
