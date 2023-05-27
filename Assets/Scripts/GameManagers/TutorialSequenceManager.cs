@@ -19,7 +19,7 @@ namespace TutorialSequence {
 
     public class TutorialSequenceManager : MonoBehaviour {
         [Header("Public Status Fields")]
-        internal static bool tutorialActive;
+        internal static bool isTutorialActive;
         internal static bool hasRequiredTool;
         internal static ToolType tutorialToolType;
 
@@ -37,7 +37,8 @@ namespace TutorialSequence {
 
 
         private void Awake() {
-            tutorialActive = false;
+            // Initialize variables
+            isTutorialActive = false;
             currentStepIndex = 0;
 
             TutorialSequenceEventManager.Current.onStartTutorialSequence += StartTutorialSequence;
@@ -53,7 +54,7 @@ namespace TutorialSequence {
             }
 
             // Start new sequence
-            TutorialSequenceManager.tutorialActive = true;
+            TutorialSequenceManager.isTutorialActive = true;
             this.currentTutorialSequence = newTutorialSequence;
             this.currentStepIndex = 0;
 
@@ -135,7 +136,7 @@ namespace TutorialSequence {
                 }
 
                 // Reset public fields
-                TutorialSequenceManager.tutorialActive = false;
+                TutorialSequenceManager.isTutorialActive = false;
                 TutorialSequenceManager.hasRequiredTool = false;
             } else {
                 DisplayNextTutorialStep();

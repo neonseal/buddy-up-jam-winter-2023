@@ -46,7 +46,7 @@ namespace GameUI {
 
         public void OnPointerClick(PointerEventData eventData) {
             // Check if there is an required tutorial tool pickup action and user selecting wrong tool
-            if ((TutorialSequenceManager.tutorialActive && !tutorialActionRequired) ||
+            if ((TutorialSequenceManager.isTutorialActive && !tutorialActionRequired) ||
                 (tutorialActionRequired && this.toolScriptableObject.toolType != this.requiredToolType)
             ) { 
                 return;
