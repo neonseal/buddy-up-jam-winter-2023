@@ -41,8 +41,11 @@ namespace TutorialSequence {
             isTutorialActive = false;
             currentStepIndex = 0;
 
-            TutorialSequenceEventManager.Current.onStartTutorialSequence += StartTutorialSequence;
-            TutorialSequenceEventManager.Current.onContinueTutorialSequence += ContinueTutorialSequence;
+            // Subscribe to event managers
+            // Start tutorial sequence when event triggers
+            TutorialSequenceEventManager.Current.onStartTutorialSequence += this.StartTutorialSequence;
+            // Start next tutorial sequence when event triggers
+            TutorialSequenceEventManager.Current.onContinueTutorialSequence += this.ContinueTutorialSequence;
         }
 
         public void StartTutorialSequence(TutorialSequenceScriptableObject newTutorialSequence) {
@@ -63,14 +66,14 @@ namespace TutorialSequence {
                 TutorialSequenceManager.tutorialToolType = newTutorialSequence.requiredToolType;
             }
 
-            CreateOrUpdateTutorialSequenceStep();
-            CreateOrUpdateTutorialSequenceArrow();
-
+            // Set values of variables related to a specific tutorial step
+            this.CreateOrUpdateTutorialSequenceStep();
+            this.CreateOrUpdateTutorialSequenceArrow();
 
             this.continueButton = this.tutorialDialogue.GetComponentInChildren<Button>();
-            this.continueButton.onClick.AddListener(ContinueTutorialSequence);
+            this.continueButton.onClick.AddListener(this.ContinueTutorialSequence);
 
-            SetContinueRequirements();
+            this.SetContinueRequirements();
         }
 
         private void CreateOrUpdateTutorialSequenceStep() {
@@ -182,6 +185,12 @@ namespace TutorialSequence {
                     TutorialSequenceEventManager.Current.RequireJobCompletionAction();
                     break;
             }
+        }
+
+        private void OnDestroy() {
+            // Unsubscribe to event managers
+            TutorialSequenceEventManager.Current.onStartTutorialSequence -= this.StartTutorialSequence;
+            TutorialSequenceEventManager.Current.onContinueTutorialSequence -= this.ContinueTutorialSequence;
         }
     }
 }
