@@ -46,7 +46,7 @@ namespace GameUI {
 
         public void OnPointerClick(PointerEventData eventData) {
             // Check if there is an required tutorial tool pickup action and user selecting wrong tool
-            if ((TutorialSequenceManager.tutorialActive && !tutorialActionRequired) ||
+            if ((TutorialSequenceManager.isTutorialActive && !tutorialActionRequired) ||
                 (tutorialActionRequired && this.toolScriptableObject.toolType != this.requiredToolType)
             ) { 
                 return;
@@ -117,17 +117,17 @@ namespace GameUI {
                         this.toolScriptableObject.toolCursorTexture.width,
                         this.toolScriptableObject.toolCursorTexture.height
                     ) / 2f,
-                    CursorMode.Auto
+                    CursorMode.ForceSoftware
                 );
             } else {
-                // Set cursor at bottom left of sprite
+                // Set cursor at crosshair
                 Cursor.SetCursor(
                     this.toolScriptableObject.toolCursorTexture,
                     new Vector2(
-                        0f,
-                        this.toolScriptableObject.toolCursorTexture.height
+                        40f,
+                        29f
                     ),
-                    CursorMode.Auto
+                    CursorMode.ForceSoftware
                 );
             }
         }

@@ -60,7 +60,7 @@ public class PlushieDamage : MonoBehaviour {
 
     private void OnMouseDown() {
         // Don't open if already open on a tutorial is active and action is not yet required
-        if (gameActive || (TutorialSequenceManager.tutorialActive && !tutorialActionRequired)) { 
+        if (gameActive || (TutorialSequenceManager.isTutorialActive && !tutorialActionRequired)) { 
             return;
         }
 

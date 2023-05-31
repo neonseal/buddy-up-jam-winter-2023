@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-namespace GameLoop {
-    public class GameLoopManager : MonoBehaviour {
+namespace GameLoop
+{
+    public class GameLoopManager : MonoBehaviour
+    {
         internal static PlushieScriptableObject currentPlushieScriptableObject;
 
         [SerializeField]
@@ -24,48 +26,57 @@ namespace GameLoop {
         private TutorialSequenceScriptableObject StartingTutorial;
 
         private List<ClientCard> clientCardCollection;
-        private bool gameActive;
+        private bool isGameActive;
         private bool _isWorkingOnPlushie;
         private int plushieListIndex;
 
 #if UNITY_EDITOR
         [UnityEditor.Callbacks.DidReloadScripts]
-        private static void OnScriptsReloaded() {
-            if (UnityEditor.EditorApplication.isPlaying) {
+        private static void OnScriptsReloaded()
+        {
+            if (UnityEditor.EditorApplication.isPlaying)
+            {
                 SceneHelper.ReloadScene();
             }
         }
 #endif
 
-        private void Awake() {
-            gameActive = false;
+        private void Awake()
+        {
+            isGameActive = false;
             DOTween.Init();
-        }
-
-        private void Start() {
             // Initialize plushie list cursor
             this.plushieListIndex = -1;
             this._isWorkingOnPlushie = false;
             this.clientCardCollection = new List<ClientCard>();
-
             // Subscribe methods to event triggers
             CustomEventManager.Current.onGameStart += this.StartGame;
+            // Send off plushie when repair is complete
             PlushieLifeCycleEventManager.Current.onFinishPlushieRepair += this.PlushieSendoff;
+            // Check for whether to send in next plushie or not (the bell rings regardless)
             PlushieLifeCycleEventManager.Current.onRingBell += this.receiveBellRing;
         }
 
+        private void Start()
+        {
+
+        }
+
         // Update the scene to bring in a new customer's plushie, note, and information
-        private void StartGame() {
-            startButton.gameObject.SetActive(false);
-            title.SetActive(false);
-            gameActive = true;
+        private void StartGame()
+        {
+            this.startButton.gameObject.SetActive(false);
+            this.title.SetActive(false);
+            this.isGameActive = true;
+            // Start first tutorial
             TutorialSequenceEventManager.Current.StartTutorialSequence(StartingTutorial);
         }
 
-        IEnumerator StartNextCustomerRoutine() {
-            plushieListIndex++;
+        IEnumerator StartNextCustomerRoutine()
+        {
+            this.plushieListIndex++;
             // Set current plushie scriptable object
-            currentPlushieScriptableObject = plushieList[plushieListIndex];
+            currentPlushieScriptableObject = this.plushieList[plushieListIndex];
             this._isWorkingOnPlushie = true;
 
             // Set client dialogue font
@@ -76,11 +87,13 @@ namespace GameLoop {
             CustomEventManager.Current.TriggerDialogue(currentPlushieScriptableObject);
         }
 
-        private void PlushieSendoff() {
+        private void PlushieSendoff()
+        {
             StartCoroutine(PlushieSendoffRoutine());
         }
 
-        IEnumerator PlushieSendoffRoutine() {
+        IEnumerator PlushieSendoffRoutine()
+        {
             /* Complete Repair and Send Plushie to Customer */
             // Play repair complete fanfare
             // Wait briefly
@@ -110,7 +123,8 @@ namespace GameLoop {
             clientCardCollection.Add(newCard);
         }
 
-        public void PlayCardAnimation() {
+        public void PlayCardAnimation()
+        {
             ClientCard card = clientCardCollection[0];
 
             float yPos = card.transform.localPosition.y;
@@ -121,12 +135,20 @@ namespace GameLoop {
             DOTween.Play(sequence);
         }
 
-        private void receiveBellRing() {
-            if (!this._isWorkingOnPlushie && gameActive) {
+        private void receiveBellRing()
+        {
+            if (!this._isWorkingOnPlushie && isGameActive)
+            {
                 this.StartCoroutine(StartNextCustomerRoutine());
             }
         }
+
+        private void OnDestroy()
+        {
+            // Unsubscribe all methods from event managers
+            CustomEventManager.Current.onGameStart -= this.StartGame;
+            PlushieLifeCycleEventManager.Current.onFinishPlushieRepair -= this.PlushieSendoff;
+            PlushieLifeCycleEventManager.Current.onRingBell -= this.receiveBellRing;
+        }
     }
-
-
 }

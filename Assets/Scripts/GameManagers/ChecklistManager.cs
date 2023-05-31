@@ -47,7 +47,7 @@ public class ChecklistManager : MonoBehaviour {
             this.checklist.activeInHierarchy && 
             (hit.collider == null || hit.collider.name != "Checklist") &&
             // If a tutorial is active, we don't want to hide the checklist prematurely
-            !TutorialSequenceManager.tutorialActive
+            !TutorialSequenceManager.isTutorialActive
         ) {
             this.checklist.SetActive(false);
         }
