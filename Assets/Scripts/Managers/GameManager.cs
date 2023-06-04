@@ -3,43 +3,51 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Singleton Game Manager
+/// Game State Manager
 /// 
 /// Primary game state manager controlling flow of control between all game states 
-/// throughout the course of the case. Uses singleton setup to maintain one source of truth.
+/// throughout the course of the game
 /// </summary>
 
 namespace GameState {
     public class GameManager : MonoBehaviour {
-
-        /* Singleton Game Manager */
-        private static GameManager s_instance;
-        public static GameManager Instance {
-            get { return s_instance; }
-        }
-
         /* Private Member Variables */
         [Header("Game State Concrete Implementations")]
         private IGameState currentState;
+        private MainMenuState mainMenuState;
+        private WorkspaceEmptyState workspaceEmptyState;
+        private PlushieActiveState plushieActiveState;
 
         private void Awake() {
-            // Instantiate game manager, and ensure duplicates are not created
-            if (s_instance == null) {
-                SetManager(this);
-                DontDestroyOnLoad(gameObject);
-            } else {
-                Destroy(gameObject);
-            }
+            SetupGameStates();
+
+            // Set and enter initial state
+            currentState = mainMenuState;
+            currentState.EnterState();
         }
 
-        // Use a static setter to instantiate the new Game Mamager instance, 
-        // to avoid setting static variable in non-static member function
-        private static void SetManager(GameManager gameManager) {
-            s_instance = gameManager;
+        private void Update() {
+            currentState.UpdateState();
+        }
+
+        public void SwitchGameState(IGameState newState) {
+            // Set new state
+            currentState = newState;
+            currentState.EnterState();
+        }
+
+        // Instantiate all game states
+        private void SetupGameStates() {
+            mainMenuState = new MainMenuState(this);
+            workspaceEmptyState = new WorkspaceEmptyState(this);
+            plushieActiveState = new PlushieActiveState(this);
         }
 
         /* Public Properties */
         public IGameState CurrentState { get => currentState; }
+        public IGameState MainMenuState { get => mainMenuState; }
+        public IGameState WorkspaceEmptyState { get => workspaceEmptyState; }
+        public IGameState PlushieActiveState { get => plushieActiveState; }
     }
 }
 

@@ -10,6 +10,11 @@ TagManager:
   - Volume
   - PlayPause
   - Skip
+  - MainMenuCanvas
+  - PlayAreaCanvas
+  - Bell
+  - Checklist
+  - Workspace
   layers:
   - Default
   - TransparentFX
