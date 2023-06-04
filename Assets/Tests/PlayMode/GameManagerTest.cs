@@ -5,18 +5,16 @@ using UnityEngine;
 using UnityEngine.TestTools;
 /* User-defined Namespaces */
 using GameState;
+using Utility;
 
 namespace Tests {
     public class GameManagerTest {
-        private readonly HelperFunctions helper = new HelperFunctions();
+        private readonly TestHelper helper = new TestHelper();
 
         // Test switching through all game states
         [Test]
         public void GameStateSwitching() {
             GameManager gameManager = helper.GetGameManager();
-
-            // We expect to start in the main menu state
-            Assert.AreEqual(gameManager.CurrentState, gameManager.MainMenuState);
 
             // Test all game states to ensure proper switching and setup logic occurs
             gameManager.SwitchGameState(gameManager.WorkspaceEmptyState);

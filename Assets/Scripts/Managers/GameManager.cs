@@ -19,15 +19,19 @@ namespace GameState {
         private PlushieActiveState plushieActiveState;
 
         private void Awake() {
+            InitializeGameManager();
+        }
+
+        private void Update() {
+            currentState.UpdateState();
+        }
+
+        public void InitializeGameManager() {
             SetupGameStates();
 
             // Set and enter initial state
             currentState = mainMenuState;
             currentState.EnterState();
-        }
-
-        private void Update() {
-            currentState.UpdateState();
         }
 
         public void SwitchGameState(IGameState newState) {

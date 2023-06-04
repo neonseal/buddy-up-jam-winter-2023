@@ -18,17 +18,23 @@ namespace PlayArea {
         private int currentPlushieIndex = -1;
 
         /* Public Event Actions */
-        public static event Action OnNextClientloaded;
+        public static event Action OnClientloaded;
 
         private void Awake() {
+            InitializeWorkspace();
+        }
+
+        public void InitializeWorkspace() {
             WorkspaceEmptyState.OnNextClientRequested += LoadNextClient;
         }
 
         private void LoadNextClient() {
             currentPlushieIndex++;
 
+            // Load next plushie prefab
+
             // Send task complete event
-            OnNextClientloaded?.Invoke();
+            OnClientloaded?.Invoke();
         }
 
         /* Public Properties */

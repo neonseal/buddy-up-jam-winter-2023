@@ -33,6 +33,10 @@ namespace UserInterface {
         public static event Action OnNextClientBellRung;
 
         private void Awake() {
+            InitializeCanvasManager();
+        }
+
+        public void InitializeCanvasManager() {
             bellSound = this.gameObject.GetComponent<AudioSource>();
             nextClientBtn.onClick.AddListener(HandleNextClientBtnClick);
         }

@@ -26,7 +26,7 @@ namespace GameState {
 
         public void EnterState() {
             PlayAreaCanvasManager.OnNextClientBellRung += () => { OnNextClientRequested?.Invoke(); };
-            Workspace.OnNextClientloaded += () => { gameManager.SwitchGameState(gameManager.PlushieActiveState); } ;
+            Workspace.OnClientloaded += () => { gameManager.SwitchGameState(gameManager.PlushieActiveState); } ;
         }
 
         public void UpdateState() {
