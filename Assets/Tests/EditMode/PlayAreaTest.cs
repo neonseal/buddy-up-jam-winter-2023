@@ -12,7 +12,7 @@ using UserInterface;
 
 namespace Tests {
     public class PlayAreaTest: MonoBehaviour {
-        private readonly TestHelper helper = new TestHelper();
+        private readonly Helper helper = new Helper();
         private readonly PlayAreaCanvasManager playAreaCanvas = GameObject.FindGameObjectWithTag("PlayAreaCanvas").GetComponent<PlayAreaCanvasManager>();
         private bool clientLoaded = false;
 

@@ -9,7 +9,7 @@ using Utility;
 
 namespace Tests {
     public class GameManagerTest {
-        private readonly TestHelper helper = new TestHelper();
+        private readonly Helper helper = new Helper();
 
         // Test switching through all game states
         [Test]

@@ -32,6 +32,7 @@ namespace PlayArea {
             currentPlushieIndex++;
 
             // Load next plushie prefab
+            // TODO: Load in new plushie with animation
 
             // Send task complete event
             OnClientloaded?.Invoke();

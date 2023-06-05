@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+/* User-defined Namespaces */
+using UserInterface;
 
 /// <summary>
 /// Plushie Active State
@@ -11,12 +13,14 @@ using UnityEngine;
 namespace GameState {
     public class PlushieActiveState : IGameState {
         private GameManager gameManager;
+        private PlayAreaCanvasManager playAreaCanvas;
+
         public PlushieActiveState(GameManager gameManager) {
             this.gameManager = gameManager;
         }
 
         public void EnterState() {
-            Debug.Log("PLUSHIE ACTIVE STATE");
+            playAreaCanvas = GameObject.FindGameObjectWithTag("PlayAreaCanvas").GetComponent<PlayAreaCanvasManager>();
         }
 
         public void UpdateState() {

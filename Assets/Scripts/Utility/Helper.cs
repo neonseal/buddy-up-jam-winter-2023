@@ -4,7 +4,7 @@ using UnityEngine;
 using GameState;
 
 namespace Utility {
-    public class TestHelper {
+    public class Helper {
         public GameManager GetGameManager() {
             // Initialize new GameManger game object
             GameObject gameObject = new GameObject();

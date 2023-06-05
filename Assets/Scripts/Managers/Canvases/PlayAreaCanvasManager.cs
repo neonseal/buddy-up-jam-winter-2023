@@ -21,6 +21,7 @@ namespace UserInterface {
         private Checklist checklist;
         [SerializeField]
         private Tool[] tools;
+        private Button clickableNotepad;
 
         /* Private Member Variables */
         private AudioSource bellSound;
@@ -39,6 +40,13 @@ namespace UserInterface {
         public void InitializeCanvasManager() {
             bellSound = this.gameObject.GetComponent<AudioSource>();
             nextClientBtn.onClick.AddListener(HandleNextClientBtnClick);
+            SetToolRollColliderStatus(false);
+        }
+
+        public void EnablePlayArea() {
+            SetToolRollColliderStatus(true);
+            checklist.EnableNotepad();
+            
         }
 
         // When the next client button is clicked, we play the bell ring sound effect and 
@@ -47,6 +55,12 @@ namespace UserInterface {
         private void HandleNextClientBtnClick() {
             bellSound.Play();
             OnNextClientBellRung?.Invoke();
+        }
+
+        private void SetToolRollColliderStatus(bool status) {
+            foreach (Tool tool in tools) {
+                tool.GetComponent<BoxCollider2D>().enabled = status;
+            }
         }
     }
 }
