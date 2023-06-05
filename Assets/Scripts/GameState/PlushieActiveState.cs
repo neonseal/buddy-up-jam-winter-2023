@@ -12,7 +12,8 @@ using UserInterface;
 /// </summary>
 namespace GameState {
     public class PlushieActiveState : IGameState {
-        private GameManager gameManager;
+        /* Private Member Variables */
+        private readonly GameManager gameManager;
         private PlayAreaCanvasManager playAreaCanvas;
 
         public PlushieActiveState(GameManager gameManager) {

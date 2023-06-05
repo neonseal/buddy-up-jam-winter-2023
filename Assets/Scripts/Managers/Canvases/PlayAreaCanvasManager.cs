@@ -46,7 +46,6 @@ namespace UserInterface {
         public void EnablePlayArea() {
             SetToolRollColliderStatus(true);
             checklist.EnableNotepad();
-            
         }
 
         // When the next client button is clicked, we play the bell ring sound effect and 
