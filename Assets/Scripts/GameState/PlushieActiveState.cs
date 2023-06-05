@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /* User-defined Namespaces */
-using UserInterface;
+using PlayArea;
 
 /// <summary>
 /// Plushie Active State

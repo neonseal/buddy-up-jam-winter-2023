@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Assertions;
 /* User-defined Namespaces */
 using PlayArea;
 
@@ -12,9 +13,10 @@ using PlayArea;
 /// - Checklist
 /// - Tool Roll
 /// </summary>
-namespace UserInterface {
+namespace PlayArea {
     public class PlayAreaCanvasManager : MonoBehaviour {
-        /* Primary UI Elements */
+        /* Private Member Variables */
+        [Header("Checklist Elements")]
         [SerializeField]
         private Button nextClientBtn;
         [SerializeField]
@@ -23,12 +25,10 @@ namespace UserInterface {
         private Tool[] tools;
         private Button clickableNotepad;
 
-        /* Private Member Variables */
+        [Header("Mending Tool Elements")]
         private AudioSource bellSound;
-
-        /* Public Member Variables */
-        public static readonly Tool currentTool;
-        public static readonly ToolType currentToolType;
+        private Tool currentTool;
+        private ToolType currentToolType;
 
         /* UI Interaction Event Actions */
         public static event Action OnNextClientBellRung;
@@ -37,9 +37,14 @@ namespace UserInterface {
             InitializeCanvasManager();
         }
 
+        /*                       PLAY AREA SETUP                       */
+        /* ----------------------------------------------------------- */
         public void InitializeCanvasManager() {
             bellSound = this.gameObject.GetComponent<AudioSource>();
+
             nextClientBtn.onClick.AddListener(HandleNextClientBtnClick);
+            Tool.OnToolClicked += HandleToolSelection;
+
             SetToolRollColliderStatus(false);
         }
 
@@ -48,6 +53,60 @@ namespace UserInterface {
             checklist.EnableNotepad();
         }
 
+
+        /*                       TOOL SELECTION                        */
+        /* ----------------------------------------------------------- */
+        private void HandleToolSelection(Tool tool, ToolType toolType) {
+            // If no tool selected or different tool, pick up clicked tool
+            if (currentTool == null || currentTool != tool) {
+                SetCurrentTool(tool, toolType);
+
+                // Set held tool cursor
+                SetToolCursor();
+            } else {
+                // If currently selected tool matched clicked tool, drop tool
+                SetCurrentTool(null, ToolType.None);
+
+                // Reset cursor
+                Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            }
+        }
+
+        private void SetCurrentTool(Tool tool, ToolType toolType) {
+            currentTool = tool;
+            currentToolType = toolType;
+        }
+
+        private void SetToolCursor() {
+            if (
+                currentTool.ToolScriptableObject.toolType.Equals(ToolType.Cleaning) ||
+                currentTool.ToolScriptableObject.toolType.Equals(ToolType.Stuffing)
+            ) {
+                // Set cursor at center of sprite
+                Cursor.SetCursor(
+                    currentTool.ToolScriptableObject.toolCursorTexture,
+                    new Vector2(
+                        currentTool.ToolScriptableObject.toolCursorTexture.width,
+                        currentTool.ToolScriptableObject.toolCursorTexture.height
+                    ) / 2f,
+                    CursorMode.ForceSoftware
+                );
+            } else {
+                // Set cursor at crosshair
+                Cursor.SetCursor(
+                    currentTool.ToolScriptableObject.toolCursorTexture,
+                    new Vector2(
+                        40f,
+                        29f
+                    ),
+                    CursorMode.ForceSoftware
+                );
+            }
+        }
+
+
+        /*                   PRIVATE MEMBER FUNCTIONS                  */
+        /* ----------------------------------------------------------- */
         // When the next client button is clicked, we play the bell ring sound effect and 
         // send out an event that will only send in the next client if we are in the 
         // appropriate, workspace empty, game state
@@ -61,5 +120,9 @@ namespace UserInterface {
                 tool.GetComponent<BoxCollider2D>().enabled = status;
             }
         }
+
+        /* Public Properties */
+        public Tool CurrentTool { get; set; }
+        public ToolType CurrentToolType { get; set; }
     }
 }
