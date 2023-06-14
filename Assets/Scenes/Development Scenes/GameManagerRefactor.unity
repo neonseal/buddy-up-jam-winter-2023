@@ -1846,6 +1846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306c8cd7d6e71d94d809f9db8e90d02a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toolScriptableObject: {fileID: 0}
 --- !u!1 &267962119
 GameObject:
   m_ObjectHideFlags: 0
@@ -3669,6 +3670,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306c8cd7d6e71d94d809f9db8e90d02a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toolScriptableObject: {fileID: 0}
 --- !u!1 &609274317
 GameObject:
   m_ObjectHideFlags: 0
@@ -5432,7 +5434,7 @@ MonoBehaviour:
   unstuffedTexBase: {fileID: 2800000, guid: 0381897c4dc4dc542943db9c9a6feeca, type: 3}
   stuffingBrush: {fileID: 2800000, guid: 3668ddff5f5f3484f8b4d194a9194e57, type: 3}
   material: {fileID: 2100000, guid: fbb4ccd8a85d3524d8d944a86ce66f16, type: 2}
-  defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 3}
   stuffingTargetPrefab: {fileID: 6179064308317248151, guid: 265d74d065365ed459cbc09e41b0abcd, type: 3}
   texturePosModifier: 3
 --- !u!114 &1256315801
@@ -5451,7 +5453,7 @@ MonoBehaviour:
   dashPrefab: {fileID: 1891405508311996228, guid: ae4b126baad3d17439e280a8554d2676, type: 3}
   dashSize: 0.04
   delta: 0.4
-  defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 3}
 --- !u!58 &1256315802
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -7865,6 +7867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306c8cd7d6e71d94d809f9db8e90d02a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toolScriptableObject: {fileID: 0}
 --- !u!1 &1790483337
 GameObject:
   m_ObjectHideFlags: 0

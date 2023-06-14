@@ -14,7 +14,7 @@ namespace PlayArea {
     public class Workspace : MonoBehaviour {
         /* Private Member Variables */
         [SerializeField]
-        private GameObject[] plushieList;
+        private Sprite[] plushieList;
         private int currentPlushieIndex = -1;
 
         /* Public Event Actions */
