@@ -3993,7 +3993,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4f54d3f909f8f4397c930e65ddf955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plushieList: []
+  plushieList:
+  - {fileID: 21300000, guid: b213de11068798245a93d177fecb20c9, type: 3}
+  - {fileID: 21300000, guid: a691ed539120b1643beba0a01d929593, type: 3}
+  - {fileID: 21300000, guid: f9c3e87947dd77b41ac4c511e3b42a46, type: 3}
 --- !u!1 &675400475
 GameObject:
   m_ObjectHideFlags: 0
