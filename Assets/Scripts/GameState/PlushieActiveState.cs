@@ -14,17 +14,19 @@ namespace GameState {
     public class PlushieActiveState : IGameState {
         /* Private Member Variables */
         private readonly GameManager gameManager;
-        private PlayAreaCanvasManager playAreaCanvas;
 
         public PlushieActiveState(GameManager gameManager) {
             this.gameManager = gameManager;
         }
 
         public void EnterState() {
-            playAreaCanvas = GameObject.FindGameObjectWithTag("PlayAreaCanvas").GetComponent<PlayAreaCanvasManager>();
         }
 
         public void UpdateState() {
+            // Not In Use
+        }
+
+        public void ExitState() {
             // Not In Use
         }
     }

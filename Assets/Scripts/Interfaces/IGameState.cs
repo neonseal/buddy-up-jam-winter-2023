@@ -8,5 +8,7 @@ namespace GameState {
 
         /* UpdateState is called every frame by the Game Manager and execute runtime state logic */
         public abstract void UpdateState();
+
+        public abstract void ExitState();
     }
 }

@@ -33,6 +33,6 @@ namespace PlayArea {
         }
 
         /* Public Properties */
-        public ToolScriptableObject ToolScriptableObject { get => ToolScriptableObject; }
+        public ToolScriptableObject ToolScriptableObject { get => toolScriptableObject; }
     }
 }

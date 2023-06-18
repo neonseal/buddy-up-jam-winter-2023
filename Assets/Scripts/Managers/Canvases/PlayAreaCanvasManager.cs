@@ -1,9 +1,8 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Assertions;
 /* User-defined Namespaces */
-using PlayArea;
+using GameState;
 
 /// <summary>
 /// Play Area UI Canvas Manager
@@ -44,6 +43,9 @@ namespace PlayArea {
 
             nextClientBtn.onClick.AddListener(HandleNextClientBtnClick);
             Tool.OnToolClicked += HandleToolSelection;
+
+            // Set up event listeners
+            WorkspaceEmptyState.OnNextClientRequested += EnablePlayArea;
 
             SetToolRollColliderStatus(false);
         }

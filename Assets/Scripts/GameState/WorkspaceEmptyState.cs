@@ -15,10 +15,10 @@ namespace GameState {
     public class WorkspaceEmptyState : IGameState {
         /* Private Member Variables */
         private readonly GameManager gameManager;
-        private PlayAreaCanvasManager playAreaCanvas;
 
         /* Public Event Actions */
         public static event Action OnNextClientRequested;
+
 
         public WorkspaceEmptyState(GameManager gameManager) {
             this.gameManager = gameManager;
@@ -26,15 +26,15 @@ namespace GameState {
 
         public void EnterState() {
             PlayAreaCanvasManager.OnNextClientBellRung += () => { OnNextClientRequested?.Invoke(); };
-            Workspace.OnClientloaded += () => { gameManager.SwitchGameState(gameManager.PlushieActiveState); } ;
-            
-            // Enable play area canvas
-            playAreaCanvas = GameObject.FindGameObjectWithTag("PlayAreaCanvas").GetComponent<PlayAreaCanvasManager>();
-            playAreaCanvas.EnablePlayArea();
+            Workspace.OnClientloaded += () => { gameManager.SwitchGameState(gameManager.PlushieActiveState); };
         }
 
         public void UpdateState() {
             // Not in use
+        }
+
+        public void ExitState() {
+            // Not In Use
         }
     }
 }
