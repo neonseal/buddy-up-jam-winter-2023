@@ -16,20 +16,14 @@ using TMPro;
 namespace Dialogue {
     public class ClientDialogueBox : MonoBehaviour {
         [Header("UI Components")]
-        [SerializeField]
-        private TMP_Text nameText;
-        [SerializeField]
-        private TMP_Text dialogueText;
-        [SerializeField]
-        private Button continueButton;
-        [SerializeField]
-        private Slider fontToggle;
-        [SerializeField]
-        private Slider fontSizeToggle;
+        [SerializeField] private TMP_Text nameText;
+        [SerializeField] private TMP_Text dialogueText;
+        [SerializeField] private Button continueButton;
+        [SerializeField] private Slider fontToggle;
+        [SerializeField] private Slider fontSizeToggle;
 
         [Header("Animation Variables")]
-        [SerializeField]
-        private Animator animator;
+        [SerializeField] private Animator animator;
         private float defaultAnimationDelay;
         private float animationDelay;
         private bool animationPlaying;
@@ -46,7 +40,7 @@ namespace Dialogue {
         private int largeFontSize;
 
         private void Awake() {
-            InitializeClientDialogueBox();
+            SetupClientDialogueBox();
         }
 
         private void Update() {
@@ -57,7 +51,7 @@ namespace Dialogue {
             }
         }
 
-        public void InitializeClientDialogueBox() {
+        public void SetupClientDialogueBox() {
             // Setup sentence animation variables
             sentences = new Queue<string>();
             defaultAnimationDelay = 0.025f;
@@ -72,7 +66,7 @@ namespace Dialogue {
             largeFontSize = 50;
 
             // Setup event listeners
-            DialogueCanvasManager.OnDialogueStart += StartDialogue;
+            DialogueCanvasManager.OnClientDialogueStart += StartDialogue;
             continueButton.onClick.AddListener(DisplayNextSentence);
             fontToggle.onValueChanged.AddListener(delegate { SwitchFonts(); });
             fontSizeToggle.onValueChanged.AddListener(delegate { SwitchFontSize(); });

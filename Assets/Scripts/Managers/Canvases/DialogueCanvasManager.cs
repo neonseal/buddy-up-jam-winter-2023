@@ -14,25 +14,23 @@ using UnityEngine.UI;
 namespace Dialogue {
     public class DialogueCanvasManager : MonoBehaviour {
         [Header("Testing Elements")]
-        [SerializeField]
-        private Button tempStartButton;
-        [SerializeField]
-        private ClientDialogueSet clientDialogue;
+        [SerializeField] private Button tempStartButton;
+        [SerializeField] private ClientDialogueSet clientDialogue;
+        [SerializeField] private TutorialSequenceScriptableObject tutorialSequence;
 
         /* Private Member Variables */
         [Header("Client Dialogue Elements")]
-        [SerializeField]
-        private ClientDialogueBox clientDialogueBox;
+        [SerializeField] private ClientDialogueBox clientDialogueBox;
 
         /* Public Event Actions */
-        public static event Action<ClientDialogueSet> OnDialogueStart;
-
+        public static event Action<ClientDialogueSet> OnClientDialogueStart;
+        public static event Action<TutorialSequenceScriptableObject> OnTutorialSequenceStart;
         private void Awake() {
             SetupDialogueCanvasManager();
         }
 
         public void SetupDialogueCanvasManager() {
-            tempStartButton.onClick.AddListener(() => { OnDialogueStart.Invoke(clientDialogue); });
+            tempStartButton.onClick.AddListener( () => { OnTutorialSequenceStart?.Invoke(tutorialSequence); });
         }
     }
 }
