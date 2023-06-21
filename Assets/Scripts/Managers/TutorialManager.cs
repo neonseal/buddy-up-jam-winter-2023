@@ -8,7 +8,8 @@ using Utility;
 
 namespace Dialogue {
     public class TutorialManager : MonoBehaviour {
-        private Helper helper;
+        [Header("Static Progress Trackers")]
+        private static bool tutorialActive;
 
         [Header("Tutorial UI Elements")]
         [SerializeField] private GameObject tutorialDialoguePrefab;
@@ -26,15 +27,21 @@ namespace Dialogue {
         }
 
         public void SetupTutorialManager() {
-            helper = new Helper();
-
+            TutorialManager.SetTutorialStatus(false);
             currentStepIndex = 0;
 
             // Setup dialogue event listeners
             DialogueCanvasManager.OnTutorialSequenceStart += StartTutorialSequence;
+            TutorialDialogueBox.OnContinueButtonPressed += ContinueTutorialSequence;
+        }
+
+        private static void SetTutorialStatus(bool status) {
+            TutorialManager.tutorialActive = status;
         }
 
         private void StartTutorialSequence(TutorialSequenceScriptableObject tutorialSequence) {
+            TutorialManager.SetTutorialStatus(true);
+
             if (this.activeTutorialArrow || this.activeTutorialDialogue) {
                 Destroy(this.activeTutorialDialogue);
                 Destroy(this.activeTutorialArrow);
@@ -48,29 +55,64 @@ namespace Dialogue {
             // Initialize new tutorial sequence tracking
             currentStepIndex = 0;
             currentTutorialSequence = tutorialSequence;
-            currentTutorialStep = tutorialSequence.tutorialSteps[currentStepIndex];
 
             // Setup dialogue and arrow elements
             CreateOrUpdateTutorialDialogue();
-
-            /*continueButton = this.activeTutorialDialogue.GetComponentInChildren<Button>();
-            continueButton.onClick.AddListener(ContinueTutorialSequence);*/
+            CreateOrUpdateTutorialArrow();
         }
 
         private void CreateOrUpdateTutorialDialogue() {
+            currentTutorialStep = currentTutorialSequence.tutorialSteps[currentStepIndex];
             Vector2 dialoguePosition = currentTutorialStep.tutorialDialogueLocation;
             string stepText = currentTutorialStep.stepText;
 
             // Create or update the tutorial dialogue box
             if (activeTutorialDialogue == null) {
-                GameObject tutorialDialogue = Instantiate(tutorialDialoguePrefab, dialoguePosition, Quaternion.identity);
+                GameObject tutorialDialogue = Instantiate(tutorialDialoguePrefab);
                 activeTutorialDialogue = tutorialDialogue.GetComponent<TutorialDialogueBox>();
+                activeTutorialDialogue.transform.SetParent(this.transform);
             }
 
             activeTutorialDialogue.SetTutorialStepTexts(stepText);
-            activeTutorialDialogue.transform.SetParent(this.transform);
             activeTutorialDialogue.transform.localPosition = dialoguePosition;
         }
+
+        private void CreateOrUpdateTutorialArrow() {
+            // If no arrow required for this step, destroy arrow if ative and return
+            if (currentTutorialStep.requiresArrow) {
+                Vector2 arrowPosition = currentTutorialStep.tutorialArrowLocation;
+                int arrowZRotation = currentTutorialStep.arrowZRotationValue;
+
+                if (activeTutorialArrow == null) {
+                    activeTutorialArrow = Instantiate(tutorialArrowPrefab);
+                    activeTutorialArrow.transform.SetParent(this.transform);
+                }
+
+                activeTutorialArrow.transform.localPosition = arrowPosition;
+                activeTutorialArrow.transform.localRotation = Quaternion.Euler(0, 0, arrowZRotation);
+            } else if (activeTutorialArrow) {
+                Destroy(activeTutorialArrow);
+            }
+        }
+
+        private void ContinueTutorialSequence() {
+            currentStepIndex++;
+
+            // Exit tutorial if we have exceeded the turn count
+            if (currentStepIndex >= currentTutorialSequence.tutorialSteps.Length) {
+                TutorialManager.SetTutorialStatus(false);
+                DestroyImmediate(activeTutorialDialogue.gameObject);
+                if (activeTutorialArrow != null) {
+                    DestroyImmediate(activeTutorialArrow);
+                }
+            } else {
+                // Update dialogue box and show next step
+                CreateOrUpdateTutorialDialogue();
+                CreateOrUpdateTutorialArrow();
+            }
+        }
+
+        public static bool TutorialActive { get => tutorialActive; }
     }
 }
 
