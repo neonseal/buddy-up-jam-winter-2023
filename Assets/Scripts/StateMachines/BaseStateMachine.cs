@@ -8,13 +8,12 @@ public abstract class BaseStateMachine : MonoBehaviour
     internal BaseState currentState;
 
     // Set currentState to the initial state of the implementing state machine (default is null)
+    /*
     private protected void Start()
     {
-        currentState = GetInitialState();
-        if (currentState != null) {
-            currentState.EnterState();
-        }
+        InitializeState();
     }
+    */
 
     // Call update logic function of state
     private void Update()
@@ -38,6 +37,13 @@ public abstract class BaseStateMachine : MonoBehaviour
 
         currentState = newState;
         currentState.EnterState();
+    }
+
+    private protected void InitializeState() {
+        currentState = GetInitialState();
+        if (currentState != null) {
+            currentState.EnterState();
+        }
     }
 
     // Default implementation of function for getting initial state
