@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlushieDamageGO : MonoBehaviour
 {
     // Initial damage type of the plushie damage
-    public readonly PlushieDamageType initialPlushieDamageType;
+    public PlushieDamageType initialPlushieDamageType;
 
     public List<GameObject> plushieDamagesDeletedOnCompletion;
 
