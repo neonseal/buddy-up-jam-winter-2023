@@ -13,11 +13,11 @@ using Scriptables;
 /// </summary>
 namespace PlayArea {
     public enum ToolType {
+        None,
         Scissors,
         Needle,
         Stuffing,
-        Cleaning,
-        None
+        Cleaning
     }
 
     public class Tool : MonoBehaviour, IPointerClickHandler {
@@ -33,6 +33,6 @@ namespace PlayArea {
         }
 
         /* Public Properties */
-        public ToolScriptableObject ToolScriptableObject { get => ToolScriptableObject; }
+        public ToolScriptableObject ToolScriptableObject { get => toolScriptableObject; }
     }
 }

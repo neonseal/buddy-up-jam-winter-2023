@@ -14,6 +14,7 @@ TagManager:
   - Bell
   - Checklist
   - Workspace
+  - DialogueTextArea
   layers:
   - Default
   - TransparentFX

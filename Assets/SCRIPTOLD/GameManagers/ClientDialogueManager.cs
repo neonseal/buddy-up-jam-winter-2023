@@ -62,8 +62,8 @@ public class ClientDialogueManager : MonoBehaviour {
         openDyslexicFontSize = 22;
         largeFontSize = 50;
 
-        continueButton.onClick.AddListener(DisplayNextSentence);
-        CustomEventManager.Current.onTriggerDialogue += StartDialogue;
+        // continueButton.onClick.AddListener(DisplayNextSentence);
+        // CustomEventManager.Current.onTriggerDialogue += StartDialogue;
         fontToggle.onValueChanged.AddListener(delegate { SwitchFonts(); });
         fontSizeToggle.onValueChanged.AddListener(delegate { SwitchFontSize(); });
     }
@@ -137,9 +137,9 @@ public class ClientDialogueManager : MonoBehaviour {
     }
 
     private void EndDialogue() {
-        animator.SetBool("isOpen", false);
+        /*animator.SetBool("isOpen", false);
         // Broadcasts an event to initialize a plushie
-        PlushieLifeCycleEventManager.Current.generatePlushie(currentPlushie);
+        PlushieLifeCycleEventManager.Current.generatePlushie(currentPlushie);*/
     }
 
     private void SetFont(bool clientFontVisibility) {

@@ -22,6 +22,9 @@ namespace GameState {
         public void UpdateState() {
             // Not in use
         }
+        public void ExitState() {
+            // Not In Use
+        }
 
         private void StartGame() {
             // Unsubscribe from event handlers and switch to play state
