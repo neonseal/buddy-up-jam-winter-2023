@@ -2,17 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MissingStuffingState : MonoBehaviour
+public class MissingStuffingState : PlushieDamageBaseState
 {
-    // Start is called before the first frame update
-    void Start()
+    public MissingStuffingState(PlushieDamageSM stateMachine) : base("Missing stuffing plushie damage state", stateMachine)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

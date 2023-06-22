@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlushieDamage : MonoBehaviour
+public class PlushieDamageGO : MonoBehaviour
 {
-    //public DamageType damageType;
+    // Initial damage type of the plushie damage
+    public readonly PlushieDamageType initialPlushieDamageType;
+
     public List<GameObject> plushieDamagesDeletedOnCompletion;
 
     // Start is called before the first frame update
@@ -17,6 +19,10 @@ public class PlushieDamage : MonoBehaviour
     void Update()
     {
         
+    }
+
+    internal PlushieDamageType getInitialDamageType() {
+        return initialPlushieDamageType;
     }
 
     private void _spawnDamage() {

@@ -2,17 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WornStuffingState : MonoBehaviour
+public class WornStuffingState : PlushieDamageBaseState
 {
-    // Start is called before the first frame update
-    void Start()
+    public WornStuffingState(PlushieDamageSM stateMachine) : base("Worn stuffing plushie damage state", stateMachine)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

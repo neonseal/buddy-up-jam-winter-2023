@@ -11,7 +11,7 @@ public class Plushie : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this._spawnPlushie();
+        this.spawnPlushie();
     }
 
     // Update is called once per frame
@@ -20,7 +20,7 @@ public class Plushie : MonoBehaviour
         
     }
 
-    private void _spawnPlushie() {
+    private void spawnPlushie() {
 
     }
 }

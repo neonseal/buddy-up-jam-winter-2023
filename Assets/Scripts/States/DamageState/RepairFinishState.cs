@@ -2,17 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RepairFinishState : MonoBehaviour
+public class RepairFinishState : PlushieDamageBaseState
 {
-    // Start is called before the first frame update
-    void Start()
+    public RepairFinishState(PlushieDamageSM stateMachine) : base("Plushie damage repair complete state", stateMachine)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -2,17 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SmallRipState : MonoBehaviour
+public class SmallRipState : PlushieDamageBaseState
 {
-    // Start is called before the first frame update
-    void Start()
+    public SmallRipState(PlushieDamageSM stateMachine) : base("Small rip plushie damage state", stateMachine)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
