@@ -78,12 +78,12 @@ public class ChecklistManager : MonoBehaviour {
     }
 
     // Listener method - add a checklist step to checklistItemsObject for each generation event
-    private void populateChecklist(PlushieDamage plushieDamage, DamageType damageType) {
+    private void populateChecklist(PlushieDamage_old plushieDamage, DamageType damageType) {
         this.addChecklistStep(plushieDamage, damageType);
     }
 
     // Add a checklist step 
-    private void addChecklistStep(PlushieDamage plushieDamage, DamageType damageType) {
+    private void addChecklistStep(PlushieDamage_old plushieDamage, DamageType damageType) {
         // increment checklistStepcount
         this.checklistStepcount++;
         GameObject checklistEntry = Instantiate(checklistStepPrefab, new Vector3(0, 0, 0), Quaternion.identity);
@@ -100,7 +100,7 @@ public class ChecklistManager : MonoBehaviour {
     }
 
     // Listener method - increment repair completion count for each repair completion
-    private void incrementRepairCompletionCount(PlushieDamage plushieDamage) {
+    private void incrementRepairCompletionCount(PlushieDamage_old plushieDamage) {
         this.repairCompletionCount++;
 
         // Check if all repairs are complete

@@ -4,9 +4,6 @@ public sealed class PlushieLifeCycleEventManager
 {
     // Singleton setup (https://www.c-sharpcorner.com/UploadFile/8911c4/singleton-design-pattern-in-C-Sharp/)
     private static readonly PlushieLifeCycleEventManager instance = new PlushieLifeCycleEventManager();
-    static PlushieLifeCycleEventManager()
-    {
-    }
     private PlushieLifeCycleEventManager()
     {
     }

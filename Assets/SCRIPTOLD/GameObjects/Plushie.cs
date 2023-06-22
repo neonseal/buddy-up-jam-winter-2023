@@ -1,7 +1,7 @@
 using UnityEngine;
 using GameData;
 
-public class Plushie : MonoBehaviour
+public class Plushie_old : MonoBehaviour
 {
     private SpriteRenderer plushieSpriteRenderer;
     internal Sprite sprite;
@@ -38,7 +38,7 @@ public class Plushie : MonoBehaviour
         GameObject plushieDamageGameObject = new GameObject();
 
         // Attach script for functions
-        PlushieDamage plushieDamageScript = plushieDamageGameObject.AddComponent<PlushieDamage>();
+        PlushieDamage_old plushieDamageScript = plushieDamageGameObject.AddComponent<PlushieDamage_old>();
         plushieDamageScript.generateCollider(plushieScriptableObject.damageColliderSizeList[index], plushieScriptableObject.damageZRotationList[index]);
 
         // Assign initial type to plushieDamage child game object

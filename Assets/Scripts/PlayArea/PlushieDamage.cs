@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GameData;
 
-public class PlushieDamage_new : MonoBehaviour
+public class PlushieDamage : MonoBehaviour
 {
-    public DamageType damageType;
+    //public DamageType damageType;
     public List<GameObject> plushieDamagesDeletedOnCompletion;
 
     // Start is called before the first frame update
@@ -21,7 +20,7 @@ public class PlushieDamage_new : MonoBehaviour
     }
 
     private void _spawnDamage() {
-        this.gameObject.name = this.damageType.ToString();
+        //this.gameObject.name = this.damageType.ToString();
     }
 
     private void _finishRepairing() {

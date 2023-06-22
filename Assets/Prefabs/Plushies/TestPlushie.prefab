@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 401615207934656476}
   m_LocalRotation: {x: -0, y: -0, z: 0.5212893, w: 0.85337996}
   m_LocalPosition: {x: -7.97, y: 0.35, z: 0}
-  m_LocalScale: {x: 0.97892, y: 0.96906006, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1286443154815552094}
@@ -215,4 +215,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customerRequestDialogue: 
-  clientCard: {fileID: 3708409553341289766, guid: 2d4dcde84829e1f49be5b0d2ef020b7d, type: 3}
+  clientCard: {fileID: 0}

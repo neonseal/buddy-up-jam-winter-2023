@@ -11,7 +11,7 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private Image checklistStepIcon;
     private TMP_Text checklistStepText;
     // PlushieDamage this step is associated with
-    internal PlushieDamage plushieDamage;
+    internal PlushieDamage_old plushieDamage;
     private Color mouseOverColor = new Color(0.6f, 1f, 0.6f, 1f);
     private bool isMouseOver = false;
     private float colorChangeSpeed = 5f;
@@ -51,7 +51,7 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     }
 
     // Listener method - change the status of multistep repair to the next step
-    public void repairDamage(PlushieDamage plushieDamage, DamageType damageType)
+    public void repairDamage(PlushieDamage_old plushieDamage, DamageType damageType)
     {
         if (this.plushieDamage != null && this.plushieDamage.Equals(plushieDamage))
         {
@@ -67,7 +67,7 @@ public class ChecklistStep : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     }
 
     // Listener method - change status of damage to repair completed
-    public void completeStep(PlushieDamage plushieDamage)
+    public void completeStep(PlushieDamage_old plushieDamage)
     {
         if (this.plushieDamage.Equals(plushieDamage))
         {

@@ -1459,7 +1459,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 261353760}
-  toolScriptableObject: {fileID: 11400000, guid: 1bc85c8428b896f42a96f328f97c44ae, type: 2}
+  toolScriptableObject: {fileID: 0}
   canvas: {fileID: 1509283928}
 --- !u!82 &261353757
 AudioSource:
@@ -3137,7 +3137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 578156028}
-  toolScriptableObject: {fileID: 11400000, guid: b2e8f778d6c3f1541bfdb9b03fac063a, type: 2}
+  toolScriptableObject: {fileID: 0}
   canvas: {fileID: 1509283928}
 --- !u!82 &578156024
 AudioSource:
@@ -6712,7 +6712,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1767612979}
-  toolScriptableObject: {fileID: 11400000, guid: c169376ac2350724a8f479d01a50f27f, type: 2}
+  toolScriptableObject: {fileID: 0}
   canvas: {fileID: 1509283928}
 --- !u!82 &1767612975
 AudioSource:

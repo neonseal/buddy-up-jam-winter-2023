@@ -27,8 +27,8 @@ public class MendingGameEventManager {
     }
 
     // Mending Game Complete 
-    public event Action<PlushieDamage> onMendingGameComplete;
-    public void MendingGameComplete(PlushieDamage plushieDamage) {
+    public event Action<PlushieDamage_old> onMendingGameComplete;
+    public void MendingGameComplete(PlushieDamage_old plushieDamage) {
         if (this.onMendingGameComplete != null) {
             this.onMendingGameComplete(plushieDamage);
         }
