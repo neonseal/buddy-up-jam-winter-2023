@@ -9,11 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1212409871802061422}
-  - component: {fileID: 2419854076409783694}
-  - component: {fileID: 3576644469074929454}
   - component: {fileID: 4066721381560647145}
   m_Layer: 0
-  m_Name: DamagePrefab
+  m_Name: AutoDamageRepairPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,31 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2419854076409783694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8031963007569900044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2908b97d2707814b96745c8ca7778d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3576644469074929454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8031963007569900044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fe4b328489b0644db903b68fdd638d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plushieDamagesDeletedOnCompletion: []
 --- !u!212 &4066721381560647145
 SpriteRenderer:
   m_ObjectHideFlags: 0

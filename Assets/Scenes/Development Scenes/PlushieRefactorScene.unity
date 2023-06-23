@@ -5766,6 +5766,18 @@ MonoBehaviour:
   fontToggle: {fileID: 945686525}
   fontSizeToggle: {fileID: 845507722}
   animator: {fileID: 693941342}
+  defaultAnimationDelay: 0
+  animationDelay: 0
+  animationPlaying: 0
+  clientFontVisible: 0
+  openDyslexicFont: {fileID: 0}
+  clientFont: {fileID: 0}
+  clientTitleSize: 0
+  clientFontSize: 0
+  openDyslexicTitleSize: 0
+  openDyslexicFontSize: 0
+  largeFontSize: 0
+  currentPlushie: {fileID: 0}
 --- !u!224 &1307563855
 RectTransform:
   m_ObjectHideFlags: 0
