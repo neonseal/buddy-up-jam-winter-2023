@@ -24,5 +24,8 @@ namespace PlayArea {
         public void EnableNotepad() {
             notepadBtn.interactable = true;
         }
+        public void DisableNotepad() {
+            notepadBtn.interactable = false;
+        }
     }
 }

@@ -14,7 +14,6 @@ using UnityEngine.UI;
 namespace Dialogue {
     public class DialogueCanvasManager : MonoBehaviour {
         [Header("Testing Elements")]
-        [SerializeField] private Button tempStartButton;
         [SerializeField] private ClientDialogueSet clientDialogue;
         [SerializeField] private TutorialSequenceScriptableObject tutorialSequence;
 
@@ -30,7 +29,7 @@ namespace Dialogue {
         }
 
         public void SetupDialogueCanvasManager() {
-            tempStartButton.onClick.AddListener( () => { OnTutorialSequenceStart?.Invoke(tutorialSequence); });
+            // Not In Use
         }
     }
 }

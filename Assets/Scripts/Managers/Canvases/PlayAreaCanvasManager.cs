@@ -42,10 +42,10 @@ namespace PlayArea {
             bellSound = this.gameObject.GetComponent<AudioSource>();
 
             nextClientBtn.onClick.AddListener(HandleNextClientBtnClick);
-            Tool.OnToolClicked += HandleToolSelection;
 
             // Set up event listeners
             WorkspaceEmptyState.OnNextClientRequested += EnablePlayArea;
+            Tool.OnToolClicked += HandleToolSelection;
 
             SetToolRollColliderStatus(false);
         }
@@ -53,6 +53,13 @@ namespace PlayArea {
         public void EnablePlayArea() {
             SetToolRollColliderStatus(true);
             checklist.EnableNotepad();
+        }
+
+        public void DisablePlayArea() {
+            SetToolRollColliderStatus(false);
+            checklist.DisableNotepad();
+            WorkspaceEmptyState.OnNextClientRequested -= EnablePlayArea;
+            Tool.OnToolClicked -= HandleToolSelection;
         }
 
 

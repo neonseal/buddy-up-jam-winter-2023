@@ -34,10 +34,10 @@ public class PlushieDamageSM : BaseStateMachine
     }
 
     // Initialize references before first frame update
-    private void Start() {
+    /*private void Start() {
         base.InitializeState();
         InitializeReferences();
-    }
+    }*/
 
     // Initialize fields in this class
     private void InitializeFields() {
@@ -55,7 +55,7 @@ public class PlushieDamageSM : BaseStateMachine
 
     // Initialize reference fields in this class
     private void InitializeReferences() {
-        _plushieDamageGO = this.GetComponent<PlushieDamageGO>();
+        //_plushieDamageGO = this.GetComponent<PlushieDamageGO>();
     }
 
     // Assign blank grid state as the initial state

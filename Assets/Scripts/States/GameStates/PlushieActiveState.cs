@@ -11,24 +11,26 @@ using PlayArea;
 /// Controls transition to mending mini-game and interaction with plushie elements
 /// </summary>
 namespace GameState {
-    public class PlushieActiveState : IGameState {
+    public class PlushieActiveState : GameState {
         /* Private Member Variables */
-        private readonly GameManager gameManager;
+        private readonly GameStateMachine gameManager;
 
-        public PlushieActiveState(GameManager gameManager) {
+        public PlushieActiveState(GameStateMachine gameManager) {
             this.gameManager = gameManager;
         }
 
-        public void EnterState() {
-        }
-
-        public void UpdateState() {
+        public override void EnterState() {
             // Not In Use
         }
 
-        public void ExitState() {
+        public override void UpdateState() {
             // Not In Use
         }
+
+        public override void ExitState() {
+            // Not In Use
+        }
+
     }
 }
 

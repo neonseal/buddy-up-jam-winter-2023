@@ -14,7 +14,7 @@ namespace Tests {
         // Test switching through all game states
         [Test]
         public void GameStateSwitching() {
-            GameManager gameManager = helper.GetGameManager();
+            GameStateMachine gameManager = helper.GetGameManager();
 
             // Test all game states to ensure proper switching and setup logic occurs
             gameManager.SwitchGameState(gameManager.WorkspaceEmptyState);
