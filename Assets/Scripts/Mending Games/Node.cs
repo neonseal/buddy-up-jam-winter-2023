@@ -16,11 +16,17 @@ namespace MendingGames {
             DOTween.Init();
 
             spriteRenderer = this.GetComponent<SpriteRenderer>();
+
+            activated = false;
         }
 
-        public Node(ToolType requiredToolType, bool isTarget = false) {
+        public void SetNodeProperties(ToolType requiredToolType, bool isTarget = false) {
             this.requiredToolType = requiredToolType;
             this.targetNode = isTarget;
+
+            if (isTarget) {
+                spriteRenderer.color = Color.blue;
+            }
         }
 
         public bool IsTargetNode() {

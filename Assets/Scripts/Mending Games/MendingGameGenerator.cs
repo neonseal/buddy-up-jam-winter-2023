@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+/* User-defined Namespaces */
+using Scriptables.DamageInstructions;
 
 /// <summary>
 /// Mending Game Generator
@@ -18,7 +20,7 @@ using UnityEngine;
 namespace MendingGames {
     public class MendingGameGenerator : MonoBehaviour {
         [Header("High-level Status/Progress Elements")]
-        private DamageInstructions damageInstructions;
+        private DamageInstructrionsScriptableObject damageInstructions;
 
         [Header("Game Component Rendering")]
         [SerializeField] private Material defaultMaterial;
@@ -34,22 +36,26 @@ namespace MendingGames {
         private SpriteRenderer spriteRenderer;
 
         [Header("Game Component Collections")]
-        private Node[] nodes;
+        private List<Node> nodes;
 
         /* Mending Game Events */
         public static event Action OnMendingGameComplete;
 
         private void Awake() {
             spriteRenderer = GetComponent<SpriteRenderer>();
+            nodes = new List<Node>();
         }
 
         /*                      COMMON FUNCTIONS                       */
         /* ----------------------------------------------------------- */
         // Primary function invoked by the Mending Game Manager, responsible for parsing the 
         // damage instructions and rendering the appropriate game to the lens
-        public void GenerateMendingGame(DamageInstructions damageInstructions) {
+        public void GenerateMendingGame(DamageInstructrionsScriptableObject damageInstructions) {
+            this.damageInstructions = damageInstructions; 
+
             switch (damageInstructions.PlushieDamageType) {
-                case PlushieDamageType.SmallRip:                    
+                case PlushieDamageType.SmallRip:
+                    GenerateSewingGame(damageInstructions.TargetLocations);
                     break;
                 case PlushieDamageType.LargeRip:
                     break;
@@ -67,6 +73,16 @@ namespace MendingGames {
             // Ensure we are using the appropriate material
             if (spriteRenderer.material != defaultMaterial) {
                 spriteRenderer.material = defaultMaterial;
+            }
+
+            // Generate sewing target nodes based on input target locations
+            for (int i = 0; i < targetLocations.Length; i++) {
+                Vector3 position = new Vector3(targetLocations[i].x, targetLocations[i].y);
+                GameObject gameObject = Instantiate(mendingTargetPrefab, this.transform, false);
+                gameObject.transform.localPosition = position;
+                Node node = gameObject.GetComponent<Node>();
+                node.SetNodeProperties(damageInstructions.RequiredToolType, i == 0);
+                nodes.Add(node);
             }
 
         }

@@ -125,19 +125,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1212409871802061422, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9697375
+      value: 0.9659259
       objectReference: {fileID: 0}
     - target: {fileID: 1212409871802061422, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1212409871802061422, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1212409871802061422, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.24414997
+      value: -0.258819
       objectReference: {fileID: 0}
     - target: {fileID: 1212409871802061422, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -149,11 +149,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1212409871802061422, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -28.263
+      value: -30
       objectReference: {fileID: 0}
+    - target: {fileID: 3576644469074929454, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
+      propertyPath: damageInstructions
+      value: 
+      objectReference: {fileID: 11400000, guid: 3209174993c88f746ab1be0a737e3175, type: 2}
     - target: {fileID: 3576644469074929454, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
       propertyPath: damageInstructions.title
       value: Sewing Game Instructions
+      objectReference: {fileID: 0}
+    - target: {fileID: 3576644469074929454, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
+      propertyPath: damageInstructions.damageSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 1892fa0a4b4106a48b8f210d025261d7, type: 3}
+    - target: {fileID: 3576644469074929454, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
+      propertyPath: damageInstructions.rotationZValue
+      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 3576644469074929454, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
       propertyPath: damageInstructions.requiredToolType

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+/* User-defined Namespaces */
+using Scriptables.DamageInstructions;
 
 /// <summary>
 /// Mending Game Manager
@@ -36,15 +38,15 @@ namespace MendingGames {
 
             gameInProgress = false;
             startingLocation = magnifyingGlass.transform.localPosition;
-            centerLocation = new Vector3(-4.25f,0,0);
+            centerLocation = new Vector3(5.5f, -10, 0);
 
             PlushieDamageGO.OnPlushieDamageClicked += HandleDamageClick;
         }
 
-        private void HandleDamageClick(DamageInstructions damageInstructions) {
+        private void HandleDamageClick(DamageInstructrionsScriptableObject damageInstructions) {
             gameInProgress = true;
             mendingGameGenerator.GenerateMendingGame(damageInstructions);
-            magnifyingGlass.transform.DOLocalMove(centerLocation, duration).SetEase(easeType);
+            //magnifyingGlass.transform.DOMove(centerLocation, duration).SetEase(easeType);
         }
 
 
