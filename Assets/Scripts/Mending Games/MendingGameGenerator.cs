@@ -24,8 +24,8 @@ namespace MendingGames {
 
         [Header("Game Component Rendering")]
         [SerializeField] private Material defaultMaterial;
-        [SerializeField] private GameObject mendingTargetPrefab;
-        [SerializeField] private GameObject mendingDashPrefab;
+        [SerializeField] private Node mendingTargetPrefab;
+        [SerializeField] private Dash mendingDashPrefab;
         [SerializeField] private Sprite[] dashOptions;
         [Range(0.01f, 1f)]
         [SerializeField] private float dashSize;
@@ -73,9 +73,7 @@ namespace MendingGames {
         /*                 SEWING AND CUTTING GAMES                    */
         /* ----------------------------------------------------------- */
         private void HandleTargetNodeTrigger(Node node) {
-            Debug.Log("CLICK");
             Node matchingNode = nodes.Find(n => node == n);
-            Debug.Log("Node Triggered: " + matchingNode);
         }
 
         private void GenerateSewingGame() {
@@ -83,9 +81,8 @@ namespace MendingGames {
             lensSpriteRenderer.sprite = this.damageInstructions.DamageSprite;
 
             // Set updated rotation value
-            Quaternion rotation = magnifyingGlassLens.transform.rotation;
-            Vector3 newRotationVector = new Vector3(rotation.x, rotation.y, this.damageInstructions.RotationZValue);
-            magnifyingGlassLens.transform.rotation = Quaternion.Euler(newRotationVector);
+            this.transform.Rotate(0, 0, this.damageInstructions.RotationZValue);
+            magnifyingGlassLens.transform.Rotate(0, 0, this.damageInstructions.RotationZValue);
 
             // Ensure we are using the appropriate material
             if (lensSpriteRenderer.material != defaultMaterial) {
@@ -97,10 +94,11 @@ namespace MendingGames {
 
             // Generate dashes between each pair of target nodes
             for (int i = 0; i < nodes.Count - 1; i++) {
-                Vector3 startingNodePos = nodes[i].transform.position;
-                Vector3 endingNodePos = nodes[i + 1].transform.position;
+                Vector3 startingNodePos = nodes[i].transform.localPosition;
+                Vector3 endingNodePos = nodes[i + 1].transform.localPosition;
 
                 List<Vector3> dashPositions = GenerateDashPositions(startingNodePos, endingNodePos);
+                List<Dash> dashes = RenderLine(dashPositions, startingNodePos, endingNodePos);
 
             }
         }
@@ -108,15 +106,14 @@ namespace MendingGames {
         private void GenerateTargetNodes(Vector2[] targetLocations) {
             for (int i = 0; i < targetLocations.Length; i++) {
                 Vector3 position = new Vector3(targetLocations[i].x, targetLocations[i].y);
-                GameObject gameObject = Instantiate(mendingTargetPrefab, this.transform, false);
-                gameObject.transform.localPosition = position;
-                Node node = gameObject.GetComponent<Node>();
+                Node node = Instantiate(mendingTargetPrefab, this.transform, false);
+                node.transform.localPosition = position;
                 node.SetNodeProperties(damageInstructions.RequiredToolType, i == 0);
                 this.nodes.Add(node);
             }
         }
 
-        /*Calculate dash positions between pairs of nodes where we will generate dash objects */
+        /* Calculate dash positions between pairs of nodes where we will generate dash objects */
         private List<Vector3> GenerateDashPositions(Vector3 start, Vector3 end) {
             List<Vector3> positions = new List<Vector3>();
             // Triangulate a straight line between both point
@@ -132,6 +129,35 @@ namespace MendingGames {
             }
 
             return positions;
+        }
+
+        // Given a set of postitions to place dashes, and the positions of the starting and ending node positions
+        // Generate and orient a line of evenly spaced dash objects
+        private List<Dash> RenderLine(List<Vector3> dashPositions, Vector3 start, Vector3 end) {
+            List<Dash> dashes = new List<Dash>();
+
+            // Instantiate line of dashes between nodes
+            foreach (Vector3 dashPosition in dashPositions) {
+                Dash dashObject = GenerateDash(start, end);
+                dashObject.transform.localPosition = dashPosition;
+                dashes.Add(dashObject);
+            }
+
+            return dashes;
+        }
+
+        //Instantiate a new Dash object and calculate rotation between given node posisitons
+        private Dash GenerateDash(Vector3 startingPos, Vector3 endingPos) {
+            Dash dash = Instantiate(mendingDashPrefab, this.transform, false);
+
+            Vector2 diff = endingPos - startingPos;
+            float sign = (endingPos.y < startingPos.y) ? -1.0f : 1.0f;
+            float angle = Vector2.Angle(Vector2.right, diff) * sign;
+
+            Quaternion rot = dash.transform.rotation;
+            //dash.transform.localRotation = Quaternion.Euler(rot.x, rot.y, angle);
+            dash.transform.Rotate(0, 0, angle);
+            return dash;
         }
 
 

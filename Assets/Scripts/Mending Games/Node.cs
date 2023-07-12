@@ -47,6 +47,9 @@ namespace MendingGames {
             if (triggered) {
                 spriteRenderer.color = Color.red;
                 OnTargetNodeTriggered?.Invoke(this);
+                Sequence sequence = DOTween.Sequence();
+                sequence.Append(this.gameObject.transform.DOScale(.15f, 0.25f));
+                sequence.SetLoops(1, LoopType.Yoyo);
                 this.activated = true;
             } else {
                 // Or release control of target node if mouse button is released
