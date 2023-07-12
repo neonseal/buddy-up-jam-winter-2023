@@ -29,7 +29,7 @@ namespace PlayArea {
 
         // Set the selected tool as the player's cursor
         public void OnPointerClick(PointerEventData eventData) {
-            OnToolClicked?.Invoke(this, toolScriptableObject.toolType);
+            OnToolClicked?.Invoke(this, toolScriptableObject.ToolType);
         }
 
         /* Public Properties */

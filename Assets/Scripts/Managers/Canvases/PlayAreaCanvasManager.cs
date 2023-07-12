@@ -88,22 +88,22 @@ namespace PlayArea {
 
         private void SetToolCursor() {
             if (
-                currentTool.ToolScriptableObject.toolType.Equals(ToolType.Cleaning) ||
-                currentTool.ToolScriptableObject.toolType.Equals(ToolType.Stuffing)
+                currentTool.ToolScriptableObject.ToolType.Equals(ToolType.Cleaning) ||
+                currentTool.ToolScriptableObject.ToolType.Equals(ToolType.Stuffing)
             ) {
                 // Set cursor at center of sprite
                 Cursor.SetCursor(
-                    currentTool.ToolScriptableObject.toolCursorTexture,
+                    currentTool.ToolScriptableObject.ToolCursorTexture,
                     new Vector2(
-                        currentTool.ToolScriptableObject.toolCursorTexture.width,
-                        currentTool.ToolScriptableObject.toolCursorTexture.height
+                        currentTool.ToolScriptableObject.ToolCursorTexture.width,
+                        currentTool.ToolScriptableObject.ToolCursorTexture.height
                     ) / 2f,
                     CursorMode.ForceSoftware
                 );
             } else {
                 // Set cursor at crosshair
                 Cursor.SetCursor(
-                    currentTool.ToolScriptableObject.toolCursorTexture,
+                    currentTool.ToolScriptableObject.ToolCursorTexture,
                     new Vector2(
                         40f,
                         29f

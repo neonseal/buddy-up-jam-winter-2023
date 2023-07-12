@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
@@ -7,10 +7,14 @@ using PlayArea;
 
 namespace MendingGames {
     public class Node : MonoBehaviour {
+        private bool startingNode;
         private bool targetNode;
         private bool activated;
         private ToolType requiredToolType;
         private SpriteRenderer spriteRenderer;
+
+        public static event Action<Node> OnTargetNodeTriggered;
+        public static event Action<Node> OnTargetNodeReleased;
 
         private void Awake() {
             DOTween.Init();
@@ -20,12 +24,45 @@ namespace MendingGames {
             activated = false;
         }
 
-        public void SetNodeProperties(ToolType requiredToolType, bool isTarget = false) {
-            this.requiredToolType = requiredToolType;
-            this.targetNode = isTarget;
+        private void OnMouseDown() {
+            if (this.startingNode) {
+                UpdateTargetNode(true);
+            }
+        }
 
-            if (isTarget) {
+        private void OnMouseOver() {
+            if (this.targetNode) {
+                UpdateTargetNode(true);
+            }
+        }
+
+        private void OnMouseUp() {
+            if (this.targetNode) {
+                UpdateTargetNode(false);
+            }
+        }
+
+        private void UpdateTargetNode(bool triggered) {
+            // Activate target node if clicked or moused over
+            if (triggered) {
+                spriteRenderer.color = Color.red;
+                OnTargetNodeTriggered?.Invoke(this);
+                this.activated = true;
+            } else {
+                // Or release control of target node if mouse button is released
                 spriteRenderer.color = Color.blue;
+                OnTargetNodeReleased?.Invoke(this);
+                this.activated = false;
+            }
+        }
+
+        public void SetNodeProperties(ToolType requiredToolType, bool isStartingNode = false) {
+            this.requiredToolType = requiredToolType;
+            this.startingNode = isStartingNode;
+
+            if (isStartingNode) {
+                spriteRenderer.color = Color.blue;
+                this.targetNode = true;
             }
         }
 

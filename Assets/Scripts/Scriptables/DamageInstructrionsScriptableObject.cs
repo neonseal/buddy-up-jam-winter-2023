@@ -18,6 +18,8 @@ namespace Scriptables.DamageInstructions {
         public PlushieDamageType PlushieDamageType { get => plushieDamageType; }
         public ToolType RequiredToolType { get => requiredToolType; }
         public Vector2[] TargetLocations { get => targetLocations; }
+        public Sprite DamageSprite { get => damageSprite; }
+        public int RotationZValue { get => rotationZValue; }
     }
 
 

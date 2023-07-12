@@ -206,7 +206,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 474829884}
   m_HandleRect: {fileID: 474829883}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2685,7 +2685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5bbdd89b5778e140adb0636a5b76e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mendingGameGenerator: {fileID: 0}
+  mendingGameGenerator: {fileID: 939925163}
   magnifyingGlass: {fileID: 1457434932}
   duration: 0.6
   easeType: 2
@@ -4369,53 +4369,6 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &798678359
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 798678361}
-  - component: {fileID: 798678360}
-  m_Layer: 0
-  m_Name: TutorialSequenceManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &798678360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 798678359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d92d47226e34d7246a30e93f9813902c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentObject: {fileID: 0}
-  tutorialStepPrefab: {fileID: 6000077438314716359, guid: 7ac9e3831bf26a644b7e56f019f31ce6, type: 3}
-  tutorialArrowPrefab: {fileID: 815703068292625465, guid: 2b3d0d2333d40c24687706d74e5224a9, type: 3}
---- !u!4 &798678361
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 798678359}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1790483338}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &845507720
 GameObject:
   m_ObjectHideFlags: 0
@@ -4638,9 +4591,6 @@ GameObject:
   m_Component:
   - component: {fileID: 939925162}
   - component: {fileID: 939925167}
-  - component: {fileID: 939925166}
-  - component: {fileID: 939925165}
-  - component: {fileID: 939925164}
   - component: {fileID: 939925163}
   m_Layer: 0
   m_Name: MendingGameGenerator
@@ -4684,58 +4634,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b2c3a0e488dffc842b071f6df7fd5fe5, type: 3}
   dashSize: 0.04
   delta: 0.4
---- !u!114 &939925164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 939925161}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59fbf0a5f8bc1a1499e5e12c328a8883, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainTex: {fileID: 2800000, guid: c7b0c9a997a5ab34181ddb86ff614aed, type: 3}
-  unstuffedTexBase: {fileID: 2800000, guid: 0381897c4dc4dc542943db9c9a6feeca, type: 3}
-  stuffingBrush: {fileID: 2800000, guid: 3668ddff5f5f3484f8b4d194a9194e57, type: 3}
-  material: {fileID: 2100000, guid: fbb4ccd8a85d3524d8d944a86ce66f16, type: 2}
-  defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 3}
-  stuffingTargetPrefab: {fileID: 6179064308317248151, guid: 265d74d065365ed459cbc09e41b0abcd, type: 3}
-  texturePosModifier: 3
---- !u!114 &939925165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 939925161}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 213b304bfa3ddc1438a3ce13d7cc8f97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetPrefab: {fileID: 9087557310337048614, guid: 32264638a4133e2419d0b5f5d53ac3d2, type: 3}
-  dashPrefab: {fileID: 1891405508311996228, guid: ae4b126baad3d17439e280a8554d2676, type: 3}
-  dashSize: 0.04
-  delta: 0.4
-  defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 3}
---- !u!58 &939925166
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 939925161}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 10
+  lensSpriteRenderer: {fileID: 1256315804}
 --- !u!120 &939925167
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -5526,7 +5425,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1790483338}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1250905797
 MonoBehaviour:
@@ -5550,7 +5449,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1256315799}
   - component: {fileID: 1256315804}
-  - component: {fileID: 1256315801}
   m_Layer: 0
   m_Name: LensBackground
   m_TagString: Untagged
@@ -5573,23 +5471,6 @@ Transform:
   m_Father: {fileID: 1457434933}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1256315801
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1256315798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 213b304bfa3ddc1438a3ce13d7cc8f97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetPrefab: {fileID: 9087557310337048614, guid: 32264638a4133e2419d0b5f5d53ac3d2, type: 3}
-  dashPrefab: {fileID: 1891405508311996228, guid: ae4b126baad3d17439e280a8554d2676, type: 3}
-  dashSize: 0.04
-  delta: 0.4
-  defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 3}
 --- !u!212 &1256315804
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6110,7 +5991,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1307563853}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9414a6d88e292304889a069129c78a5c, type: 3}
+  m_Script: {fileID: 11500000, guid: ed5278ade69742b4e9a6f496843255bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &1307563855
@@ -7820,7 +7701,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1307563855}
-  - {fileID: 798678361}
   - {fileID: 1250905796}
   m_Father: {fileID: 0}
   m_RootOrder: 2

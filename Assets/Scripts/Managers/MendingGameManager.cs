@@ -46,7 +46,7 @@ namespace MendingGames {
         private void HandleDamageClick(DamageInstructrionsScriptableObject damageInstructions) {
             gameInProgress = true;
             mendingGameGenerator.GenerateMendingGame(damageInstructions);
-            //magnifyingGlass.transform.DOMove(centerLocation, duration).SetEase(easeType);
+            magnifyingGlass.transform.DOLocalMove(centerLocation, duration).SetEase(easeType);
         }
 
 
