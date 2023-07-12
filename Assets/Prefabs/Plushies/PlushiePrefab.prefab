@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 668989213637585115}
   - component: {fileID: 3932967621435437430}
+  - component: {fileID: 9145382263483770563}
   m_Layer: 0
   m_Name: PlushiePrefab
   m_TagString: Untagged
@@ -84,3 +85,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &9145382263483770563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4920179664441396057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff0e72d9106b1ea448cfb51d62207f6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  repairedPlushieSprite: {fileID: 0}
+  customerRequestDialogue: 

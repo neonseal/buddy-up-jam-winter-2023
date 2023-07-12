@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Plushie : MonoBehaviour
 {
+    // The sprite that is applied to plushie when repair is completed
+    public Sprite repairedPlushieSprite;
+
     public String customerRequestDialogue;
     //public ClientCard clientCard;
 
