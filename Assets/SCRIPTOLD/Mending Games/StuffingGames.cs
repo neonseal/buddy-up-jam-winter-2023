@@ -16,7 +16,7 @@ public class StuffingGames : MonoBehaviour {
     [SerializeField] GameObject stuffingTargetPrefab;
     [SerializeField] float texturePosModifier = 3f;
     List<StuffingTarget> targets;
-    PlushieDamage currentPlushieDamage;
+    PlushieDamage_old currentPlushieDamage;
 
     [Header("State Management Variables")]
     private Texture2D stuffingMaskTexture;
@@ -108,7 +108,7 @@ public class StuffingGames : MonoBehaviour {
         mendingGameForTransfer.CreateSewingGame(targetPositions, currentPlushieDamage);
     }
 
-    public void CreateStuffingGameMultipleTargets(List<Vector3> targetPositions, PlushieDamage plushieDamage) {
+    public void CreateStuffingGameMultipleTargets(List<Vector3> targetPositions, PlushieDamage_old plushieDamage) {
         gameActive = true;
         int counter = 1;
 
@@ -141,11 +141,11 @@ public class StuffingGames : MonoBehaviour {
         }
     }
 
-    public void StartGameRoutine(MendingGames mendingGame, PlushieDamage plushieDamage) {
+    public void StartGameRoutine(MendingGames mendingGame, PlushieDamage_old plushieDamage) {
         StartCoroutine(CreateStuffingGame(mendingGame, plushieDamage));
     }
 
-    public IEnumerator CreateStuffingGame(MendingGames mendingGame, PlushieDamage plushieDamage) {
+    public IEnumerator CreateStuffingGame(MendingGames mendingGame, PlushieDamage_old plushieDamage) {
         requiredToolType = ToolType.Stuffing;
         mendingGameForTransfer = mendingGame;
         currentPlushieDamage = plushieDamage;

@@ -4,7 +4,7 @@ using UnityEngine;
 using GameData;
 using TutorialSequence;
 
-public class PlushieDamage : MonoBehaviour {
+public class PlushieDamage_old : MonoBehaviour {
     // Fields
     private DamageType plushieDamageType;
     private bool tutorialActionRequired;

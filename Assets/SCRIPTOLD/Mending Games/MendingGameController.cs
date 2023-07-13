@@ -40,7 +40,7 @@ public class MendingGameController : MonoBehaviour {
     }
 
 
-    private void StartRepairMiniGame(PlushieDamage plushieDamage, DamageType damageType) {
+    private void StartRepairMiniGame(PlushieDamage_old plushieDamage, DamageType damageType) {
         Vector3 lensePosition = lenseSpriteRenderer.transform.position;
         List<Vector3> targetPositions;
         // Check damage type to determine which repair game to create
@@ -66,7 +66,7 @@ public class MendingGameController : MonoBehaviour {
         this.checklist.SetActive(true);
     }
 
-    private void StopRepairMiniGame(PlushieDamage plushieDamage) {
+    private void StopRepairMiniGame(PlushieDamage_old plushieDamage) {
         // Move and clear repair game
         this.transform.DOLocalMove(homePosition, duration).SetEase(Ease.InCirc);
         StartCoroutine(WaitAndClearLens(plushieDamage));
@@ -81,7 +81,7 @@ public class MendingGameController : MonoBehaviour {
         }
     }
 
-    private IEnumerator WaitAndClearLens(PlushieDamage plushieDamage) {
+    private IEnumerator WaitAndClearLens(PlushieDamage_old plushieDamage) {
         yield return new WaitForSeconds(2f);
         plushieDamage.deletePlushieDamage();
         mendingGame.ResetAllElements();

@@ -21,7 +21,7 @@ public class Workspace : MonoBehaviour {
         plushie.name = plushieScriptableObject.plushieObjectName + "Plushie";
         plushie.transform.localScale = plushieScriptableObject.plushieScale;
 
-        Plushie plushieComponent = plushie.AddComponent<Plushie>();
+        Plushie_old plushieComponent = plushie.AddComponent<Plushie_old>();
         plushieComponent.sprite = plushieScriptableObject.damagedPlushieSprite;
 
         for (int i = 0; i < plushieScriptableObject.damageTypeList.Count; i++) {

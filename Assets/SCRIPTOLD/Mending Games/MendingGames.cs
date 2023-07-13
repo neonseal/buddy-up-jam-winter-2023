@@ -28,7 +28,7 @@ public class MendingGames : MonoBehaviour {
     // Set of dashes making up the line to be followed
     List<List<GameObject>> dashSets;
     // Current type of plushie damange being repaired
-    PlushieDamage currentPlushieDamage;
+    PlushieDamage_old currentPlushieDamage;
 
     [Header("Game Progression Variables")]
     int targetNodeIndex;
@@ -55,7 +55,7 @@ public class MendingGames : MonoBehaviour {
         MendingGameEventManager.Current.onNodeTriggered += HandleNodeTrigger;
     }
 
-    public void CreateSewingGame(List<Vector3> targetPositions, PlushieDamage plushieDamage) {
+    public void CreateSewingGame(List<Vector3> targetPositions, PlushieDamage_old plushieDamage) {
         PlushieScriptableObject currentPlushie = GameLoopManager.currentPlushieScriptableObject;
 
         SpriteRenderer spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
