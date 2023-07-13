@@ -41,6 +41,7 @@ namespace GameState {
             OnNextClientRequested?.Invoke();
         }
 
+
         private void SwitchToPlushieActiveState() {
             gameManager.SwitchGameState(gameManager.PlushieActiveState);
         }

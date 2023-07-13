@@ -9,7 +9,7 @@ namespace MendingGames {
     public class Node : MonoBehaviour {
         private bool startingNode;
         private bool targetNode;
-        private bool activated;
+        private bool triggered;
         private ToolType requiredToolType;
         private SpriteRenderer spriteRenderer;
 
@@ -21,7 +21,7 @@ namespace MendingGames {
 
             spriteRenderer = this.GetComponent<SpriteRenderer>();
 
-            activated = false;
+            triggered = false;
         }
 
         private void OnMouseDown() {
@@ -31,7 +31,7 @@ namespace MendingGames {
         }
 
         private void OnMouseOver() {
-            if (this.targetNode) {
+            if (Input.GetMouseButton(0) && this.targetNode) {
                 UpdateTargetNode(true);
             }
         }
@@ -50,23 +50,26 @@ namespace MendingGames {
                 Sequence sequence = DOTween.Sequence();
                 sequence.Append(this.gameObject.transform.DOScale(.15f, 0.25f));
                 sequence.SetLoops(1, LoopType.Yoyo);
-                this.activated = true;
+                this.triggered = triggered;
             } else {
                 // Or release control of target node if mouse button is released
                 spriteRenderer.color = Color.blue;
                 OnTargetNodeReleased?.Invoke(this);
-                this.activated = false;
+                this.triggered = triggered;
             }
         }
 
-        public void SetNodeProperties(ToolType requiredToolType, bool isStartingNode = false) {
-            this.requiredToolType = requiredToolType;
+        public void SetTargetStatus(bool isTarget, bool isStartingNode = false) {
             this.startingNode = isStartingNode;
 
-            if (isStartingNode) {
+            if (isTarget) {
                 spriteRenderer.color = Color.blue;
                 this.targetNode = true;
             }
+        }
+
+        public void SetToolType(ToolType requiredToolType) {
+            this.requiredToolType = requiredToolType;
         }
 
         public bool IsTargetNode() {
@@ -75,7 +78,7 @@ namespace MendingGames {
 
 
         /* Public Properties */
-        public bool Activated { get => activated; }
+        public bool Triggered { get => triggered; }
     }
 
 }

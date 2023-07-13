@@ -2685,8 +2685,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5bbdd89b5778e140adb0636a5b76e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mendingGameGenerator: {fileID: 939925163}
+  defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  mendingTargetPrefab: {fileID: -938938346952896493, guid: 32264638a4133e2419d0b5f5d53ac3d2, type: 3}
+  mendingDashPrefab: {fileID: 2905279161526616842, guid: ae4b126baad3d17439e280a8554d2676, type: 3}
+  dashSize: 0.1
+  delta: 1
   magnifyingGlass: {fileID: 1457434932}
+  magnifyingGlassLens: {fileID: 1256315798}
+  mendingGamePlayArea: {fileID: 939925161}
   duration: 0.6
   easeType: 2
 --- !u!1 &474829882
@@ -4052,7 +4058,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plushieList:
-  - {fileID: 6601934604103475982, guid: 24dc4cceda53b754289e982f7ee145d2, type: 3}
+  - {fileID: 1880372361918277451, guid: 5b1f9029f89758e4591055e389ed4fbd, type: 3}
   moveEaseType: 21
   moveDuration: 0.5
   animateDuration: 0.7
@@ -4591,9 +4597,8 @@ GameObject:
   m_Component:
   - component: {fileID: 939925162}
   - component: {fileID: 939925167}
-  - component: {fileID: 939925163}
   m_Layer: 0
-  m_Name: MendingGameGenerator
+  m_Name: MendingGameArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4614,27 +4619,6 @@ Transform:
   m_Father: {fileID: 1457434933}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &939925163
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 939925161}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9281db87954d43e45b10f9134007584d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  mendingTargetPrefab: {fileID: -938938346952896493, guid: 32264638a4133e2419d0b5f5d53ac3d2, type: 3}
-  mendingDashPrefab: {fileID: 2905279161526616842, guid: ae4b126baad3d17439e280a8554d2676, type: 3}
-  dashOptions:
-  - {fileID: 21300000, guid: 8486f57300ec2ac4185d20473340dbd7, type: 3}
-  - {fileID: 21300000, guid: b2c3a0e488dffc842b071f6df7fd5fe5, type: 3}
-  dashSize: 0.04
-  delta: 0.4
-  magnifyingGlassLens: {fileID: 1256315798}
 --- !u!120 &939925167
 LineRenderer:
   m_ObjectHideFlags: 0
