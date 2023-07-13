@@ -15,9 +15,9 @@ namespace PlayArea {
     public class Workspace : MonoBehaviour {
         /* Private Member Variables */
         [Header("Plushie Loading Elements")]
-        [SerializeField] private Plushie[] plushieList;
+        [SerializeField] private PlushieGO[] plushieList;
         private int currentPlushieIndex = -1;
-        private Plushie currentPlushie;
+        private PlushieGO currentPlushie;
 
         [Header("Plushie Animation Elements")]
         [SerializeField] private Ease moveEaseType;
@@ -65,6 +65,6 @@ namespace PlayArea {
 
         /* Public Properties */
         public int CurrentPlushieIndex { get => currentPlushieIndex; }
-        public Plushie CurrentPlushie { get => currentPlushie; }
+        public PlushieGO CurrentPlushie { get => currentPlushie; }
     }
 }
