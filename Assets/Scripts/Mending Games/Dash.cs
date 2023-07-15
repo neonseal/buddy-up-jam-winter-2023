@@ -24,9 +24,6 @@ namespace MendingGames {
         public int DashSetIndex { get; set; }
         public PlayAreaCanvasManager CanvasManager { get; set; }
 
-        public static event Action<Dash> OnDashTriggered;
-        public static event Action<Dash> OnDashedLineReleased;
-
         private void Awake() {
             DOTween.Init();
 
@@ -58,7 +55,6 @@ namespace MendingGames {
                 ParentNode.Triggered &&
                 CanvasManager.CurrentToolType == requiredToolType
             ) {
-                OnDashTriggered?.Invoke(this);
                 spriteRenderer.color = Color.green;
                 Triggered = true;
                 Sequence sequence = DOTween.Sequence();

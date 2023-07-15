@@ -8,6 +8,7 @@ using GameState;
 using PlayArea;
 using System.Linq;
 using static Codice.CM.WorkspaceServer.DataStore.WkTree.WriteWorkspaceTree;
+using PlasticGui.WorkspaceWindow.Merge;
 
 /// <summary>
 /// Mending Game Manager
@@ -76,8 +77,6 @@ namespace MendingGames {
             centerLocation = new Vector3(5.5f, -10, 0);
 
             PlushieActiveState.MendingGameInitiated += GenerateMendingGame;
-            Node.OnNodeTriggered += HandleTargetNodeTrigger;
-            Node.OnActiveNodeReleased += ResetCurrentLine;
         }
 
         /*                      COMMON FUNCTIONS                       */
@@ -90,11 +89,12 @@ namespace MendingGames {
 
             switch (damageInstructions.PlushieDamageType) {
                 case PlushieDamageType.SmallRip:
-                    GenerateSewingGame();
+                    GenerateSewingOrCuttingGame();
                     break;
                 case PlushieDamageType.LargeRip:
                     break;
                 case PlushieDamageType.WornStuffing:
+                    GenerateSewingOrCuttingGame();
                     break;
                 case PlushieDamageType.MissingStuffing:
                     break;
@@ -106,6 +106,48 @@ namespace MendingGames {
 
         /*                 SEWING AND CUTTING GAMES                    */
         /* ----------------------------------------------------------- */
+
+        private void GenerateSewingOrCuttingGame()
+        {
+            Node.OnNodeTriggered += HandleTargetNodeTrigger;
+            Node.OnActiveNodeReleased += ResetCurrentLine;
+
+            Vector2[] targetLocations = this.damageInstructions.TargetLocations;
+            lensSpriteRenderer.sprite = this.damageInstructions.DamageSprite;
+
+            // Set updated rotation value
+            mendingGamePlayArea.transform.Rotate(0, 0, this.damageInstructions.RotationZValue);
+            magnifyingGlassLens.transform.Rotate(0, 0, this.damageInstructions.RotationZValue);
+
+            // Ensure we are using the appropriate material
+            if (lensSpriteRenderer.material != defaultMaterial)
+            {
+                lensSpriteRenderer.material = defaultMaterial;
+            }
+
+            // Generate sewing target nodes based on input target locations
+            GenerateTargetNodes(targetLocations);
+
+            // Generate dashes between each pair of target nodes
+            for (int i = 0; i < nodes.Count - 1; i++)
+            {
+                Vector3 startingNodePos = nodes[i].transform.localPosition;
+                Vector3 endingNodePos = nodes[i + 1].transform.localPosition;
+
+                List<Vector3> dashPositions = GenerateDashPositions(startingNodePos, endingNodePos);
+                List<Dash> dashes = RenderLine(dashPositions, startingNodePos, endingNodePos);
+
+                dashSets.Add(dashes);
+            }
+        }
+
+        private void CompleteSewingOrCuttingGame()
+        {
+            Node.OnNodeTriggered -= HandleTargetNodeTrigger;
+            Node.OnActiveNodeReleased -= ResetCurrentLine;
+            magnifyingGlass.transform.DOLocalMove(startingLocation, duration).SetEase(easeType);
+        }
+
         private void HandleTargetNodeTrigger(Node triggeredNode) {
             this.activeNodeIndex = nodes.FindIndex(n => n == triggeredNode);
             // If starting node triggered, enable first line
@@ -114,11 +156,23 @@ namespace MendingGames {
                 EnableNextLine(triggeredNode);
             } else
             {
-                bool nextLineEnabled = CheckLineCompletion(triggeredNode);
-                if (nextLineEnabled) {
-                    triggeredNode.ActiveNode = true;
-                    nodes[this.activeNodeIndex - 1].ActiveNode = false;
-                    
+                bool lineComplete = CheckLineCompletion(triggeredNode);
+                if (lineComplete)
+                {
+                    // Check if the triggered node is the last in the set, then complete the game/step
+                    if (this.activeNodeIndex == nodes.Count - 1) {
+                        CompleteSewingOrCuttingGame();
+                    } else
+                    {
+                        // Else, continue on to the next line
+                        EnableNextLine(triggeredNode);
+                        triggeredNode.ActiveNode = true;
+                        nodes[this.activeNodeIndex - 1].ActiveNode = false;
+
+                    }
+                } else
+                {
+                    ResetCurrentLine(triggeredNode);
                 }
             }
         }
@@ -126,16 +180,8 @@ namespace MendingGames {
         {
             // Check if enough dashes have been triggered to enable next line
             int dashTriggeredCount = dashSets[this.activeNodeIndex - 1].Where(d => d.Triggered).Count();
-            if (dashTriggeredCount >= this.lineCompleteThreshold)
-            {
-                EnableNextLine(node);
-                return true;
-            }
-            else
-            {
-                ResetCurrentLine(node);
-                return false;
-            }
+            return dashTriggeredCount >= this.lineCompleteThreshold;
+            
         }
         
         private void EnableNextLine(Node node)
@@ -156,34 +202,6 @@ namespace MendingGames {
             foreach (Dash dash in dashSets[this.activeNodeIndex])
             {
                 dash.ResetDash(true);
-            }
-        }
-
-        private void GenerateSewingGame() {
-            Vector2[] targetLocations = this.damageInstructions.TargetLocations;
-            lensSpriteRenderer.sprite = this.damageInstructions.DamageSprite;
-
-            // Set updated rotation value
-            mendingGamePlayArea.transform.Rotate(0, 0, this.damageInstructions.RotationZValue);
-            magnifyingGlassLens.transform.Rotate(0, 0, this.damageInstructions.RotationZValue);
-
-            // Ensure we are using the appropriate material
-            if (lensSpriteRenderer.material != defaultMaterial) {
-                lensSpriteRenderer.material = defaultMaterial;
-            }
-
-            // Generate sewing target nodes based on input target locations
-            GenerateTargetNodes(targetLocations);
-
-            // Generate dashes between each pair of target nodes
-            for (int i = 0; i < nodes.Count - 1; i++) {
-                Vector3 startingNodePos = nodes[i].transform.localPosition;
-                Vector3 endingNodePos = nodes[i + 1].transform.localPosition;
-
-                List<Vector3> dashPositions = GenerateDashPositions(startingNodePos, endingNodePos);
-                List<Dash> dashes = RenderLine(dashPositions, startingNodePos, endingNodePos);
-                
-                dashSets.Add(dashes);
             }
         }
 
