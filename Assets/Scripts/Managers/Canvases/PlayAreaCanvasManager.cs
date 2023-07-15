@@ -131,7 +131,7 @@ namespace PlayArea {
         }
 
         /* Public Properties */
-        public Tool CurrentTool { get; set; }
-        public ToolType CurrentToolType { get; set; }
+        public Tool CurrentTool { get => currentTool; }
+        public ToolType CurrentToolType { get => currentToolType; }
     }
 }

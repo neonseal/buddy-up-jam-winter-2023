@@ -15,7 +15,6 @@ namespace GameState {
     public class PlushieActiveState : GameState {
         /* Private Member Variables */
         private readonly GameStateMachine gameManager;
-        private bool mendingGameInProgress;
 
         public static event Action<DamageInstructrionsScriptableObject> MendingGameInitiated;
 
@@ -38,12 +37,8 @@ namespace GameState {
         private void HandleDamageClick(DamageInstructrionsScriptableObject damageInstructions) {
             // Send command to start mending repair mini-game
             MendingGameInitiated?.Invoke(damageInstructions);
-            mendingGameInProgress = true;
         }
 
-
-        /* Public Properties */
-        public bool MendingGameInProgress { get => mendingGameInProgress; }
     }
 }
 

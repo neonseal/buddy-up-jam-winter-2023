@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -938938346952896493}
   m_Layer: 0
   m_Name: GameTarget
-  m_TagString: Untagged
+  m_TagString: Node
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,3 +136,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d619403f32aa4434ca4bd4bfc82b74e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  duration: 0.4
+  strength: 0.1
+  vibrato: 20
+  randomness: 50
+  snapping: 0
+  fadeOut: 1

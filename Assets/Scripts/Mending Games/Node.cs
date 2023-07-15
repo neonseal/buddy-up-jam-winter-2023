@@ -7,78 +7,88 @@ using PlayArea;
 
 namespace MendingGames {
     public class Node : MonoBehaviour {
-        private bool startingNode;
-        private bool targetNode;
-        private bool triggered;
         private ToolType requiredToolType;
         private SpriteRenderer spriteRenderer;
 
-        public static event Action<Node> OnTargetNodeTriggered;
-        public static event Action<Node> OnTargetNodeReleased;
+        [Header("Reset Tweening Elements")]
+        [SerializeField] float duration;
+        [SerializeField] float strength;
+        [SerializeField] int vibrato;
+        [SerializeField] float randomness;
+        [SerializeField] bool snapping;
+        [SerializeField] bool fadeOut;
+
+        /* Public Properties */
+        public bool ActiveNode { get; set; }
+        public bool TargetNode { get; set; }
+        public bool Triggered { get; private set; }
+        public PlayAreaCanvasManager CanvasManager { get; set; }
+
+        public static event Action<Node> OnNodeTriggered;
+        public static event Action<Node> OnActiveNodeReleased;
 
         private void Awake() {
             DOTween.Init();
 
             spriteRenderer = this.GetComponent<SpriteRenderer>();
 
-            triggered = false;
+            Triggered = false;
+            TargetNode = false;
+        }
+
+        private void Update()
+        {
+            // Only send the released command for the active node
+            if (Input.GetMouseButtonUp(0) && this.ActiveNode )
+            {
+                ActivateOrDeactivateNode(false);
+            }
         }
 
         private void OnMouseDown() {
-            if (this.startingNode) {
-                UpdateTargetNode(true);
+            if (this.TargetNode &&
+                !Triggered &&
+                CanvasManager.CurrentToolType == requiredToolType) {
+                ActivateOrDeactivateNode(true);
             }
         }
 
         private void OnMouseOver() {
-            if (Input.GetMouseButton(0) && this.targetNode) {
-                UpdateTargetNode(true);
+            if (Input.GetMouseButton(0) && 
+                this.TargetNode &&
+                !Triggered &&
+                CanvasManager.CurrentToolType == requiredToolType) {
+                ActivateOrDeactivateNode(true);
             }
         }
 
-        private void OnMouseUp() {
-            if (this.targetNode) {
-                UpdateTargetNode(false);
-            }
-        }
-
-        private void UpdateTargetNode(bool triggered) {
+        private void ActivateOrDeactivateNode(bool Triggered) {
             // Activate target node if clicked or moused over
-            if (triggered) {
-                spriteRenderer.color = Color.red;
-                OnTargetNodeTriggered?.Invoke(this);
+            if (Triggered) {
+                spriteRenderer.color = Color.green;
+                OnNodeTriggered?.Invoke(this);
                 Sequence sequence = DOTween.Sequence();
                 sequence.Append(this.gameObject.transform.DOScale(.15f, 0.25f));
-                sequence.SetLoops(1, LoopType.Yoyo);
-                this.triggered = triggered;
+                sequence.SetLoops(2, LoopType.Yoyo);
+                this.Triggered = Triggered;
+                this.ActiveNode = true;
             } else {
                 // Or release control of target node if mouse button is released
                 spriteRenderer.color = Color.blue;
-                OnTargetNodeReleased?.Invoke(this);
-                this.triggered = triggered;
+                OnActiveNodeReleased?.Invoke(this);
+                this.gameObject.transform.DOShakePosition(duration, strength, vibrato, randomness, snapping, fadeOut);
+                this.Triggered = Triggered;
             }
         }
 
-        public void SetTargetStatus(bool isTarget, bool isStartingNode = false) {
-            this.startingNode = isStartingNode;
-
-            if (isTarget) {
-                spriteRenderer.color = Color.blue;
-                this.targetNode = true;
-            }
+        public void SetColor(Color color)
+        {
+            this.spriteRenderer.color = color;  
         }
 
         public void SetToolType(ToolType requiredToolType) {
             this.requiredToolType = requiredToolType;
         }
-
-        public bool IsTargetNode() {
-            return targetNode;
-        }
-
-
-        /* Public Properties */
-        public bool Triggered { get => triggered; }
     }
 
 }

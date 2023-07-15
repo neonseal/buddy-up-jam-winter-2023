@@ -2685,6 +2685,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5bbdd89b5778e140adb0636a5b76e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasManager: {fileID: 1509283934}
+  lineCompleteThreshold: 0.8
   defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   mendingTargetPrefab: {fileID: -938938346952896493, guid: 32264638a4133e2419d0b5f5d53ac3d2, type: 3}
   mendingDashPrefab: {fileID: 2905279161526616842, guid: ae4b126baad3d17439e280a8554d2676, type: 3}

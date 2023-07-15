@@ -7,10 +7,22 @@ using PlayArea;
 
 namespace MendingGames {
     public class Dash : MonoBehaviour {
-        private bool enabled;
-        private bool triggered;
         private ToolType requiredToolType;
         private SpriteRenderer spriteRenderer;
+
+        [Header("Reset Tweening Elements")]
+        [SerializeField] float duration;
+        [SerializeField] float strength;
+        [SerializeField] int vibrato;
+        [SerializeField] float randomness;
+        [SerializeField] bool snapping;
+        [SerializeField] bool fadeOut;
+
+        public bool Enabled { get; private set; }
+        public bool Triggered { get; private set; }
+        public Node ParentNode { get; set; }    
+        public int DashSetIndex { get; set; }
+        public PlayAreaCanvasManager CanvasManager { get; set; }
 
         public static event Action<Dash> OnDashTriggered;
         public static event Action<Dash> OnDashedLineReleased;
@@ -20,39 +32,40 @@ namespace MendingGames {
 
             spriteRenderer = this.GetComponent<SpriteRenderer>();
 
-            enabled = false;
-            triggered = false;
+            Enabled = false;
+            Triggered = false;
         }
 
         public void EnableDash(ToolType requiredToolType) {
             spriteRenderer.color = Color.blue;
-            enabled = true;
+            this.requiredToolType = requiredToolType;
+            Enabled = true;
         }
 
-        public void Reset(bool active) {
-            triggered = false;
-            enabled = active;
-            spriteRenderer.color = Color.black;
+        public void ResetDash(bool active) {
+            Triggered = false;
+            Enabled = active;
+            spriteRenderer.color = Color.blue;
+            this.gameObject.transform.DOShakePosition(duration, strength, vibrato, randomness, snapping, fadeOut);
         }
 
-        private void OnMouseOver() {
+        private void OnMouseOver()
+        {
+
             if (Input.GetMouseButton(0) &&
-                enabled &&
-                !triggered 
-                //&&
-                //CanvasManager.toolType == requiredToolType
+                Enabled &&
+                !Triggered && 
+                ParentNode.Triggered &&
+                CanvasManager.CurrentToolType == requiredToolType
             ) {
-                spriteRenderer.color = Color.yellow;
-                triggered = true;
+                OnDashTriggered?.Invoke(this);
+                spriteRenderer.color = Color.green;
+                Triggered = true;
                 Sequence sequence = DOTween.Sequence();
                 sequence.Append(this.gameObject.transform.DOScale(.15f, 0.25f));
                 sequence.SetLoops(2, LoopType.Yoyo);
             }
         }
-
-        /* Public Properties */
-        public bool Enabled { get => enabled; }
-        public bool Triggered { get => triggered; }
 
     }
 }

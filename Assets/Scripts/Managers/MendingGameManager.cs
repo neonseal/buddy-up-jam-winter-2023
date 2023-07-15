@@ -5,6 +5,9 @@ using DG.Tweening;
 /* User-defined Namespaces */
 using Scriptables.DamageInstructions;
 using GameState;
+using PlayArea;
+using System.Linq;
+using static Codice.CM.WorkspaceServer.DataStore.WkTree.WriteWorkspaceTree;
 
 /// <summary>
 /// Mending Game Manager
@@ -30,7 +33,12 @@ namespace MendingGames {
     public class MendingGameManager : MonoBehaviour {
         [Header("High-level Status/Progress Elements")]
         private DamageInstructrionsScriptableObject damageInstructions;
-
+        private bool mendingGameInProgress;
+        private int activeNodeIndex;
+        [SerializeField] private PlayAreaCanvasManager canvasManager;
+        [Range(0f, 1f)]
+        [SerializeField] private float lineCompleteThreshold;
+         
         [Header("Game Component Rendering")]
         [SerializeField] private Material defaultMaterial;
         [SerializeField] private Node mendingTargetPrefab;
@@ -68,8 +76,8 @@ namespace MendingGames {
             centerLocation = new Vector3(5.5f, -10, 0);
 
             PlushieActiveState.MendingGameInitiated += GenerateMendingGame;
-            Node.OnTargetNodeTriggered += HandleTargetNodeTrigger;
-            Node.OnTargetNodeReleased += ResetCurrentLine;
+            Node.OnNodeTriggered += HandleTargetNodeTrigger;
+            Node.OnActiveNodeReleased += ResetCurrentLine;
         }
 
         /*                      COMMON FUNCTIONS                       */
@@ -77,6 +85,7 @@ namespace MendingGames {
         // Primary function invoked by the Mending Game Manager, responsible for parsing the 
         // damage instructions and rendering the appropriate game to the lens
         public void GenerateMendingGame(DamageInstructrionsScriptableObject damageInstructions) {
+            mendingGameInProgress = true;
             this.damageInstructions = damageInstructions;
 
             switch (damageInstructions.PlushieDamageType) {
@@ -97,20 +106,57 @@ namespace MendingGames {
 
         /*                 SEWING AND CUTTING GAMES                    */
         /* ----------------------------------------------------------- */
-        private void HandleTargetNodeTrigger(Node node) {
-            // Find triggered node in list
-            int nodeIndex = nodes.FindIndex(n => node == n);
-
+        private void HandleTargetNodeTrigger(Node triggeredNode) {
+            this.activeNodeIndex = nodes.FindIndex(n => n == triggeredNode);
+            // If starting node triggered, enable first line
+            if (triggeredNode == nodes.First())
+            {
+                EnableNextLine(triggeredNode);
+            } else
+            {
+                bool nextLineEnabled = CheckLineCompletion(triggeredNode);
+                if (nextLineEnabled) {
+                    triggeredNode.ActiveNode = true;
+                    nodes[this.activeNodeIndex - 1].ActiveNode = false;
+                    
+                }
+            }
+        }
+        private bool CheckLineCompletion(Node node)
+        {
+            // Check if enough dashes have been triggered to enable next line
+            int dashTriggeredCount = dashSets[this.activeNodeIndex - 1].Where(d => d.Triggered).Count();
+            if (dashTriggeredCount >= this.lineCompleteThreshold)
+            {
+                EnableNextLine(node);
+                return true;
+            }
+            else
+            {
+                ResetCurrentLine(node);
+                return false;
+            }
+        }
+        
+        private void EnableNextLine(Node node)
+        {
             // Activate corresponding line of dashes
-            foreach(Dash dash in dashSets[nodeIndex]) {
+            foreach (Dash dash in dashSets[this.activeNodeIndex])
+            {
                 dash.EnableDash(this.damageInstructions.RequiredToolType);
             }
-
-            nodes[nodeIndex + 1].SetTargetStatus(true);
+            // Activate next node as target node
+            nodes[this.activeNodeIndex + 1].TargetNode = true;
+            nodes[this.activeNodeIndex + 1].SetColor(Color.blue);
         }
 
-        private void ResetCurrentLine(Node node) {
-
+        private void ResetCurrentLine(Node node)
+        {
+            // Reset current line and triggered node to try again
+            foreach (Dash dash in dashSets[this.activeNodeIndex])
+            {
+                dash.ResetDash(true);
+            }
         }
 
         private void GenerateSewingGame() {
@@ -146,9 +192,15 @@ namespace MendingGames {
                 Vector3 position = new Vector3(targetLocations[i].x, targetLocations[i].y);
 
                 Node node = Instantiate(mendingTargetPrefab, mendingGamePlayArea.transform, false);
-                
+                node.CanvasManager = this.canvasManager;
+
                 node.transform.localPosition = position;
-                node.SetTargetStatus(i == 0, i == 0);
+                if (i == 0)
+                {
+                    node.TargetNode = node.ActiveNode = true;
+                    node.SetColor(Color.blue);
+
+                }
                 node.SetToolType(damageInstructions.RequiredToolType);
                 
                 this.nodes.Add(node);
@@ -181,6 +233,9 @@ namespace MendingGames {
             // Instantiate line of dashes between nodes
             foreach (Vector3 dashPosition in dashPositions) {
                 Dash dashObject = GenerateDash(start, end);
+                dashObject.CanvasManager = this.canvasManager;
+                dashObject.DashSetIndex = this.dashSets.Count;
+                dashObject.ParentNode = this.nodes[this.dashSets.Count];
                 dashObject.transform.localPosition = dashPosition;
                 dashes.Add(dashObject);
             }
@@ -209,6 +264,9 @@ namespace MendingGames {
 
 
 
+
+        /* Public Properties */
+        public bool MendingGameInProgress { get => mendingGameInProgress; }
     }
 }
 
