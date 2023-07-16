@@ -16,7 +16,7 @@ namespace GameState {
         /* Private Member Variables */
         private readonly GameStateMachine gameManager;
 
-        public static event Action<DamageInstructrionsScriptableObject> MendingGameInitiated;
+        public static event Action<DamageInstructrionsScriptableObject[]> MendingGameInitiated;
 
         public PlushieActiveState(GameStateMachine gameManager) {
             this.gameManager = gameManager;
@@ -34,7 +34,7 @@ namespace GameState {
             PlushieDamageGO.OnPlushieDamageClicked -= HandleDamageClick;
         }
 
-        private void HandleDamageClick(DamageInstructrionsScriptableObject damageInstructions) {
+        private void HandleDamageClick(DamageInstructrionsScriptableObject[] damageInstructions) {
             // Send command to start mending repair mini-game
             MendingGameInitiated?.Invoke(damageInstructions);
         }

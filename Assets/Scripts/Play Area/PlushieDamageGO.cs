@@ -6,12 +6,12 @@ using Scriptables.DamageInstructions;
 
 public class PlushieDamageGO : MonoBehaviour {
     // Initial damage type of the plushie damage
-    [SerializeField] private DamageInstructrionsScriptableObject damageInstructions;
+    [SerializeField] private DamageInstructrionsScriptableObject[] damageInstructions;
     [SerializeField]
     private List<GameObject> plushieDamagesDeletedOnCompletion;
 
     /* Damage life cycle events */
-    public static event Action<DamageInstructrionsScriptableObject> OnPlushieDamageClicked;
+    public static event Action<DamageInstructrionsScriptableObject[]> OnPlushieDamageClicked;
 
     // Send out event when damage is clicked to 
     private void OnMouseDown() {
@@ -19,7 +19,7 @@ public class PlushieDamageGO : MonoBehaviour {
     }
 
     internal PlushieDamageType getInitialDamageType() {
-        return damageInstructions.PlushieDamageType;
+        return damageInstructions[0].PlushieDamageType;
     }
 
     private void _finishRepairing() {

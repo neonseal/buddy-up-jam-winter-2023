@@ -7,8 +7,8 @@ using Scriptables.DamageInstructions;
 using GameState;
 using PlayArea;
 using System.Linq;
-using static Codice.CM.WorkspaceServer.DataStore.WkTree.WriteWorkspaceTree;
 using PlasticGui.WorkspaceWindow.Merge;
+using System.Runtime.CompilerServices;
 
 /// <summary>
 /// Mending Game Manager
@@ -33,14 +33,15 @@ namespace MendingGames {
 
     public class MendingGameManager : MonoBehaviour {
         [Header("High-level Status/Progress Elements")]
-        private DamageInstructrionsScriptableObject damageInstructions;
+        private DamageInstructrionsScriptableObject[] damageInstructions;
+        private int damageRepairStep;
         private bool mendingGameInProgress;
         private int activeNodeIndex;
         [SerializeField] private PlayAreaCanvasManager canvasManager;
         [Range(0f, 1f)]
         [SerializeField] private float lineCompleteThreshold;
          
-        [Header("Game Component Rendering")]
+        [Header("Sewing/Cutting Game Rendering")]
         [SerializeField] private Material defaultMaterial;
         [SerializeField] private Node mendingTargetPrefab;
         [SerializeField] private Dash mendingDashPrefab;
@@ -48,6 +49,9 @@ namespace MendingGames {
         [SerializeField] private float dashSize;
         [Range(0.1f, 2f)]
         [SerializeField] private float delta;
+
+        [Header("Stuffing Game Rendering")]
+
 
         [Header("Magnifying Glass Lens Elements")]
         [SerializeField] private GameObject magnifyingGlass;
@@ -66,13 +70,14 @@ namespace MendingGames {
         private List<List<Dash>> dashSets;
 
         /* Mending Game Events */
-        public static event Action OnMendingGameComplete;
+        public static event Action<DamageInstructrionsScriptableObject[]> OnMendingGameComplete;
 
         private void Awake() {
             nodes = new List<Node>();
             dashSets = new List<List<Dash>>();
             lensSpriteRenderer = magnifyingGlassLens.GetComponent<SpriteRenderer>();
 
+            damageRepairStep = -1;
             startingLocation = magnifyingGlass.transform.localPosition;
             centerLocation = new Vector3(5.5f, -10, 0);
 
@@ -83,11 +88,13 @@ namespace MendingGames {
         /* ----------------------------------------------------------- */
         // Primary function invoked by the Mending Game Manager, responsible for parsing the 
         // damage instructions and rendering the appropriate game to the lens
-        public void GenerateMendingGame(DamageInstructrionsScriptableObject damageInstructions) {
+        public void GenerateMendingGame(DamageInstructrionsScriptableObject[] damageInstructions) {
             mendingGameInProgress = true;
             this.damageInstructions = damageInstructions;
+            this.damageRepairStep++; 
 
-            switch (damageInstructions.PlushieDamageType) {
+            // Check first step of damage instructions to determine starting damage type
+            switch (damageInstructions[damageRepairStep].PlushieDamageType) {
                 case PlushieDamageType.SmallRip:
                     GenerateSewingOrCuttingGame();
                     break;
@@ -112,12 +119,12 @@ namespace MendingGames {
             Node.OnNodeTriggered += HandleTargetNodeTrigger;
             Node.OnActiveNodeReleased += ResetCurrentLine;
 
-            Vector2[] targetLocations = this.damageInstructions.TargetLocations;
-            lensSpriteRenderer.sprite = this.damageInstructions.DamageSprite;
+            Vector2[] targetLocations = this.damageInstructions[damageRepairStep].TargetLocations;
+            lensSpriteRenderer.sprite = this.damageInstructions[damageRepairStep].DamageSprite;
 
             // Set updated rotation value
-            mendingGamePlayArea.transform.Rotate(0, 0, this.damageInstructions.RotationZValue);
-            magnifyingGlassLens.transform.Rotate(0, 0, this.damageInstructions.RotationZValue);
+            mendingGamePlayArea.transform.Rotate(0, 0, this.damageInstructions[damageRepairStep].RotationZValue);
+            magnifyingGlassLens.transform.Rotate(0, 0, this.damageInstructions[damageRepairStep].RotationZValue);
 
             // Ensure we are using the appropriate material
             if (lensSpriteRenderer.material != defaultMaterial)
@@ -145,7 +152,19 @@ namespace MendingGames {
         {
             Node.OnNodeTriggered -= HandleTargetNodeTrigger;
             Node.OnActiveNodeReleased -= ResetCurrentLine;
-            magnifyingGlass.transform.DOLocalMove(startingLocation, duration).SetEase(easeType);
+            // Check if there are more steps to the repair process
+            if (this.damageRepairStep < this.damageInstructions.Count() - 1)
+            {
+                // Start next mending game step
+                GenerateMendingGame(this.damageInstructions);
+            } else
+            {
+                // Complete mending game and reset
+                magnifyingGlass.transform.DOLocalMove(startingLocation, duration).SetEase(easeType);
+                this.mendingGameInProgress = false;
+                OnMendingGameComplete?.Invoke(this.damageInstructions);
+            } 
+            
         }
 
         private void HandleTargetNodeTrigger(Node triggeredNode) {
@@ -189,7 +208,7 @@ namespace MendingGames {
             // Activate corresponding line of dashes
             foreach (Dash dash in dashSets[this.activeNodeIndex])
             {
-                dash.EnableDash(this.damageInstructions.RequiredToolType);
+                dash.EnableDash(this.damageInstructions[damageRepairStep].RequiredToolType);
             }
             // Activate next node as target node
             nodes[this.activeNodeIndex + 1].TargetNode = true;
@@ -219,7 +238,7 @@ namespace MendingGames {
                     node.SetColor(Color.blue);
 
                 }
-                node.SetToolType(damageInstructions.RequiredToolType);
+                node.SetToolType(damageInstructions[damageRepairStep].RequiredToolType);
                 
                 this.nodes.Add(node);
             }
@@ -270,7 +289,6 @@ namespace MendingGames {
             float angle = Vector2.Angle(Vector2.right, diff) * sign;
 
             Quaternion rot = dash.transform.rotation;
-            //dash.transform.localRotation = Quaternion.Euler(rot.x, rot.y, angle);
             dash.transform.Rotate(0, 0, angle);
             return dash;
         }

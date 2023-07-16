@@ -39,7 +39,7 @@ namespace MendingGames {
         private void Update()
         {
             // Only send the released command for the active node
-            if (Input.GetMouseButtonUp(0) && this.ActiveNode )
+            if (Input.GetMouseButtonUp(0) && this.ActiveNode && this.Triggered)
             {
                 ActivateOrDeactivateNode(false);
             }
