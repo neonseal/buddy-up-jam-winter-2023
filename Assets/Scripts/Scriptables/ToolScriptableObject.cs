@@ -1,4 +1,3 @@
-#pragma warning disable S1104 // Fields should not have public accessibilityusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /* User-defined Namespaces */
@@ -7,13 +6,19 @@ using PlayArea;
 namespace Scriptables {
     [CreateAssetMenu (fileName = "Tool", menuName = "Scriptable Objects/Tool")]
     public class ToolScriptableObject : ScriptableObject {
-        public Sprite toolSlotSprite;
-        public Texture2D toolCursorTexture;
-        public Sprite standardToolImage;
-        public Sprite selectedToolImage;
-        public ToolType toolType;
+        [SerializeField] private Sprite toolSlotSprite;
+        [SerializeField] private Texture2D toolCursorTexture;
+        [SerializeField] private Sprite standardToolImage;
+        [SerializeField] private Sprite selectedToolImage;
+        [SerializeField] private ToolType toolType;
+
+        /* Public Properties */
+        public Sprite ToolSlotSprite { get => toolSlotSprite; }
+        public Texture2D ToolCursorTexture { get => toolCursorTexture; }
+        public Sprite StandardToolImage { get => standardToolImage; }
+        public Sprite SelectedToolImage { get => selectedToolImage; }
+        public ToolType ToolType { get => toolType; }
     }
 }
 
-#pragma warning restore S1104 // Fields should not have public accessibility
 

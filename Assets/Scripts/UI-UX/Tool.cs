@@ -24,12 +24,38 @@ namespace PlayArea {
         [SerializeField]
         private ToolScriptableObject toolScriptableObject;
 
+        [Header("Audio Sources")]
+        [SerializeField] private AudioSource pickupSound;
+        [SerializeField] private AudioSource placeSound;
+        [SerializeField] private AudioSource singleMouseClickSound;
+        [SerializeField] private AudioSource contionuousMouseHoldSound;
+
         /* Tool Selected Event */
         public static event Action<Tool, ToolType> OnToolClicked;
 
         // Set the selected tool as the player's cursor
         public void OnPointerClick(PointerEventData eventData) {
-            OnToolClicked?.Invoke(this, toolScriptableObject.toolType);
+            OnToolClicked?.Invoke(this, toolScriptableObject.ToolType);
+        }
+
+        public void Pickup()
+        {
+            pickupSound.Play();
+        }
+
+        public void Place()
+        {
+            placeSound.Play();
+        }
+
+        public void PlayMouseClickSound()
+        {
+            singleMouseClickSound.Play();
+        }
+
+        public void PlayMouseHoldSound()
+        {
+            contionuousMouseHoldSound.Play();   
         }
 
         /* Public Properties */

@@ -12,29 +12,38 @@ using PlayArea;
 /// Handles requests to load the next customer and switch to the main play state.
 /// </summary>
 namespace GameState {
-    public class WorkspaceEmptyState : IGameState {
+    public class WorkspaceEmptyState : GameState {
         /* Private Member Variables */
-        private readonly GameManager gameManager;
+        private readonly GameStateMachine gameManager;
 
         /* Public Event Actions */
         public static event Action OnNextClientRequested;
 
-
-        public WorkspaceEmptyState(GameManager gameManager) {
+        public WorkspaceEmptyState(GameStateMachine gameManager) {
             this.gameManager = gameManager;
         }
 
-        public void EnterState() {
-            PlayAreaCanvasManager.OnNextClientBellRung += () => { OnNextClientRequested?.Invoke(); };
-            Workspace.OnClientloaded += () => { gameManager.SwitchGameState(gameManager.PlushieActiveState); };
+        public override void EnterState() {
+            PlayAreaCanvasManager.OnNextClientBellRung += CallNextClient;
+            Workspace.OnClientloaded += SwitchToPlushieActiveState;
         }
 
-        public void UpdateState() {
-            // Not in use
-        }
-
-        public void ExitState() {
+        public override void UpdateState() {
             // Not In Use
+        }
+
+        public override void ExitState() {
+            PlayAreaCanvasManager.OnNextClientBellRung -= CallNextClient;
+            Workspace.OnClientloaded -= SwitchToPlushieActiveState;
+        }
+
+        private void CallNextClient() {
+            OnNextClientRequested?.Invoke();
+        }
+
+
+        private void SwitchToPlushieActiveState() {
+            gameManager.SwitchGameState(gameManager.PlushieActiveState);
         }
     }
 }

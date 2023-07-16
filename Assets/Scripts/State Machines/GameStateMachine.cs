@@ -10,10 +10,10 @@ using UnityEngine;
 /// </summary>
 
 namespace GameState {
-    public class GameManager : MonoBehaviour {
+    public class GameStateMachine : MonoBehaviour {
         /* Private Member Variables */
         [Header("Game State Concrete Implementations")]
-        private IGameState currentState;
+        private GameState currentState;
         private MainMenuState mainMenuState;
         private WorkspaceEmptyState workspaceEmptyState;
         private PlushieActiveState plushieActiveState;
@@ -34,7 +34,7 @@ namespace GameState {
             currentState.EnterState();
         }
 
-        public void SwitchGameState(IGameState newState) {
+        public void SwitchGameState(GameState newState) {
             // Set new state
             currentState = newState;
             currentState.EnterState();
@@ -48,10 +48,10 @@ namespace GameState {
         }
 
         /* Public Properties */
-        public IGameState CurrentState { get => currentState; }
-        public IGameState MainMenuState { get => mainMenuState; }
-        public IGameState WorkspaceEmptyState { get => workspaceEmptyState; }
-        public IGameState PlushieActiveState { get => plushieActiveState; }
+        public GameState CurrentState { get => currentState; }
+        public GameState MainMenuState { get => mainMenuState; }
+        public GameState WorkspaceEmptyState { get => workspaceEmptyState; }
+        public GameState PlushieActiveState { get => plushieActiveState; }
     }
 }
 

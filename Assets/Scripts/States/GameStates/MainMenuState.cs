@@ -8,27 +8,26 @@ using UserInterface;
 /// Initial starting game state. Handles start button input to kick off the game
 /// </summary>
 namespace GameState {
-    public class MainMenuState : IGameState {
-        private readonly GameManager gameManager;
+    public class MainMenuState : GameState {
+        private readonly GameStateMachine gameManager;
 
-        public MainMenuState(GameManager gameManager) {
+        public MainMenuState(GameStateMachine gameManager) {
             this.gameManager = gameManager;
         }
 
-        public void EnterState() {
+        public override void EnterState() {
             MainMenuCanvasManager.OnStartButtonPressed += StartGame;
         }
 
-        public void UpdateState() {
-            // Not in use
-        }
-        public void ExitState() {
+        public override void UpdateState() {
             // Not In Use
         }
 
-        private void StartGame() {
-            // Unsubscribe from event handlers and switch to play state
+        public override void ExitState() {
             MainMenuCanvasManager.OnStartButtonPressed -= StartGame;
+        }
+
+        private void StartGame() {
             gameManager.SwitchGameState(gameManager.WorkspaceEmptyState);
         }
     }

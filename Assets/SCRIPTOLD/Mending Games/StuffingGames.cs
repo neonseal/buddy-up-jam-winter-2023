@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GameData;
@@ -176,3 +176,4 @@ public class StuffingGames : MonoBehaviour {
         return this.unstuffedAreaCurrent / unstuffedAreaTotal;
     }
 }
+*/

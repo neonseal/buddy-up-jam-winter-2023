@@ -5,10 +5,10 @@ using GameState;
 
 namespace Utility {
     public class Helper {
-        public GameManager GetGameManager() {
+        public GameStateMachine GetGameManager() {
             // Initialize new GameManger game object
             GameObject gameObject = new GameObject();
-            GameManager gameManager = gameObject.AddComponent<GameManager>();
+            GameStateMachine gameManager = gameObject.AddComponent<GameStateMachine>();
             Assert.IsNotNull(gameManager);
             gameManager.InitializeGameManager();
             // We expect to start in the main menu state

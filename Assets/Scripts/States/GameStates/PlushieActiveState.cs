@@ -1,8 +1,9 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 /* User-defined Namespaces */
 using PlayArea;
+using Scriptables.DamageInstructions;
 
 /// <summary>
 /// Plushie Active State
@@ -11,24 +12,33 @@ using PlayArea;
 /// Controls transition to mending mini-game and interaction with plushie elements
 /// </summary>
 namespace GameState {
-    public class PlushieActiveState : IGameState {
+    public class PlushieActiveState : GameState {
         /* Private Member Variables */
-        private readonly GameManager gameManager;
+        private readonly GameStateMachine gameManager;
 
-        public PlushieActiveState(GameManager gameManager) {
+        public static event Action<DamageInstructrionsScriptableObject[]> MendingGameInitiated;
+
+        public PlushieActiveState(GameStateMachine gameManager) {
             this.gameManager = gameManager;
         }
 
-        public void EnterState() {
+        public override void EnterState() {
+            PlushieDamageGO.OnPlushieDamageClicked += HandleDamageClick;
         }
 
-        public void UpdateState() {
+        public override void UpdateState() {
             // Not In Use
         }
 
-        public void ExitState() {
-            // Not In Use
+        public override void ExitState() {
+            PlushieDamageGO.OnPlushieDamageClicked -= HandleDamageClick;
         }
+
+        private void HandleDamageClick(DamageInstructrionsScriptableObject[] damageInstructions) {
+            // Send command to start mending repair mini-game
+            MendingGameInitiated?.Invoke(damageInstructions);
+        }
+
     }
 }
 

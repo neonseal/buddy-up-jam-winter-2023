@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GameData;
@@ -6,11 +6,11 @@ using DG.Tweening;
 using UnityEngine.UI;
 
 public class MendingGameController : MonoBehaviour {
-    /* Mending Game component for generating different mini game sprites */
+    *//* Mending Game component for generating different mini game sprites *//*
     private MendingGames mendingGame;
     private StuffingGames stuffingGame;
 
-    /* Lense Sprite on which we'll render the dashed line */
+    *//* Lense Sprite on which we'll render the dashed line *//*
     private SpriteRenderer lenseSpriteRenderer;
 
     private Vector3 homePosition;
@@ -87,3 +87,4 @@ public class MendingGameController : MonoBehaviour {
         mendingGame.ResetAllElements();
     }
 }
+*/

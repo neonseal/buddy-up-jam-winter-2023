@@ -18,7 +18,7 @@ namespace Tests {
 
         [Test]
         public void NextClientButton() {
-            GameManager gameManager = helper.GetGameManager();
+            GameStateMachine gameManager = helper.GetGameManager();
             Assert.IsNotNull(playAreaCanvas);
             playAreaCanvas.InitializeCanvasManager();
 

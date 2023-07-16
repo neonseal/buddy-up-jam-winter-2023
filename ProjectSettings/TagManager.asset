@@ -15,6 +15,7 @@ TagManager:
   - Checklist
   - Workspace
   - DialogueTextArea
+  - Node
   layers:
   - Default
   - TransparentFX
