@@ -72,7 +72,10 @@ namespace PlayArea {
 
                 // Set held tool cursor
                 SetToolCursor();
-            } else {
+            } else
+            {
+                currentTool.Place();
+
                 // If currently selected tool matched clicked tool, drop tool
                 SetCurrentTool(null, ToolType.None);
 
@@ -86,7 +89,7 @@ namespace PlayArea {
             currentToolType = toolType;
         }
 
-        private void SetToolCursor() {
+        private void SetToolCursor() {            
             if (
                 currentTool.ToolScriptableObject.ToolType.Equals(ToolType.Cleaning) ||
                 currentTool.ToolScriptableObject.ToolType.Equals(ToolType.Stuffing)
@@ -111,6 +114,7 @@ namespace PlayArea {
                     CursorMode.ForceSoftware
                 );
             }
+            currentTool.Pickup();
         }
 
 

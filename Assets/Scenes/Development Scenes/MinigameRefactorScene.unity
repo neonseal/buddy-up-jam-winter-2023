@@ -1667,7 +1667,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5588bb3d41fbcda4388d73150d3c4728, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1763,7 +1763,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e6b7f9bc3047d9b419c4245a6fb4686a, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1898,6 +1898,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toolScriptableObject: {fileID: 11400000, guid: 1bc85c8428b896f42a96f328f97c44ae, type: 2}
+  pickupSound: {fileID: 261353759}
+  placeSound: {fileID: 261353758}
+  singleMouseClickSound: {fileID: 261353757}
+  contionuousMouseHoldSound: {fileID: 261353757}
 --- !u!1 &267962119
 GameObject:
   m_ObjectHideFlags: 0
@@ -3485,7 +3489,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5588bb3d41fbcda4388d73150d3c4728, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -3581,7 +3585,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e6b7f9bc3047d9b419c4245a6fb4686a, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -3716,6 +3720,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toolScriptableObject: {fileID: 11400000, guid: b2e8f778d6c3f1541bfdb9b03fac063a, type: 2}
+  pickupSound: {fileID: 578156027}
+  placeSound: {fileID: 578156026}
+  singleMouseClickSound: {fileID: 578156025}
+  contionuousMouseHoldSound: {fileID: 578156024}
 --- !u!1 &609274317
 GameObject:
   m_ObjectHideFlags: 0
@@ -7235,7 +7243,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 2cc13c4aa264962468418e681c75fab6, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -7331,7 +7339,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: eb87280264a71524cbdfd00243ef07d8, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -7427,7 +7435,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5588bb3d41fbcda4388d73150d3c4728, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -7523,7 +7531,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e6b7f9bc3047d9b419c4245a6fb4686a, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -7658,6 +7666,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toolScriptableObject: {fileID: 11400000, guid: c169376ac2350724a8f479d01a50f27f, type: 2}
+  pickupSound: {fileID: 1767612978}
+  placeSound: {fileID: 1767612977}
+  singleMouseClickSound: {fileID: 1767612976}
+  contionuousMouseHoldSound: {fileID: 1767612975}
 --- !u!1 &1790483337
 GameObject:
   m_ObjectHideFlags: 0
