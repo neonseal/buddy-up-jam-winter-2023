@@ -56,10 +56,9 @@ namespace PlayArea {
                 loadPlushieSequence.Append(currentPlushie.transform.DOPunchScale(punchVector, animateDuration, punchVibrato, punchElasticity));
 
                 // Send task complete event
+                // TODO: Pass plushie prefab to PlushieActiveState i.e. OnClientLoaded?.Invoke(currentPlushie)
                 OnClientloaded?.Invoke();
-            } else {
-                // No plushies left -> transition to end state
-            }
+            } 
 
         }
 

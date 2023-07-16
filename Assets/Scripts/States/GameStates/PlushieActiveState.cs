@@ -24,6 +24,11 @@ namespace GameState {
 
         public override void EnterState() {
             PlushieDamageGO.OnPlushieDamageClicked += HandleDamageClick;
+
+            // TODO: Capturing the current plushie 
+            // TODO: Send event to play plushie client dialogue to be received by ClientDialogueManager
+            // TODO: Setup listener for ClientDialogueManager.OnClientDialogueComplete event to play tutorial if needed
+            // TODO: Fire start tutorial event if needed
         }
 
         public override void UpdateState() {

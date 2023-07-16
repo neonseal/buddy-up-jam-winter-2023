@@ -34,7 +34,7 @@ namespace MendingGames {
     public class MendingGameManager : MonoBehaviour {
         [Header("High-level Status/Progress Elements")]
         private DamageInstructrionsScriptableObject[] damageInstructions;
-        private int damageRepairStep;
+        private int damageRepairStepIndex;
         private bool mendingGameInProgress;
         private int activeNodeIndex;
         [SerializeField] private PlayAreaCanvasManager canvasManager;
@@ -71,13 +71,14 @@ namespace MendingGames {
 
         /* Mending Game Events */
         public static event Action<DamageInstructrionsScriptableObject[]> OnMendingGameComplete;
+        public static event Action<DamageInstructrionsScriptableObject> OnMendingStepComplete;
 
         private void Awake() {
             nodes = new List<Node>();
             dashSets = new List<List<Dash>>();
             lensSpriteRenderer = magnifyingGlassLens.GetComponent<SpriteRenderer>();
 
-            damageRepairStep = -1;
+            damageRepairStepIndex = -1;
             startingLocation = magnifyingGlass.transform.localPosition;
             centerLocation = new Vector3(5.5f, -10, 0);
 
@@ -91,10 +92,11 @@ namespace MendingGames {
         public void GenerateMendingGame(DamageInstructrionsScriptableObject[] damageInstructions) {
             mendingGameInProgress = true;
             this.damageInstructions = damageInstructions;
-            this.damageRepairStep++; 
+            this.damageRepairStepIndex++; 
 
             // Check first step of damage instructions to determine starting damage type
-            switch (damageInstructions[damageRepairStep].PlushieDamageType) {
+            switch (damageInstructions[damageRepairStepIndex].PlushieDamageType) {
+                // TODO: Change to switch of MendingGameType (May need to add to DamageInstruction Scriptable)
                 case PlushieDamageType.SmallRip:
                     GenerateSewingOrCuttingGame();
                     break;
@@ -119,12 +121,12 @@ namespace MendingGames {
             Node.OnNodeTriggered += HandleTargetNodeTrigger;
             Node.OnActiveNodeReleased += ResetCurrentLine;
 
-            Vector2[] targetLocations = this.damageInstructions[damageRepairStep].TargetLocations;
-            lensSpriteRenderer.sprite = this.damageInstructions[damageRepairStep].DamageSprite;
+            Vector2[] targetLocations = this.damageInstructions[damageRepairStepIndex].TargetLocations;
+            lensSpriteRenderer.sprite = this.damageInstructions[damageRepairStepIndex].DamageSprite;
 
             // Set updated rotation value
-            mendingGamePlayArea.transform.Rotate(0, 0, this.damageInstructions[damageRepairStep].RotationZValue);
-            magnifyingGlassLens.transform.Rotate(0, 0, this.damageInstructions[damageRepairStep].RotationZValue);
+            mendingGamePlayArea.transform.Rotate(0, 0, this.damageInstructions[damageRepairStepIndex].RotationZValue);
+            magnifyingGlassLens.transform.Rotate(0, 0, this.damageInstructions[damageRepairStepIndex].RotationZValue);
 
             // Ensure we are using the appropriate material
             if (lensSpriteRenderer.material != defaultMaterial)
@@ -153,8 +155,11 @@ namespace MendingGames {
             Node.OnNodeTriggered -= HandleTargetNodeTrigger;
             Node.OnActiveNodeReleased -= ResetCurrentLine;
             // Check if there are more steps to the repair process
-            if (this.damageRepairStep < this.damageInstructions.Count() - 1)
+            if (this.damageRepairStepIndex < this.damageInstructions.Count() - 1)
             {
+                // Fire step complete event 
+                // TODO: Add listener for this event on the ChecklistManager
+                OnMendingStepComplete?.Invoke(this.damageInstructions[this.damageRepairStepIndex]);
                 // Start next mending game step
                 GenerateMendingGame(this.damageInstructions);
             } else
@@ -208,7 +213,7 @@ namespace MendingGames {
             // Activate corresponding line of dashes
             foreach (Dash dash in dashSets[this.activeNodeIndex])
             {
-                dash.EnableDash(this.damageInstructions[damageRepairStep].RequiredToolType);
+                dash.EnableDash(this.damageInstructions[damageRepairStepIndex].RequiredToolType);
             }
             // Activate next node as target node
             nodes[this.activeNodeIndex + 1].TargetNode = true;
@@ -238,7 +243,7 @@ namespace MendingGames {
                     node.SetColor(Color.blue);
 
                 }
-                node.SetToolType(damageInstructions[damageRepairStep].RequiredToolType);
+                node.SetToolType(damageInstructions[damageRepairStepIndex].RequiredToolType);
                 
                 this.nodes.Add(node);
             }
