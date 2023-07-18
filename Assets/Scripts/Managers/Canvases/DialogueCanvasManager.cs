@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UserInterface;
 
 /// <summary>
 /// Dialogue Canvas Manager
@@ -15,7 +16,7 @@ namespace Dialogue {
     public class DialogueCanvasManager : MonoBehaviour {
         [Header("Testing Elements")]
         [SerializeField] private ClientDialogueSet clientDialogue;
-        [SerializeField] private TutorialSequenceScriptableObject tutorialSequence;
+        [SerializeField] private TutorialSequenceScriptableObject welcomeTutorialSequence;
 
         /* Private Member Variables */
         [Header("Client Dialogue Elements")]
@@ -29,7 +30,11 @@ namespace Dialogue {
         }
 
         public void SetupDialogueCanvasManager() {
-            // Not In Use
+            MainMenuCanvasManager.OnStartButtonPressed += StartWelcomeTutorial;
+        }
+
+        private void StartWelcomeTutorial() {
+            OnTutorialSequenceStart?.Invoke(welcomeTutorialSequence);
         }
     }
 }
