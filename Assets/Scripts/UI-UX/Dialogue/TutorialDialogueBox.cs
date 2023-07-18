@@ -30,7 +30,7 @@ namespace Dialogue {
 
             // Setup event actions
             continueButton.onClick.AddListener(() => { OnContinueButtonPressed?.Invoke(); });
-            fontSizeToggle.onValueChanged.AddListener(delegate { SwitchFontSize(); });
+            //fontSizeToggle.onValueChanged.AddListener(delegate { SwitchFontSize(); });
         }
 
         public void SetTutorialStepTexts(string stepText) {

@@ -3,7 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 /* User-defined Namespaces */
 using GameState;
-
+using Dialogue;
+ 
 /// <summary>
 /// Play Area UI Canvas Manager
 /// 
@@ -15,6 +16,8 @@ using GameState;
 namespace PlayArea {
     public class PlayAreaCanvasManager : MonoBehaviour {
         /* Private Member Variables */
+        [SerializeField] private TutorialManager tutorialManager;
+
         [Header("Checklist Elements")]
         [SerializeField]
         private Button nextClientBtn;
@@ -28,6 +31,7 @@ namespace PlayArea {
         private AudioSource bellSound;
         private Tool currentTool;
         private ToolType currentToolType;
+
 
         /* UI Interaction Event Actions */
         public static event Action OnNextClientBellRung;
@@ -125,6 +129,12 @@ namespace PlayArea {
         // appropriate, workspace empty, game state
         private void HandleNextClientBtnClick() {
             bellSound.Play();
+
+            if (tutorialManager.RequiredContinueActionType == TutorialActionRequiredContinueType.RingBell)
+            {
+                tutorialManager.ContinueTutorialSequence();
+            }
+
             OnNextClientBellRung?.Invoke();
         }
 

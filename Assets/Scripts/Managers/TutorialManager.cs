@@ -36,6 +36,28 @@ namespace Dialogue {
             TutorialDialogueBox.OnContinueButtonPressed += ContinueTutorialSequence;
         }
 
+        public void ContinueTutorialSequence()
+        {
+            currentStepIndex++;
+
+            // Exit tutorial if we have exceeded the turn count
+            if (currentStepIndex >= currentTutorialSequence.tutorialSteps.Length)
+            {
+                TutorialManager.SetTutorialStatus(false);
+                DestroyImmediate(activeTutorialDialogue.gameObject);
+                if (activeTutorialArrow != null)
+                {
+                    DestroyImmediate(activeTutorialArrow);
+                }
+            }
+            else
+            {
+                // Update dialogue box and show next step
+                CreateOrUpdateTutorialDialogue();
+                CreateOrUpdateTutorialArrow();
+            }
+        }
+
         private static void SetTutorialStatus(bool status) {
             TutorialManager.tutorialActive = status;
         }
@@ -74,6 +96,10 @@ namespace Dialogue {
                 activeTutorialDialogue.transform.SetParent(parentObject.transform);
             }
 
+            // If there is a required continue action (i.e. ring bell, pickup tool), hide continue button
+            activeTutorialDialogue.GetComponentInChildren<Button>().gameObject.SetActive(currentTutorialStep.requiredContinueAction == TutorialActionRequiredContinueType.None);
+
+            // Update tutorial text and location
             activeTutorialDialogue.SetTutorialStepTexts(stepText);
             activeTutorialDialogue.transform.localPosition = dialoguePosition;
         }
@@ -96,24 +122,8 @@ namespace Dialogue {
             }
         }
 
-        private void ContinueTutorialSequence() {
-            currentStepIndex++;
-
-            // Exit tutorial if we have exceeded the turn count
-            if (currentStepIndex >= currentTutorialSequence.tutorialSteps.Length) {
-                TutorialManager.SetTutorialStatus(false);
-                DestroyImmediate(activeTutorialDialogue.gameObject);
-                if (activeTutorialArrow != null) {
-                    DestroyImmediate(activeTutorialArrow);
-                }
-            } else {
-                // Update dialogue box and show next step
-                CreateOrUpdateTutorialDialogue();
-                CreateOrUpdateTutorialArrow();
-            }
-        }
-
         public static bool TutorialActive { get => tutorialActive; }
+        public TutorialActionRequiredContinueType RequiredContinueActionType { get => currentTutorialStep.requiredContinueAction; }
     }
 }
 
