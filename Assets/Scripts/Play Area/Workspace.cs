@@ -15,9 +15,9 @@ namespace PlayArea {
     public class Workspace : MonoBehaviour {
         /* Private Member Variables */
         [Header("Plushie Loading Elements")]
-        [SerializeField] private PlushieGO[] plushieList;
+        [SerializeField] private Plushie[] plushieList;
         private int currentPlushieIndex = -1;
-        private PlushieGO currentPlushie;
+        private Plushie currentPlushie;
 
         [Header("Plushie Animation Elements")]
         [SerializeField] private Ease moveEaseType;
@@ -30,7 +30,7 @@ namespace PlayArea {
 
 
         /* Public Event Actions */
-        public static event Action OnClientloaded;
+        public static event Action<Plushie> OnClientPlushieloaded;
 
         private void Awake() {
             InitializeWorkspace();
@@ -56,14 +56,13 @@ namespace PlayArea {
                 loadPlushieSequence.Append(currentPlushie.transform.DOPunchScale(punchVector, animateDuration, punchVibrato, punchElasticity));
 
                 // Send task complete event
-                // TODO: Pass plushie prefab to PlushieActiveState i.e. OnClientLoaded?.Invoke(currentPlushie)
-                OnClientloaded?.Invoke();
+                OnClientPlushieloaded?.Invoke(currentPlushie);
             } 
 
         }
 
         /* Public Properties */
         public int CurrentPlushieIndex { get => currentPlushieIndex; }
-        public PlushieGO CurrentPlushie { get => currentPlushie; }
+        public Plushie CurrentPlushie { get => currentPlushie; }
     }
 }

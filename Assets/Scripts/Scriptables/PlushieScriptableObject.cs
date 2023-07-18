@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GameData;
+/* User-defined Namespaces */
+using Dialogue;
 
 [CreateAssetMenu (fileName = "Plushie", menuName = "Scriptable Objects/Plushie")]
 public class PlushieScriptableObject : ScriptableObject
@@ -20,28 +21,16 @@ public class PlushieScriptableObject : ScriptableObject
     public int characterSpacingValue;
     public int wordSpacingValue;
 
-    [Header("Plushie Sprite Elements")]
-    public Sprite sewingIncompleteSprite;
-    public Sprite sewingCompleteSprite;
-    public Sprite stuffingIncompleteSprite;
-    public Sprite stuffingCompleteSprite;
-    public Sprite cuttingIncompleteSprite;
-    public Sprite cuttingCompleteSprite;
-
-    [Header("Plushie/Damage Elements")]
+    [Header("Plushie Rendering Elements")]
     public Sprite damagedPlushieSprite;
     public Sprite repairedPlushieSprite;
     public Vector3 plushieScale;
     public int spriteZRotationValue;
 
-    public List<DamageType> damageTypeList;
-    public List<Vector2> damageColliderSizeList;
-    public List<Vector2> damagePositionList;
-    public List<int> damageZRotationList;
 
     [Header("Issue and Resolution Elements")]
-    public Dialogue issueDialogue;
-    public ClientCard resolutionClientCard;
+    public ClientDialogueSet issueDialogue;
+    //public ClientCard resolutionClientCard;
 
     [Header("Tutorial Dialogue")]
     public bool hasTutorialDialogue;

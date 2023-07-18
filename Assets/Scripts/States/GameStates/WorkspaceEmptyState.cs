@@ -25,8 +25,6 @@ namespace GameState {
 
         public override void EnterState() {
             PlayAreaCanvasManager.OnNextClientBellRung += CallNextClient;
-            Workspace.OnClientloaded += SwitchToPlushieActiveState;
-            // TODO: Check if we need to play to welcomeSequence Tutorial 
         }
 
         public override void UpdateState() {
@@ -35,15 +33,10 @@ namespace GameState {
 
         public override void ExitState() {
             PlayAreaCanvasManager.OnNextClientBellRung -= CallNextClient;
-            Workspace.OnClientloaded -= SwitchToPlushieActiveState;
         }
 
         private void CallNextClient() {
             OnNextClientRequested?.Invoke();
-        }
-
-
-        private void SwitchToPlushieActiveState() {
             gameManager.SwitchGameState(gameManager.PlushieActiveState);
         }
     }
