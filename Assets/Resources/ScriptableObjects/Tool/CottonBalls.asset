@@ -16,4 +16,4 @@ MonoBehaviour:
   toolCursorTexture: {fileID: 2800000, guid: 1b2775d48236c2e47adeabebc8bb9c45, type: 3}
   standardToolImage: {fileID: 21300000, guid: 7e4746f01bc33f049b8f99e5e590c0bf, type: 3}
   selectedToolImage: {fileID: 21300000, guid: 7e4746f01bc33f049b8f99e5e590c0bf, type: 3}
-  toolType: 2
+  toolType: 3

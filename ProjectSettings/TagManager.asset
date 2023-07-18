@@ -5,11 +5,17 @@ TagManager:
   serializedVersion: 2
   tags:
   - Tool
-  - ToolSlot
   - Damage
   - Volume
   - PlayPause
   - Skip
+  - MainMenuCanvas
+  - PlayAreaCanvas
+  - Bell
+  - Checklist
+  - Workspace
+  - DialogueTextArea
+  - Node
   layers:
   - Default
   - TransparentFX

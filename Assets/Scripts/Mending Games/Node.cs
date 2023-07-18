@@ -1,59 +1,94 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using GameData;
-using GameUI;
 using DG.Tweening;
+/* User-defined Namespaces */
+using PlayArea;
 
-public class Node : MonoBehaviour {
-    public bool targetNode { get; set; }
-    public bool triggered { get; set; }
-    public ToolType requiredToolType { get; set; }
-    public SpriteRenderer spriteRenderer { get; set; }
+namespace MendingGames {
+    public class Node : MonoBehaviour {
+        private ToolType requiredToolType;
+        private SpriteRenderer spriteRenderer;
 
+        [Header("Reset Tweening Elements")]
+        [SerializeField] float duration;
+        [SerializeField] float strength;
+        [SerializeField] int vibrato;
+        [SerializeField] float randomness;
+        [SerializeField] bool snapping;
+        [SerializeField] bool fadeOut;
 
-    private void Awake() {
-        DOTween.Init();
-        targetNode = false;
-        triggered = false;
+        /* Public Properties */
+        public bool ActiveNode { get; set; }
+        public bool TargetNode { get; set; }
+        public bool Triggered { get; private set; }
+        public PlayAreaCanvasManager CanvasManager { get; set; }
 
-        // Get components
-        spriteRenderer = this.GetComponent<SpriteRenderer>();
-    }
+        public static event Action<Node> OnNodeTriggered;
+        public static event Action<Node> OnActiveNodeReleased;
 
-    public void Reset(bool target) {
-        triggered = false;
-        targetNode = target;
-        spriteRenderer.color = Color.black;
-    }
+        private void Awake() {
+            DOTween.Init();
 
-    public void TriggerNode(bool target) {
-        targetNode = target;
-        spriteRenderer.color = Color.blue;
-    }
+            spriteRenderer = this.GetComponent<SpriteRenderer>();
 
-    private void OnMouseDown() {
-        if (!triggered && 
-            targetNode && 
-            CanvasManager.toolType == requiredToolType
-        ) {
-            triggered = true;
-            MendingGameEventManager.Current.NodeTriggered(this);
+            Triggered = false;
+            TargetNode = false;
+        }
+
+        private void Update()
+        {
+            // Only send the released command for the active node
+            if (Input.GetMouseButtonUp(0) && this.ActiveNode && this.Triggered)
+            {
+                ActivateOrDeactivateNode(false);
+            }
+        }
+
+        private void OnMouseDown() {
+            if (this.TargetNode &&
+                !Triggered &&
+                CanvasManager.CurrentToolType == requiredToolType) {
+                ActivateOrDeactivateNode(true);
+            }
+        }
+
+        private void OnMouseOver() {
+            if (Input.GetMouseButton(0) && 
+                this.TargetNode &&
+                !Triggered &&
+                CanvasManager.CurrentToolType == requiredToolType) {
+                ActivateOrDeactivateNode(true);
+            }
+        }
+
+        private void ActivateOrDeactivateNode(bool Triggered) {
+            // Activate target node if clicked or moused over
+            if (Triggered) {
+                spriteRenderer.color = Color.green;
+                OnNodeTriggered?.Invoke(this);
+                Sequence sequence = DOTween.Sequence();
+                sequence.Append(this.gameObject.transform.DOScale(.15f, 0.25f));
+                sequence.SetLoops(2, LoopType.Yoyo);
+                this.Triggered = Triggered;
+                this.ActiveNode = true;
+            } else {
+                // Or release control of target node if mouse button is released
+                spriteRenderer.color = Color.blue;
+                OnActiveNodeReleased?.Invoke(this);
+                this.gameObject.transform.DOShakePosition(duration, strength, vibrato, randomness, snapping, fadeOut);
+                this.Triggered = Triggered;
+            }
+        }
+
+        public void SetColor(Color color)
+        {
+            this.spriteRenderer.color = color;  
+        }
+
+        public void SetToolType(ToolType requiredToolType) {
+            this.requiredToolType = requiredToolType;
         }
     }
 
-    private void OnMouseOver() {
-        if (Input.GetMouseButton(0) && 
-            !triggered && 
-            targetNode && 
-            CanvasManager.toolType == requiredToolType
-        ) {
-            spriteRenderer.color = Color.yellow;
-            triggered = true;
-            Sequence sequence = DOTween.Sequence();
-            sequence.Append(this.gameObject.transform.DOScale(.15f, 0.25f));
-            sequence.SetLoops(2, LoopType.Yoyo);
-            MendingGameEventManager.Current.NodeTriggered(this);
-        }
-    }
 }
