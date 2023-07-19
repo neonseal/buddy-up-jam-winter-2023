@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 668989213637585115}
   - component: {fileID: 3932967621435437430}
+  - component: {fileID: -8918833531433070196}
   m_Layer: 0
   m_Name: Reima & Remy
   m_TagString: Untagged
@@ -87,6 +88,38 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-8918833531433070196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4920179664441396057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f36ecf5859deb74a8f618f4ca8bac17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clientName: Reima & Remy
+  clientFont: {fileID: 11400000, guid: 96ccb3f7823cb054dab436d699160ba1, type: 2}
+  nameFontSize: 40
+  dialogueFontSize: 32
+  nameBolded: 0
+  dialogueBolded: 0
+  lineSpacingValue: 0
+  characterSpacingValue: 0
+  wordSpacingValue: 0
+  issueDialogue:
+    name: Reima & Remy
+    sentences:
+    - Hello, my girlfriend and I just moved here from out of state and happened to
+      see one of your fliers.
+    - "During our move, I may have accidentally damaged one of Remy\u2019s favorite
+      plushies.  Usually it wouldn\u2019t matter, we could just buy a replacement,
+      but this one is special. "
+    - Do you think you could take a look?
+  hasTutorialDialogue: 1
+  TutorialSequenceScriptableObject: {fileID: 11400000, guid: 8238cfc784570944783cee4ec587f900, type: 2}
 --- !u!1001 &1702269948564423477
 PrefabInstance:
   m_ObjectHideFlags: 0

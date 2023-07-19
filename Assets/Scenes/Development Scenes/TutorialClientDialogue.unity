@@ -206,7 +206,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 474829884}
   m_HandleRect: {fileID: 474829883}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3895,7 +3895,7 @@ MonoBehaviour:
     - This is the first line of text
     - Second line of text
     - Last line of text!
-  tutorialSequence: {fileID: 11400000, guid: 15abfd44b4791c04fa51ad4d314fb26a, type: 2}
+  welcomeTutorialSequence: {fileID: 11400000, guid: 15abfd44b4791c04fa51ad4d314fb26a, type: 2}
   clientDialogueBox: {fileID: 693941345}
 --- !u!1 &639743974
 GameObject:
@@ -4118,7 +4118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plushieList:
-  - {fileID: 1880372361918277451, guid: 5b1f9029f89758e4591055e389ed4fbd, type: 3}
+  - {fileID: 0}
   moveEaseType: 21
   moveDuration: 0.5
   animateDuration: 0.7
@@ -4598,7 +4598,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialDialoguePrefab: {fileID: 6000077438314716359, guid: 7ac9e3831bf26a644b7e56f019f31ce6, type: 3}
   tutorialArrowPrefab: {fileID: 815703068292625465, guid: 2b3d0d2333d40c24687706d74e5224a9, type: 3}
-  parentTransform: {fileID: 176855447}
+  parentObject: {fileID: 176855446}
 --- !u!1 &845507720
 GameObject:
   m_ObjectHideFlags: 0
@@ -5987,6 +5987,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed5278ade69742b4e9a6f496843255bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameText: {fileID: 0}
+  dialogueText: {fileID: 0}
+  continueButton: {fileID: 0}
+  fontToggle: {fileID: 0}
+  fontSizeToggle: {fileID: 0}
+  animator: {fileID: 0}
+  defaultAnimationDelay: 0
+  animationDelay: 0
+  openDyslexicFont: {fileID: 0}
+  openDyslexicTitleSize: 0
+  openDyslexicFontSize: 0
 --- !u!224 &1307563855
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6838,6 +6849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc0691440ecc7ce4188e064b768c368c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorialManager: {fileID: 798678362}
   nextClientBtn: {fileID: 372788597}
   checklist: {fileID: 742331425}
   tools:

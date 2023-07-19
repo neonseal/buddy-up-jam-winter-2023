@@ -31,7 +31,7 @@ MonoBehaviour:
     arrowZRotationValue: 0
   - stepText: Ring the bell to welcome your next client and get started!
     requiredToolType: 0
-    requiredContinueAction: 0
+    requiredContinueAction: 1
     tutorialDialogueLocation: {x: 200, y: 100}
     requiresArrow: 1
     tutorialArrowLocation: {x: 500, y: -60}

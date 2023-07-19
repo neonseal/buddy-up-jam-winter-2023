@@ -19,13 +19,6 @@ public class Plushie : MonoBehaviour {
     [SerializeField] private int characterSpacingValue;
     [SerializeField] private int wordSpacingValue;
 
-    [Header("Plushie Rendering Elements")]
-    [SerializeField] private Sprite damagedPlushieSprite;
-    [SerializeField] private Sprite repairedPlushieSprite;
-    [SerializeField] private Vector3 plushieScale;
-    [SerializeField] private int spriteZRotationValue;
-
-
     [Header("Issue and Resolution Elements")]
     [SerializeField] private ClientDialogueSet issueDialogue;
     //[SerializeField] private ClientCard resolutionClientCard;

@@ -12,5 +12,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a91674e172df5314f94edd4876060d27, type: 3}
   m_Name: SewingTutorial
   m_EditorClassIdentifier: 
-  sequenceName: 
-  tutorialSteps: []
+  sequenceName: Sewing Game Tutorial
+  tutorialSteps:
+  - stepText: "This stuffed animal has a small cut. To repair it, you\u2019ll need
+      to sew the tear shut."
+    requiredToolType: 0
+    requiredContinueAction: 0
+    tutorialDialogueLocation: {x: 0, y: -225}
+    requiresArrow: 0
+    tutorialArrowLocation: {x: 0, y: 0}
+    arrowZRotationValue: 0
+  - stepText: Click on the damaged area to apply the magnifying lens.
+    requiredToolType: 0
+    requiredContinueAction: 2
+    tutorialDialogueLocation: {x: 115, y: 240}
+    requiresArrow: 1
+    tutorialArrowLocation: {x: -195, y: 0}
+    arrowZRotationValue: 40
+  - stepText: Click the needle from your tools to pick it up.
+    requiredToolType: 0
+    requiredContinueAction: 3
+    tutorialDialogueLocation: {x: -490, y: -35}
+    requiresArrow: 1
+    tutorialArrowLocation: {x: -780, y: -205}
+    arrowZRotationValue: 55
+  - stepText: "Draw a line between the X\u2019s from top to bottom to pull the thread
+      through."
+    requiredToolType: 2
+    requiredContinueAction: 5
+    tutorialDialogueLocation: {x: -520, y: -10}
+    requiresArrow: 1
+    tutorialArrowLocation: {x: -205, y: 135}
+    arrowZRotationValue: -140
+  - stepText: "Return the needle to the tool roll when you\u2019re done to finish
+      the repair. If the lens doesn\u2019t go away, try sewing the plushie again."
+    requiredToolType: 0
+    requiredContinueAction: 4
+    tutorialDialogueLocation: {x: -490, y: -35}
+    requiresArrow: 1
+    tutorialArrowLocation: {x: -780, y: -205}
+    arrowZRotationValue: -55
+  - stepText: Great! All the repairs are now complete.
+    requiredToolType: 0
+    requiredContinueAction: 0
+    tutorialDialogueLocation: {x: 0, y: -225}
+    requiresArrow: 0
+    tutorialArrowLocation: {x: 0, y: 0}
+    arrowZRotationValue: 0
+  - stepText: "You can view required repairs here. Since all the repairs are done,
+      click \u201CComplete Job\u201D to return the plushie to its owner."
+    requiredToolType: 0
+    requiredContinueAction: 6
+    tutorialDialogueLocation: {x: 100, y: -95}
+    requiresArrow: 1
+    tutorialArrowLocation: {x: 420, y: -240}
+    arrowZRotationValue: -220

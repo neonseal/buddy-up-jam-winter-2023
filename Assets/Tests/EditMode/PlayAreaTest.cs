@@ -44,7 +44,7 @@ namespace Tests {
             Assert.AreEqual(gameManager.WorkspaceEmptyState, gameManager.CurrentState);
 
             // Set up client loaded event listener
-            Workspace.OnClientPlushieloaded += () => { clientLoaded = true; };
+            Workspace.OnClientPlushieloaded += (Plushie plushie) => { clientLoaded = true; };
 
             // Invoke next client button and ensure client/plushie loaded
             nextClientBtn.onClick.Invoke();
