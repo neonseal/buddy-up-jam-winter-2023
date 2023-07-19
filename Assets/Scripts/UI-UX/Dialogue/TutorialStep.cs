@@ -10,6 +10,7 @@ namespace Dialogue {
         SelectDamage,
         SelectTool,
         DropTool,
+        StartRepair,
         CompleteRepair,
         CompleteJob
     }

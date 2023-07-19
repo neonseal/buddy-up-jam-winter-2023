@@ -18,6 +18,7 @@ namespace MendingGames {
         [SerializeField] bool fadeOut;
 
         /* Public Properties */
+        public bool StartingNode { get; set; }
         public bool ActiveNode { get; set; }
         public bool TargetNode { get; set; }
         public bool Triggered { get; private set; }

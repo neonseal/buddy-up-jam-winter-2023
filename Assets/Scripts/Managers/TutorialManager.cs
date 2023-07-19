@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 /* User-defined Namespaces */
 
 namespace Dialogue {
@@ -81,7 +80,7 @@ namespace Dialogue {
             }
 
             // If there is a required continue action (i.e. ring bell, pickup tool), hide continue button
-            activeTutorialDialogue.GetComponentInChildren<Button>().gameObject.SetActive(currentTutorialStep.requiredContinueAction == TutorialActionRequiredContinueType.None);
+            activeTutorialDialogue.GetComponent<TutorialDialogueBox>().EnableDisableContinueButton(currentTutorialStep.requiredContinueAction == TutorialActionRequiredContinueType.None);
 
             // Update tutorial text and location
             activeTutorialDialogue.SetTutorialStepTexts(stepText);

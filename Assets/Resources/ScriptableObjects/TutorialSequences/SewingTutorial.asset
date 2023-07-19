@@ -25,17 +25,25 @@ MonoBehaviour:
   - stepText: Click on the damaged area to apply the magnifying lens.
     requiredToolType: 0
     requiredContinueAction: 2
-    tutorialDialogueLocation: {x: 115, y: 240}
+    tutorialDialogueLocation: {x: 180, y: 245}
     requiresArrow: 1
-    tutorialArrowLocation: {x: -195, y: 0}
+    tutorialArrowLocation: {x: -125, y: 95}
     arrowZRotationValue: 40
   - stepText: Click the needle from your tools to pick it up.
     requiredToolType: 0
     requiredContinueAction: 3
-    tutorialDialogueLocation: {x: -490, y: -35}
+    tutorialDialogueLocation: {x: -290, y: -15}
     requiresArrow: 1
-    tutorialArrowLocation: {x: -780, y: -205}
+    tutorialArrowLocation: {x: -580, y: -180}
     arrowZRotationValue: 55
+  - stepText: With your tool selected, click and hold the top most X to begin the
+      repair
+    requiredToolType: 0
+    requiredContinueAction: 5
+    tutorialDialogueLocation: {x: 375, y: 315}
+    requiresArrow: 1
+    tutorialArrowLocation: {x: 45, y: 200}
+    arrowZRotationValue: 15
   - stepText: "Draw a line between the X\u2019s from top to bottom to pull the thread
       through."
     requiredToolType: 2

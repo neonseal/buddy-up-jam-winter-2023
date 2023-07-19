@@ -6661,7 +6661,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc0691440ecc7ce4188e064b768c368c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialManager: {fileID: 176855448}
   nextClientBtn: {fileID: 372788597}
   checklist: {fileID: 742331425}
   tools:
@@ -6677,6 +6676,7 @@ MonoBehaviour:
   vibrato: 18
   randomness: 15
   fadeOut: 1
+  tutorialManager: {fileID: 176855448}
 --- !u!1 &1516040117
 GameObject:
   m_ObjectHideFlags: 0
@@ -7863,6 +7863,7 @@ MonoBehaviour:
   mendingGamePlayArea: {fileID: 1550073589}
   duration: 0.6
   easeType: 2
+  tutorialManager: {fileID: 176855448}
 --- !u!1 &2142516942
 GameObject:
   m_ObjectHideFlags: 0

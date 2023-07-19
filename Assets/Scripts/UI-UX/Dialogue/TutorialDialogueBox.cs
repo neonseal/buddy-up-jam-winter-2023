@@ -35,6 +35,10 @@ namespace Dialogue {
             dialogueText.text = stepText;
         }
 
+        public void EnableDisableContinueButton(bool enabled) {
+            continueButton.gameObject.SetActive(enabled);
+        }
+
         private void SwitchFontSize() {
             bool largeFontSelected = this.fontSizeToggle.value > 0;
             dialogueText.fontSize = largeFontSelected ? this.largeFontSize : defaultFontSize;

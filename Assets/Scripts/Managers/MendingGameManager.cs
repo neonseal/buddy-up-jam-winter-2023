@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Dialogue;
 using GameState;
 using PlayArea;
 /* User-defined Namespaces */
@@ -27,7 +28,6 @@ namespace MendingGames {
         Cutting,
         Stuffing
     }
-
 
     public class MendingGameManager : MonoBehaviour {
         [Header("High-level Status/Progress Elements")]
@@ -66,6 +66,9 @@ namespace MendingGames {
         [Header("Game Component Collections")]
         private List<Node> nodes;
         private List<List<Dash>> dashSets;
+
+        [Header("Tutorial/Dialogue Managers")]
+        [SerializeField] private TutorialManager tutorialManager;
 
         /* Mending Game Events */
         public static event Action<DamageInstructrionsScriptableObject[]> OnMendingGameComplete;
@@ -108,6 +111,11 @@ namespace MendingGames {
             }
 
             magnifyingGlass.transform.DOLocalMove(centerLocation, duration).SetEase(easeType);
+
+            // Check if there is a tutorial active that requires a continue action, and continue tutorial
+            if (tutorialManager.RequiredContinueActionType == TutorialActionRequiredContinueType.SelectDamage) {
+                tutorialManager.ContinueTutorialSequence();
+            }
         }
 
 
@@ -162,6 +170,11 @@ namespace MendingGames {
                 OnMendingGameComplete?.Invoke(this.damageInstructions);
             }
 
+
+            // Check if there is a tutorial active that requires a continue action, and continue tutorial
+            if (tutorialManager.RequiredContinueActionType == TutorialActionRequiredContinueType.CompleteRepair) {
+                tutorialManager.ContinueTutorialSequence();
+            }
         }
 
         private void HandleTargetNodeTrigger(Node triggeredNode) {
@@ -185,6 +198,11 @@ namespace MendingGames {
                 } else {
                     ResetCurrentLine(triggeredNode);
                 }
+            }
+
+            // If triggered node is the first in the repair, and there is a corresponding tutorial continue action, continue tutorial
+            if (triggeredNode.StartingNode && tutorialManager.RequiredContinueActionType == TutorialActionRequiredContinueType.StartRepair) {
+                tutorialManager.ContinueTutorialSequence();
             }
         }
         private bool CheckLineCompletion(Node node) {
@@ -220,9 +238,9 @@ namespace MendingGames {
 
                 node.transform.localPosition = position;
                 if (i == 0) {
+                    node.StartingNode = true;
                     node.TargetNode = node.ActiveNode = true;
                     node.SetColor(Color.blue);
-
                 }
                 node.SetToolType(damageInstructions[damageRepairStepIndex].RequiredToolType);
 

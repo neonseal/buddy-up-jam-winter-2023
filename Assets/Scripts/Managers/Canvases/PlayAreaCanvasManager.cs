@@ -17,8 +17,6 @@ using UnityEngine.UI;
 namespace PlayArea {
     public class PlayAreaCanvasManager : MonoBehaviour {
         /* Private Member Variables */
-        [SerializeField] private TutorialManager tutorialManager;
-
         [Header("Checklist Elements")]
         [SerializeField] private Button nextClientBtn;
         [SerializeField] private Checklist checklist;
@@ -38,11 +36,13 @@ namespace PlayArea {
         [SerializeField] float randomness;
         [SerializeField] bool fadeOut;
 
-
         [Header("Mending Tool Elements")]
         private AudioSource bellSound;
         private Tool currentTool;
         private ToolType currentToolType;
+
+        [Header("Tutorial/Dialogue Managers")]
+        [SerializeField] private TutorialManager tutorialManager;
 
         /* UI Interaction Event Actions */
         public static event Action OnNextClientBellRung;
@@ -89,6 +89,11 @@ namespace PlayArea {
 
                 // Set held tool cursor
                 SetToolCursor();
+
+                // Check if there is a tutorial active that requires a continue action, and continue tutorial
+                if (tutorialManager.RequiredContinueActionType == TutorialActionRequiredContinueType.SelectTool) {
+                    tutorialManager.ContinueTutorialSequence();
+                }
             } else {
                 currentTool.Place();
 
@@ -97,6 +102,12 @@ namespace PlayArea {
 
                 // Reset cursor
                 Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+
+
+                // Check if there is a tutorial active that requires a continue action, and continue tutorial
+                if (tutorialManager.RequiredContinueActionType == TutorialActionRequiredContinueType.DropTool) {
+                    tutorialManager.ContinueTutorialSequence();
+                }
             }
         }
 
