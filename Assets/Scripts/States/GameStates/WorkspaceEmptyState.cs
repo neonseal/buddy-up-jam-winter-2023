@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
-using UnityEngine;
 /* User-defined Namespaces */
 using PlayArea;
+using System;
 
 /// <summary>
 /// Workspace Empty Game State

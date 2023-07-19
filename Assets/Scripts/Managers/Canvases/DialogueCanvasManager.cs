@@ -1,10 +1,7 @@
 using PlayArea;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
 using UserInterface;
 
 /// <summary>
@@ -21,12 +18,10 @@ namespace Dialogue {
         [SerializeField] private TutorialSequenceScriptableObject welcomeTutorialSequence;
 
         /* Private Member Variables */
-        [Header("Client Dialogue Elements")]
+        [Header("Dialogue/Tutorial Manager Elements")]
         [SerializeField] private ClientDialogueManager clientDialogueManager;
+        [SerializeField] private TutorialManager tutorialManager;
 
-        /* Public Event Actions */
-        public static event Action<ClientDialogueSet> OnClientDialogueStart;
-        public static event Action<TutorialSequenceScriptableObject> OnTutorialSequenceStart;
         private void Awake() {
             SetupDialogueCanvasManager();
         }
@@ -38,22 +33,26 @@ namespace Dialogue {
         }
 
         private void StartWelcomeTutorial() {
-            OnTutorialSequenceStart?.Invoke(welcomeTutorialSequence);
+            StartCoroutine(StartWelcomeTutorialRoutine());
         }
 
-        private void HandlePlushieLoadEvent(Plushie currentPlushie)
-        {
+        IEnumerator StartWelcomeTutorialRoutine() {
+            // Pause briefly to allow animation to finish before sending event
+            yield return new WaitForSeconds(.25f);
+            tutorialManager.StartTutorialSequence(welcomeTutorialSequence);
+        }
+
+        private void HandlePlushieLoadEvent(Plushie currentPlushie) {
             this.currentPlushie = currentPlushie;
             Assert.IsNotNull(currentPlushie.IssueDialogue, "Client issue dialogue is undefined!");
-            OnClientDialogueStart?.Invoke(currentPlushie.IssueDialogue);
+            Debug.Log(currentPlushie.IssueDialogue.Name);
+            clientDialogueManager.StartDialogueSequence(currentPlushie.IssueDialogue);
         }
 
-        private void CheckForPlushieTutorial()
-        {
-            if (currentPlushie.HasTutorialDialogue)
-            {
+        private void CheckForPlushieTutorial() {
+            if (currentPlushie.HasTutorialDialogue) {
                 Assert.IsNotNull(currentPlushie.TutorialSequenceScriptableObject, "Client plushie states it has a tutoril, but scriptable is null!");
-                OnTutorialSequenceStart?.Invoke(currentPlushie.TutorialSequenceScriptableObject);
+                tutorialManager.StartTutorialSequence(currentPlushie.TutorialSequenceScriptableObject);
             }
         }
     }

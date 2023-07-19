@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlushieDamageSM : BaseStateMachine
-{
+public class PlushieDamageSM : BaseStateMachine {
     // State of plushie damage as a small rip
     [HideInInspector]
     public SmallRipState smallRipState;
@@ -26,8 +23,8 @@ public class PlushieDamageSM : BaseStateMachine
 
     // Reference to PlushieDamageGO component
     internal PlushieDamageGO _plushieDamageGO;
-    
-    
+
+
     // Initialize fields on load
     private void Awake() {
         InitializeFields();

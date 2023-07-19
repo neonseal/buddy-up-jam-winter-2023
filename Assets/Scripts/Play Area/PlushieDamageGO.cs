@@ -1,8 +1,8 @@
+/* User-defined Namespaces */
+using Scriptables.DamageInstructions;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-/* User-defined Namespaces */
-using Scriptables.DamageInstructions; 
 
 public class PlushieDamageGO : MonoBehaviour {
     // Initial damage type of the plushie damage

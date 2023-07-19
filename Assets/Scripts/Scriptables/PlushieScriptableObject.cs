@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 /* User-defined Namespaces */
 using Dialogue;
+using UnityEngine;
 
-[CreateAssetMenu (fileName = "Plushie", menuName = "Scriptable Objects/Plushie")]
-public class PlushieScriptableObject : ScriptableObject
-{
+[CreateAssetMenu(fileName = "Plushie", menuName = "Scriptable Objects/Plushie")]
+public class PlushieScriptableObject : ScriptableObject {
     [Header("Client Name")]
     public string plushieObjectName;
     public string clientName;
@@ -34,5 +31,5 @@ public class PlushieScriptableObject : ScriptableObject
 
     [Header("Tutorial Dialogue")]
     public bool hasTutorialDialogue;
-    public TutorialSequenceScriptableObject TutorialSequenceScriptableObject; 
+    public TutorialSequenceScriptableObject TutorialSequenceScriptableObject;
 }

@@ -1,9 +1,7 @@
-using System;
-using System.Collections.Generic;
-using UnityEngine;
 /* User-defined Namespaces */
 using PlayArea;
 using Scriptables.DamageInstructions;
+using System;
 
 /// <summary>
 /// Plushie Active State
@@ -15,7 +13,7 @@ namespace GameState {
     public class PlushieActiveState : GameState {
         /* Private Member Variables */
         private readonly GameStateMachine gameManager;
-        
+
         /* Public Properties */
         public static Plushie CurrentPlushie { get; private set; }
 
@@ -46,8 +44,7 @@ namespace GameState {
             MendingGameInitiated?.Invoke(damageInstructions);
         }
 
-        private void HandlePlushieLoadEvent(Plushie plushie)
-        {
+        private void HandlePlushieLoadEvent(Plushie plushie) {
             PlushieActiveState.CurrentPlushie = plushie;
         }
     }

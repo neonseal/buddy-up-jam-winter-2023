@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -17,7 +15,7 @@ namespace Dialogue {
         private string[] sentences;
 
         /* Public Properties */
-        public string Name { get; }
+        public string Name { get => name; }
         public string[] Sentences { get => sentences; }
     }
 

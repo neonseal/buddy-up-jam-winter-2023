@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace GameState {
     public abstract class GameState {
         /* EnterState is called at the beginning of a state change to set up the state, 

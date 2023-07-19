@@ -1,9 +1,8 @@
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
 /* User-defined Namespaces */
 using Scriptables;
+using System;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Tool Class
@@ -38,24 +37,20 @@ namespace PlayArea {
             OnToolClicked?.Invoke(this, toolScriptableObject.ToolType);
         }
 
-        public void Pickup()
-        {
+        public void Pickup() {
             pickupSound.Play();
         }
 
-        public void Place()
-        {
+        public void Place() {
             placeSound.Play();
         }
 
-        public void PlayMouseClickSound()
-        {
+        public void PlayMouseClickSound() {
             singleMouseClickSound.Play();
         }
 
-        public void PlayMouseHoldSound()
-        {
-            contionuousMouseHoldSound.Play();   
+        public void PlayMouseHoldSound() {
+            contionuousMouseHoldSound.Play();
         }
 
         /* Public Properties */

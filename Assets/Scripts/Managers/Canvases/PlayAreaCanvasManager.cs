@@ -1,10 +1,10 @@
+using Dialogue;
+/* User-defined Namespaces */
+using GameState;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-/* User-defined Namespaces */
-using GameState;
-using Dialogue;
- 
+
 /// <summary>
 /// Play Area UI Canvas Manager
 /// 
@@ -76,8 +76,7 @@ namespace PlayArea {
 
                 // Set held tool cursor
                 SetToolCursor();
-            } else
-            {
+            } else {
                 currentTool.Place();
 
                 // If currently selected tool matched clicked tool, drop tool
@@ -93,7 +92,7 @@ namespace PlayArea {
             currentToolType = toolType;
         }
 
-        private void SetToolCursor() {            
+        private void SetToolCursor() {
             if (
                 currentTool.ToolScriptableObject.ToolType.Equals(ToolType.Cleaning) ||
                 currentTool.ToolScriptableObject.ToolType.Equals(ToolType.Stuffing)
@@ -130,8 +129,7 @@ namespace PlayArea {
         private void HandleNextClientBtnClick() {
             bellSound.Play();
 
-            if (tutorialManager.RequiredContinueActionType == TutorialActionRequiredContinueType.RingBell)
-            {
+            if (tutorialManager.RequiredContinueActionType == TutorialActionRequiredContinueType.RingBell) {
                 tutorialManager.ContinueTutorialSequence();
             }
 

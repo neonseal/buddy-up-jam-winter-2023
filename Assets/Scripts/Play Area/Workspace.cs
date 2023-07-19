@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using DG.Tweening; 
+using DG.Tweening;
 /* User-defined Namespaces */
 using GameState;
+using System;
+using System.Collections;
+using UnityEngine;
 
 /// <summary>
 /// Workspace Controller
@@ -43,22 +43,29 @@ namespace PlayArea {
         }
 
         private void LoadNextClientPlushie() {
+            StartCoroutine(StartLoadPlushieRoutine());
+        }
+
+        IEnumerator StartLoadPlushieRoutine() {
+
             Sequence loadPlushieSequence = DOTween.Sequence();
             currentPlushieIndex++;
 
             // Load next plushie prefab if there are any left
             if (currentPlushieIndex < plushieList.Length) {
-                currentPlushie = Instantiate(plushieList[currentPlushieIndex], new Vector3(0,20,0), Quaternion.identity, this.transform);
+                currentPlushie = Instantiate(plushieList[currentPlushieIndex], new Vector3(0, 20, 0), Quaternion.identity, this.transform);
                 Vector3 punchVector = new Vector3(squashedX, squashedY, 0);
 
                 // Set up tweening animation
                 loadPlushieSequence.Append(currentPlushie.transform.DOLocalMoveY(0, moveDuration).SetEase(moveEaseType));
                 loadPlushieSequence.Append(currentPlushie.transform.DOPunchScale(punchVector, animateDuration, punchVibrato, punchElasticity));
 
+                // Pause briefly to allow animation to finish before sending event
+                yield return new WaitForSeconds(1f);
+
                 // Send task complete event
                 OnClientPlushieloaded?.Invoke(currentPlushie);
-            } 
-
+            }
         }
 
         /* Public Properties */

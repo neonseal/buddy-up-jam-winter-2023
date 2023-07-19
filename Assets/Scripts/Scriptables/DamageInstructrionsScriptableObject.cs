@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using MendingGames;
 /* User-defined Namespaces */
 using PlayArea;
-using MendingGames;
+using UnityEngine;
 
 namespace Scriptables.DamageInstructions {
     [CreateAssetMenu(fileName = "Damage Instructions", menuName = "Scriptable Objects/Damage Instructions")]
@@ -14,7 +12,7 @@ namespace Scriptables.DamageInstructions {
         public Vector2[] TargetLocations;
         public Sprite DamageSprite;
         public Sprite RepairedDamageSprite;
-        public int RotationZValue;  
+        public int RotationZValue;
     }
 
 

@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 /// <summary>
 /// Client Dialogue Manager
@@ -51,7 +51,7 @@ namespace Dialogue {
         private void Update() {
             RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector2.zero);
 
-            if (Input.GetMouseButtonDown(0) && animationPlaying && (hit.collider != null && hit.collider.name == "ClientDialogueBox")) {
+            if (Input.GetMouseButtonDown(0) && animationPlaying && hit.collider != null && hit.collider.name == "ClientDialogueBox") {
                 animationDelay = 0f;
             }
         }
@@ -71,21 +71,20 @@ namespace Dialogue {
             largeFontSize = 50;
 
             // Setup event listeners
-            DialogueCanvasManager.OnClientDialogueStart += StartDialogue;
             continueButton.onClick.AddListener(DisplayNextSentence);
             fontToggle.onValueChanged.AddListener(delegate { SwitchFonts(); });
             fontSizeToggle.onValueChanged.AddListener(delegate { SwitchFontSize(); });
         }
 
-        /*public void SetClientStyling(PlushieScriptableObject clientPlushieObject) {
+        public void SetClientStyling(Plushie plushie) {
             this.clientFontVisible = true;
-            this.clientFont = clientPlushieObject.clientFont;
-            this.clientFontSize = clientPlushieObject.dialogueFontSize;
-            this.clientTitleSize = clientPlushieObject.nameFontSize;
+            this.clientFont = plushie.ClientFont;
+            this.clientFontSize = plushie.DialogueFontSize;
+            this.clientTitleSize = plushie.NameFontSize;
             this.SetFont(this.clientFont);
-        }*/
+        }
 
-        private void StartDialogue(ClientDialogueSet dialogue) {
+        public void StartDialogueSequence(ClientDialogueSet dialogue) {
             StartCoroutine(StartDialogueRoutine(dialogue));
         }
 
@@ -95,6 +94,7 @@ namespace Dialogue {
             dialogueText.text = "";
 
             animator.SetBool("isOpen", true);
+
             // Pause briefly to allow animation to finish before rendering text
             yield return new WaitForSeconds(.5f);
 
@@ -115,6 +115,7 @@ namespace Dialogue {
             animationDelay = defaultAnimationDelay;
 
             string sentence = sentences.Dequeue();
+
             StopAllCoroutines();
             StartCoroutine(TypeSentence(sentence));
 

@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 /* User-defined Namespaces */
 using Dialogue;
+using UnityEngine;
 
 public class Plushie : MonoBehaviour {
     [Header("Client Name")]
@@ -26,4 +23,13 @@ public class Plushie : MonoBehaviour {
     [Header("Tutorial Dialogue")]
     public bool HasTutorialDialogue;
     public TutorialSequenceScriptableObject TutorialSequenceScriptableObject;
+
+    public TMPro.TMP_FontAsset ClientFont { get => clientFont; }
+    public int NameFontSize { get => nameFontSize; }
+    public int DialogueFontSize { get => dialogueFontSize; }
+    public bool NameBolded { get => nameBolded; }
+    public bool DialogueBolder { get => dialogueBolded; }
+    public int LineSpacingValue { get => lineSpacingValue; }
+    public int CharacterSpacingValue { get => characterSpacingValue; }
+    public int WordSpacingValue { get => wordSpacingValue; }
 }

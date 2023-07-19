@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 namespace Dialogue {
     [System.Serializable]
@@ -14,8 +12,8 @@ namespace Dialogue {
         [SerializeField] private Slider fontSizeToggle;
 
         [Header("Font Variables")]
-        private int defaultFontSize;
-        private int largeFontSize;
+        [SerializeField] private int defaultFontSize;
+        [SerializeField] private int largeFontSize;
 
         /* Tutorial Box Public Events */
         public static event Action OnContinueButtonPressed;
@@ -30,7 +28,7 @@ namespace Dialogue {
 
             // Setup event actions
             continueButton.onClick.AddListener(() => { OnContinueButtonPressed?.Invoke(); });
-            //fontSizeToggle.onValueChanged.AddListener(delegate { SwitchFontSize(); });
+            // fontSizeToggle.onValueChanged.AddListener(delegate { SwitchFontSize(); });
         }
 
         public void SetTutorialStepTexts(string stepText) {

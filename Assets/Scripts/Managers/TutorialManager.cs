@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 /* User-defined Namespaces */
-using Utility;
 
 namespace Dialogue {
     public class TutorialManager : MonoBehaviour {
@@ -29,39 +25,27 @@ namespace Dialogue {
         public void SetupTutorialManager() {
             TutorialManager.SetTutorialStatus(false);
             currentStepIndex = 0;
-
-            // Setup dialogue event listeners
-            DialogueCanvasManager.OnTutorialSequenceStart += StartTutorialSequence;
             TutorialDialogueBox.OnContinueButtonPressed += ContinueTutorialSequence;
         }
 
-        public void ContinueTutorialSequence()
-        {
+        public void ContinueTutorialSequence() {
             currentStepIndex++;
 
             // Exit tutorial if we have exceeded the turn count
-            if (currentStepIndex >= currentTutorialSequence.tutorialSteps.Length)
-            {
+            if (currentStepIndex >= currentTutorialSequence.tutorialSteps.Length) {
                 TutorialManager.SetTutorialStatus(false);
                 DestroyImmediate(activeTutorialDialogue.gameObject);
-                if (activeTutorialArrow != null)
-                {
+                if (activeTutorialArrow != null) {
                     DestroyImmediate(activeTutorialArrow);
                 }
-            }
-            else
-            {
+            } else {
                 // Update dialogue box and show next step
                 CreateOrUpdateTutorialDialogue();
                 CreateOrUpdateTutorialArrow();
             }
         }
 
-        private static void SetTutorialStatus(bool status) {
-            TutorialManager.tutorialActive = status;
-        }
-
-        private void StartTutorialSequence(TutorialSequenceScriptableObject tutorialSequence) {
+        public void StartTutorialSequence(TutorialSequenceScriptableObject tutorialSequence) {
             TutorialManager.SetTutorialStatus(true);
 
             if (this.activeTutorialArrow || this.activeTutorialDialogue) {
@@ -81,6 +65,10 @@ namespace Dialogue {
             // Setup dialogue and arrow elements
             CreateOrUpdateTutorialDialogue();
             CreateOrUpdateTutorialArrow();
+        }
+
+        private static void SetTutorialStatus(bool status) {
+            TutorialManager.tutorialActive = status;
         }
 
         private void CreateOrUpdateTutorialDialogue() {
