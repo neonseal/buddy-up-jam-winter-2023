@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Dialogue;
 /* User-defined Namespaces */
 using GameState;
@@ -19,19 +20,29 @@ namespace PlayArea {
         [SerializeField] private TutorialManager tutorialManager;
 
         [Header("Checklist Elements")]
-        [SerializeField]
-        private Button nextClientBtn;
-        [SerializeField]
-        private Checklist checklist;
-        [SerializeField]
-        private Tool[] tools;
+        [SerializeField] private Button nextClientBtn;
+        [SerializeField] private Checklist checklist;
+        [SerializeField] private Tool[] tools;
         private Button clickableNotepad;
+
+        [Header("Bell Animation Elements")]
+        [SerializeField] private Image bellPlunger;
+        [SerializeField] private Image bellDome;
+        [SerializeField] private float plungerEndYValue;
+        [SerializeField] private float plungerAnimationDuration;
+
+        [Header("Dome Animation Elements")]
+        [SerializeField] float duration;
+        [SerializeField] Vector3 strength;
+        [SerializeField] int vibrato;
+        [SerializeField] float randomness;
+        [SerializeField] bool fadeOut;
+
 
         [Header("Mending Tool Elements")]
         private AudioSource bellSound;
         private Tool currentTool;
         private ToolType currentToolType;
-
 
         /* UI Interaction Event Actions */
         public static event Action OnNextClientBellRung;
@@ -43,6 +54,8 @@ namespace PlayArea {
         /*                       PLAY AREA SETUP                       */
         /* ----------------------------------------------------------- */
         public void InitializeCanvasManager() {
+            DOTween.Init();
+
             bellSound = this.gameObject.GetComponent<AudioSource>();
 
             nextClientBtn.onClick.AddListener(HandleNextClientBtnClick);
@@ -128,6 +141,11 @@ namespace PlayArea {
         // appropriate, workspace empty, game state
         private void HandleNextClientBtnClick() {
             bellSound.Play();
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(bellPlunger.transform.DOLocalMoveY(plungerEndYValue, plungerAnimationDuration, false));
+            sequence.SetLoops(2, LoopType.Yoyo);
+            sequence.Play();
+            bellDome.transform.DOShakeRotation(duration, strength, vibrato, randomness, fadeOut, ShakeRandomnessMode.Harmonic);
 
             if (tutorialManager.RequiredContinueActionType == TutorialActionRequiredContinueType.RingBell) {
                 tutorialManager.ContinueTutorialSequence();
