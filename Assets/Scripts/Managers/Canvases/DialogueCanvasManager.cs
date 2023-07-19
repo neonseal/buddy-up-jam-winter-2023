@@ -45,7 +45,7 @@ namespace Dialogue {
         private void HandlePlushieLoadEvent(Plushie currentPlushie) {
             this.currentPlushie = currentPlushie;
             Assert.IsNotNull(currentPlushie.IssueDialogue, "Client issue dialogue is undefined!");
-            Debug.Log(currentPlushie.IssueDialogue.Name);
+            clientDialogueManager.SetClientStyling(currentPlushie);
             clientDialogueManager.StartDialogueSequence(currentPlushie.IssueDialogue);
         }
 

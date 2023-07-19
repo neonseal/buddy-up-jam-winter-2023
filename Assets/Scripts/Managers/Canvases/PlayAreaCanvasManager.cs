@@ -131,9 +131,11 @@ namespace PlayArea {
 
             if (tutorialManager.RequiredContinueActionType == TutorialActionRequiredContinueType.RingBell) {
                 tutorialManager.ContinueTutorialSequence();
+                OnNextClientBellRung?.Invoke();
+            } else if (!tutorialManager.TutorialActive) {
+                OnNextClientBellRung?.Invoke();
             }
 
-            OnNextClientBellRung?.Invoke();
         }
 
         private void SetToolRollColliderStatus(bool status) {

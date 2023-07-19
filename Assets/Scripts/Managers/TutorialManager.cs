@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace Dialogue {
     public class TutorialManager : MonoBehaviour {
         [Header("Static Progress Trackers")]
-        private static bool tutorialActive;
+        private bool tutorialActive;
 
         [Header("Tutorial UI Elements")]
         [SerializeField] private GameObject tutorialDialoguePrefab;
@@ -23,7 +23,7 @@ namespace Dialogue {
         }
 
         public void SetupTutorialManager() {
-            TutorialManager.SetTutorialStatus(false);
+            tutorialActive = false;
             currentStepIndex = 0;
             TutorialDialogueBox.OnContinueButtonPressed += ContinueTutorialSequence;
         }
@@ -33,7 +33,7 @@ namespace Dialogue {
 
             // Exit tutorial if we have exceeded the turn count
             if (currentStepIndex >= currentTutorialSequence.tutorialSteps.Length) {
-                TutorialManager.SetTutorialStatus(false);
+                tutorialActive = false;
                 DestroyImmediate(activeTutorialDialogue.gameObject);
                 if (activeTutorialArrow != null) {
                     DestroyImmediate(activeTutorialArrow);
@@ -46,7 +46,7 @@ namespace Dialogue {
         }
 
         public void StartTutorialSequence(TutorialSequenceScriptableObject tutorialSequence) {
-            TutorialManager.SetTutorialStatus(true);
+            tutorialActive = true;
 
             if (this.activeTutorialArrow || this.activeTutorialDialogue) {
                 Destroy(this.activeTutorialDialogue);
@@ -67,9 +67,6 @@ namespace Dialogue {
             CreateOrUpdateTutorialArrow();
         }
 
-        private static void SetTutorialStatus(bool status) {
-            TutorialManager.tutorialActive = status;
-        }
 
         private void CreateOrUpdateTutorialDialogue() {
             currentTutorialStep = currentTutorialSequence.tutorialSteps[currentStepIndex];
@@ -109,7 +106,7 @@ namespace Dialogue {
             }
         }
 
-        public static bool TutorialActive { get => tutorialActive; }
+        public bool TutorialActive { get => tutorialActive; }
         public TutorialActionRequiredContinueType RequiredContinueActionType { get => currentTutorialStep.requiredContinueAction; }
     }
 }
