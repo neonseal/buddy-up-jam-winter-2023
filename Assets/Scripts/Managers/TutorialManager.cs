@@ -14,7 +14,6 @@ namespace Dialogue {
         [Header("Tutorial UI Elements")]
         [SerializeField] private GameObject tutorialDialoguePrefab;
         [SerializeField] private GameObject tutorialArrowPrefab;
-        [SerializeField] private GameObject parentObject;
         private TutorialDialogueBox activeTutorialDialogue;
         private GameObject activeTutorialArrow;
 
@@ -93,7 +92,7 @@ namespace Dialogue {
             if (activeTutorialDialogue == null) {
                 GameObject tutorialDialogue = Instantiate(tutorialDialoguePrefab);
                 activeTutorialDialogue = tutorialDialogue.GetComponent<TutorialDialogueBox>();
-                activeTutorialDialogue.transform.SetParent(parentObject.transform);
+                activeTutorialDialogue.transform.SetParent(this.transform);
             }
 
             // If there is a required continue action (i.e. ring bell, pickup tool), hide continue button
@@ -112,7 +111,7 @@ namespace Dialogue {
 
                 if (activeTutorialArrow == null) {
                     activeTutorialArrow = Instantiate(tutorialArrowPrefab);
-                    activeTutorialArrow.transform.SetParent(parentObject.transform);
+                    activeTutorialArrow.transform.SetParent(this.transform);
                 }
 
                 activeTutorialArrow.transform.localPosition = arrowPosition;

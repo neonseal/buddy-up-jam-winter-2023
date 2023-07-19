@@ -22,22 +22,10 @@ MonoBehaviour:
   lineSpacingValue: 0
   characterSpacingValue: 0
   wordSpacingValue: 0
-  sewingIncompleteSprite: {fileID: 21300000, guid: 54dc395d19b920f47bb5ae7bbac786fa, type: 3}
-  sewingCompleteSprite: {fileID: 21300000, guid: 544a3c0a29709464c9b613cfa101291c, type: 3}
-  stuffingIncompleteSprite: {fileID: 0}
-  stuffingCompleteSprite: {fileID: 0}
-  cuttingIncompleteSprite: {fileID: 0}
-  cuttingCompleteSprite: {fileID: 0}
   damagedPlushieSprite: {fileID: 21300000, guid: 23a2469a333b94d4fa27b8ad342aef4a, type: 3}
   repairedPlushieSprite: {fileID: 21300000, guid: b213de11068798245a93d177fecb20c9, type: 3}
   plushieScale: {x: 0.35, y: 0.35, z: 1}
   spriteZRotationValue: -30
-  damageTypeList: 00000000
-  damageColliderSizeList:
-  - {x: 4, y: 1}
-  damagePositionList:
-  - {x: -3, y: -0.2}
-  damageZRotationList: 41000000
   issueDialogue:
     name: Reima & Remy
     sentences:
@@ -47,6 +35,5 @@ MonoBehaviour:
       plushies.  Usually it wouldn\u2019t matter, we could just buy a replacement,
       but this one is special. "
     - Do you think you could take a look?
-  resolutionClientCard: {fileID: 3708409553341289766, guid: 2d4dcde84829e1f49be5b0d2ef020b7d, type: 3}
   hasTutorialDialogue: 1
-  TutorialSequenceScriptableObject: {fileID: 11400000, guid: 5c73e73bb582b9545b93b877c4c1d481, type: 2}
+  TutorialSequenceScriptableObject: {fileID: 11400000, guid: 8238cfc784570944783cee4ec587f900, type: 2}

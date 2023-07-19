@@ -206,7 +206,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 474829884}
   m_HandleRect: {fileID: 474829883}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1079,8 +1079,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 176855447}
+  - component: {fileID: 176855448}
   m_Layer: 5
-  m_Name: TutorialDialogues
+  m_Name: TutorialManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1106,6 +1107,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &176855448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176855446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab2ea7706dfe6644088ec480a2f41a62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialDialoguePrefab: {fileID: 6000077438314716359, guid: 2b8b616cee83bc94aa01615d839138ee, type: 3}
+  tutorialArrowPrefab: {fileID: 815703068292625465, guid: 2b3d0d2333d40c24687706d74e5224a9, type: 3}
 --- !u!1 &184381823
 GameObject:
   m_ObjectHideFlags: 0
@@ -3896,7 +3911,7 @@ MonoBehaviour:
     - Second line of text
     - Last line of text!
   welcomeTutorialSequence: {fileID: 11400000, guid: 15abfd44b4791c04fa51ad4d314fb26a, type: 2}
-  clientDialogueBox: {fileID: 693941345}
+  clientDialogueManager: {fileID: 0}
 --- !u!1 &639743974
 GameObject:
   m_ObjectHideFlags: 0
@@ -4294,7 +4309,7 @@ GameObject:
   - component: {fileID: 693941341}
   - component: {fileID: 693941345}
   m_Layer: 0
-  m_Name: ClientDialogueBox
+  m_Name: ClientDialogueManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4427,6 +4442,11 @@ MonoBehaviour:
   fontToggle: {fileID: 945686525}
   fontSizeToggle: {fileID: 845507722}
   animator: {fileID: 693941342}
+  defaultAnimationDelay: 0.025
+  openDyslexicFont: {fileID: 11400000, guid: 831c988cc79f6804593c3e8f5a175d66, type: 2}
+  openDyslexicTitleSize: 26
+  openDyslexicFontSize: 22
+  largeFontSize: 50
 --- !u!1 &711399427
 GameObject:
   m_ObjectHideFlags: 0
@@ -4552,53 +4572,6 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &798678359
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 798678361}
-  - component: {fileID: 798678362}
-  m_Layer: 0
-  m_Name: TutorialSequenceManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &798678361
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 798678359}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1790483338}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &798678362
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 798678359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab2ea7706dfe6644088ec480a2f41a62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tutorialDialoguePrefab: {fileID: 6000077438314716359, guid: 7ac9e3831bf26a644b7e56f019f31ce6, type: 3}
-  tutorialArrowPrefab: {fileID: 815703068292625465, guid: 2b3d0d2333d40c24687706d74e5224a9, type: 3}
-  parentObject: {fileID: 176855446}
 --- !u!1 &845507720
 GameObject:
   m_ObjectHideFlags: 0
@@ -5502,7 +5475,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1790483338}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1250905797
 MonoBehaviour:
@@ -5958,66 +5931,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1292361216}
   m_CullTransparentMesh: 1
---- !u!1 &1307563853
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1307563855}
-  - component: {fileID: 1307563854}
-  m_Layer: 0
-  m_Name: ClientDialogueManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1307563854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1307563853}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed5278ade69742b4e9a6f496843255bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nameText: {fileID: 0}
-  dialogueText: {fileID: 0}
-  continueButton: {fileID: 0}
-  fontToggle: {fileID: 0}
-  fontSizeToggle: {fileID: 0}
-  animator: {fileID: 0}
-  defaultAnimationDelay: 0
-  animationDelay: 0
-  openDyslexicFont: {fileID: 0}
-  openDyslexicTitleSize: 0
-  openDyslexicFontSize: 0
---- !u!224 &1307563855
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1307563853}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1790483338}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1315823442
 GameObject:
   m_ObjectHideFlags: 0
@@ -6849,7 +6762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc0691440ecc7ce4188e064b768c368c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialManager: {fileID: 798678362}
+  tutorialManager: {fileID: 0}
   nextClientBtn: {fileID: 372788597}
   checklist: {fileID: 742331425}
   tools:
@@ -7449,8 +7362,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1307563855}
-  - {fileID: 798678361}
   - {fileID: 1250905796}
   m_Father: {fileID: 0}
   m_RootOrder: 2

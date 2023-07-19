@@ -15,7 +15,9 @@ namespace GameState {
     public class PlushieActiveState : GameState {
         /* Private Member Variables */
         private readonly GameStateMachine gameManager;
-        private Plushie currentPlushie;
+        
+        /* Public Properties */
+        public static Plushie CurrentPlushie { get; private set; }
 
 
         public static event Action<DamageInstructrionsScriptableObject[]> MendingGameInitiated;
@@ -36,6 +38,7 @@ namespace GameState {
         public override void ExitState() {
             PlushieDamageGO.OnPlushieDamageClicked -= HandleDamageClick;
             Workspace.OnClientPlushieloaded -= HandlePlushieLoadEvent;
+            PlushieActiveState.CurrentPlushie = null;
         }
 
         private void HandleDamageClick(DamageInstructrionsScriptableObject[] damageInstructions) {
@@ -45,10 +48,7 @@ namespace GameState {
 
         private void HandlePlushieLoadEvent(Plushie plushie)
         {
-            this.currentPlushie = plushie;
-            // TODO: Send event to play plushie client dialogue to be received by ClientDialogueManager
-            // TODO: Setup listener for ClientDialogueManager.OnClientDialogueComplete event to play tutorial if needed
-            // TODO: Fire start tutorial event if needed
+            PlushieActiveState.CurrentPlushie = plushie;
         }
     }
 }

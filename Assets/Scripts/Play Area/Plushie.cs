@@ -20,10 +20,10 @@ public class Plushie : MonoBehaviour {
     [SerializeField] private int wordSpacingValue;
 
     [Header("Issue and Resolution Elements")]
-    [SerializeField] private ClientDialogueSet issueDialogue;
+    public ClientDialogueSet IssueDialogue;
     //[SerializeField] private ClientCard resolutionClientCard;
 
     [Header("Tutorial Dialogue")]
-    [SerializeField] private bool hasTutorialDialogue;
-    [SerializeField] private TutorialSequenceScriptableObject TutorialSequenceScriptableObject;
+    public bool HasTutorialDialogue;
+    public TutorialSequenceScriptableObject TutorialSequenceScriptableObject;
 }

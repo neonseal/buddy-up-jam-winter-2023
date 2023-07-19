@@ -1,7 +1,9 @@
+using PlayArea;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 using UserInterface;
 
@@ -14,13 +16,13 @@ using UserInterface;
 /// </summary>
 namespace Dialogue {
     public class DialogueCanvasManager : MonoBehaviour {
-        [Header("Testing Elements")]
+        private Plushie currentPlushie;
         [SerializeField] private ClientDialogueSet clientDialogue;
         [SerializeField] private TutorialSequenceScriptableObject welcomeTutorialSequence;
 
         /* Private Member Variables */
         [Header("Client Dialogue Elements")]
-        [SerializeField] private ClientDialogueBox clientDialogueBox;
+        [SerializeField] private ClientDialogueManager clientDialogueManager;
 
         /* Public Event Actions */
         public static event Action<ClientDialogueSet> OnClientDialogueStart;
@@ -31,10 +33,28 @@ namespace Dialogue {
 
         public void SetupDialogueCanvasManager() {
             MainMenuCanvasManager.OnStartButtonPressed += StartWelcomeTutorial;
+            Workspace.OnClientPlushieloaded += HandlePlushieLoadEvent;
+            ClientDialogueManager.OnClientDialogueComplete += CheckForPlushieTutorial;
         }
 
         private void StartWelcomeTutorial() {
             OnTutorialSequenceStart?.Invoke(welcomeTutorialSequence);
+        }
+
+        private void HandlePlushieLoadEvent(Plushie currentPlushie)
+        {
+            this.currentPlushie = currentPlushie;
+            Assert.IsNotNull(currentPlushie.IssueDialogue, "Client issue dialogue is undefined!");
+            OnClientDialogueStart?.Invoke(currentPlushie.IssueDialogue);
+        }
+
+        private void CheckForPlushieTutorial()
+        {
+            if (currentPlushie.HasTutorialDialogue)
+            {
+                Assert.IsNotNull(currentPlushie.TutorialSequenceScriptableObject, "Client plushie states it has a tutoril, but scriptable is null!");
+                OnTutorialSequenceStart?.Invoke(currentPlushie.TutorialSequenceScriptableObject);
+            }
         }
     }
 }
