@@ -47,19 +47,19 @@ MonoBehaviour:
   - stepText: "Draw a line between the X\u2019s from top to bottom to pull the thread
       through."
     requiredToolType: 2
-    requiredContinueAction: 5
-    tutorialDialogueLocation: {x: -520, y: -10}
+    requiredContinueAction: 6
+    tutorialDialogueLocation: {x: -210, y: -300}
     requiresArrow: 1
-    tutorialArrowLocation: {x: -205, y: 135}
-    arrowZRotationValue: -140
+    tutorialArrowLocation: {x: -100, y: -150}
+    arrowZRotationValue: -45
   - stepText: "Return the needle to the tool roll when you\u2019re done to finish
       the repair. If the lens doesn\u2019t go away, try sewing the plushie again."
     requiredToolType: 0
     requiredContinueAction: 4
-    tutorialDialogueLocation: {x: -490, y: -35}
+    tutorialDialogueLocation: {x: -290, y: -15}
     requiresArrow: 1
-    tutorialArrowLocation: {x: -780, y: -205}
-    arrowZRotationValue: -55
+    tutorialArrowLocation: {x: -580, y: -180}
+    arrowZRotationValue: 55
   - stepText: Great! All the repairs are now complete.
     requiredToolType: 0
     requiredContinueAction: 0

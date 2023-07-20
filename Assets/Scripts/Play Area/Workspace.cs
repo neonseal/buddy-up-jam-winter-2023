@@ -28,6 +28,8 @@ namespace PlayArea {
         [SerializeField] private int punchVibrato;
         [SerializeField] private float punchElasticity;
 
+        [Header("Game UI Elements")]
+        [SerializeField] private Checklist checklist;
 
         /* Public Event Actions */
         public static event Action<Plushie> OnClientPlushieloaded;
@@ -53,8 +55,13 @@ namespace PlayArea {
 
             // Load next plushie prefab if there are any left
             if (currentPlushieIndex < plushieList.Length) {
+                // Load plushie object into scene
                 currentPlushie = Instantiate(plushieList[currentPlushieIndex], new Vector3(0, 20, 0), Quaternion.identity, this.transform);
                 Vector3 punchVector = new Vector3(squashedX, squashedY, 0);
+
+                // Update checklist with current plushie's repair steps
+                PlushieDamageGO[] plushieDamages = currentPlushie.GetComponentsInChildren<PlushieDamageGO>();
+                checklist.InitializeChecklistForPlushie(plushieDamages);
 
                 // Set up tweening animation
                 loadPlushieSequence.Append(currentPlushie.transform.DOLocalMoveY(0, moveDuration).SetEase(moveEaseType));
