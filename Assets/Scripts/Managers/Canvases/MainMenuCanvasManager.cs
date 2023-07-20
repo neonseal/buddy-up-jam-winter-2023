@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-/* User-defined Namespaces */
+
 
 namespace UserInterface {
     public class MainMenuCanvasManager : MonoBehaviour {

@@ -1,5 +1,5 @@
 using MendingGames;
-/* User-defined Namespaces */
+
 using PlayArea;
 using UnityEngine;
 

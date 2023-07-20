@@ -1,5 +1,5 @@
 using DG.Tweening;
-/* User-defined Namespaces */
+
 using PlayArea;
 using UnityEngine;
 

@@ -1,4 +1,4 @@
-/* User-defined Namespaces */
+
 using GameState;
 using UnityEngine;
 using UnityEngine.Assertions;

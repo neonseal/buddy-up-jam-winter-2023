@@ -2,7 +2,6 @@ using DG.Tweening;
 using Dialogue;
 using GameState;
 using PlayArea;
-/* User-defined Namespaces */
 using Scriptables.DamageInstructions;
 using System;
 using System.Collections.Generic;
@@ -113,7 +112,7 @@ namespace MendingGames {
             magnifyingGlass.transform.DOLocalMove(centerLocation, duration).SetEase(easeType);
 
             // Check if there is a tutorial active that requires a continue action, and continue tutorial
-            if (tutorialManager.RequiredContinueActionType == TutorialActionRequiredContinueType.SelectDamage) {
+            if (tutorialManager.GetRequiredContinueAction() == TutorialActionRequiredContinueType.SelectDamage) {
                 tutorialManager.ContinueTutorialSequence();
             }
         }
@@ -172,7 +171,7 @@ namespace MendingGames {
 
 
             // Check if there is a tutorial active that requires a continue action, and continue tutorial
-            if (tutorialManager.RequiredContinueActionType == TutorialActionRequiredContinueType.CompleteRepair) {
+            if (tutorialManager.GetRequiredContinueAction() == TutorialActionRequiredContinueType.CompleteRepair) {
                 tutorialManager.ContinueTutorialSequence();
             }
         }
@@ -201,7 +200,7 @@ namespace MendingGames {
             }
 
             // If triggered node is the first in the repair, and there is a corresponding tutorial continue action, continue tutorial
-            if (triggeredNode.StartingNode && tutorialManager.RequiredContinueActionType == TutorialActionRequiredContinueType.StartRepair) {
+            if (triggeredNode.StartingNode && tutorialManager.GetRequiredContinueAction() == TutorialActionRequiredContinueType.StartRepair) {
                 tutorialManager.ContinueTutorialSequence();
             }
         }

@@ -1,5 +1,4 @@
 using DG.Tweening;
-/* User-defined Namespaces */
 using GameState;
 using System;
 using System.Collections;

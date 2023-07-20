@@ -298,6 +298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5509794887063404664}
   - component: {fileID: 5455297298687433057}
+  - component: {fileID: 4255050917543569200}
   m_Layer: 0
   m_Name: CheckListStep
   m_TagString: Untagged
@@ -353,3 +354,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &4255050917543569200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5509794887063404665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd707c9d2bc84a94b9c0a8ff2522742f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

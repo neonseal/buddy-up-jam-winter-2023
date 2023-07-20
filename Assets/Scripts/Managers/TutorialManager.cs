@@ -1,5 +1,5 @@
 using UnityEngine;
-/* User-defined Namespaces */
+
 
 namespace Dialogue {
     public class TutorialManager : MonoBehaviour {
@@ -24,6 +24,7 @@ namespace Dialogue {
         public void SetupTutorialManager() {
             tutorialActive = false;
             currentStepIndex = 0;
+
             TutorialDialogueBox.OnContinueButtonPressed += ContinueTutorialSequence;
         }
 
@@ -66,6 +67,14 @@ namespace Dialogue {
             CreateOrUpdateTutorialArrow();
         }
 
+        public TutorialActionRequiredContinueType GetRequiredContinueAction() {
+            if (currentTutorialStep == null) {
+                return TutorialActionRequiredContinueType.None;
+            }
+
+            return currentTutorialStep.requiredContinueAction;
+        }
+
 
         private void CreateOrUpdateTutorialDialogue() {
             currentTutorialStep = currentTutorialSequence.tutorialSteps[currentStepIndex];
@@ -106,7 +115,6 @@ namespace Dialogue {
         }
 
         public bool TutorialActive { get => tutorialActive; }
-        public TutorialActionRequiredContinueType RequiredContinueActionType { get => currentTutorialStep.requiredContinueAction; }
     }
 }
 

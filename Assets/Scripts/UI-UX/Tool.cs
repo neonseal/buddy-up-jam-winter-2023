@@ -1,4 +1,4 @@
-/* User-defined Namespaces */
+
 using Scriptables;
 using System;
 using UnityEngine;

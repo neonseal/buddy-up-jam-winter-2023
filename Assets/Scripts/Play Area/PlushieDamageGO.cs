@@ -1,4 +1,3 @@
-/* User-defined Namespaces */
 using Scriptables.DamageInstructions;
 using System;
 using System.Collections.Generic;
@@ -15,11 +14,32 @@ public class PlushieDamageGO : MonoBehaviour {
 
     // Send out event when damage is clicked to 
     private void OnMouseDown() {
-        OnPlushieDamageClicked?.Invoke(damageInstructions);
+        OnPlushieDamageClicked?.Invoke(this.damageInstructions);
     }
 
-    internal PlushieDamageType getInitialDamageType() {
-        return damageInstructions[0].PlushieDamageType;
+    public PlushieDamageType GetInitialDamageType() {
+        return this.damageInstructions[0].PlushieDamageType;
+    }
+
+    public string GenerateChecklistLineItem(int count) {
+        string lineItemDescription = string.Empty;
+
+        switch (GetInitialDamageType()) {
+            case PlushieDamageType.SmallRip:
+                lineItemDescription = count == 0 ? "Fix the small rip" : $"Fix all {count} small rips";
+                break;
+            case PlushieDamageType.LargeRip:
+                lineItemDescription = count == 0 ? "Fix the large rip" : $"Fix all {count} large rips";
+                break;
+            case PlushieDamageType.MissingStuffing:
+                lineItemDescription = count == 0 ? "Replace the missing stuffing" : $"Fix {count} areas with missing stuffing";
+                break;
+            case PlushieDamageType.WornStuffing:
+                lineItemDescription = count == 0 ? "Fix all 4 areas with worn stuffing " : $"Fix all {count} large rips";
+                break;
+        }
+
+        return lineItemDescription;
     }
 
     private void _finishRepairing() {

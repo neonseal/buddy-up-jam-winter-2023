@@ -1,6 +1,5 @@
 using DG.Tweening;
 using Dialogue;
-/* User-defined Namespaces */
 using GameState;
 using System;
 using UnityEngine;
@@ -91,7 +90,7 @@ namespace PlayArea {
                 SetToolCursor();
 
                 // Check if there is a tutorial active that requires a continue action, and continue tutorial
-                if (tutorialManager.RequiredContinueActionType == TutorialActionRequiredContinueType.SelectTool) {
+                if (tutorialManager.GetRequiredContinueAction() == TutorialActionRequiredContinueType.SelectTool) {
                     tutorialManager.ContinueTutorialSequence();
                 }
             } else {
@@ -105,7 +104,7 @@ namespace PlayArea {
 
 
                 // Check if there is a tutorial active that requires a continue action, and continue tutorial
-                if (tutorialManager.RequiredContinueActionType == TutorialActionRequiredContinueType.DropTool) {
+                if (tutorialManager.GetRequiredContinueAction() == TutorialActionRequiredContinueType.DropTool) {
                     tutorialManager.ContinueTutorialSequence();
                 }
             }
@@ -158,13 +157,11 @@ namespace PlayArea {
             sequence.Play();
             bellDome.transform.DOShakeRotation(duration, strength, vibrato, randomness, fadeOut, ShakeRandomnessMode.Harmonic);
 
-            if (tutorialManager.RequiredContinueActionType == TutorialActionRequiredContinueType.RingBell) {
+            if (tutorialManager.TutorialActive && tutorialManager.GetRequiredContinueAction() == TutorialActionRequiredContinueType.RingBell) {
                 tutorialManager.ContinueTutorialSequence();
-                OnNextClientBellRung?.Invoke();
-            } else if (!tutorialManager.TutorialActive) {
-                OnNextClientBellRung?.Invoke();
             }
 
+            OnNextClientBellRung?.Invoke();
         }
 
         private void SetToolRollColliderStatus(bool status) {

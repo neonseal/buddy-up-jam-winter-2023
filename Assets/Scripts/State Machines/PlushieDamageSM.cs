@@ -57,13 +57,13 @@ public class PlushieDamageSM : BaseStateMachine {
 
     // Assign blank grid state as the initial state
     protected override BaseState GetInitialState() {
-        switch (_plushieDamageGO.getInitialDamageType()) {
+        switch (_plushieDamageGO.GetInitialDamageType()) {
             case PlushieDamageType.SmallRip: return smallRipState;
             case PlushieDamageType.LargeRip: return largeRipState;
             case PlushieDamageType.WornStuffing: return wornStuffingState;
             case PlushieDamageType.MissingStuffing: return missingStuffingState;
             // This error means the plushie damage game object associated with this state machine has initialPlushieDamageType set to null
-            default: throw new System.Exception("Invalid initial plushie dmamage of type " + _plushieDamageGO.getInitialDamageType().ToString());
+            default: throw new System.Exception("Invalid initial plushie dmamage of type " + _plushieDamageGO.GetInitialDamageType().ToString());
         }
     }
 }

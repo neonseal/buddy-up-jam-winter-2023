@@ -4,7 +4,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.TestTools;
-/* User-defined Namespaces */
+
 using GameState;
 using PlayArea;
 using Utility;

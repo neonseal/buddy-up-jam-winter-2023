@@ -1,4 +1,6 @@
 using Dialogue;
+using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -55,11 +57,19 @@ namespace PlayArea {
             if (plushieDamages.Length == 0) {
                 return;
             }
-
+            // Set high-level checklist item count
             checklistLineItemCount = plushieDamages.Length;
-            foreach (PlushieDamageGO plushieDamage in plushieDamages) {
-                GameObject checklistEntry = Instantiate(checklistStepPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-                checklistEntry.transform.SetParent(checklistItemArea.transform);
+
+            // Count up each type of damage present on plushie
+            foreach (PlushieDamageType damageType in Enum.GetValues(typeof(PlushieDamageType))) {
+                int count = plushieDamages.Where(d => d.GetInitialDamageType() == damageType).Count();
+
+                if (count > 0) {
+                    GameObject checklistEntry = Instantiate(checklistStepPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                    checklistEntry.transform.SetParent(checklistItemArea.transform);
+
+
+                }
             }
         }
 

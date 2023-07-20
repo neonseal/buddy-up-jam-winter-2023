@@ -1,4 +1,4 @@
-/* User-defined Namespaces */
+
 using PlayArea;
 using Scriptables.DamageInstructions;
 using System;

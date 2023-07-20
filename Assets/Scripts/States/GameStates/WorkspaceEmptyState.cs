@@ -1,4 +1,3 @@
-/* User-defined Namespaces */
 using PlayArea;
 using System;
 
