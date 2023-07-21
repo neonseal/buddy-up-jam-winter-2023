@@ -23,10 +23,12 @@ namespace Dialogue {
         [SerializeField] private Button continueButton;
         [SerializeField] private Slider fontToggle;
         [SerializeField] private Slider fontSizeToggle;
+        [SerializeField] private ScrollRect scrollRect;
 
         [Header("Animation Variables")]
         [SerializeField] private Animator animator;
         [SerializeField] private float defaultAnimationDelay;
+        private string currentSentence;
         private float animationDelay;
         private bool animationPlaying;
         private Queue<string> sentences;
@@ -51,8 +53,8 @@ namespace Dialogue {
         private void Update() {
             RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector2.zero);
 
-            if (Input.GetMouseButtonDown(0) && animationPlaying && hit.collider != null && hit.collider.name == "ClientDialogueBox") {
-                animationDelay = 0f;
+            if (Input.GetMouseButtonDown(0) && animationPlaying && hit.collider != null && hit.collider.name == "ClientDialogueManager") {
+                SkipSentenceAnimation();
             }
         }
 
@@ -65,7 +67,6 @@ namespace Dialogue {
 
             // Setup font styling and switching variables
             clientFontVisible = true;
-            openDyslexicFont = Resources.Load<TMP_FontAsset>("Fonts/OpenDyslexic3-Regular SDF");
             openDyslexicTitleSize = 26;
             openDyslexicFontSize = 22;
             largeFontSize = 50;
@@ -112,12 +113,15 @@ namespace Dialogue {
                 EndDialogue();
                 return;
             }
-            animationDelay = defaultAnimationDelay;
 
-            string sentence = sentences.Dequeue();
+            if (scrollRect.verticalNormalizedPosition != 1f) {
+                scrollRect.verticalNormalizedPosition = 1f;
+            }
+
+            this.currentSentence = sentences.Dequeue();
 
             StopAllCoroutines();
-            StartCoroutine(TypeSentence(sentence));
+            StartCoroutine(TypeSentence(this.currentSentence));
 
             if (sentences.Count == 0) {
                 continueButton.gameObject.GetComponentInChildren<TMP_Text>().text = "END";
@@ -133,6 +137,11 @@ namespace Dialogue {
             }
 
             animationPlaying = false;
+        }
+
+        private void SkipSentenceAnimation() {
+            StopAllCoroutines();
+            dialogueText.text = this.currentSentence;
         }
 
         private void EndDialogue() {

@@ -1,5 +1,5 @@
+using PlayArea;
 using UnityEngine;
-
 
 namespace Dialogue {
     public class TutorialManager : MonoBehaviour {
@@ -7,8 +7,9 @@ namespace Dialogue {
         private bool tutorialActive;
 
         [Header("Tutorial UI Elements")]
-        [SerializeField] private GameObject tutorialDialoguePrefab;
+        [SerializeField] private TutorialDialogueBox tutorialDialoguePrefab;
         [SerializeField] private GameObject tutorialArrowPrefab;
+        [SerializeField] private Checklist checklist;
         private TutorialDialogueBox activeTutorialDialogue;
         private GameObject activeTutorialArrow;
 
@@ -42,6 +43,12 @@ namespace Dialogue {
                 // Update dialogue box and show next step
                 CreateOrUpdateTutorialDialogue();
                 CreateOrUpdateTutorialArrow();
+
+                // Show checklist if tutorial requires interacting with it
+                if (currentTutorialStep.requiredContinueAction == TutorialActionRequiredContinueType.CompleteJob) {
+                    Debug.Log("COMPLETE JOB");
+                    checklist.ShowHideChecklist(true);
+                }
             }
         }
 
@@ -83,8 +90,7 @@ namespace Dialogue {
 
             // Create or update the tutorial dialogue box
             if (activeTutorialDialogue == null) {
-                GameObject tutorialDialogue = Instantiate(tutorialDialoguePrefab);
-                activeTutorialDialogue = tutorialDialogue.GetComponent<TutorialDialogueBox>();
+                activeTutorialDialogue = Instantiate(tutorialDialoguePrefab);
                 activeTutorialDialogue.transform.SetParent(this.transform);
             }
 

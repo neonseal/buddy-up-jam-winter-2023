@@ -36,8 +36,7 @@ MonoBehaviour:
     requiresArrow: 1
     tutorialArrowLocation: {x: -580, y: -180}
     arrowZRotationValue: 55
-  - stepText: With your tool selected, click and hold the top most X to begin the
-      repair
+  - stepText: Click and hold the top most X to begin the repair
     requiredToolType: 0
     requiredContinueAction: 5
     tutorialDialogueLocation: {x: 375, y: 315}
@@ -53,7 +52,7 @@ MonoBehaviour:
     tutorialArrowLocation: {x: -100, y: -150}
     arrowZRotationValue: -45
   - stepText: "Return the needle to the tool roll when you\u2019re done to finish
-      the repair. If the lens doesn\u2019t go away, try sewing the plushie again."
+      the repair. "
     requiredToolType: 0
     requiredContinueAction: 4
     tutorialDialogueLocation: {x: -290, y: -15}
@@ -70,8 +69,8 @@ MonoBehaviour:
   - stepText: "You can view required repairs here. Since all the repairs are done,
       click \u201CComplete Job\u201D to return the plushie to its owner."
     requiredToolType: 0
-    requiredContinueAction: 6
-    tutorialDialogueLocation: {x: 100, y: -95}
+    requiredContinueAction: 7
+    tutorialDialogueLocation: {x: 30, y: -160}
     requiresArrow: 1
-    tutorialArrowLocation: {x: 420, y: -240}
-    arrowZRotationValue: -220
+    tutorialArrowLocation: {x: 340, y: -300}
+    arrowZRotationValue: 140

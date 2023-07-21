@@ -42,17 +42,21 @@ namespace PlayArea {
                 // If a tutorial is active, we don't want to hide the checklist prematurely
                 !tutorialManager.TutorialActive
             ) {
-                focusedChecklist.SetActive(false);
+                ShowHideChecklist(false);
             }
         }
 
         public void EnableNotepad() {
             notepadBtn.interactable = true;
         }
+
         public void DisableNotepad() {
             notepadBtn.interactable = false;
         }
 
+        public void ShowHideChecklist(bool showChecklist) {
+            focusedChecklist.SetActive(showChecklist);
+        }
         public void InitializeChecklistForPlushie(PlushieDamageGO[] plushieDamages) {
             if (plushieDamages.Length == 0) {
                 return;
@@ -76,7 +80,7 @@ namespace PlayArea {
 
         private void HandleChecklistClick() {
             if (!focusedChecklist.activeInHierarchy) {
-                focusedChecklist.SetActive(true);
+                ShowHideChecklist(true);
             }
         }
     }

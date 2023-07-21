@@ -10,6 +10,7 @@ namespace Dialogue {
         [SerializeField] private TMP_Text dialogueText;
         [SerializeField] private Button continueButton;
         [SerializeField] private Slider fontSizeToggle;
+        [SerializeField] private ScrollRect scrollRect;
 
         [Header("Font Variables")]
         [SerializeField] private int defaultFontSize;
@@ -23,15 +24,16 @@ namespace Dialogue {
         }
 
         private void SetupTutorialDialogueBox() {
-            defaultFontSize = 20;
-            largeFontSize = 40;
-
             // Setup event actions
             continueButton.onClick.AddListener(() => { OnContinueButtonPressed?.Invoke(); });
-            // fontSizeToggle.onValueChanged.AddListener(delegate { SwitchFontSize(); });
+            fontSizeToggle.onValueChanged.AddListener(delegate { SwitchFontSize(); });
         }
 
         public void SetTutorialStepTexts(string stepText) {
+            if (scrollRect.verticalNormalizedPosition != 1f) {
+                scrollRect.verticalNormalizedPosition = 1f;
+            }
+
             dialogueText.text = stepText;
         }
 
