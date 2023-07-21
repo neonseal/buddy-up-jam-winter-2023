@@ -1,18 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ChecklistLineItem : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+public class ChecklistLineItem : MonoBehaviour {
+    [SerializeField] private Image checkmark;
+    [SerializeField] private TMPro.TMP_Text lineItemText;
+    private PlushieDamageGO[] plushieDamageSet;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void SetParameters(string lineItemText, PlushieDamageGO[] plushieDamageSet) {
+        this.lineItemText.text = lineItemText;
+        this.plushieDamageSet = plushieDamageSet;
     }
 }

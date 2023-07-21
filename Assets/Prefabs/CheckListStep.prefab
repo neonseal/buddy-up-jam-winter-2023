@@ -366,3 +366,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd707c9d2bc84a94b9c0a8ff2522742f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkmark: {fileID: 5509794885470016012}
+  lineItemText: {fileID: 5509794887059821383}

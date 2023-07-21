@@ -34,6 +34,8 @@ namespace PlayArea {
         [SerializeField] int vibrato;
         [SerializeField] float randomness;
         [SerializeField] bool fadeOut;
+        bool bellRinging;
+        float bellResetTimer;
 
         [Header("Mending Tool Elements")]
         private AudioSource bellSound;
@@ -50,13 +52,26 @@ namespace PlayArea {
             InitializeCanvasManager();
         }
 
+        private void Update() {
+            // Repeatedly firing the bell ringing animation can break the bell's positioning.
+            // So, each time the bell is clicked, we start a one-second timer to alet it reset .
+            if (bellRinging) {
+                if (bellResetTimer > 0) {
+                    bellResetTimer -= Time.deltaTime;
+                } else {
+                    bellRinging = false;
+                    bellResetTimer = 1f;
+                }
+            }
+        }
+
         /*                       PLAY AREA SETUP                       */
         /* ----------------------------------------------------------- */
         public void InitializeCanvasManager() {
             DOTween.Init();
 
             bellSound = this.gameObject.GetComponent<AudioSource>();
-
+            bellResetTimer = 1f;
             nextClientBtn.onClick.AddListener(HandleNextClientBtnClick);
 
             // Set up event listeners
@@ -150,18 +165,23 @@ namespace PlayArea {
         // send out an event that will only send in the next client if we are in the 
         // appropriate, workspace empty, game state
         private void HandleNextClientBtnClick() {
-            bellSound.Play();
-            Sequence sequence = DOTween.Sequence();
-            sequence.Append(bellPlunger.transform.DOLocalMoveY(plungerEndYValue, plungerAnimationDuration, false));
-            sequence.SetLoops(2, LoopType.Yoyo);
-            sequence.Play();
-            bellDome.transform.DOShakeRotation(duration, strength, vibrato, randomness, fadeOut, ShakeRandomnessMode.Harmonic);
+            if (!bellRinging) {
+                bellRinging = true;
+                bellSound.Play();
+                Sequence sequence = DOTween.Sequence();
+                sequence.Append(bellPlunger.transform.DOLocalMoveY(plungerEndYValue, plungerAnimationDuration, false));
+                sequence.SetLoops(2, LoopType.Yoyo);
+                sequence.Play();
+                bellDome.transform.DOShakeRotation(duration, strength, vibrato, randomness, fadeOut, ShakeRandomnessMode.Harmonic);
 
-            if (tutorialManager.TutorialActive && tutorialManager.GetRequiredContinueAction() == TutorialActionRequiredContinueType.RingBell) {
-                tutorialManager.ContinueTutorialSequence();
+                if (tutorialManager.TutorialActive && tutorialManager.GetRequiredContinueAction() == TutorialActionRequiredContinueType.RingBell) {
+                    tutorialManager.ContinueTutorialSequence();
+                    OnNextClientBellRung?.Invoke();
+                } else if (!tutorialManager.TutorialActive) {
+                    OnNextClientBellRung?.Invoke();
+                }
+
             }
-
-            OnNextClientBellRung?.Invoke();
         }
 
         private void SetToolRollColliderStatus(bool status) {

@@ -26,16 +26,16 @@ public class PlushieDamageGO : MonoBehaviour {
 
         switch (GetInitialDamageType()) {
             case PlushieDamageType.SmallRip:
-                lineItemDescription = count == 0 ? "Fix the small rip" : $"Fix all {count} small rips";
+                lineItemDescription = count == 1 ? "Fix the small rip" : $"Fix all {count} small rips";
                 break;
             case PlushieDamageType.LargeRip:
-                lineItemDescription = count == 0 ? "Fix the large rip" : $"Fix all {count} large rips";
+                lineItemDescription = count == 1 ? "Fix the large rip" : $"Fix all {count} large rips";
                 break;
             case PlushieDamageType.MissingStuffing:
-                lineItemDescription = count == 0 ? "Replace the missing stuffing" : $"Fix {count} areas with missing stuffing";
+                lineItemDescription = count == 1 ? "Replace the missing stuffing" : $"Fix {count} areas with missing stuffing";
                 break;
             case PlushieDamageType.WornStuffing:
-                lineItemDescription = count == 0 ? "Fix all 4 areas with worn stuffing " : $"Fix all {count} large rips";
+                lineItemDescription = count == 1 ? "Fix all 4 areas with worn stuffing " : $"Fix all {count} large rips";
                 break;
         }
 

@@ -12,7 +12,7 @@ namespace PlayArea {
         [SerializeField] private GameObject checklistItemArea;
         [SerializeField] private Button notepadBtn;
         [SerializeField] private Button completeRepairBtn;
-        [SerializeField] private GameObject checklistStepPrefab;
+        [SerializeField] private ChecklistLineItem checklistStepPrefab;
 
         [Header("Dialogue/Tutorial Elements")]
         [SerializeField] private TutorialManager tutorialManager;
@@ -62,13 +62,14 @@ namespace PlayArea {
 
             // Count up each type of damage present on plushie
             foreach (PlushieDamageType damageType in Enum.GetValues(typeof(PlushieDamageType))) {
-                int count = plushieDamages.Where(d => d.GetInitialDamageType() == damageType).Count();
+                PlushieDamageGO[] subset = plushieDamages.Where(d => d.GetInitialDamageType() == damageType).ToArray();
 
-                if (count > 0) {
-                    GameObject checklistEntry = Instantiate(checklistStepPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-                    checklistEntry.transform.SetParent(checklistItemArea.transform);
+                if (subset.Length > 0) {
+                    ChecklistLineItem checklistLineItem = Instantiate(checklistStepPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                    checklistLineItem.transform.SetParent(checklistItemArea.transform);
 
-
+                    string lineItemText = subset[0].GenerateChecklistLineItem(subset.Length);
+                    checklistLineItem.SetParameters(lineItemText, subset);
                 }
             }
         }
