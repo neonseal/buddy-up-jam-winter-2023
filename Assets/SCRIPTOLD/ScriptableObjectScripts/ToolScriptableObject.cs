@@ -1,7 +1,7 @@
 #pragma warning disable S1104 // Fields should not have public accessibilityusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/* User-defined Namespaces */
+
 using GameData;
 
 [CreateAssetMenu(fileName = "Tool", menuName = "Scriptable Objects/Tool")]

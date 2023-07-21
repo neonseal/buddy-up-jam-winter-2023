@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -137,9 +137,9 @@ public class ClientDialogueManager : MonoBehaviour {
     }
 
     private void EndDialogue() {
-        /*animator.SetBool("isOpen", false);
+        *//*animator.SetBool("isOpen", false);
         // Broadcasts an event to initialize a plushie
-        PlushieLifeCycleEventManager.Current.generatePlushie(currentPlushie);*/
+        PlushieLifeCycleEventManager.Current.generatePlushie(currentPlushie);*//*
     }
 
     private void SetFont(bool clientFontVisibility) {
@@ -165,3 +165,4 @@ public class ClientDialogueManager : MonoBehaviour {
         dialogueText.fontSize = largeFontSelected ? this.largeFontSize : smallFontSize;
     }
 }
+*/

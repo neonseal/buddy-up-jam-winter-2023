@@ -4,7 +4,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.TestTools;
-/* User-defined Namespaces */
+
 using GameState;
 using PlayArea;
 using Utility;
@@ -44,7 +44,7 @@ namespace Tests {
             Assert.AreEqual(gameManager.WorkspaceEmptyState, gameManager.CurrentState);
 
             // Set up client loaded event listener
-            Workspace.OnClientloaded += () => { clientLoaded = true; };
+            Workspace.OnClientPlushieloaded += (Plushie plushie) => { clientLoaded = true; };
 
             // Invoke next client button and ensure client/plushie loaded
             nextClientBtn.onClick.Invoke();

@@ -1,10 +1,9 @@
-using System.Collections.Generic;
-using UnityEngine;
-/* User-defined Namespaces */
+
 using PlayArea;
+using UnityEngine;
 
 namespace Scriptables {
-    [CreateAssetMenu (fileName = "Tool", menuName = "Scriptable Objects/Tool")]
+    [CreateAssetMenu(fileName = "Tool", menuName = "Scriptable Objects/Tool")]
     public class ToolScriptableObject : ScriptableObject {
         [SerializeField] private Sprite toolSlotSprite;
         [SerializeField] private Texture2D toolCursorTexture;

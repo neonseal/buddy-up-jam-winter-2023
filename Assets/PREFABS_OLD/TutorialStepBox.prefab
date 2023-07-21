@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 1458639590043335919}
   - component: {fileID: 7826139742993171025}
   - component: {fileID: 5399849688113610459}
+  - component: {fileID: 3892880287607868925}
   m_Layer: 0
   m_Name: TutorialStepBox
   m_TagString: Untagged
@@ -335,6 +336,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3892880287607868925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6000077438314716359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0532376029c007f49bc0981b8928e8bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueText: {fileID: 1743285899526566232}
+  continueButton: {fileID: 2410398822448209033}
+  fontSizeToggle: {fileID: 0}
 --- !u!1 &8300567407397716969
 GameObject:
   m_ObjectHideFlags: 0

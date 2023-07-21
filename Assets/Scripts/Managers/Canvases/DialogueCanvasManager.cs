@@ -1,8 +1,8 @@
-using System;
+using PlayArea;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Assertions;
+using UserInterface;
 
 /// <summary>
 /// Dialogue Canvas Manager
@@ -13,23 +13,47 @@ using UnityEngine.UI;
 /// </summary>
 namespace Dialogue {
     public class DialogueCanvasManager : MonoBehaviour {
-        [Header("Testing Elements")]
+        private Plushie currentPlushie;
         [SerializeField] private ClientDialogueSet clientDialogue;
-        [SerializeField] private TutorialSequenceScriptableObject tutorialSequence;
+        [SerializeField] private TutorialSequenceScriptableObject welcomeTutorialSequence;
 
         /* Private Member Variables */
-        [Header("Client Dialogue Elements")]
-        [SerializeField] private ClientDialogueBox clientDialogueBox;
+        [Header("Dialogue/Tutorial Manager Elements")]
+        [SerializeField] private ClientDialogueManager clientDialogueManager;
+        [SerializeField] private TutorialManager tutorialManager;
 
-        /* Public Event Actions */
-        public static event Action<ClientDialogueSet> OnClientDialogueStart;
-        public static event Action<TutorialSequenceScriptableObject> OnTutorialSequenceStart;
         private void Awake() {
             SetupDialogueCanvasManager();
         }
 
         public void SetupDialogueCanvasManager() {
-            // Not In Use
+            MainMenuCanvasManager.OnStartButtonPressed += StartWelcomeTutorial;
+            Workspace.OnClientPlushieloaded += HandlePlushieLoadEvent;
+            ClientDialogueManager.OnClientDialogueComplete += CheckForPlushieTutorial;
+        }
+
+        private void StartWelcomeTutorial() {
+            StartCoroutine(StartWelcomeTutorialRoutine());
+        }
+
+        IEnumerator StartWelcomeTutorialRoutine() {
+            // Pause briefly to allow animation to finish before sending event
+            yield return new WaitForSeconds(.25f);
+            tutorialManager.StartTutorialSequence(welcomeTutorialSequence);
+        }
+
+        private void HandlePlushieLoadEvent(Plushie currentPlushie) {
+            this.currentPlushie = currentPlushie;
+            Assert.IsNotNull(currentPlushie.IssueDialogue, "Client issue dialogue is undefined!");
+            clientDialogueManager.SetClientStyling(currentPlushie);
+            clientDialogueManager.StartDialogueSequence(currentPlushie.IssueDialogue);
+        }
+
+        private void CheckForPlushieTutorial() {
+            if (currentPlushie.HasTutorialDialogue) {
+                Assert.IsNotNull(currentPlushie.TutorialSequenceScriptableObject, "Client plushie states it has a tutoril, but scriptable is null!");
+                tutorialManager.StartTutorialSequence(currentPlushie.TutorialSequenceScriptableObject);
+            }
         }
     }
 }

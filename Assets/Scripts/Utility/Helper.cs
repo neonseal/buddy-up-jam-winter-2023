@@ -1,7 +1,7 @@
-using UnityEngine.Assertions;
-using UnityEngine;
-/* User-defined Namespaces */
+
 using GameState;
+using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Utility {
     public class Helper {

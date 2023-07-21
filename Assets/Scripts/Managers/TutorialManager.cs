@@ -1,19 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+using PlayArea;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-/* User-defined Namespaces */
-using Utility;
 
 namespace Dialogue {
     public class TutorialManager : MonoBehaviour {
         [Header("Static Progress Trackers")]
-        private static bool tutorialActive;
+        private bool tutorialActive;
 
         [Header("Tutorial UI Elements")]
-        [SerializeField] private GameObject tutorialDialoguePrefab;
+        [SerializeField] private TutorialDialogueBox tutorialDialoguePrefab;
         [SerializeField] private GameObject tutorialArrowPrefab;
+        [SerializeField] private Checklist checklist;
         private TutorialDialogueBox activeTutorialDialogue;
         private GameObject activeTutorialArrow;
 
@@ -27,20 +23,37 @@ namespace Dialogue {
         }
 
         public void SetupTutorialManager() {
-            TutorialManager.SetTutorialStatus(false);
+            tutorialActive = false;
             currentStepIndex = 0;
 
-            // Setup dialogue event listeners
-            DialogueCanvasManager.OnTutorialSequenceStart += StartTutorialSequence;
             TutorialDialogueBox.OnContinueButtonPressed += ContinueTutorialSequence;
         }
 
-        private static void SetTutorialStatus(bool status) {
-            TutorialManager.tutorialActive = status;
+        public void ContinueTutorialSequence() {
+            currentStepIndex++;
+
+            // Exit tutorial if we have exceeded the turn count
+            if (currentStepIndex >= currentTutorialSequence.tutorialSteps.Length) {
+                tutorialActive = false;
+                DestroyImmediate(activeTutorialDialogue.gameObject);
+                if (activeTutorialArrow != null) {
+                    DestroyImmediate(activeTutorialArrow);
+                }
+            } else {
+                // Update dialogue box and show next step
+                CreateOrUpdateTutorialDialogue();
+                CreateOrUpdateTutorialArrow();
+
+                // Show checklist if tutorial requires interacting with it
+                if (currentTutorialStep.requiredContinueAction == TutorialActionRequiredContinueType.CompleteJob) {
+                    Debug.Log("COMPLETE JOB");
+                    checklist.ShowHideChecklist(true);
+                }
+            }
         }
 
-        private void StartTutorialSequence(TutorialSequenceScriptableObject tutorialSequence) {
-            TutorialManager.SetTutorialStatus(true);
+        public void StartTutorialSequence(TutorialSequenceScriptableObject tutorialSequence) {
+            tutorialActive = true;
 
             if (this.activeTutorialArrow || this.activeTutorialDialogue) {
                 Destroy(this.activeTutorialDialogue);
@@ -61,6 +74,15 @@ namespace Dialogue {
             CreateOrUpdateTutorialArrow();
         }
 
+        public TutorialActionRequiredContinueType GetRequiredContinueAction() {
+            if (currentTutorialStep == null) {
+                return TutorialActionRequiredContinueType.None;
+            }
+
+            return currentTutorialStep.requiredContinueAction;
+        }
+
+
         private void CreateOrUpdateTutorialDialogue() {
             currentTutorialStep = currentTutorialSequence.tutorialSteps[currentStepIndex];
             Vector2 dialoguePosition = currentTutorialStep.tutorialDialogueLocation;
@@ -68,11 +90,14 @@ namespace Dialogue {
 
             // Create or update the tutorial dialogue box
             if (activeTutorialDialogue == null) {
-                GameObject tutorialDialogue = Instantiate(tutorialDialoguePrefab);
-                activeTutorialDialogue = tutorialDialogue.GetComponent<TutorialDialogueBox>();
+                activeTutorialDialogue = Instantiate(tutorialDialoguePrefab);
                 activeTutorialDialogue.transform.SetParent(this.transform);
             }
 
+            // If there is a required continue action (i.e. ring bell, pickup tool), hide continue button
+            activeTutorialDialogue.GetComponent<TutorialDialogueBox>().EnableDisableContinueButton(currentTutorialStep.requiredContinueAction == TutorialActionRequiredContinueType.None);
+
+            // Update tutorial text and location
             activeTutorialDialogue.SetTutorialStepTexts(stepText);
             activeTutorialDialogue.transform.localPosition = dialoguePosition;
         }
@@ -95,24 +120,7 @@ namespace Dialogue {
             }
         }
 
-        private void ContinueTutorialSequence() {
-            currentStepIndex++;
-
-            // Exit tutorial if we have exceeded the turn count
-            if (currentStepIndex >= currentTutorialSequence.tutorialSteps.Length) {
-                TutorialManager.SetTutorialStatus(false);
-                DestroyImmediate(activeTutorialDialogue.gameObject);
-                if (activeTutorialArrow != null) {
-                    DestroyImmediate(activeTutorialArrow);
-                }
-            } else {
-                // Update dialogue box and show next step
-                CreateOrUpdateTutorialDialogue();
-                CreateOrUpdateTutorialArrow();
-            }
-        }
-
-        public static bool TutorialActive { get => tutorialActive; }
+        public bool TutorialActive { get => tutorialActive; }
     }
 }
 

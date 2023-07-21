@@ -1,9 +1,7 @@
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-/* User-defined Namespaces */
+
 using PlayArea;
 using Scriptables.DamageInstructions;
+using System;
 
 /// <summary>
 /// Plushie Active State
@@ -16,6 +14,10 @@ namespace GameState {
         /* Private Member Variables */
         private readonly GameStateMachine gameManager;
 
+        /* Public Properties */
+        public static Plushie CurrentPlushie { get; private set; }
+
+
         public static event Action<DamageInstructrionsScriptableObject[]> MendingGameInitiated;
 
         public PlushieActiveState(GameStateMachine gameManager) {
@@ -24,11 +26,7 @@ namespace GameState {
 
         public override void EnterState() {
             PlushieDamageGO.OnPlushieDamageClicked += HandleDamageClick;
-
-            // TODO: Capturing the current plushie 
-            // TODO: Send event to play plushie client dialogue to be received by ClientDialogueManager
-            // TODO: Setup listener for ClientDialogueManager.OnClientDialogueComplete event to play tutorial if needed
-            // TODO: Fire start tutorial event if needed
+            Workspace.OnClientPlushieloaded += HandlePlushieLoadEvent;
         }
 
         public override void UpdateState() {
@@ -37,6 +35,8 @@ namespace GameState {
 
         public override void ExitState() {
             PlushieDamageGO.OnPlushieDamageClicked -= HandleDamageClick;
+            Workspace.OnClientPlushieloaded -= HandlePlushieLoadEvent;
+            PlushieActiveState.CurrentPlushie = null;
         }
 
         private void HandleDamageClick(DamageInstructrionsScriptableObject[] damageInstructions) {
@@ -44,6 +44,9 @@ namespace GameState {
             MendingGameInitiated?.Invoke(damageInstructions);
         }
 
+        private void HandlePlushieLoadEvent(Plushie plushie) {
+            PlushieActiveState.CurrentPlushie = plushie;
+        }
     }
 }
 

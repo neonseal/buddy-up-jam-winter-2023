@@ -1,8 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-/* User-defined Namespaces */
-using GameState;
+
 
 namespace UserInterface {
     public class MainMenuCanvasManager : MonoBehaviour {
@@ -13,6 +12,10 @@ namespace UserInterface {
         public static event Action OnStartButtonPressed;
 
         private void Awake() {
+            SetupMainMenuCanvasManager();
+        }
+
+        private void SetupMainMenuCanvasManager() {
             canvas = GetComponent<Canvas>();
             Button startButton = GetComponentInChildren<Button>();
             startButton.onClick.AddListener(HandleStartButtonPressed);
@@ -20,8 +23,8 @@ namespace UserInterface {
 
         // Hide the main menu UI elements and kick off the game
         private void HandleStartButtonPressed() {
-            OnStartButtonPressed?.Invoke();
             canvas.gameObject.SetActive(false);
+            OnStartButtonPressed?.Invoke();
         }
     }
 }

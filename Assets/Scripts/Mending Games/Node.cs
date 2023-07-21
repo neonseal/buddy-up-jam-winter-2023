@@ -1,9 +1,8 @@
-using System;
-using System.Collections.Generic;
-using UnityEngine;
 using DG.Tweening;
-/* User-defined Namespaces */
+
 using PlayArea;
+using System;
+using UnityEngine;
 
 namespace MendingGames {
     public class Node : MonoBehaviour {
@@ -19,6 +18,7 @@ namespace MendingGames {
         [SerializeField] bool fadeOut;
 
         /* Public Properties */
+        public bool StartingNode { get; set; }
         public bool ActiveNode { get; set; }
         public bool TargetNode { get; set; }
         public bool Triggered { get; private set; }
@@ -36,11 +36,9 @@ namespace MendingGames {
             TargetNode = false;
         }
 
-        private void Update()
-        {
+        private void Update() {
             // Only send the released command for the active node
-            if (Input.GetMouseButtonUp(0) && this.ActiveNode && this.Triggered)
-            {
+            if (Input.GetMouseButtonUp(0) && this.ActiveNode && this.Triggered) {
                 ActivateOrDeactivateNode(false);
             }
         }
@@ -54,7 +52,7 @@ namespace MendingGames {
         }
 
         private void OnMouseOver() {
-            if (Input.GetMouseButton(0) && 
+            if (Input.GetMouseButton(0) &&
                 this.TargetNode &&
                 !Triggered &&
                 CanvasManager.CurrentToolType == requiredToolType) {
@@ -81,9 +79,8 @@ namespace MendingGames {
             }
         }
 
-        public void SetColor(Color color)
-        {
-            this.spriteRenderer.color = color;  
+        public void SetColor(Color color) {
+            this.spriteRenderer.color = color;
         }
 
         public void SetToolType(ToolType requiredToolType) {

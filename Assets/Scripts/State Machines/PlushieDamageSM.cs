@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlushieDamageSM : BaseStateMachine
-{
+public class PlushieDamageSM : BaseStateMachine {
     // State of plushie damage as a small rip
     [HideInInspector]
     public SmallRipState smallRipState;
@@ -26,8 +23,8 @@ public class PlushieDamageSM : BaseStateMachine
 
     // Reference to PlushieDamageGO component
     internal PlushieDamageGO _plushieDamageGO;
-    
-    
+
+
     // Initialize fields on load
     private void Awake() {
         InitializeFields();
@@ -60,13 +57,13 @@ public class PlushieDamageSM : BaseStateMachine
 
     // Assign blank grid state as the initial state
     protected override BaseState GetInitialState() {
-        switch (_plushieDamageGO.getInitialDamageType()) {
+        switch (_plushieDamageGO.GetInitialDamageType()) {
             case PlushieDamageType.SmallRip: return smallRipState;
             case PlushieDamageType.LargeRip: return largeRipState;
             case PlushieDamageType.WornStuffing: return wornStuffingState;
             case PlushieDamageType.MissingStuffing: return missingStuffingState;
             // This error means the plushie damage game object associated with this state machine has initialPlushieDamageType set to null
-            default: throw new System.Exception("Invalid initial plushie dmamage of type " + _plushieDamageGO.getInitialDamageType().ToString());
+            default: throw new System.Exception("Invalid initial plushie dmamage of type " + _plushieDamageGO.GetInitialDamageType().ToString());
         }
     }
 }

@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseStateMachine : MonoBehaviour
-{
+public abstract class BaseStateMachine : MonoBehaviour {
     // Current state of the state machine
     internal BaseState currentState;
 
@@ -16,8 +13,7 @@ public abstract class BaseStateMachine : MonoBehaviour
     */
 
     // Call update logic function of state
-    private void Update()
-    {
+    private void Update() {
         if (currentState != null) {
             currentState.UpdateFrame();
         }

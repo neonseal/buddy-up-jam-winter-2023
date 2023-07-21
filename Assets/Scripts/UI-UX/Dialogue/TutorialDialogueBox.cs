@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 namespace Dialogue {
     [System.Serializable]
@@ -12,10 +10,11 @@ namespace Dialogue {
         [SerializeField] private TMP_Text dialogueText;
         [SerializeField] private Button continueButton;
         [SerializeField] private Slider fontSizeToggle;
+        [SerializeField] private ScrollRect scrollRect;
 
         [Header("Font Variables")]
-        private int defaultFontSize;
-        private int largeFontSize;
+        [SerializeField] private int defaultFontSize;
+        [SerializeField] private int largeFontSize;
 
         /* Tutorial Box Public Events */
         public static event Action OnContinueButtonPressed;
@@ -25,16 +24,21 @@ namespace Dialogue {
         }
 
         private void SetupTutorialDialogueBox() {
-            defaultFontSize = 20;
-            largeFontSize = 40;
-
             // Setup event actions
             continueButton.onClick.AddListener(() => { OnContinueButtonPressed?.Invoke(); });
             fontSizeToggle.onValueChanged.AddListener(delegate { SwitchFontSize(); });
         }
 
         public void SetTutorialStepTexts(string stepText) {
+            if (scrollRect.verticalNormalizedPosition != 1f) {
+                scrollRect.verticalNormalizedPosition = 1f;
+            }
+
             dialogueText.text = stepText;
+        }
+
+        public void EnableDisableContinueButton(bool enabled) {
+            continueButton.gameObject.SetActive(enabled);
         }
 
         private void SwitchFontSize() {

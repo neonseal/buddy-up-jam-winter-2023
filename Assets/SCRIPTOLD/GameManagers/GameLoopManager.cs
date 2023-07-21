@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -94,7 +94,7 @@ namespace GameLoop
 
         IEnumerator PlushieSendoffRoutine()
         {
-            /* Complete Repair and Send Plushie to Customer */
+            *//* Complete Repair and Send Plushie to Customer *//*
             // Play repair complete fanfare
             // Wait briefly
             yield return new WaitForSeconds(.4f);
@@ -106,7 +106,7 @@ namespace GameLoop
             // Wait briefly
             yield return new WaitForSeconds(.65f);
 
-            /* Show Client Resolution Card */
+            *//* Show Client Resolution Card *//*
             // Create resolution text object, and instantiate above the screen
             ClientCard clientCard = currentPlushieScriptableObject.resolutionClientCard;
             clientCard.name = currentPlushieScriptableObject.plushieObjectName + "ClientCard";
@@ -152,3 +152,4 @@ namespace GameLoop
         }
     }
 }
+*/

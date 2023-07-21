@@ -1,9 +1,8 @@
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using DG.Tweening; 
-/* User-defined Namespaces */
+using DG.Tweening;
 using GameState;
+using System;
+using System.Collections;
+using UnityEngine;
 
 /// <summary>
 /// Workspace Controller
@@ -15,9 +14,9 @@ namespace PlayArea {
     public class Workspace : MonoBehaviour {
         /* Private Member Variables */
         [Header("Plushie Loading Elements")]
-        [SerializeField] private PlushieGO[] plushieList;
+        [SerializeField] private Plushie[] plushieList;
         private int currentPlushieIndex = -1;
-        private PlushieGO currentPlushie;
+        private Plushie currentPlushie;
 
         [Header("Plushie Animation Elements")]
         [SerializeField] private Ease moveEaseType;
@@ -28,9 +27,11 @@ namespace PlayArea {
         [SerializeField] private int punchVibrato;
         [SerializeField] private float punchElasticity;
 
+        [Header("Game UI Elements")]
+        [SerializeField] private Checklist checklist;
 
         /* Public Event Actions */
-        public static event Action OnClientloaded;
+        public static event Action<Plushie> OnClientPlushieloaded;
 
         private void Awake() {
             InitializeWorkspace();
@@ -43,27 +44,38 @@ namespace PlayArea {
         }
 
         private void LoadNextClientPlushie() {
+            StartCoroutine(StartLoadPlushieRoutine());
+        }
+
+        IEnumerator StartLoadPlushieRoutine() {
+
             Sequence loadPlushieSequence = DOTween.Sequence();
             currentPlushieIndex++;
 
             // Load next plushie prefab if there are any left
             if (currentPlushieIndex < plushieList.Length) {
-                currentPlushie = Instantiate(plushieList[currentPlushieIndex], new Vector3(0,20,0), Quaternion.identity, this.transform);
+                // Load plushie object into scene
+                currentPlushie = Instantiate(plushieList[currentPlushieIndex], new Vector3(0, 20, 0), Quaternion.identity, this.transform);
                 Vector3 punchVector = new Vector3(squashedX, squashedY, 0);
+
+                // Update checklist with current plushie's repair steps
+                PlushieDamageGO[] plushieDamages = currentPlushie.GetComponentsInChildren<PlushieDamageGO>();
+                checklist.InitializeChecklistForPlushie(plushieDamages);
 
                 // Set up tweening animation
                 loadPlushieSequence.Append(currentPlushie.transform.DOLocalMoveY(0, moveDuration).SetEase(moveEaseType));
                 loadPlushieSequence.Append(currentPlushie.transform.DOPunchScale(punchVector, animateDuration, punchVibrato, punchElasticity));
 
-                // Send task complete event
-                // TODO: Pass plushie prefab to PlushieActiveState i.e. OnClientLoaded?.Invoke(currentPlushie)
-                OnClientloaded?.Invoke();
-            } 
+                // Pause briefly to allow animation to finish before sending event
+                yield return new WaitForSeconds(1f);
 
+                // Send task complete event
+                OnClientPlushieloaded?.Invoke(currentPlushie);
+            }
         }
 
         /* Public Properties */
         public int CurrentPlushieIndex { get => currentPlushieIndex; }
-        public PlushieGO CurrentPlushie { get => currentPlushie; }
+        public Plushie CurrentPlushie { get => currentPlushie; }
     }
 }

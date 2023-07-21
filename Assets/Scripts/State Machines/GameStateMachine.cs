@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -22,13 +20,19 @@ namespace GameState {
             InitializeGameManager();
         }
 
+        private void Start() {
+            InitializeStartingState();
+        }
+
         private void Update() {
             currentState.UpdateState();
         }
 
         public void InitializeGameManager() {
             SetupGameStates();
+        }
 
+        public void InitializeStartingState() {
             // Set and enter initial state
             currentState = mainMenuState;
             currentState.EnterState();

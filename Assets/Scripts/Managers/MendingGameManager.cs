@@ -1,14 +1,12 @@
-using System;
-using System.Collections.Generic;
-using UnityEngine;
 using DG.Tweening;
-/* User-defined Namespaces */
-using Scriptables.DamageInstructions;
+using Dialogue;
 using GameState;
 using PlayArea;
+using Scriptables.DamageInstructions;
+using System;
+using System.Collections.Generic;
 using System.Linq;
-using PlasticGui.WorkspaceWindow.Merge;
-using System.Runtime.CompilerServices;
+using UnityEngine;
 
 /// <summary>
 /// Mending Game Manager
@@ -30,7 +28,6 @@ namespace MendingGames {
         Stuffing
     }
 
-
     public class MendingGameManager : MonoBehaviour {
         [Header("High-level Status/Progress Elements")]
         private DamageInstructrionsScriptableObject[] damageInstructions;
@@ -40,7 +37,7 @@ namespace MendingGames {
         [SerializeField] private PlayAreaCanvasManager canvasManager;
         [Range(0f, 1f)]
         [SerializeField] private float lineCompleteThreshold;
-         
+
         [Header("Sewing/Cutting Game Rendering")]
         [SerializeField] private Material defaultMaterial;
         [SerializeField] private Node mendingTargetPrefab;
@@ -69,6 +66,9 @@ namespace MendingGames {
         private List<Node> nodes;
         private List<List<Dash>> dashSets;
 
+        [Header("Tutorial/Dialogue Managers")]
+        [SerializeField] private TutorialManager tutorialManager;
+
         /* Mending Game Events */
         public static event Action<DamageInstructrionsScriptableObject[]> OnMendingGameComplete;
         public static event Action<DamageInstructrionsScriptableObject> OnMendingStepComplete;
@@ -92,7 +92,7 @@ namespace MendingGames {
         public void GenerateMendingGame(DamageInstructrionsScriptableObject[] damageInstructions) {
             mendingGameInProgress = true;
             this.damageInstructions = damageInstructions;
-            this.damageRepairStepIndex++; 
+            this.damageRepairStepIndex++;
 
             // Check first step of damage instructions to determine starting damage type
             switch (damageInstructions[damageRepairStepIndex].PlushieDamageType) {
@@ -110,14 +110,18 @@ namespace MendingGames {
             }
 
             magnifyingGlass.transform.DOLocalMove(centerLocation, duration).SetEase(easeType);
+
+            // Check if there is a tutorial active that requires a continue action, and continue tutorial
+            if (tutorialManager.GetRequiredContinueAction() == TutorialActionRequiredContinueType.SelectDamage) {
+                tutorialManager.ContinueTutorialSequence();
+            }
         }
 
 
         /*                 SEWING AND CUTTING GAMES                    */
         /* ----------------------------------------------------------- */
 
-        private void GenerateSewingOrCuttingGame()
-        {
+        private void GenerateSewingOrCuttingGame() {
             Node.OnNodeTriggered += HandleTargetNodeTrigger;
             Node.OnActiveNodeReleased += ResetCurrentLine;
 
@@ -129,8 +133,7 @@ namespace MendingGames {
             magnifyingGlassLens.transform.Rotate(0, 0, this.damageInstructions[damageRepairStepIndex].RotationZValue);
 
             // Ensure we are using the appropriate material
-            if (lensSpriteRenderer.material != defaultMaterial)
-            {
+            if (lensSpriteRenderer.material != defaultMaterial) {
                 lensSpriteRenderer.material = defaultMaterial;
             }
 
@@ -138,8 +141,7 @@ namespace MendingGames {
             GenerateTargetNodes(targetLocations);
 
             // Generate dashes between each pair of target nodes
-            for (int i = 0; i < nodes.Count - 1; i++)
-            {
+            for (int i = 0; i < nodes.Count - 1; i++) {
                 Vector3 startingNodePos = nodes[i].transform.localPosition;
                 Vector3 endingNodePos = nodes[i + 1].transform.localPosition;
 
@@ -150,69 +152,68 @@ namespace MendingGames {
             }
         }
 
-        private void CompleteSewingOrCuttingGame()
-        {
+        private void CompleteSewingOrCuttingGame() {
             Node.OnNodeTriggered -= HandleTargetNodeTrigger;
             Node.OnActiveNodeReleased -= ResetCurrentLine;
             // Check if there are more steps to the repair process
-            if (this.damageRepairStepIndex < this.damageInstructions.Count() - 1)
-            {
+            if (this.damageRepairStepIndex < this.damageInstructions.Count() - 1) {
                 // Fire step complete event 
                 // TODO: Add listener for this event on the ChecklistManager
                 OnMendingStepComplete?.Invoke(this.damageInstructions[this.damageRepairStepIndex]);
                 // Start next mending game step
                 GenerateMendingGame(this.damageInstructions);
-            } else
-            {
+            } else {
                 // Complete mending game and reset
                 magnifyingGlass.transform.DOLocalMove(startingLocation, duration).SetEase(easeType);
                 this.mendingGameInProgress = false;
                 OnMendingGameComplete?.Invoke(this.damageInstructions);
-            } 
-            
+            }
+
+
+            // Check if there is a tutorial active that requires a continue action, and continue tutorial
+            if (tutorialManager.GetRequiredContinueAction() == TutorialActionRequiredContinueType.CompleteRepair) {
+                tutorialManager.ContinueTutorialSequence();
+            }
         }
 
         private void HandleTargetNodeTrigger(Node triggeredNode) {
             this.activeNodeIndex = nodes.FindIndex(n => n == triggeredNode);
             // If starting node triggered, enable first line
-            if (triggeredNode == nodes.First())
-            {
+            if (triggeredNode == nodes.First()) {
                 EnableNextLine(triggeredNode);
-            } else
-            {
+            } else {
                 bool lineComplete = CheckLineCompletion(triggeredNode);
-                if (lineComplete)
-                {
+                if (lineComplete) {
                     // Check if the triggered node is the last in the set, then complete the game/step
                     if (this.activeNodeIndex == nodes.Count - 1) {
                         CompleteSewingOrCuttingGame();
-                    } else
-                    {
+                    } else {
                         // Else, continue on to the next line
                         EnableNextLine(triggeredNode);
                         triggeredNode.ActiveNode = true;
                         nodes[this.activeNodeIndex - 1].ActiveNode = false;
 
                     }
-                } else
-                {
+                } else {
                     ResetCurrentLine(triggeredNode);
                 }
             }
+
+            // If triggered node is the first in the repair, and there is a corresponding tutorial continue action, continue tutorial
+            if (triggeredNode.StartingNode && tutorialManager.GetRequiredContinueAction() == TutorialActionRequiredContinueType.StartRepair) {
+                tutorialManager.ContinueTutorialSequence();
+            }
         }
-        private bool CheckLineCompletion(Node node)
-        {
+        private bool CheckLineCompletion(Node node) {
             // Check if enough dashes have been triggered to enable next line
             int dashTriggeredCount = dashSets[this.activeNodeIndex - 1].Where(d => d.Triggered).Count();
             return dashTriggeredCount >= this.lineCompleteThreshold;
-            
+
         }
-        
-        private void EnableNextLine(Node node)
-        {
+
+        private void EnableNextLine(Node node) {
             // Activate corresponding line of dashes
-            foreach (Dash dash in dashSets[this.activeNodeIndex])
-            {
+            foreach (Dash dash in dashSets[this.activeNodeIndex]) {
                 dash.EnableDash(this.damageInstructions[damageRepairStepIndex].RequiredToolType);
             }
             // Activate next node as target node
@@ -220,11 +221,9 @@ namespace MendingGames {
             nodes[this.activeNodeIndex + 1].SetColor(Color.blue);
         }
 
-        private void ResetCurrentLine(Node node)
-        {
+        private void ResetCurrentLine(Node node) {
             // Reset current line and triggered node to try again
-            foreach (Dash dash in dashSets[this.activeNodeIndex])
-            {
+            foreach (Dash dash in dashSets[this.activeNodeIndex]) {
                 dash.ResetDash(true);
             }
         }
@@ -237,14 +236,13 @@ namespace MendingGames {
                 node.CanvasManager = this.canvasManager;
 
                 node.transform.localPosition = position;
-                if (i == 0)
-                {
+                if (i == 0) {
+                    node.StartingNode = true;
                     node.TargetNode = node.ActiveNode = true;
                     node.SetColor(Color.blue);
-
                 }
                 node.SetToolType(damageInstructions[damageRepairStepIndex].RequiredToolType);
-                
+
                 this.nodes.Add(node);
             }
         }
@@ -254,14 +252,14 @@ namespace MendingGames {
             List<Vector3> positions = new List<Vector3>();
             // Triangulate a straight line between both point
             Vector3 direction = (end - start).normalized;
-            Vector3 dash = start += (direction * delta);
+            Vector3 dash = start += direction * delta;
 
 
             // Incrementally calculate dash positions until we reach the end position
             while ((end - start).magnitude > (dash - start + (direction * delta * 0.65f)).magnitude) {
                 // If within threshold of the ending position, add new position to list
                 positions.Add(dash);
-                dash += (direction * delta);
+                dash += direction * delta;
             }
 
             return positions;

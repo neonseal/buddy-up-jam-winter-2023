@@ -1,6 +1,6 @@
-using UnityEngine;
-/* User-defined Namespaces */
+
 using PlayArea;
+using UnityEngine;
 
 namespace Dialogue {
     // Some tutorial steps require a specifc action to progress the sequence
@@ -10,6 +10,7 @@ namespace Dialogue {
         SelectDamage,
         SelectTool,
         DropTool,
+        StartRepair,
         CompleteRepair,
         CompleteJob
     }

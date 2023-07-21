@@ -1,5 +1,4 @@
-using UnityEngine;
-/* User-defined Namespaces */
+
 using UserInterface;
 
 /// <summary>

@@ -1,8 +1,9 @@
+using DG.Tweening;
+using Dialogue;
+using GameState;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-/* User-defined Namespaces */
-using GameState;
 
 /// <summary>
 /// Play Area UI Canvas Manager
@@ -16,18 +17,33 @@ namespace PlayArea {
     public class PlayAreaCanvasManager : MonoBehaviour {
         /* Private Member Variables */
         [Header("Checklist Elements")]
-        [SerializeField]
-        private Button nextClientBtn;
-        [SerializeField]
-        private Checklist checklist;
-        [SerializeField]
-        private Tool[] tools;
+        [SerializeField] private Button nextClientBtn;
+        [SerializeField] private Checklist checklist;
+        [SerializeField] private Tool[] tools;
         private Button clickableNotepad;
+
+        [Header("Bell Animation Elements")]
+        [SerializeField] private Image bellPlunger;
+        [SerializeField] private Image bellDome;
+        [SerializeField] private float plungerEndYValue;
+        [SerializeField] private float plungerAnimationDuration;
+
+        [Header("Dome Animation Elements")]
+        [SerializeField] float duration;
+        [SerializeField] Vector3 strength;
+        [SerializeField] int vibrato;
+        [SerializeField] float randomness;
+        [SerializeField] bool fadeOut;
+        bool bellRinging;
+        float bellResetTimer;
 
         [Header("Mending Tool Elements")]
         private AudioSource bellSound;
         private Tool currentTool;
         private ToolType currentToolType;
+
+        [Header("Tutorial/Dialogue Managers")]
+        [SerializeField] private TutorialManager tutorialManager;
 
         /* UI Interaction Event Actions */
         public static event Action OnNextClientBellRung;
@@ -36,11 +52,26 @@ namespace PlayArea {
             InitializeCanvasManager();
         }
 
+        private void Update() {
+            // Repeatedly firing the bell ringing animation can break the bell's positioning.
+            // So, each time the bell is clicked, we start a one-second timer to alet it reset .
+            if (bellRinging) {
+                if (bellResetTimer > 0) {
+                    bellResetTimer -= Time.deltaTime;
+                } else {
+                    bellRinging = false;
+                    bellResetTimer = 1f;
+                }
+            }
+        }
+
         /*                       PLAY AREA SETUP                       */
         /* ----------------------------------------------------------- */
         public void InitializeCanvasManager() {
-            bellSound = this.gameObject.GetComponent<AudioSource>();
+            DOTween.Init();
 
+            bellSound = this.gameObject.GetComponent<AudioSource>();
+            bellResetTimer = 1f;
             nextClientBtn.onClick.AddListener(HandleNextClientBtnClick);
 
             // Set up event listeners
@@ -72,8 +103,12 @@ namespace PlayArea {
 
                 // Set held tool cursor
                 SetToolCursor();
-            } else
-            {
+
+                // Check if there is a tutorial active that requires a continue action, and continue tutorial
+                if (tutorialManager.GetRequiredContinueAction() == TutorialActionRequiredContinueType.SelectTool) {
+                    tutorialManager.ContinueTutorialSequence();
+                }
+            } else {
                 currentTool.Place();
 
                 // If currently selected tool matched clicked tool, drop tool
@@ -81,6 +116,12 @@ namespace PlayArea {
 
                 // Reset cursor
                 Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+
+
+                // Check if there is a tutorial active that requires a continue action, and continue tutorial
+                if (tutorialManager.GetRequiredContinueAction() == TutorialActionRequiredContinueType.DropTool) {
+                    tutorialManager.ContinueTutorialSequence();
+                }
             }
         }
 
@@ -89,7 +130,7 @@ namespace PlayArea {
             currentToolType = toolType;
         }
 
-        private void SetToolCursor() {            
+        private void SetToolCursor() {
             if (
                 currentTool.ToolScriptableObject.ToolType.Equals(ToolType.Cleaning) ||
                 currentTool.ToolScriptableObject.ToolType.Equals(ToolType.Stuffing)
@@ -124,8 +165,23 @@ namespace PlayArea {
         // send out an event that will only send in the next client if we are in the 
         // appropriate, workspace empty, game state
         private void HandleNextClientBtnClick() {
-            bellSound.Play();
-            OnNextClientBellRung?.Invoke();
+            if (!bellRinging) {
+                bellRinging = true;
+                bellSound.Play();
+                Sequence sequence = DOTween.Sequence();
+                sequence.Append(bellPlunger.transform.DOLocalMoveY(plungerEndYValue, plungerAnimationDuration, false));
+                sequence.SetLoops(2, LoopType.Yoyo);
+                sequence.Play();
+                bellDome.transform.DOShakeRotation(duration, strength, vibrato, randomness, fadeOut, ShakeRandomnessMode.Harmonic);
+
+                if (tutorialManager.TutorialActive && tutorialManager.GetRequiredContinueAction() == TutorialActionRequiredContinueType.RingBell) {
+                    tutorialManager.ContinueTutorialSequence();
+                    OnNextClientBellRung?.Invoke();
+                } else if (!tutorialManager.TutorialActive) {
+                    OnNextClientBellRung?.Invoke();
+                }
+
+            }
         }
 
         private void SetToolRollColliderStatus(bool status) {
