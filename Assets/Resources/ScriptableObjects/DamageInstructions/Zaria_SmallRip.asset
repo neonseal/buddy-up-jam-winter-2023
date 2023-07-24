@@ -10,17 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f80a159de1db645878f7f5f69d17b5, type: 3}
-  m_Name: Javier_WornStuffingSew
+  m_Name: Zaria_SmallRip
   m_EditorClassIdentifier: 
-  PlushieDamageType: 1
+  PlushieDamageType: 0
   MendingGameType: 0
   RequiredToolType: 2
   TargetLocations:
-  - {x: 2.7, y: 5.65}
-  - {x: -2.83, y: 2.21}
-  - {x: 3.91, y: -0.12}
-  - {x: -1.32, y: -3.85}
-  - {x: 3.2, y: -6.77}
+  - {x: -1.51, y: 6.49}
+  - {x: -2.55, y: 3.07}
+  - {x: 1.48, y: 4.1}
+  - {x: -0.01, y: 0.55}
+  - {x: 4.19, y: -1.56}
+  - {x: -1.16, y: -2.15}
+  - {x: 1.28, y: -5.18}
+  - {x: -3.09, y: -5.42}
   DamageSprite: {fileID: 0}
   RepairedDamageSprite: {fileID: 0}
   RotationZValue: 0

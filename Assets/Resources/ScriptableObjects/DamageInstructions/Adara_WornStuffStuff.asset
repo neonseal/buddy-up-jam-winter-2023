@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9f80a159de1db645878f7f5f69d17b5, type: 3}
   m_Name: Adara_WornStuffStuff
   m_EditorClassIdentifier: 
-  PlushieDamageType: 2
+  PlushieDamageType: 3
   MendingGameType: 2
   RequiredToolType: 3
   TargetLocations: []
