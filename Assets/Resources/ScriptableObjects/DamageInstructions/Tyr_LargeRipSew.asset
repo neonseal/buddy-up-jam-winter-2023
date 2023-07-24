@@ -15,7 +15,12 @@ MonoBehaviour:
   PlushieDamageType: 1
   MendingGameType: 0
   RequiredToolType: 2
-  TargetLocations: []
-  DamageSprite: {fileID: 21300000, guid: 8e1477657686e174893dba5c69570383, type: 3}
+  TargetLocations:
+  - {x: 2.75, y: 5.56}
+  - {x: -2.68, y: 1.95}
+  - {x: 4.18, y: -0.25}
+  - {x: -1.37, y: -3.93}
+  - {x: 3.24, y: -6.71}
+  DamageSprite: {fileID: 21300000, guid: ca875793f37955141afdc0123ef214be, type: 3}
   RepairedDamageSprite: {fileID: 0}
   RotationZValue: 0

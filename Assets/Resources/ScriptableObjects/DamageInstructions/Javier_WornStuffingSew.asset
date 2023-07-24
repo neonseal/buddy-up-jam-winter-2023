@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f80a159de1db645878f7f5f69d17b5, type: 3}
-  m_Name: MarcusTrisha_SmallRip2
+  m_Name: Javier_WornStuffingSew
   m_EditorClassIdentifier: 
-  PlushieDamageType: 0
+  PlushieDamageType: 2
   MendingGameType: 0
   RequiredToolType: 2
   TargetLocations:
-  - {x: -3.6, y: 4.21}
-  - {x: 1.58, y: 3.69}
-  - {x: 0.06, y: -0.03}
-  - {x: 3.69, y: -3.17}
-  - {x: -2.27, y: -4.29}
+  - {x: 2.7, y: 5.65}
+  - {x: -2.83, y: 2.21}
+  - {x: 3.91, y: -0.12}
+  - {x: -1.32, y: -3.85}
+  - {x: 3.2, y: -6.77}
   DamageSprite: {fileID: 0}
   RepairedDamageSprite: {fileID: 0}
   RotationZValue: 0

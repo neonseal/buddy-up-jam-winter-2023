@@ -17,5 +17,5 @@ MonoBehaviour:
   RequiredToolType: 3
   TargetLocations: []
   DamageSprite: {fileID: 21300000, guid: e3ae01043378c534caff4faf845f58ad, type: 3}
-  RepairedDamageSprite: {fileID: 21300000, guid: 8e1477657686e174893dba5c69570383, type: 3}
+  RepairedDamageSprite: {fileID: 21300000, guid: ca875793f37955141afdc0123ef214be, type: 3}
   RotationZValue: 0
