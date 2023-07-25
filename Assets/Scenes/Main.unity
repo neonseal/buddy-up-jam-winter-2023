@@ -3797,7 +3797,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 20.48, y: 20.48}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -6641,18 +6641,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209041260833d4e4db00ba8c2fc24e53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: {fileID: 1674649280}
-  dialogueText: {fileID: 1769947083}
-  continueButton: {fileID: 2121270719}
-  fontToggle: {fileID: 246209258}
-  fontSizeToggle: {fileID: 1570012168}
-  scrollRect: {fileID: 1942025850}
-  animator: {fileID: 1626410498}
-  defaultAnimationDelay: 0.025
-  openDyslexicFont: {fileID: 11400000, guid: 831c988cc79f6804593c3e8f5a175d66, type: 2}
-  openDyslexicTitleSize: 26
-  openDyslexicFontSize: 22
-  largeFontSize: 50
 --- !u!61 &1626410497
 BoxCollider2D:
   m_ObjectHideFlags: 0

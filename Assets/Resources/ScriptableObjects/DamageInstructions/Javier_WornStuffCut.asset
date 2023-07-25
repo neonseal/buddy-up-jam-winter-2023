@@ -10,11 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f80a159de1db645878f7f5f69d17b5, type: 3}
-  m_Name: StuffingGameTest
+  m_Name: Javier_WornStuffCut
   m_EditorClassIdentifier: 
-  PlushieDamageType: 0
-  RequiredToolType: 0
-  TargetLocations: []
+  PlushieDamageType: 2
+  MendingGameType: 1
+  RequiredToolType: 1
+  TargetLocations:
+  - {x: 0, y: 7.44}
+  - {x: 0.39, y: 0.46}
+  - {x: 0.25, y: -8.25}
   DamageSprite: {fileID: 0}
   RepairedDamageSprite: {fileID: 0}
   RotationZValue: 0
