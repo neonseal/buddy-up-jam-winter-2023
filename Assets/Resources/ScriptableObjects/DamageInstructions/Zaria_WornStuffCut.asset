@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9f80a159de1db645878f7f5f69d17b5, type: 3}
-  m_Name: ReimaRemy_SmallRip
+  m_Name: Zaria_WornStuffCut
   m_EditorClassIdentifier: 
-  PlushieDamageType: 0
-  MendingGameType: 0
-  RequiredToolType: 2
+  PlushieDamageType: 2
+  MendingGameType: 1
+  RequiredToolType: 1
   TargetLocations:
-  - {x: -2.39, y: 2.96}
-  - {x: 4.58, y: 1.32}
-  - {x: -2.04, y: -3.7}
-  DamageSprite: {fileID: 21300000, guid: 1892fa0a4b4106a48b8f210d025261d7, type: 3}
-  RepairedDamageSprite: {fileID: 21300000, guid: e93888ebf7d4b4749b801ab842459ab8, type: 3}
-  RotationZValue: -20
+  - {x: 0, y: 7.44}
+  - {x: 0.39, y: 0.46}
+  - {x: 0.25, y: -8.25}
+  DamageSprite: {fileID: 0}
+  RepairedDamageSprite: {fileID: 0}
+  RotationZValue: 0
