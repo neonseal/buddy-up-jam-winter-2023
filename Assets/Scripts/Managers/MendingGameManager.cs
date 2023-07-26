@@ -48,7 +48,17 @@ namespace MendingGames {
         [SerializeField] private float delta;
 
         [Header("Stuffing Game Rendering")]
+        [SerializeField] private Texture2D mainTex;
+        [SerializeField] private Texture2D unstuffedTexBase;
+        [SerializeField] private Texture2D stuffingBrush;
+        [SerializeField] private Sprite stuffingSprite;
+        [SerializeField] private Material material;
 
+        [Header("State Management Variables")]
+        private Texture2D stuffingMaskTexture;
+        private Vector2Int lastPaintPixelPosition;
+        private float unstuffedAreaTotal;
+        private float unstuffedAreaCurrent;
 
         [Header("Magnifying Glass Lens Elements")]
         [SerializeField] private GameObject magnifyingGlass;

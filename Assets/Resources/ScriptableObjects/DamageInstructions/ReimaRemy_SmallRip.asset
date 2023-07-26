@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: ReimaRemy_SmallRip
   m_EditorClassIdentifier: 
   PlushieDamageType: 0
+  MendingGameType: 0
   RequiredToolType: 2
   TargetLocations:
-  - {x: -4, y: 4}
-  - {x: -2, y: 2}
-  - {x: -2, y: 0}
-  - {x: 2, y: -2}
-  - {x: -4, y: -4}
+  - {x: -3.2, y: 6.46}
+  - {x: 2.79, y: 2.99}
+  - {x: -4.42, y: -0.78}
+  - {x: 2.56, y: -4}
   DamageSprite: {fileID: 21300000, guid: 1892fa0a4b4106a48b8f210d025261d7, type: 3}
   RepairedDamageSprite: {fileID: 21300000, guid: e93888ebf7d4b4749b801ab842459ab8, type: 3}
   RotationZValue: -20
