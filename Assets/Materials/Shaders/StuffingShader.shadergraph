@@ -1116,7 +1116,7 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": {
-        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"c7b0c9a997a5ab34181ddb86ff614aed\",\"type\":3}}",
+        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"aeaa3ff7e5319e8478b593639b51d98d\",\"type\":3}}",
         "m_Guid": ""
     },
     "isMainTexture": false,
@@ -1657,7 +1657,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
     "m_ObjectId": "da3b2180c8e047be8687c479ce5f6177",
     "m_Id": 0,
-    "m_DisplayName": "StuffingTex",
+    "m_DisplayName": "UnstuffedTex",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -1950,10 +1950,10 @@
     "m_Guid": {
         "m_GuidSerialized": "5af1cae8-4681-4a07-a50b-97f664dd97f7"
     },
-    "m_Name": "StuffingTex",
+    "m_Name": "UnstuffedTex",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "StuffingTex",
-    "m_DefaultReferenceName": "_StuffingTex",
+    "m_RefNameGeneratedByDisplayName": "UnstuffedTex",
+    "m_DefaultReferenceName": "_UnstuffedTex",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
@@ -1963,7 +1963,7 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": {
-        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"eaff31f775d744c40aed271bc9f102e4\",\"type\":3}}",
+        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"fa62927eef4bd514d917031c2ead9a45\",\"type\":3}}",
         "m_Guid": ""
     },
     "isMainTexture": false,

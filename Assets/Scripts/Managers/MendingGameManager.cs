@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 /// <summary>
 /// Mending Game Manager
@@ -34,6 +35,7 @@ namespace MendingGames {
         private int damageRepairStepIndex;
         private bool mendingGameInProgress;
         private int activeNodeIndex;
+        private ToolType requiredToolType;
         [SerializeField] private PlayAreaCanvasManager canvasManager;
         [Range(0f, 1f)]
         [SerializeField] private float lineCompleteThreshold;
@@ -49,12 +51,13 @@ namespace MendingGames {
 
         [Header("Stuffing Game Rendering")]
         [SerializeField] private Texture2D mainTex;
-        [SerializeField] private Texture2D unstuffedTexBase;
         [SerializeField] private Texture2D stuffingBrush;
         [SerializeField] private Sprite stuffingSprite;
-        [SerializeField] private Material material;
+        [SerializeField] private Texture2D stuffingTexture;
+        [SerializeField] private Material stuffingMaterial;
+        [SerializeField] private GameObject stuffingForeground;
 
-        [Header("State Management Variables")]
+        [Header("Stuffing Game State Management")]
         private Texture2D stuffingMaskTexture;
         private Vector2Int lastPaintPixelPosition;
         private float unstuffedAreaTotal;
@@ -95,6 +98,13 @@ namespace MendingGames {
             PlushieActiveState.MendingGameInitiated += GenerateMendingGame;
         }
 
+        private void Update() {
+            // Update stuffing material if interacting with stuffing game
+            if (mendingGameInProgress && requiredToolType == ToolType.Stuffing) {
+                // Check for raycast hits on magnifying glass and update mask
+            }
+        }
+
         /*                      COMMON FUNCTIONS                       */
         /* ----------------------------------------------------------- */
         // Primary function invoked by the Mending Game Manager, responsible for parsing the 
@@ -116,6 +126,7 @@ namespace MendingGames {
                     GenerateSewingOrCuttingGame();
                     break;
                 case PlushieDamageType.MissingStuffing:
+                    GenerateStuffingGame();
                     break;
             }
 
@@ -309,7 +320,40 @@ namespace MendingGames {
 
         /*                        STUFFING GAME                         */
         /* ----------------------------------------------------------- */
+        private void GenerateStuffingGame() {
+            Assert.IsTrue(this.damageInstructions[damageRepairStepIndex].MendingGameType == MendingGameType.Stuffing,
+                $"Damage Instructions does not contain stuffing game info at index {damageRepairStepIndex}!");
+            DamageInstructrionsScriptableObject instructions = this.damageInstructions[damageRepairStepIndex];
+            SpriteRenderer lensSpriteRenderer = magnifyingGlassLens.GetComponent<SpriteRenderer>();
 
+            this.requiredToolType = ToolType.Stuffing;
+
+            // Create Masking Texture
+            stuffingMaskTexture = new Texture2D(instructions.StuffingBackgroundTexture.width, instructions.StuffingBackgroundTexture.height);
+            stuffingMaskTexture.SetPixels(instructions.StuffingBackgroundTexture.GetPixels());
+            stuffingMaskTexture.Apply();
+
+            // Set textures on stuffing material for current plushie
+            stuffingMaterial.SetTexture("_MainTex", stuffingTexture);
+            stuffingMaterial.SetTexture("_UnstuffedTex", instructions.StuffingBackgroundTexture);
+            stuffingMaterial.SetTexture("_Mask", stuffingMaskTexture);
+
+            // Render unstuffed sprite and material on lens background
+            lensSpriteRenderer.material = stuffingMaterial;
+            lensSpriteRenderer.sprite = instructions.StuffingBackgroundSprite;
+
+            // Activate and set foreground sprite
+            stuffingForeground.GetComponent<SpriteRenderer>().sprite = instructions.DamageSprite;
+            stuffingForeground.SetActive(true);
+
+            unstuffedAreaTotal = 0f;
+            for (int x = 0; x < instructions.StuffingBackgroundTexture.width; x++) {
+                for (int y = 0; y < instructions.StuffingBackgroundTexture.height; y++) {
+                    unstuffedAreaTotal += instructions.StuffingBackgroundTexture.GetPixel(x, y).g;
+                }
+            }
+            unstuffedAreaCurrent = unstuffedAreaTotal;
+        }
 
 
 

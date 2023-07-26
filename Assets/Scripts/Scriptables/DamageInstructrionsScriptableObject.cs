@@ -11,7 +11,10 @@ namespace Scriptables.DamageInstructions {
         public ToolType RequiredToolType;
         public Vector2[] TargetLocations;
         public Sprite DamageSprite;
+        public Texture2D DamageTexture;
         public Sprite RepairedDamageSprite;
+        public Sprite StuffingBackgroundSprite;
+        public Texture2D StuffingBackgroundTexture;
         public int RotationZValue;
     }
 
