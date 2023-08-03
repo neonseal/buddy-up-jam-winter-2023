@@ -1,4 +1,6 @@
 using UnityEngine;
+using MendingGames;
+using Scriptables.DamageInstructions;
 
 public class PlushieDamageSM : BaseStateMachine {
     // State of plushie damage as a small rip
@@ -31,10 +33,10 @@ public class PlushieDamageSM : BaseStateMachine {
     }
 
     // Initialize references before first frame update
-    /*private void Start() {
+    private void Start() {
         base.InitializeState();
         InitializeReferences();
-    }*/
+    }
 
     // Initialize fields in this class
     private void InitializeFields() {
@@ -52,7 +54,7 @@ public class PlushieDamageSM : BaseStateMachine {
 
     // Initialize reference fields in this class
     private void InitializeReferences() {
-        //_plushieDamageGO = this.GetComponent<PlushieDamageGO>();
+        _plushieDamageGO = this.GetComponent<PlushieDamageGO>();
     }
 
     // Assign blank grid state as the initial state
@@ -65,5 +67,17 @@ public class PlushieDamageSM : BaseStateMachine {
             // This error means the plushie damage game object associated with this state machine has initialPlushieDamageType set to null
             default: throw new System.Exception("Invalid initial plushie dmamage of type " + _plushieDamageGO.GetInitialDamageType().ToString());
         }
+    }
+
+    internal void subscribeToMendingGame() {
+        MendingGameManager.OnMendingGameComplete += progressMendingSteps;
+    }
+
+    internal void unsubscribeToMendingGame() {
+        MendingGameManager.OnMendingGameComplete -= progressMendingSteps;
+    }
+
+    private void progressMendingSteps(DamageInstructrionsScriptableObject[] damageInstructions) {
+        ((PlushieDamageBaseState) currentState).CompleteRepair();
     }
 }
