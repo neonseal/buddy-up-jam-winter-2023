@@ -3729,6 +3729,7 @@ GameObject:
   m_Component:
   - component: {fileID: 724576090}
   - component: {fileID: 724576091}
+  - component: {fileID: 724576092}
   m_Layer: 0
   m_Name: LensBackground
   m_TagString: Untagged
@@ -3803,6 +3804,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &724576092
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724576089}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.25, y: 0.25}
+  serializedVersion: 2
+  m_Radius: 10
 --- !u!1 &754847305
 GameObject:
   m_ObjectHideFlags: 0
@@ -6371,6 +6388,7 @@ MonoBehaviour:
   stuffingTexture: {fileID: 2800000, guid: aeaa3ff7e5319e8478b593639b51d98d, type: 3}
   stuffingMaterial: {fileID: 2100000, guid: fbb4ccd8a85d3524d8d944a86ce66f16, type: 2}
   stuffingForeground: {fileID: 1951882964}
+  texturePosModifier: 3
   magnifyingGlass: {fileID: 2108589877}
   magnifyingGlassLens: {fileID: 724576089}
   mendingGamePlayArea: {fileID: 639341546}
@@ -8226,7 +8244,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1412819781
   m_SortingLayer: 9
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 2eda82765e78ae04eafe8e589e589244, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1

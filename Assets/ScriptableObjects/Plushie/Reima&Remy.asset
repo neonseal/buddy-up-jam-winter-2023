@@ -35,5 +35,5 @@ MonoBehaviour:
       plushies.  Usually it wouldn\u2019t matter, we could just buy a replacement,
       but this one is special. "
     - Do you think you could take a look?
-  hasTutorialDialogue: 1
+  hasTutorialDialogue: 0
   TutorialSequenceScriptableObject: {fileID: 11400000, guid: 8238cfc784570944783cee4ec587f900, type: 2}

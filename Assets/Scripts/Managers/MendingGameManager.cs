@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 /// <summary>
 /// Mending Game Manager
@@ -32,6 +31,7 @@ namespace MendingGames {
     public class MendingGameManager : MonoBehaviour {
         [Header("High-level Status/Progress Elements")]
         private DamageInstructrionsScriptableObject[] damageInstructions;
+        private DamageInstructrionsScriptableObject instructionStep;
         private int damageRepairStepIndex;
         private bool mendingGameInProgress;
         private int activeNodeIndex;
@@ -56,6 +56,7 @@ namespace MendingGames {
         [SerializeField] private Texture2D stuffingTexture;
         [SerializeField] private Material stuffingMaterial;
         [SerializeField] private GameObject stuffingForeground;
+        [SerializeField] private float texturePosModifier = 3f;
 
         [Header("Stuffing Game State Management")]
         private Texture2D stuffingMaskTexture;
@@ -68,6 +69,7 @@ namespace MendingGames {
         [SerializeField] private GameObject magnifyingGlassLens;
         [SerializeField] private GameObject mendingGamePlayArea;
         private SpriteRenderer lensSpriteRenderer;
+        private CircleCollider2D lensCircleCollider;
 
         [Header("Magnifying Glass Animation Elements")]
         [SerializeField] private float duration;
@@ -90,6 +92,7 @@ namespace MendingGames {
             nodes = new List<Node>();
             dashSets = new List<List<Dash>>();
             lensSpriteRenderer = magnifyingGlassLens.GetComponent<SpriteRenderer>();
+            lensCircleCollider = magnifyingGlassLens.GetComponent<CircleCollider2D>();
 
             damageRepairStepIndex = -1;
             startingLocation = magnifyingGlass.transform.localPosition;
@@ -101,7 +104,60 @@ namespace MendingGames {
         private void Update() {
             // Update stuffing material if interacting with stuffing game
             if (mendingGameInProgress && requiredToolType == ToolType.Stuffing) {
-                // Check for raycast hits on magnifying glass and update mask
+                if (Input.GetMouseButton(0) && canvasManager.CurrentToolType == requiredToolType) {
+                    // Check for raycast hits on magnifying glass and update mask
+                    Vector3 position = Input.mousePosition;
+                    position.z = 0.0f;
+                    position = Camera.main.ScreenToWorldPoint(position);
+                    RaycastHit2D hit = Physics2D.Raycast(position, Vector2.zero);
+
+                    Debug.Log(hit.collider.name);
+                    if (hit.collider != null && hit.collider.name == "LensBackground") {
+                        // Determine mouse position as percentage of collider extents 
+
+                        Debug.Log($"Position: ({position.x}:{position.y}");
+
+                        /*float percentX = position.x < 0 ? (position.x + texturePosModifier) / texturePosModifier : position.x / texturePosModifier;
+                        float percentY = position.y < 0 ? (position.y + texturePosModifier) / texturePosModifier : position.y / texturePosModifier;
+                        
+                        Debug.Log($"%X - {percentX} : %Y - {percentY}");
+
+                        int pixelX = (int)(percentX * 300);
+                        int pixelY = (int)(percentY * 300);
+
+                        Vector2Int paintPixelPosition = new Vector2Int(pixelX, pixelY);
+
+                        int paintPixelDistance = Mathf.Abs(paintPixelPosition.x - lastPaintPixelPosition.x) + Mathf.Abs(paintPixelPosition.y - lastPaintPixelPosition.y);
+                        int maxPaintDistance = 7;
+                        if (paintPixelDistance < maxPaintDistance) {
+                            // Painting too close to last position
+                            return;
+                        }
+                        lastPaintPixelPosition = paintPixelPosition;
+
+                        int pixelXOffset = pixelX - (stuffingBrush.width / 2);
+                        int pixelYOffset = pixelY - (stuffingBrush.height / 2);
+
+                        for (int x = 0; x < stuffingBrush.width; x++) {
+                            for (int y = 0; y < stuffingBrush.height; y++) {
+                                Color pixelDirt = stuffingBrush.GetPixel(x, y);
+                                Color pixelDirtMask = stuffingMaskTexture.GetPixel(pixelXOffset + x, pixelYOffset + y);
+
+                                float removedAmount = pixelDirtMask.g - (pixelDirtMask.g * pixelDirt.g);
+                                unstuffedAreaCurrent -= removedAmount;
+
+                                stuffingMaskTexture.SetPixel(
+                                    pixelXOffset + x,
+                                    pixelYOffset + y,
+                                    new Color(0, pixelDirtMask.g * pixelDirt.g, 0)
+                                );
+                            }
+                        }
+
+                        stuffingMaskTexture.Apply();*/
+                    }
+
+                }
             }
         }
 
@@ -113,6 +169,8 @@ namespace MendingGames {
             mendingGameInProgress = true;
             this.damageInstructions = damageInstructions;
             this.damageRepairStepIndex++;
+
+            instructionStep = this.damageInstructions[damageRepairStepIndex];
 
             // Check first step of damage instructions to determine starting damage type
             switch (damageInstructions[damageRepairStepIndex].PlushieDamageType) {
@@ -126,6 +184,7 @@ namespace MendingGames {
                     GenerateSewingOrCuttingGame();
                     break;
                 case PlushieDamageType.MissingStuffing:
+                    this.requiredToolType = ToolType.Stuffing;
                     GenerateStuffingGame();
                     break;
             }
@@ -321,45 +380,43 @@ namespace MendingGames {
         /*                        STUFFING GAME                         */
         /* ----------------------------------------------------------- */
         private void GenerateStuffingGame() {
-            Assert.IsTrue(this.damageInstructions[damageRepairStepIndex].MendingGameType == MendingGameType.Stuffing,
-                $"Damage Instructions does not contain stuffing game info at index {damageRepairStepIndex}!");
-            DamageInstructrionsScriptableObject instructions = this.damageInstructions[damageRepairStepIndex];
-            SpriteRenderer lensSpriteRenderer = magnifyingGlassLens.GetComponent<SpriteRenderer>();
-
-            this.requiredToolType = ToolType.Stuffing;
-
             // Create Masking Texture
-            stuffingMaskTexture = new Texture2D(instructions.StuffingBackgroundTexture.width, instructions.StuffingBackgroundTexture.height);
-            stuffingMaskTexture.SetPixels(instructions.StuffingBackgroundTexture.GetPixels());
+            stuffingMaskTexture = new Texture2D(instructionStep.StuffingBackgroundTexture.width, instructionStep.StuffingBackgroundTexture.height);
+            stuffingMaskTexture.SetPixels(instructionStep.StuffingBackgroundTexture.GetPixels());
             stuffingMaskTexture.Apply();
+            Debug.Log(stuffingMaskTexture.width);
 
             // Set textures on stuffing material for current plushie
             stuffingMaterial.SetTexture("_MainTex", stuffingTexture);
-            stuffingMaterial.SetTexture("_UnstuffedTex", instructions.StuffingBackgroundTexture);
+            stuffingMaterial.SetTexture("_UnstuffedTex", instructionStep.StuffingBackgroundTexture);
             stuffingMaterial.SetTexture("_Mask", stuffingMaskTexture);
 
             // Render unstuffed sprite and material on lens background
             lensSpriteRenderer.material = stuffingMaterial;
-            lensSpriteRenderer.sprite = instructions.StuffingBackgroundSprite;
+            lensSpriteRenderer.sprite = instructionStep.StuffingBackgroundSprite;
 
             // Activate and set foreground sprite
-            stuffingForeground.GetComponent<SpriteRenderer>().sprite = instructions.DamageSprite;
+            stuffingForeground.GetComponent<SpriteRenderer>().sprite = instructionStep.DamageSprite;
             stuffingForeground.SetActive(true);
 
             unstuffedAreaTotal = 0f;
-            for (int x = 0; x < instructions.StuffingBackgroundTexture.width; x++) {
-                for (int y = 0; y < instructions.StuffingBackgroundTexture.height; y++) {
-                    unstuffedAreaTotal += instructions.StuffingBackgroundTexture.GetPixel(x, y).g;
+            for (int x = 0; x < instructionStep.StuffingBackgroundTexture.width; x++) {
+                for (int y = 0; y < instructionStep.StuffingBackgroundTexture.height; y++) {
+                    unstuffedAreaTotal += instructionStep.StuffingBackgroundTexture.GetPixel(x, y).g;
                 }
             }
             unstuffedAreaCurrent = unstuffedAreaTotal;
+            lensCircleCollider.enabled = true;
         }
 
-
+        private float GetStuffedAmount() {
+            return this.unstuffedAreaCurrent / unstuffedAreaTotal;
+        }
 
 
         /* Public Properties */
         public bool MendingGameInProgress { get => mendingGameInProgress; }
     }
 }
+
 
