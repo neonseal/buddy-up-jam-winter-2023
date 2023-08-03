@@ -50,19 +50,22 @@ namespace MendingGames {
         [SerializeField] private float delta;
 
         [Header("Stuffing Game Rendering")]
-        [SerializeField] private Texture2D mainTex;
+        [SerializeField] private Texture2D uvMask;
         [SerializeField] private Texture2D stuffingBrush;
         [SerializeField] private Sprite stuffingSprite;
         [SerializeField] private Texture2D stuffingTexture;
         [SerializeField] private Material stuffingMaterial;
         [SerializeField] private GameObject stuffingForeground;
-        [SerializeField] private float texturePosModifier = 3f;
+        [SerializeField] private float textureXPosMax;
+        [SerializeField] private float textureYPosMax;
+        private int textureWidth;
+        private int textureHeight;
 
         [Header("Stuffing Game State Management")]
         private Texture2D stuffingMaskTexture;
         private Vector2Int lastPaintPixelPosition;
         private float unstuffedAreaTotal;
-        private float unstuffedAreaCurrent;
+        private float stuffedAreaCurrent;
 
         [Header("Magnifying Glass Lens Elements")]
         [SerializeField] private GameObject magnifyingGlass;
@@ -111,50 +114,52 @@ namespace MendingGames {
                     position = Camera.main.ScreenToWorldPoint(position);
                     RaycastHit2D hit = Physics2D.Raycast(position, Vector2.zero);
 
-                    Debug.Log(hit.collider.name);
                     if (hit.collider != null && hit.collider.name == "LensBackground") {
                         // Determine mouse position as percentage of collider extents 
+                        if (GetStuffedAmount() < 0.9f) {
+                            float percentX = (float)Math.Round((position.x + (textureXPosMax / 2f)) / textureXPosMax, 2);
+                            float percentY = (float)Math.Round((position.y + (textureYPosMax / 2f)) / textureYPosMax, 2);
 
-                        Debug.Log($"Position: ({position.x}:{position.y}");
+                            float clampedPercentX = Math.Clamp(percentX, 0.00f, 1.00f);
+                            float clampedPercentY = Math.Clamp(percentY, 0.00f, 1.00f);
 
-                        /*float percentX = position.x < 0 ? (position.x + texturePosModifier) / texturePosModifier : position.x / texturePosModifier;
-                        float percentY = position.y < 0 ? (position.y + texturePosModifier) / texturePosModifier : position.y / texturePosModifier;
-                        
-                        Debug.Log($"%X - {percentX} : %Y - {percentY}");
+                            int pixelX = (int)(clampedPercentX * textureWidth);
+                            int pixelY = (int)(clampedPercentY * textureHeight);
 
-                        int pixelX = (int)(percentX * 300);
-                        int pixelY = (int)(percentY * 300);
+                            Vector2Int paintPixelPosition = new Vector2Int(pixelX, pixelY);
 
-                        Vector2Int paintPixelPosition = new Vector2Int(pixelX, pixelY);
-
-                        int paintPixelDistance = Mathf.Abs(paintPixelPosition.x - lastPaintPixelPosition.x) + Mathf.Abs(paintPixelPosition.y - lastPaintPixelPosition.y);
-                        int maxPaintDistance = 7;
-                        if (paintPixelDistance < maxPaintDistance) {
-                            // Painting too close to last position
-                            return;
-                        }
-                        lastPaintPixelPosition = paintPixelPosition;
-
-                        int pixelXOffset = pixelX - (stuffingBrush.width / 2);
-                        int pixelYOffset = pixelY - (stuffingBrush.height / 2);
-
-                        for (int x = 0; x < stuffingBrush.width; x++) {
-                            for (int y = 0; y < stuffingBrush.height; y++) {
-                                Color pixelDirt = stuffingBrush.GetPixel(x, y);
-                                Color pixelDirtMask = stuffingMaskTexture.GetPixel(pixelXOffset + x, pixelYOffset + y);
-
-                                float removedAmount = pixelDirtMask.g - (pixelDirtMask.g * pixelDirt.g);
-                                unstuffedAreaCurrent -= removedAmount;
-
-                                stuffingMaskTexture.SetPixel(
-                                    pixelXOffset + x,
-                                    pixelYOffset + y,
-                                    new Color(0, pixelDirtMask.g * pixelDirt.g, 0)
-                                );
+                            int paintPixelDistance = Mathf.Abs(paintPixelPosition.x - lastPaintPixelPosition.x) + Mathf.Abs(paintPixelPosition.y - lastPaintPixelPosition.y);
+                            int maxPaintDistance = 7;
+                            if (paintPixelDistance < maxPaintDistance) {
+                                // Painting too close to last position
+                                return;
                             }
-                        }
+                            lastPaintPixelPosition = paintPixelPosition;
 
-                        stuffingMaskTexture.Apply();*/
+                            int pixelXOffset = pixelX - (stuffingBrush.width / 2);
+                            int pixelYOffset = pixelY - (stuffingBrush.height / 2);
+
+                            for (int x = 0; x < stuffingBrush.width; x++) {
+                                for (int y = 0; y < stuffingBrush.height; y++) {
+                                    Color pixelDirt = stuffingBrush.GetPixel(x, y);
+                                    Color pixelDirtMask = stuffingMaskTexture.GetPixel(pixelXOffset + x, pixelYOffset + y);
+
+                                    float stuffedAmount = pixelDirtMask.g - (pixelDirtMask.g * pixelDirt.g);
+                                    stuffedAreaCurrent += stuffedAmount;
+
+                                    stuffingMaskTexture.SetPixel(
+                                        pixelXOffset + x,
+                                        pixelYOffset + y,
+                                        new Color(0, pixelDirtMask.g * pixelDirt.g, 0)
+                                    );
+                                }
+                            }
+
+                            stuffingMaskTexture.Apply();
+                        } else {
+                            // Player has stuffed at least 90% of texture -> complete game and continue
+                            CompleteStuffingGame();
+                        }
                     }
 
                 }
@@ -197,6 +202,27 @@ namespace MendingGames {
             }
         }
 
+        private void CompleteOrContinueMendingGames() {
+            // Check if there are more steps to the repair process
+            if (this.damageRepairStepIndex < this.damageInstructions.Count() - 1) {
+                // Fire step complete event 
+                // TODO: Add listener for this event on the ChecklistManager
+                OnMendingStepComplete?.Invoke(this.damageInstructions[this.damageRepairStepIndex]);
+                // Start next mending game step
+                GenerateMendingGame(this.damageInstructions);
+            } else {
+                // Complete mending game and reset
+                magnifyingGlass.transform.DOLocalMove(startingLocation, duration).SetEase(easeType);
+                this.mendingGameInProgress = false;
+                OnMendingGameComplete?.Invoke(this.damageInstructions);
+            }
+
+            // Check if there is a tutorial active that requires a continue action, and continue tutorial
+            if (tutorialManager.GetRequiredContinueAction() == TutorialActionRequiredContinueType.CompleteRepair) {
+                tutorialManager.ContinueTutorialSequence();
+            }
+        }
+
 
         /*                 SEWING AND CUTTING GAMES                    */
         /* ----------------------------------------------------------- */
@@ -235,25 +261,7 @@ namespace MendingGames {
         private void CompleteSewingOrCuttingGame() {
             Node.OnNodeTriggered -= HandleTargetNodeTrigger;
             Node.OnActiveNodeReleased -= ResetCurrentLine;
-            // Check if there are more steps to the repair process
-            if (this.damageRepairStepIndex < this.damageInstructions.Count() - 1) {
-                // Fire step complete event 
-                // TODO: Add listener for this event on the ChecklistManager
-                OnMendingStepComplete?.Invoke(this.damageInstructions[this.damageRepairStepIndex]);
-                // Start next mending game step
-                GenerateMendingGame(this.damageInstructions);
-            } else {
-                // Complete mending game and reset
-                magnifyingGlass.transform.DOLocalMove(startingLocation, duration).SetEase(easeType);
-                this.mendingGameInProgress = false;
-                OnMendingGameComplete?.Invoke(this.damageInstructions);
-            }
-
-
-            // Check if there is a tutorial active that requires a continue action, and continue tutorial
-            if (tutorialManager.GetRequiredContinueAction() == TutorialActionRequiredContinueType.CompleteRepair) {
-                tutorialManager.ContinueTutorialSequence();
-            }
+            CompleteOrContinueMendingGames();
         }
 
         private void HandleTargetNodeTrigger(Node triggeredNode) {
@@ -381,10 +389,12 @@ namespace MendingGames {
         /* ----------------------------------------------------------- */
         private void GenerateStuffingGame() {
             // Create Masking Texture
-            stuffingMaskTexture = new Texture2D(instructionStep.StuffingBackgroundTexture.width, instructionStep.StuffingBackgroundTexture.height);
-            stuffingMaskTexture.SetPixels(instructionStep.StuffingBackgroundTexture.GetPixels());
+            stuffingMaskTexture = new Texture2D(uvMask.width, uvMask.height);
+            stuffingMaskTexture.SetPixels(uvMask.GetPixels());
             stuffingMaskTexture.Apply();
-            Debug.Log(stuffingMaskTexture.width);
+
+            textureWidth = stuffingMaskTexture.width;
+            textureHeight = stuffingMaskTexture.height;
 
             // Set textures on stuffing material for current plushie
             stuffingMaterial.SetTexture("_MainTex", stuffingTexture);
@@ -393,24 +403,38 @@ namespace MendingGames {
 
             // Render unstuffed sprite and material on lens background
             lensSpriteRenderer.material = stuffingMaterial;
-            lensSpriteRenderer.sprite = instructionStep.StuffingBackgroundSprite;
+            lensSpriteRenderer.sprite = stuffingSprite;
 
             // Activate and set foreground sprite
             stuffingForeground.GetComponent<SpriteRenderer>().sprite = instructionStep.DamageSprite;
             stuffingForeground.SetActive(true);
 
             unstuffedAreaTotal = 0f;
-            for (int x = 0; x < instructionStep.StuffingBackgroundTexture.width; x++) {
-                for (int y = 0; y < instructionStep.StuffingBackgroundTexture.height; y++) {
-                    unstuffedAreaTotal += instructionStep.StuffingBackgroundTexture.GetPixel(x, y).g;
+            for (int x = 0; x < textureWidth; x++) {
+                for (int y = 0; y < textureHeight; y++) {
+                    unstuffedAreaTotal += stuffingMaskTexture.GetPixel(x, y).g;
                 }
             }
-            unstuffedAreaCurrent = unstuffedAreaTotal;
+
             lensCircleCollider.enabled = true;
         }
 
         private float GetStuffedAmount() {
-            return this.unstuffedAreaCurrent / unstuffedAreaTotal;
+            return this.stuffedAreaCurrent / unstuffedAreaTotal;
+        }
+
+        private void CompleteStuffingGame() {
+            Color32 stuffedColor = new Color32(0, 0, 0, 0);
+            Color32[] colors = stuffingMaskTexture.GetPixels32();
+
+            for (int i = 0; i < colors.Length; i++) {
+                colors[i] = stuffedColor;
+            }
+
+            stuffingMaskTexture.SetPixels32(colors);
+            stuffingMaskTexture.Apply();
+
+            CompleteOrContinueMendingGames();
         }
 
 

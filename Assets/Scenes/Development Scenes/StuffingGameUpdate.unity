@@ -6382,13 +6382,14 @@ MonoBehaviour:
   mendingDashPrefab: {fileID: 2905279161526616842, guid: ae4b126baad3d17439e280a8554d2676, type: 3}
   dashSize: 0.1
   delta: 1
-  mainTex: {fileID: 2800000, guid: 3f75341b31a1d7844b259504f79c8f18, type: 3}
-  stuffingBrush: {fileID: 2800000, guid: 3668ddff5f5f3484f8b4d194a9194e57, type: 3}
+  uvMask: {fileID: 2800000, guid: 0381897c4dc4dc542943db9c9a6feeca, type: 3}
+  stuffingBrush: {fileID: 2800000, guid: 31ef6652248efb04a8c2cf604b05fd9d, type: 3}
   stuffingSprite: {fileID: 21300000, guid: aeaa3ff7e5319e8478b593639b51d98d, type: 3}
   stuffingTexture: {fileID: 2800000, guid: aeaa3ff7e5319e8478b593639b51d98d, type: 3}
   stuffingMaterial: {fileID: 2100000, guid: fbb4ccd8a85d3524d8d944a86ce66f16, type: 2}
   stuffingForeground: {fileID: 1951882964}
-  texturePosModifier: 3
+  textureXPosMax: 7.5
+  textureYPosMax: 7
   magnifyingGlass: {fileID: 2108589877}
   magnifyingGlassLens: {fileID: 724576089}
   mendingGamePlayArea: {fileID: 639341546}
