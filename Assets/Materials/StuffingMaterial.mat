@@ -21,7 +21,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: c7b0c9a997a5ab34181ddb86ff614aed, type: 3}
+        m_Texture: {fileID: 2800000, guid: aeaa3ff7e5319e8478b593639b51d98d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Mask:
@@ -29,7 +29,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _StuffingTex:
-        m_Texture: {fileID: 2800000, guid: eaff31f775d744c40aed271bc9f102e4, type: 3}
+        m_Texture: {fileID: 2800000, guid: fa62927eef4bd514d917031c2ead9a45, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _UnstuffedTex:
+        m_Texture: {fileID: 2800000, guid: fa62927eef4bd514d917031c2ead9a45, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:

@@ -46,7 +46,6 @@ namespace Dialogue {
 
                 // Show checklist if tutorial requires interacting with it
                 if (currentTutorialStep.requiredContinueAction == TutorialActionRequiredContinueType.CompleteJob) {
-                    Debug.Log("COMPLETE JOB");
                     checklist.ShowHideChecklist(true);
                 }
             }
