@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 958951278925545544}
   - component: {fileID: 1457025831233557086}
   - component: {fileID: 7026440170469487523}
-  - component: {fileID: 4605821463121623565}
+  - component: {fileID: 8074995172036852997}
   - component: {fileID: 7668615244602329287}
-  - component: {fileID: 3708409553341289766}
+  - component: {fileID: -8861978948673554049}
   m_Layer: 5
   m_Name: ReimaAndRemyCard
   m_TagString: Untagged
@@ -81,7 +81,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!50 &4605821463121623565
+--- !u!50 &8074995172036852997
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -98,10 +98,10 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
+  m_Interpolate: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!61 &7668615244602329287
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -112,7 +112,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -126,9 +126,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 100, y: 100}
   m_EdgeRadius: 0
---- !u!114 &3708409553341289766
+--- !u!114 &-8861978948673554049
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,10 +137,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3060181916619301987}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d7c593bd48ed1f449102cacf673cfd8, type: 3}
+  m_Script: {fileID: 11500000, guid: dd7ca6a166deeee4193ae3df166b61ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  easeType: 0
 --- !u!1 &3142170290765226100
 GameObject:
   m_ObjectHideFlags: 0

@@ -27,7 +27,7 @@ public class PlushieScriptableObject : ScriptableObject {
 
     [Header("Issue and Resolution Elements")]
     public ClientDialogueSet issueDialogue;
-    //public ClientCard resolutionClientCard;
+    public ClientCard resolutionClientCard;
 
     [Header("Tutorial Dialogue")]
     public bool hasTutorialDialogue;
