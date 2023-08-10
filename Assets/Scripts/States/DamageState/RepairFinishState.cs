@@ -3,6 +3,6 @@ public class RepairFinishState : PlushieDamageBaseState {
     }
 
     public override void EnterState() {
-        ((PlushieDamageSM) this.stateMachine).unsubscribeToMendingGame();
+        ((PlushieDamageSM) this.stateMachine).UnsubscribeToMendingGame();
      }
 }

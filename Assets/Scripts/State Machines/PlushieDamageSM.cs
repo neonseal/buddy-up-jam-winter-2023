@@ -28,13 +28,13 @@ public class PlushieDamageSM : BaseStateMachine {
 
 
     // Initialize fields on load
-    private void Awake() {
+    public void Awake() {
         InitializeFields();
     }
 
     // Initialize references before first frame update
-    private void Start() {
-        base.InitializeState();
+    public void Start() {
+        InitializeStateMachine();
         InitializeReferences();
     }
 
@@ -54,7 +54,7 @@ public class PlushieDamageSM : BaseStateMachine {
 
     // Initialize reference fields in this class
     private void InitializeReferences() {
-        _plushieDamageGO = this.GetComponent<PlushieDamageGO>();
+        _plushieDamageGO = GetComponent<PlushieDamageGO>();
     }
 
     // Assign blank grid state as the initial state
@@ -69,15 +69,15 @@ public class PlushieDamageSM : BaseStateMachine {
         }
     }
 
-    internal void subscribeToMendingGame() {
-        MendingGameManager.OnMendingGameComplete += progressMendingSteps;
+    internal void SubscribeToMendingGame() {
+        MendingGameManager.OnMendingGameComplete += ProgressMendingSteps;
     }
 
-    internal void unsubscribeToMendingGame() {
-        MendingGameManager.OnMendingGameComplete -= progressMendingSteps;
+    internal void UnsubscribeToMendingGame() {
+        MendingGameManager.OnMendingGameComplete -= ProgressMendingSteps;
     }
 
-    private void progressMendingSteps(DamageInstructrionsScriptableObject[] damageInstructions) {
+    private void ProgressMendingSteps(DamageInstructrionsScriptableObject[] damageInstructions) {
         ((PlushieDamageBaseState) currentState).CompleteRepair();
     }
 }

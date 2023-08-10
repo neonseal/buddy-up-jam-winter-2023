@@ -13,14 +13,14 @@ public abstract class BaseStateMachine : MonoBehaviour {
     */
 
     // Call update logic function of state
-    private void Update() {
+    public void Update() {
         if (currentState != null) {
             currentState.UpdateFrame();
         }
     }
 
     // Call update physics function of state
-    private void FixedUpdate() {
+    public void FixedUpdate() {
         if (currentState != null) {
             currentState.UpdatePhysics();
         }
@@ -35,7 +35,7 @@ public abstract class BaseStateMachine : MonoBehaviour {
         currentState.EnterState();
     }
 
-    private protected void InitializeState() {
+    private protected void InitializeStateMachine() {
         currentState = GetInitialState();
         if (currentState != null) {
             currentState.EnterState();
