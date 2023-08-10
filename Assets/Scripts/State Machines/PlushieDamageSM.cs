@@ -35,12 +35,12 @@ public class PlushieDamageSM : BaseStateMachine {
     // Initialize references before first frame update
     public void Start() {
         InitializeStateMachine();
-        InitializeReferences();
     }
 
     // Initialize fields in this class
     private void InitializeFields() {
         InitializeStates();
+        _plushieDamageGO = GetComponent<PlushieDamageGO>();
     }
 
     // Initialize states in this state machine
@@ -50,11 +50,6 @@ public class PlushieDamageSM : BaseStateMachine {
         wornStuffingState = new WornStuffingState(this);
         missingStuffingState = new MissingStuffingState(this);
         repairFinishState = new RepairFinishState(this);
-    }
-
-    // Initialize reference fields in this class
-    private void InitializeReferences() {
-        _plushieDamageGO = GetComponent<PlushieDamageGO>();
     }
 
     // Assign blank grid state as the initial state
