@@ -31,9 +31,11 @@ namespace MendingGames {
     public class MendingGameManager : MonoBehaviour {
         [Header("High-level Status/Progress Elements")]
         private DamageInstructrionsScriptableObject[] damageInstructions;
+        private DamageInstructrionsScriptableObject instructionStep;
         private int damageRepairStepIndex;
         private bool mendingGameInProgress;
         private int activeNodeIndex;
+        private ToolType requiredToolType;
         [SerializeField] private PlayAreaCanvasManager canvasManager;
         [Range(0f, 1f)]
         [SerializeField] private float lineCompleteThreshold;
@@ -48,13 +50,30 @@ namespace MendingGames {
         [SerializeField] private float delta;
 
         [Header("Stuffing Game Rendering")]
+        [SerializeField] private Texture2D uvMask;
+        [SerializeField] private Texture2D stuffingBrush;
+        [SerializeField] private Sprite stuffingSprite;
+        [SerializeField] private Texture2D stuffingTexture;
+        [SerializeField] private Material stuffingMaterial;
+        [SerializeField] private GameObject stuffingForeground;
+        [SerializeField] private float textureXPosMax;
+        [SerializeField] private float textureYPosMax;
+        private int textureWidth;
+        private int textureHeight;
 
+        [Header("Stuffing Game State Management")]
+        private Texture2D stuffingMaskTexture;
+        private Vector2Int lastPaintPixelPosition;
+        private float unstuffedAreaTotal;
+        private float stuffedAreaCurrent;
+        private bool stepCompleteCalled;
 
         [Header("Magnifying Glass Lens Elements")]
         [SerializeField] private GameObject magnifyingGlass;
         [SerializeField] private GameObject magnifyingGlassLens;
         [SerializeField] private GameObject mendingGamePlayArea;
         private SpriteRenderer lensSpriteRenderer;
+        private CircleCollider2D lensCircleCollider;
 
         [Header("Magnifying Glass Animation Elements")]
         [SerializeField] private float duration;
@@ -77,12 +96,77 @@ namespace MendingGames {
             nodes = new List<Node>();
             dashSets = new List<List<Dash>>();
             lensSpriteRenderer = magnifyingGlassLens.GetComponent<SpriteRenderer>();
+            lensCircleCollider = magnifyingGlassLens.GetComponent<CircleCollider2D>();
 
             damageRepairStepIndex = -1;
             startingLocation = magnifyingGlass.transform.localPosition;
             centerLocation = new Vector3(5.5f, -10, 0);
+            stepCompleteCalled = false;
 
             PlushieActiveState.MendingGameInitiated += GenerateMendingGame;
+        }
+
+        private void Update() {
+            // Update stuffing material if interacting with stuffing game
+            if (mendingGameInProgress && requiredToolType == ToolType.Stuffing) {
+                if (Input.GetMouseButton(0) && canvasManager.CurrentToolType == requiredToolType && !stepCompleteCalled) {
+                    // Check for raycast hits on magnifying glass and update mask
+                    Vector3 position = Input.mousePosition;
+                    position.z = 0.0f;
+                    position = Camera.main.ScreenToWorldPoint(position);
+                    RaycastHit2D hit = Physics2D.Raycast(position, Vector2.zero);
+
+                    if (hit.collider != null && hit.collider.name == "LensBackground") {
+                        // Determine mouse position as percentage of collider extents 
+                        if (GetStuffedAmount() < 0.9f) {
+                            float percentX = (float)Math.Round((position.x + (textureXPosMax / 2f)) / textureXPosMax, 2);
+                            float percentY = (float)Math.Round((position.y + (textureYPosMax / 2f)) / textureYPosMax, 2);
+
+                            float clampedPercentX = Math.Clamp(percentX, 0.00f, 1.00f);
+                            float clampedPercentY = Math.Clamp(percentY, 0.00f, 1.00f);
+
+                            int pixelX = (int)(clampedPercentX * textureWidth);
+                            int pixelY = (int)(clampedPercentY * textureHeight);
+
+                            Vector2Int paintPixelPosition = new Vector2Int(pixelX, pixelY);
+
+                            int paintPixelDistance = Mathf.Abs(paintPixelPosition.x - lastPaintPixelPosition.x) + Mathf.Abs(paintPixelPosition.y - lastPaintPixelPosition.y);
+                            int maxPaintDistance = 7;
+                            if (paintPixelDistance < maxPaintDistance) {
+                                // Painting too close to last position
+                                return;
+                            }
+                            lastPaintPixelPosition = paintPixelPosition;
+
+                            int pixelXOffset = pixelX - (stuffingBrush.width / 2);
+                            int pixelYOffset = pixelY - (stuffingBrush.height / 2);
+
+                            for (int x = 0; x < stuffingBrush.width; x++) {
+                                for (int y = 0; y < stuffingBrush.height; y++) {
+                                    Color pixelDirt = stuffingBrush.GetPixel(x, y);
+                                    Color pixelDirtMask = stuffingMaskTexture.GetPixel(pixelXOffset + x, pixelYOffset + y);
+
+                                    float stuffedAmount = pixelDirtMask.g - (pixelDirtMask.g * pixelDirt.g);
+                                    stuffedAreaCurrent += stuffedAmount;
+
+                                    stuffingMaskTexture.SetPixel(
+                                        pixelXOffset + x,
+                                        pixelYOffset + y,
+                                        new Color(0, pixelDirtMask.g * pixelDirt.g, 0)
+                                    );
+                                }
+                            }
+
+                            stuffingMaskTexture.Apply();
+                        } else {
+                            // Player has stuffed at least 90% of texture -> complete game and continue
+                            stepCompleteCalled = true;
+                            CompleteStuffingGame();
+                        }
+                    }
+
+                }
+            }
         }
 
         /*                      COMMON FUNCTIONS                       */
@@ -94,6 +178,8 @@ namespace MendingGames {
             this.damageInstructions = damageInstructions;
             this.damageRepairStepIndex++;
 
+            instructionStep = this.damageInstructions[damageRepairStepIndex];
+
             // Check first step of damage instructions to determine starting damage type
             switch (damageInstructions[damageRepairStepIndex].PlushieDamageType) {
                 // TODO: Change to switch of MendingGameType (May need to add to DamageInstruction Scriptable)
@@ -101,11 +187,14 @@ namespace MendingGames {
                     GenerateSewingOrCuttingGame();
                     break;
                 case PlushieDamageType.LargeRip:
+                    GenerateSewingOrCuttingGame();
                     break;
                 case PlushieDamageType.WornStuffing:
                     GenerateSewingOrCuttingGame();
                     break;
                 case PlushieDamageType.MissingStuffing:
+                    this.requiredToolType = ToolType.Stuffing;
+                    GenerateStuffingGame();
                     break;
             }
 
@@ -117,11 +206,44 @@ namespace MendingGames {
             }
         }
 
+        private void CompleteOrContinueMendingGames() {
+            // Check if there are more steps to the repair process
+            if (this.damageRepairStepIndex < this.damageInstructions.Count() - 1) {
+                // Fire step complete event 
+                // TODO: Add listener for this event on the ChecklistManager
+                OnMendingStepComplete?.Invoke(this.damageInstructions[this.damageRepairStepIndex]);
+                // Start next mending game step
+                GenerateMendingGame(this.damageInstructions);
+            } else {
+                // Complete mending game and reset
+                magnifyingGlass.transform.DOLocalMove(startingLocation, duration).SetEase(easeType);
+                this.mendingGameInProgress = false;
+                OnMendingGameComplete?.Invoke(this.damageInstructions);
+            }
+
+            // Check if there is a tutorial active that requires a continue action, and continue tutorial
+            if (tutorialManager.GetRequiredContinueAction() == TutorialActionRequiredContinueType.CompleteRepair) {
+                tutorialManager.ContinueTutorialSequence();
+            }
+        }
+
 
         /*                 SEWING AND CUTTING GAMES                    */
         /* ----------------------------------------------------------- */
 
         private void GenerateSewingOrCuttingGame() {
+            // If transitioning from cutting/sewing game to similar game, destroy previous game objects
+            if (dashSets.Count > 0) {
+                foreach (var dashSet in dashSets) {
+                    foreach (Dash dash in dashSet) {
+                        Destroy(dash);
+                    }
+                }
+                foreach (Node node in nodes) {
+                    Destroy(node);
+                }
+            }
+
             Node.OnNodeTriggered += HandleTargetNodeTrigger;
             Node.OnActiveNodeReleased += ResetCurrentLine;
 
@@ -155,25 +277,7 @@ namespace MendingGames {
         private void CompleteSewingOrCuttingGame() {
             Node.OnNodeTriggered -= HandleTargetNodeTrigger;
             Node.OnActiveNodeReleased -= ResetCurrentLine;
-            // Check if there are more steps to the repair process
-            if (this.damageRepairStepIndex < this.damageInstructions.Count() - 1) {
-                // Fire step complete event 
-                // TODO: Add listener for this event on the ChecklistManager
-                OnMendingStepComplete?.Invoke(this.damageInstructions[this.damageRepairStepIndex]);
-                // Start next mending game step
-                GenerateMendingGame(this.damageInstructions);
-            } else {
-                // Complete mending game and reset
-                magnifyingGlass.transform.DOLocalMove(startingLocation, duration).SetEase(easeType);
-                this.mendingGameInProgress = false;
-                OnMendingGameComplete?.Invoke(this.damageInstructions);
-            }
-
-
-            // Check if there is a tutorial active that requires a continue action, and continue tutorial
-            if (tutorialManager.GetRequiredContinueAction() == TutorialActionRequiredContinueType.CompleteRepair) {
-                tutorialManager.ContinueTutorialSequence();
-            }
+            CompleteOrContinueMendingGames();
         }
 
         private void HandleTargetNodeTrigger(Node triggeredNode) {
@@ -299,13 +403,63 @@ namespace MendingGames {
 
         /*                        STUFFING GAME                         */
         /* ----------------------------------------------------------- */
+        private void GenerateStuffingGame() {
+            // Create Masking Texture
+            stuffingMaskTexture = new Texture2D(uvMask.width, uvMask.height);
+            stuffingMaskTexture.SetPixels(uvMask.GetPixels());
+            stuffingMaskTexture.Apply();
 
+            textureWidth = stuffingMaskTexture.width;
+            textureHeight = stuffingMaskTexture.height;
 
+            // Set textures on stuffing material for current plushie
+            stuffingMaterial.SetTexture("_MainTex", stuffingTexture);
+            stuffingMaterial.SetTexture("_UnstuffedTex", instructionStep.StuffingBackgroundTexture);
+            stuffingMaterial.SetTexture("_Mask", stuffingMaskTexture);
 
+            // Render unstuffed sprite and material on lens background
+            lensSpriteRenderer.material = stuffingMaterial;
+            lensSpriteRenderer.sprite = stuffingSprite;
+
+            // Activate and set foreground sprite
+            stuffingForeground.GetComponent<SpriteRenderer>().sprite = instructionStep.DamageSprite;
+            stuffingForeground.SetActive(true);
+
+            unstuffedAreaTotal = 0f;
+            for (int x = 0; x < textureWidth; x++) {
+                for (int y = 0; y < textureHeight; y++) {
+                    unstuffedAreaTotal += stuffingMaskTexture.GetPixel(x, y).g;
+                }
+            }
+
+            lensCircleCollider.enabled = true;
+        }
+
+        private float GetStuffedAmount() {
+            return this.stuffedAreaCurrent / unstuffedAreaTotal;
+        }
+
+        private void CompleteStuffingGame() {
+            Color32 stuffedColor = new Color32(0, 0, 0, 0);
+            Color32[] colors = stuffingMaskTexture.GetPixels32();
+
+            for (int i = 0; i < colors.Length; i++) {
+                colors[i] = stuffedColor;
+            }
+
+            stuffingMaskTexture.SetPixels32(colors);
+            stuffingMaskTexture.Apply();
+
+            stuffingForeground.SetActive(false);
+            lensCircleCollider.enabled = false;
+
+            CompleteOrContinueMendingGames();
+        }
 
 
         /* Public Properties */
         public bool MendingGameInProgress { get => mendingGameInProgress; }
     }
 }
+
 
