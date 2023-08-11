@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,12 +7,16 @@ using UnityEngine.UI;
 
 public class ClientCardContainer : MonoBehaviour, IPointerClickHandler {
     private ClientCard[] cards;
+    private bool focused;
 
     [Header("Card Stack Navigation Elements")]
     [SerializeField] private Button nextCardBtn;
     [SerializeField] private Button prevCardBtn;
     [SerializeField] private float clickSizeModifier;
     [SerializeField] private float clickDuration;
+    [SerializeField] private float cardCycleDistance;
+    [SerializeField] private float cardCycleDuration;
+    [SerializeField] private float waitForCycleAnimation;
 
     [Header("Tweening Elements")]
     [SerializeField] private Vector3 screenHomePosition;
@@ -44,27 +49,65 @@ public class ClientCardContainer : MonoBehaviour, IPointerClickHandler {
         sequence.Insert(0, this.transform.transform.DOScaleX(s_x, duration));
         sequence.Insert(0, this.transform.transform.DOScaleY(s_y, duration));
         sequence.Play();
+
+        if (focused) {
+            focused = false;
+            nextCardBtn.gameObject.SetActive(false);
+            prevCardBtn.gameObject.SetActive(false);
+        } else {
+            focused = true;
+            nextCardBtn.gameObject.SetActive(true);
+            prevCardBtn.gameObject.SetActive(true);
+        }
     }
 
     private void ShowNextCard() {
-        Debug.Log("SHOW NEXT CARD");
-        Sequence sequence = DOTween.Sequence();
-        sequence.Append(nextCardBtn.transform.DOScale(clickSizeModifier, clickDuration));
-        sequence.SetLoops(2, LoopType.Yoyo);
+        CycleCard(true, nextCardBtn.transform);
     }
 
     private void ShowPrevCard() {
-        Debug.Log("SHOW NEXT CARD");
-        Sequence sequence = DOTween.Sequence();
-        sequence.Append(prevCardBtn.transform.DOScale(clickSizeModifier, clickDuration));
-        sequence.SetLoops(2, LoopType.Yoyo);
+        CycleCard(false, prevCardBtn.transform);
+    }
+
+    private void CycleCard(bool topToBottom, Transform transform) {
+        Sequence btnSequence = DOTween.Sequence();
+        btnSequence.Append(transform.DOScale(clickSizeModifier, clickDuration));
+        btnSequence.SetLoops(2, LoopType.Yoyo);
+        btnSequence.Play();
+
+        StartCoroutine(CycleCardRoutine(topToBottom));
+    }
+
+    private IEnumerator CycleCardRoutine(bool topToBottom) {
+        ClientCard[] cardStack = this.GetComponentsInChildren<ClientCard>();
+
+        Sequence cardSequence = DOTween.Sequence();
+        if (topToBottom) {
+            ClientCard topMostCard = cardStack.Last();
+            cardSequence.Append(topMostCard.transform.DOLocalMoveX(topMostCard.transform.localPosition.x + cardCycleDistance, cardCycleDuration));
+            cardSequence.SetLoops(2, LoopType.Yoyo);
+            cardSequence.Play();
+            yield return new WaitForSeconds(waitForCycleAnimation);
+            topMostCard.transform.SetAsFirstSibling();
+        } else {
+            ClientCard bottomMostCard = cardStack.First();
+            cardSequence.Append(bottomMostCard.transform.DOLocalMoveX(bottomMostCard.transform.localPosition.x - cardCycleDistance, cardCycleDuration));
+            cardSequence.SetLoops(2, LoopType.Yoyo);
+            cardSequence.Play();
+            yield return new WaitForSeconds(waitForCycleAnimation);
+            bottomMostCard.transform.SetAsLastSibling();
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData) {
-        FocusOnCardContainer();
+        if (cards != null) {
+            FocusOnCardContainer();
+        }
     }
 
     public void UpdateCardStack() {
         cards = this.gameObject.GetComponentsInChildren<ClientCard>();
     }
+
+    public int GetCardCount() { return cards != null ? cards.Length : 0; }
 }
