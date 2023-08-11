@@ -8,12 +8,16 @@ using UnityEngine.UI;
 public class ClientCardCanvasManager : MonoBehaviour {
     [Header("Client Card Canvas UI Elements")]
     [SerializeField] private Button sendThankYouBtn;
-    [SerializeField] private GameObject clientCardStack;
+    [SerializeField] private ClientCardContainer clientCardContainer;
+    private Vector3 lastCardPosition;
+    private float lastCardZRotation;
+    [SerializeField] private float positionRandomizerMinMax;
+    [SerializeField] private float rotationRandomizerMinMax;
 
     [Header("Game Object Elements")]
     private Plushie currentPlushie;
     private ClientCard clientCard;
-    private List<ClientCard> cardStack;
+    private List<ClientCard> cardCollection;
 
     [Header("Tweening Elements")]
     [SerializeField] private float duration;
@@ -27,7 +31,7 @@ public class ClientCardCanvasManager : MonoBehaviour {
         sendThankYouBtn.onClick.AddListener(SendClientCard);
         ClientCard.OnClientCardClick += MoveClientCardToBoard;
 
-        cardStack = new List<ClientCard>();
+        cardCollection = new List<ClientCard>();
     }
 
     private void HandlePlushieLoadEvent(Plushie currentPlushie) {
@@ -47,27 +51,42 @@ public class ClientCardCanvasManager : MonoBehaviour {
         yield return new WaitForSeconds(.5f);
 
         // Tween the card into view
-        clientCard.transform.DOLocalMove(new Vector3(0, 0, -1), 1.5f).SetEase(Ease.OutBack);
+        clientCard.transform.DOLocalMove(new Vector3(0, 0, 0), 1.5f).SetEase(Ease.OutBack);
 
-        cardStack.Add(clientCard);
+        cardCollection.Add(clientCard);
     }
 
     private void MoveClientCardToBoard(ClientCard clientCard) {
         if (clientCard == this.clientCard) {
-            clientCard.transform.SetParent(this.clientCardStack.transform);
+            clientCard.transform.SetParent(this.clientCardContainer.transform);
+            // Calculate new position for card on stack
+            Vector3 newCardPosition = lastCardPosition;
+            float newCardZRotation = lastCardZRotation;
 
-            Debug.Log(clientCard.transform.localPosition);
-            Debug.Log(clientCard.transform.localScale);
+            // Get random values for new position and rotation
+            float randomX = Random.Range(-positionRandomizerMinMax, positionRandomizerMinMax);
+            float randomY = Random.Range(-positionRandomizerMinMax, positionRandomizerMinMax);
+            newCardPosition = new Vector3(randomX, randomY, 0);
+            newCardZRotation = Random.Range(-rotationRandomizerMinMax, rotationRandomizerMinMax);
 
-            Vector3 v = clientCard.transform.localPosition.x == 0 ? new Vector3(-700, -300, 0) : new Vector3(0, 0, 1);
-            float s_x = clientCard.transform.localScale.x > scaleX ? scaleX : 5f;
-            float s_y = clientCard.transform.localScale.y > scaleY ? scaleY : 7f;
+            // Negate rotation if new value too close to previous value
+            float rotDiff = Mathf.Abs(newCardZRotation) - Mathf.Abs(lastCardZRotation);
+            if (Mathf.Abs(rotDiff) <= 0.5f) {
+                newCardZRotation *= -1;
+            }
 
+            // Tween to new position and rotation on board
             Sequence sequence = DOTween.Sequence();
-            sequence.Append(clientCard.transform.DOLocalMove(v, duration));
-            sequence.Insert(0, clientCard.transform.DOScaleX(s_x, duration));
-            sequence.Insert(0, clientCard.transform.DOScaleY(s_y, duration));
+            sequence.Append(clientCard.transform.DOLocalMove(newCardPosition, duration));
+            sequence.Insert(0, clientCard.transform.DOScaleX(scaleX, duration));
+            sequence.Insert(0, clientCard.transform.DOScaleY(scaleY, duration));
+            sequence.Insert(0, clientCard.transform.DORotate(new Vector3(0, 0, newCardZRotation), duration));
             sequence.Play();
+
+            // Update board and last values
+            clientCardContainer.UpdateCardStack();
+            lastCardPosition = newCardPosition;
+            lastCardZRotation = newCardZRotation;
         }
     }
 
