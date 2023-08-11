@@ -66,6 +66,7 @@ namespace MendingGames {
         private Vector2Int lastPaintPixelPosition;
         private float unstuffedAreaTotal;
         private float stuffedAreaCurrent;
+        private bool stepCompleteCalled;
 
         [Header("Magnifying Glass Lens Elements")]
         [SerializeField] private GameObject magnifyingGlass;
@@ -100,6 +101,7 @@ namespace MendingGames {
             damageRepairStepIndex = -1;
             startingLocation = magnifyingGlass.transform.localPosition;
             centerLocation = new Vector3(5.5f, -10, 0);
+            stepCompleteCalled = false;
 
             PlushieActiveState.MendingGameInitiated += GenerateMendingGame;
         }
@@ -107,7 +109,7 @@ namespace MendingGames {
         private void Update() {
             // Update stuffing material if interacting with stuffing game
             if (mendingGameInProgress && requiredToolType == ToolType.Stuffing) {
-                if (Input.GetMouseButton(0) && canvasManager.CurrentToolType == requiredToolType) {
+                if (Input.GetMouseButton(0) && canvasManager.CurrentToolType == requiredToolType && !stepCompleteCalled) {
                     // Check for raycast hits on magnifying glass and update mask
                     Vector3 position = Input.mousePosition;
                     position.z = 0.0f;
@@ -158,6 +160,7 @@ namespace MendingGames {
                             stuffingMaskTexture.Apply();
                         } else {
                             // Player has stuffed at least 90% of texture -> complete game and continue
+                            stepCompleteCalled = true;
                             CompleteStuffingGame();
                         }
                     }
@@ -184,6 +187,7 @@ namespace MendingGames {
                     GenerateSewingOrCuttingGame();
                     break;
                 case PlushieDamageType.LargeRip:
+                    GenerateSewingOrCuttingGame();
                     break;
                 case PlushieDamageType.WornStuffing:
                     GenerateSewingOrCuttingGame();
@@ -228,6 +232,18 @@ namespace MendingGames {
         /* ----------------------------------------------------------- */
 
         private void GenerateSewingOrCuttingGame() {
+            // If transitioning from cutting/sewing game to similar game, destroy previous game objects
+            if (dashSets.Count > 0) {
+                foreach (var dashSet in dashSets) {
+                    foreach (Dash dash in dashSet) {
+                        Destroy(dash);
+                    }
+                }
+                foreach (Node node in nodes) {
+                    Destroy(node);
+                }
+            }
+
             Node.OnNodeTriggered += HandleTargetNodeTrigger;
             Node.OnActiveNodeReleased += ResetCurrentLine;
 
@@ -433,6 +449,9 @@ namespace MendingGames {
 
             stuffingMaskTexture.SetPixels32(colors);
             stuffingMaskTexture.Apply();
+
+            stuffingForeground.SetActive(false);
+            lensCircleCollider.enabled = false;
 
             CompleteOrContinueMendingGames();
         }

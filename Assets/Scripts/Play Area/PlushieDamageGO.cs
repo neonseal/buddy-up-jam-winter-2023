@@ -9,11 +9,24 @@ public class PlushieDamageGO : MonoBehaviour {
     [SerializeField]
     private List<GameObject> plushieDamagesDeletedOnCompletion;
 
+    private PlushieDamageSM plushieDamageSM;
+
     /* Damage life cycle events */
     public static event Action<DamageInstructrionsScriptableObject[]> OnPlushieDamageClicked;
 
+    public void Start() {
+       InitializeReferences();
+    }
+
+    // Initialize reference fields in this class
+    private void InitializeReferences() {
+        plushieDamageSM = GetComponent<PlushieDamageSM>();
+        plushieDamageSM._plushieDamageGO = this;
+    }
+
     // Send out event when damage is clicked to 
-    private void OnMouseDown() {
+    public void OnMouseDown() {
+        plushieDamageSM.SubscribeToMendingGame();
         OnPlushieDamageClicked?.Invoke(this.damageInstructions);
     }
 

@@ -47,7 +47,6 @@ namespace MendingGames {
             if (this.TargetNode &&
                 !Triggered &&
                 CanvasManager.CurrentToolType == requiredToolType) {
-                ;
                 ActivateOrDeactivateNode(true);
             }
         }
