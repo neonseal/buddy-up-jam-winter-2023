@@ -34,12 +34,12 @@ public class ClientCardContainer : MonoBehaviour, IPointerClickHandler {
     }
 
     private void HandleClientCardClick(ClientCard card) {
-        if (cards != null && cards.Contains(card)) {
-            FocusOnCardContainer();
+        if (cards != null) {
+            MoveCardContainer();
         }
     }
 
-    private void FocusOnCardContainer() {
+    private void MoveCardContainer() {
         Vector3 v = this.transform.localPosition.x == 0 ? screenHomePosition : new Vector3(0, 0, 1);
         float s_x = this.transform.localScale.x < scaleX ? scaleX : 1f;
         float s_y = this.transform.localScale.y < scaleY ? scaleY : 1f;
@@ -75,7 +75,10 @@ public class ClientCardContainer : MonoBehaviour, IPointerClickHandler {
         btnSequence.SetLoops(2, LoopType.Yoyo);
         btnSequence.Play();
 
-        StartCoroutine(CycleCardRoutine(topToBottom));
+
+        if (cards.Length > 1) {
+            StartCoroutine(CycleCardRoutine(topToBottom));
+        }
     }
 
     private IEnumerator CycleCardRoutine(bool topToBottom) {
@@ -101,7 +104,7 @@ public class ClientCardContainer : MonoBehaviour, IPointerClickHandler {
 
     public void OnPointerClick(PointerEventData eventData) {
         if (cards != null) {
-            FocusOnCardContainer();
+            MoveCardContainer();
         }
     }
 

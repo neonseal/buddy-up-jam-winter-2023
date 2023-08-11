@@ -6044,6 +6044,9 @@ MonoBehaviour:
   prevCardBtn: {fileID: 2005970255}
   clickSizeModifier: 0.75
   clickDuration: 0.25
+  cardCycleDistance: 115
+  cardCycleDuration: 0.5
+  waitForCycleAnimation: 0.3
   screenHomePosition: {x: 700, y: 300, z: 1}
   duration: 1
   ease: 1
@@ -7432,7 +7435,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1673392092
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8654,7 +8657,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2005970254
 RectTransform:
   m_ObjectHideFlags: 0

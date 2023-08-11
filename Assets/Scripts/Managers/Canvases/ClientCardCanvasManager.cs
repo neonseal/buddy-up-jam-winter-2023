@@ -29,7 +29,7 @@ public class ClientCardCanvasManager : MonoBehaviour {
         DOTween.Init();
         Workspace.OnClientPlushieloaded += HandlePlushieLoadEvent;
         sendThankYouBtn.onClick.AddListener(SendClientCard);
-        ClientCard.OnClientCardClick += MoveClientCardToBoard;
+        ClientCard.OnClientCardInitialClick += MoveClientCardToBoard;
 
         cardCollection = new List<ClientCard>();
     }
@@ -85,6 +85,7 @@ public class ClientCardCanvasManager : MonoBehaviour {
 
             // Update board and last values
             clientCardContainer.UpdateCardStack();
+            clientCard.MovedToBoard = true;
             lastCardPosition = newCardPosition;
             lastCardZRotation = newCardZRotation;
         }
