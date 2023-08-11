@@ -1,4 +1,6 @@
 using UnityEngine;
+using MendingGames;
+using Scriptables.DamageInstructions;
 
 public class PlushieDamageSM : BaseStateMachine {
     // State of plushie damage as a small rip
@@ -26,19 +28,19 @@ public class PlushieDamageSM : BaseStateMachine {
 
 
     // Initialize fields on load
-    private void Awake() {
+    public void Awake() {
         InitializeFields();
     }
 
     // Initialize references before first frame update
-    /*private void Start() {
-        base.InitializeState();
-        InitializeReferences();
-    }*/
+    public void Start() {
+        InitializeStateMachine();
+    }
 
     // Initialize fields in this class
     private void InitializeFields() {
         InitializeStates();
+        _plushieDamageGO = GetComponent<PlushieDamageGO>();
     }
 
     // Initialize states in this state machine
@@ -48,11 +50,6 @@ public class PlushieDamageSM : BaseStateMachine {
         wornStuffingState = new WornStuffingState(this);
         missingStuffingState = new MissingStuffingState(this);
         repairFinishState = new RepairFinishState(this);
-    }
-
-    // Initialize reference fields in this class
-    private void InitializeReferences() {
-        //_plushieDamageGO = this.GetComponent<PlushieDamageGO>();
     }
 
     // Assign blank grid state as the initial state
@@ -65,5 +62,17 @@ public class PlushieDamageSM : BaseStateMachine {
             // This error means the plushie damage game object associated with this state machine has initialPlushieDamageType set to null
             default: throw new System.Exception("Invalid initial plushie dmamage of type " + _plushieDamageGO.GetInitialDamageType().ToString());
         }
+    }
+
+    internal void SubscribeToMendingGame() {
+        MendingGameManager.OnMendingGameComplete += ProgressMendingSteps;
+    }
+
+    internal void UnsubscribeToMendingGame() {
+        MendingGameManager.OnMendingGameComplete -= ProgressMendingSteps;
+    }
+
+    private void ProgressMendingSteps(DamageInstructrionsScriptableObject[] damageInstructions) {
+        ((PlushieDamageBaseState) currentState).CompleteRepair();
     }
 }
