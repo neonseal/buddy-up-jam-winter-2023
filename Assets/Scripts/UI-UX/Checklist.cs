@@ -3,6 +3,8 @@ using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using MendingGames;
+using Scriptables.DamageInstructions;
 
 namespace PlayArea {
     public class Checklist : MonoBehaviour {
@@ -29,6 +31,7 @@ namespace PlayArea {
 
             // Setup checklist UI interaction events
             notepadBtn.onClick.AddListener(HandleChecklistClick);
+            MendingGameManager.OnMendingGameComplete += HandleCompletedMendingGameEvent;
         }
 
         private void Update() {
@@ -82,6 +85,14 @@ namespace PlayArea {
             if (!focusedChecklist.activeInHierarchy) {
                 ShowHideChecklist(true);
             }
+        }
+
+        private void HandleCompletedMendingGameEvent(DamageInstructrionsScriptableObject[] damageInstructions) {
+            // Check initial damage type for instructions
+            // Find corresponding checklist line item by type
+            // If damage set contains more than one item, check all items for completion
+            // If all items in set complete, check line item on checklist
+            // If all line items checked, enable "Complete Repair" button
         }
     }
 }

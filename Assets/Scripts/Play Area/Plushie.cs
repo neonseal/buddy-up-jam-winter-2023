@@ -17,7 +17,7 @@ public class Plushie : MonoBehaviour {
 
     [Header("Issue and Resolution Elements")]
     public ClientDialogueSet IssueDialogue;
-    //[SerializeField] private ClientCard resolutionClientCard;
+    [SerializeField] private ClientCard resolutionClientCard;
 
     [Header("Tutorial Dialogue")]
     public bool HasTutorialDialogue;
@@ -31,4 +31,5 @@ public class Plushie : MonoBehaviour {
     public int LineSpacingValue { get => lineSpacingValue; }
     public int CharacterSpacingValue { get => characterSpacingValue; }
     public int WordSpacingValue { get => wordSpacingValue; }
+    public ClientCard ResolutionClientCard { get => resolutionClientCard; }
 }
