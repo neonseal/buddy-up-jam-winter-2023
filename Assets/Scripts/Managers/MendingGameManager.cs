@@ -299,6 +299,7 @@ namespace MendingGames {
 
                     }
                 } else {
+                    Debug.Log("RESET LINE");
                     ResetCurrentLine(triggeredNode);
                 }
             }
@@ -308,14 +309,19 @@ namespace MendingGames {
                 tutorialManager.ContinueTutorialSequence();
             }
         }
+
         private bool CheckLineCompletion(Node node) {
             // Check if enough dashes have been triggered to enable next line
-            int dashTriggeredCount = dashSets[this.activeNodeIndex - 1].Where(d => d.Triggered).Count();
-            return dashTriggeredCount >= this.lineCompleteThreshold;
+            List<Dash> dashSet = dashSets[this.activeNodeIndex - 1];
+            int dashTriggeredCount = dashSet.Where(d => d.Triggered).Count();
+            return (dashTriggeredCount / dashSet.Count) >= this.lineCompleteThreshold;
 
         }
 
         private void EnableNextLine(Node node) {
+            Debug.Log("ENABLE NEXT LINE");
+            node.TargetNode = false;
+
             // Activate corresponding line of dashes
             foreach (Dash dash in dashSets[this.activeNodeIndex]) {
                 dash.EnableDash(this.damageInstructions[damageRepairStepIndex].RequiredToolType);
@@ -326,6 +332,8 @@ namespace MendingGames {
         }
 
         private void ResetCurrentLine(Node node) {
+            node.TargetNode = true;
+
             // Reset current line and triggered node to try again
             foreach (Dash dash in dashSets[this.activeNodeIndex]) {
                 dash.ResetDash(true);
@@ -346,7 +354,7 @@ namespace MendingGames {
                     node.SetColor(Color.blue);
                 }
                 node.SetToolType(damageInstructions[damageRepairStepIndex].RequiredToolType);
-
+                node.gameObject.name = $"TargetNode_{i}";
                 this.nodes.Add(node);
             }
         }
