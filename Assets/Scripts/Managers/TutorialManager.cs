@@ -7,6 +7,7 @@ namespace Dialogue {
         private bool tutorialActive;
 
         [Header("Tutorial UI Elements")]
+        [SerializeField] private GameObject parentObject;
         [SerializeField] private TutorialDialogueBox tutorialDialoguePrefab;
         [SerializeField] private GameObject tutorialArrowPrefab;
         [SerializeField] private Checklist checklist;
@@ -89,8 +90,7 @@ namespace Dialogue {
 
             // Create or update the tutorial dialogue box
             if (activeTutorialDialogue == null) {
-                activeTutorialDialogue = Instantiate(tutorialDialoguePrefab);
-                activeTutorialDialogue.transform.SetParent(this.transform);
+                activeTutorialDialogue = Instantiate(tutorialDialoguePrefab, this.parentObject.transform, false);
             }
 
             // If there is a required continue action (i.e. ring bell, pickup tool), hide continue button
@@ -108,8 +108,7 @@ namespace Dialogue {
                 int arrowZRotation = currentTutorialStep.arrowZRotationValue;
 
                 if (activeTutorialArrow == null) {
-                    activeTutorialArrow = Instantiate(tutorialArrowPrefab);
-                    activeTutorialArrow.transform.SetParent(this.transform);
+                    activeTutorialArrow = Instantiate(tutorialArrowPrefab, this.parentObject.transform, false);
                 }
 
                 activeTutorialArrow.transform.localPosition = arrowPosition;

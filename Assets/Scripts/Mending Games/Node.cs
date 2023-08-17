@@ -8,6 +8,7 @@ namespace MendingGames {
     public class Node : MonoBehaviour {
         private ToolType requiredToolType;
         private SpriteRenderer spriteRenderer;
+        private bool animationPlaying;
 
         [Header("Reset Tweening Elements")]
         [SerializeField] float duration;
@@ -43,19 +44,14 @@ namespace MendingGames {
             }
         }
 
-        private void OnMouseDown() {
-            if (this.TargetNode &&
-                !Triggered &&
-                CanvasManager.CurrentToolType == requiredToolType) {
+        public void OnMouseDown() {
+            if (TargetNode) {//&& CanvasManager.CurrentToolType == requiredToolType) {
                 ActivateOrDeactivateNode(true);
             }
         }
 
-        private void OnMouseOver() {
-            if (Input.GetMouseButton(0) &&
-                this.TargetNode &&
-                !Triggered &&
-                CanvasManager.CurrentToolType == requiredToolType) {
+        public void OnMouseOver() {
+            if (!Triggered && Input.GetMouseButton(0) && TargetNode) {// && CanvasManager.CurrentToolType == requiredToolType ) {
                 ActivateOrDeactivateNode(true);
             }
         }
@@ -65,17 +61,26 @@ namespace MendingGames {
             if (Triggered) {
                 spriteRenderer.color = Color.green;
                 OnNodeTriggered?.Invoke(this);
-                Sequence sequence = DOTween.Sequence();
-                sequence.Append(this.gameObject.transform.DOScale(.15f, 0.25f));
-                sequence.SetLoops(2, LoopType.Yoyo);
+                if (!animationPlaying) {
+                    animationPlaying = true;
+                    Sequence sequence = DOTween.Sequence();
+                    sequence.Append(this.gameObject.transform.DOScale(.15f, 0.25f));
+                    sequence.SetLoops(2, LoopType.Yoyo);
+                    animationPlaying = false;
+                }
+
                 this.Triggered = Triggered;
                 this.ActiveNode = true;
             } else {
                 // Or release control of target node if mouse button is released
+                this.Triggered = false;
                 spriteRenderer.color = Color.blue;
                 OnActiveNodeReleased?.Invoke(this);
-                this.gameObject.transform.DOShakePosition(duration, strength, vibrato, randomness, snapping, fadeOut);
-                this.Triggered = Triggered;
+                if (!animationPlaying) {
+                    animationPlaying = true;
+                    this.gameObject.transform.DOShakePosition(duration, strength, vibrato, randomness, snapping, fadeOut);
+                    animationPlaying = false;
+                }
             }
         }
 

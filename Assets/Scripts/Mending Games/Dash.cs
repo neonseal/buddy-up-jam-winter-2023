@@ -17,7 +17,7 @@ namespace MendingGames {
         [SerializeField] bool fadeOut;
 
         public bool Enabled { get; private set; }
-        public bool Triggered { get; private set; }
+        [SerializeField] public bool Triggered { get; private set; }
         public Node ParentNode { get; set; }
         public int DashSetIndex { get; set; }
         public PlayAreaCanvasManager CanvasManager { get; set; }
@@ -29,6 +29,11 @@ namespace MendingGames {
 
             Enabled = false;
             Triggered = false;
+        }
+
+        public void TriggerDash() {
+            spriteRenderer.color = Color.green;
+            Triggered = true;
         }
 
         public void EnableDash(ToolType requiredToolType) {
@@ -44,16 +49,14 @@ namespace MendingGames {
             this.gameObject.transform.DOShakePosition(duration, strength, vibrato, randomness, snapping, fadeOut);
         }
 
-        private void OnMouseOver() {
-
+        public void OnMouseOver() {
             if (Input.GetMouseButton(0) &&
                 Enabled &&
                 !Triggered &&
-                ParentNode.Triggered &&
-                CanvasManager.CurrentToolType == requiredToolType
+                ParentNode.Triggered
+            //CanvasManager.CurrentToolType == requiredToolType
             ) {
-                spriteRenderer.color = Color.green;
-                Triggered = true;
+                TriggerDash();
                 Sequence sequence = DOTween.Sequence();
                 sequence.Append(this.gameObject.transform.DOScale(.15f, 0.25f));
                 sequence.SetLoops(2, LoopType.Yoyo);

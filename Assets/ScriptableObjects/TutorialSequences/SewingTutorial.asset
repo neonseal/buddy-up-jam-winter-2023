@@ -25,39 +25,39 @@ MonoBehaviour:
   - stepText: Click on the damaged area to apply the magnifying lens.
     requiredToolType: 0
     requiredContinueAction: 2
-    tutorialDialogueLocation: {x: 180, y: 245}
+    tutorialDialogueLocation: {x: 180, y: 265}
     requiresArrow: 1
-    tutorialArrowLocation: {x: -125, y: 95}
+    tutorialArrowLocation: {x: -180, y: 95}
     arrowZRotationValue: 40
   - stepText: Click the needle from your tools to pick it up.
     requiredToolType: 0
     requiredContinueAction: 3
-    tutorialDialogueLocation: {x: -290, y: -15}
+    tutorialDialogueLocation: {x: -425, y: -30}
     requiresArrow: 1
-    tutorialArrowLocation: {x: -580, y: -180}
+    tutorialArrowLocation: {x: -775, y: -215}
     arrowZRotationValue: 55
   - stepText: Click and hold the top most X to begin the repair
     requiredToolType: 0
     requiredContinueAction: 5
-    tutorialDialogueLocation: {x: 375, y: 315}
+    tutorialDialogueLocation: {x: 420, y: 315}
     requiresArrow: 1
-    tutorialArrowLocation: {x: 45, y: 200}
+    tutorialArrowLocation: {x: 35, y: 175}
     arrowZRotationValue: 15
   - stepText: "Draw a line between the X\u2019s from top to bottom to pull the thread
       through."
     requiredToolType: 2
     requiredContinueAction: 6
-    tutorialDialogueLocation: {x: -210, y: -300}
+    tutorialDialogueLocation: {x: 290, y: -350}
     requiresArrow: 1
-    tutorialArrowLocation: {x: -100, y: -150}
+    tutorialArrowLocation: {x: -80, y: -185}
     arrowZRotationValue: -45
   - stepText: "Return the needle to the tool roll when you\u2019re done to finish
       the repair. "
     requiredToolType: 0
     requiredContinueAction: 4
-    tutorialDialogueLocation: {x: -290, y: -15}
+    tutorialDialogueLocation: {x: -425, y: -30}
     requiresArrow: 1
-    tutorialArrowLocation: {x: -580, y: -180}
+    tutorialArrowLocation: {x: -775, y: -215}
     arrowZRotationValue: 55
   - stepText: Great! All the repairs are now complete.
     requiredToolType: 0
@@ -70,7 +70,7 @@ MonoBehaviour:
       click \u201CComplete Job\u201D to return the plushie to its owner."
     requiredToolType: 0
     requiredContinueAction: 7
-    tutorialDialogueLocation: {x: 30, y: -160}
+    tutorialDialogueLocation: {x: 135, y: -262}
     requiresArrow: 1
-    tutorialArrowLocation: {x: 340, y: -300}
+    tutorialArrowLocation: {x: 500, y: -425}
     arrowZRotationValue: 140
