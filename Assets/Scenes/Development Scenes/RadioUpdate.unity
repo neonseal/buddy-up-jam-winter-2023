@@ -3512,7 +3512,7 @@ MonoBehaviour:
     - Second line of text
     - Last line of text!
   welcomeTutorialSequence: {fileID: 11400000, guid: 15abfd44b4791c04fa51ad4d314fb26a, type: 2}
-  clientDialogueManager: {fileID: 1626410501}
+  clientDialogueManager: {fileID: 0}
   tutorialManager: {fileID: 1630949053}
 --- !u!114 &525940587
 MonoBehaviour:
