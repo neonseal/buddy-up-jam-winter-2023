@@ -23,6 +23,9 @@ public class Plushie : MonoBehaviour {
     public bool HasTutorialDialogue;
     public TutorialSequenceScriptableObject TutorialSequenceScriptableObject;
 
+    [Header("Plushie sprites")]
+    public Sprite repairedPlushieSprite;
+
     public TMPro.TMP_FontAsset ClientFont { get => clientFont; }
     public int NameFontSize { get => nameFontSize; }
     public int DialogueFontSize { get => dialogueFontSize; }

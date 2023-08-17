@@ -60,9 +60,10 @@ public class PlushieDamageGO : MonoBehaviour {
         return lineItemDescription;
     }
 
-    private void _finishRepairing() {
-        foreach (GameObject gO in this.plushieDamagesDeletedOnCompletion) {
+    internal void FinishRepair() {
+        foreach (GameObject gO in plushieDamagesDeletedOnCompletion) {
             Destroy(gO);
         }
+        Destroy(this.gameObject);
     }
 }

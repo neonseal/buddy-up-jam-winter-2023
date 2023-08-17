@@ -68,8 +68,11 @@ public class PlushieDamageSM : BaseStateMachine {
         MendingGameManager.OnMendingGameComplete += ProgressMendingSteps;
     }
 
-    internal void UnsubscribeToMendingGame() {
+
+
+    internal void FinishRepair() {
         MendingGameManager.OnMendingGameComplete -= ProgressMendingSteps;
+        _plushieDamageGO.FinishRepair();
     }
 
     private void ProgressMendingSteps(DamageInstructrionsScriptableObject[] damageInstructions) {
