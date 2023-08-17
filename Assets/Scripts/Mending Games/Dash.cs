@@ -31,6 +31,11 @@ namespace MendingGames {
             Triggered = false;
         }
 
+        public void TriggerDash() {
+            spriteRenderer.color = Color.green;
+            Triggered = true;
+        }
+
         public void EnableDash(ToolType requiredToolType) {
             spriteRenderer.color = Color.blue;
             this.requiredToolType = requiredToolType;
@@ -45,15 +50,13 @@ namespace MendingGames {
         }
 
         private void OnMouseOver() {
-
             if (Input.GetMouseButton(0) &&
                 Enabled &&
                 !Triggered &&
                 ParentNode.Triggered &&
                 CanvasManager.CurrentToolType == requiredToolType
             ) {
-                spriteRenderer.color = Color.green;
-                Triggered = true;
+                TriggerDash();
                 Sequence sequence = DOTween.Sequence();
                 sequence.Append(this.gameObject.transform.DOScale(.15f, 0.25f));
                 sequence.SetLoops(2, LoopType.Yoyo);
