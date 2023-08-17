@@ -1,5 +1,6 @@
 using DG.Tweening;
 using GameState;
+using MendingGames;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -32,6 +33,8 @@ namespace PlayArea {
 
         /* Public Event Actions */
         public static event Action<Plushie> OnClientPlushieloaded;
+         /* Public Event Actions */
+        public static event Action<Plushie> OnClientPlushieRepairComplete;
 
         private void Awake() {
             InitializeWorkspace();

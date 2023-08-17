@@ -31,7 +31,7 @@ namespace PlayArea {
 
             // Setup checklist UI interaction events
             notepadBtn.onClick.AddListener(HandleChecklistClick);
-            MendingGameManager.OnMendingGameComplete += HandleCompletedMendingGameEvent;
+            MendingGameManager.OnOverallRepairComplete += HandleCompletedMendingGameEvent;
         }
 
         private void Update() {

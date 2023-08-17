@@ -26,7 +26,6 @@ public class PlushieDamageSM : BaseStateMachine {
     // Reference to PlushieDamageGO component
     internal PlushieDamageGO _plushieDamageGO;
 
-
     // Initialize fields on load
     public void Awake() {
         InitializeFields();
@@ -65,13 +64,13 @@ public class PlushieDamageSM : BaseStateMachine {
     }
 
     internal void SubscribeToMendingGame() {
-        MendingGameManager.OnMendingGameComplete += ProgressMendingSteps;
+        MendingGameManager.OnOverallRepairComplete += ProgressMendingSteps;
     }
 
 
 
     internal void FinishRepair() {
-        MendingGameManager.OnMendingGameComplete -= ProgressMendingSteps;
+        MendingGameManager.OnOverallRepairComplete -= ProgressMendingSteps;
         _plushieDamageGO.FinishRepair();
     }
 

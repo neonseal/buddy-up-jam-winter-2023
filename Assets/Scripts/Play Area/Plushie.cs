@@ -1,5 +1,7 @@
 using Dialogue;
 using UnityEngine;
+using MendingGames;
+using Scriptables.DamageInstructions;
 
 public class Plushie : MonoBehaviour {
     [Header("Client Name")]
@@ -24,7 +26,7 @@ public class Plushie : MonoBehaviour {
     public TutorialSequenceScriptableObject TutorialSequenceScriptableObject;
 
     [Header("Plushie sprites")]
-    public Sprite repairedPlushieSprite;
+    [SerializeField] private Sprite repairedPlushieSprite;
 
     public TMPro.TMP_FontAsset ClientFont { get => clientFont; }
     public int NameFontSize { get => nameFontSize; }
@@ -35,4 +37,23 @@ public class Plushie : MonoBehaviour {
     public int CharacterSpacingValue { get => characterSpacingValue; }
     public int WordSpacingValue { get => wordSpacingValue; }
     public ClientCard ResolutionClientCard { get => resolutionClientCard; }
+
+    public void Start() {
+        MendingGameManager.OnOverallRepairComplete += SwitchToRepairedSprite;
+        Debug.Log(this.gameObject.transform.childCount);
+    }
+
+    private void SwitchToRepairedSprite(DamageInstructrionsScriptableObject[] damageInstructions) {
+        Debug.Log(this.gameObject.transform.childCount);
+        if (!HasDamageChild()) {
+            GetComponent<SpriteRenderer>().sprite = repairedPlushieSprite;
+        }
+    }
+
+    private bool HasDamageChild() {
+        if (this.gameObject.transform.childCount > 0) {
+            return true;
+        }
+        return false;
+    }
 }
