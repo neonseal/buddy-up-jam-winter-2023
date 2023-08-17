@@ -6,9 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Development Scenes/MainScene_BACKUP.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+    path: Assets/Scenes/Development Scenes/ResolutionUpdate.unity
+    guid: 76f1df5d209de6946846b5de028aa8af
   m_configObjects: {}

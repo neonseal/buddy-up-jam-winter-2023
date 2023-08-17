@@ -44,14 +44,14 @@ namespace MendingGames {
             }
         }
 
-        private void OnMouseDown() {
-            if (TargetNode && CanvasManager.CurrentToolType == requiredToolType) {
+        public void OnMouseDown() {
+            if (TargetNode) {//&& CanvasManager.CurrentToolType == requiredToolType) {
                 ActivateOrDeactivateNode(true);
             }
         }
 
-        private void OnMouseOver() {
-            if (!Triggered && Input.GetMouseButton(0) && CanvasManager.CurrentToolType == requiredToolType && TargetNode) {
+        public void OnMouseOver() {
+            if (!Triggered && Input.GetMouseButton(0) && TargetNode) {// && CanvasManager.CurrentToolType == requiredToolType ) {
                 ActivateOrDeactivateNode(true);
             }
         }

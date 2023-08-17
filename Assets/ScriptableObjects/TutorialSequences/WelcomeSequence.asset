@@ -32,7 +32,7 @@ MonoBehaviour:
   - stepText: Ring the bell to welcome your next client and get started!
     requiredToolType: 0
     requiredContinueAction: 1
-    tutorialDialogueLocation: {x: 355, y: 75}
+    tutorialDialogueLocation: {x: 430, y: 0}
     requiresArrow: 1
-    tutorialArrowLocation: {x: 655, y: -85}
+    tutorialArrowLocation: {x: 715, y: -140}
     arrowZRotationValue: 130

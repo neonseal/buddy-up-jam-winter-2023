@@ -119,7 +119,7 @@ MonoBehaviour:
       but this one is special. "
     - Do you think you could take a look?
   resolutionClientCard: {fileID: -8861978948673554049, guid: 2d4dcde84829e1f49be5b0d2ef020b7d, type: 3}
-  HasTutorialDialogue: 0
+  HasTutorialDialogue: 1
   TutorialSequenceScriptableObject: {fileID: 11400000, guid: 8238cfc784570944783cee4ec587f900, type: 2}
 --- !u!1001 &1702269948564423477
 PrefabInstance:
