@@ -13,9 +13,14 @@ public class PlushieDamageGO : MonoBehaviour {
 
     /* Damage life cycle events */
     public static event Action<DamageInstructrionsScriptableObject[]> OnPlushieDamageClicked;
+    public bool DamageRepairComplete { get; private set; }
+
+    private void Awake() {
+        DamageRepairComplete = false;
+    }
 
     public void Start() {
-       InitializeReferences();
+        InitializeReferences();
     }
 
     // Initialize reference fields in this class

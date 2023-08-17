@@ -80,3 +80,6 @@ TagManager:
   - name: MendingGameLayer
     uniqueID: 1412819781
     locked: 0
+  - name: ClientCardLayer
+    uniqueID: 4083220583
+    locked: 0
