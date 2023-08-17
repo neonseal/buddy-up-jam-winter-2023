@@ -7938,7 +7938,7 @@ MonoBehaviour:
   notepadBtn: {fileID: 1538220954}
   completeRepairBtn: {fileID: 1343829110}
   checklistStepPrefab: {fileID: 4255050917543569200, guid: e969a62eb4d5dea4d85d485e187ca7b8, type: 3}
-  tutorialManager: {fileID: 0}
+  tutorialManager: {fileID: 2008474006}
 --- !u!224 &1760024041
 RectTransform:
   m_ObjectHideFlags: 0

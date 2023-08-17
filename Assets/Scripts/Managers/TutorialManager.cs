@@ -91,8 +91,6 @@ namespace Dialogue {
             // Create or update the tutorial dialogue box
             if (activeTutorialDialogue == null) {
                 activeTutorialDialogue = Instantiate(tutorialDialoguePrefab, this.parentObject.transform, false);
-                /*activeTutorialDialogue = Instantiate(tutorialDialoguePrefab);
-                activeTutorialDialogue.transform.SetParent(this.transform);*/
             }
 
             // If there is a required continue action (i.e. ring bell, pickup tool), hide continue button
@@ -111,8 +109,6 @@ namespace Dialogue {
 
                 if (activeTutorialArrow == null) {
                     activeTutorialArrow = Instantiate(tutorialArrowPrefab, this.parentObject.transform, false);
-                    /*activeTutorialArrow = Instantiate(tutorialArrowPrefab);
-                    activeTutorialArrow.transform.SetParent(this.transform);*/
                 }
 
                 activeTutorialArrow.transform.localPosition = arrowPosition;
