@@ -89,7 +89,7 @@ namespace MendingGames {
         [SerializeField] private TutorialManager tutorialManager;
 
         /* Mending Game Events */
-        public static event Action<DamageInstructrionsScriptableObject[]> OnMendingGameComplete;
+        public static event Action OnMendingGameComplete;
         public static event Action<DamageInstructrionsScriptableObject> OnMendingStepComplete;
 
         private void Awake() {
@@ -218,7 +218,7 @@ namespace MendingGames {
                 // Complete mending game and reset
                 magnifyingGlass.transform.DOLocalMove(startingLocation, duration).SetEase(easeType);
                 this.mendingGameInProgress = false;
-                OnMendingGameComplete?.Invoke(this.damageInstructions);
+                OnMendingGameComplete?.Invoke();
             }
 
             // Check if there is a tutorial active that requires a continue action, and continue tutorial

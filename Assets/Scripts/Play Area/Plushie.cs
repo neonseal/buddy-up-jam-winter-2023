@@ -23,6 +23,12 @@ public class Plushie : MonoBehaviour {
     public bool HasTutorialDialogue;
     public TutorialSequenceScriptableObject TutorialSequenceScriptableObject;
 
+    public PlushieDamageGO[] plushieDamageList { get; private set; }
+
+    private void Awake() {
+        plushieDamageList = GetComponentsInChildren<PlushieDamageGO>();
+    }
+
     public TMPro.TMP_FontAsset ClientFont { get => clientFont; }
     public int NameFontSize { get => nameFontSize; }
     public int DialogueFontSize { get => dialogueFontSize; }
@@ -32,4 +38,5 @@ public class Plushie : MonoBehaviour {
     public int CharacterSpacingValue { get => characterSpacingValue; }
     public int WordSpacingValue { get => wordSpacingValue; }
     public ClientCard ResolutionClientCard { get => resolutionClientCard; }
+
 }

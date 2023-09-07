@@ -8,12 +8,11 @@ public class PlushieDamageGO : MonoBehaviour {
     [SerializeField] private DamageInstructrionsScriptableObject[] damageInstructions;
     [SerializeField]
     private List<GameObject> plushieDamagesDeletedOnCompletion;
-
     private PlushieDamageSM plushieDamageSM;
 
     /* Damage life cycle events */
-    public static event Action<DamageInstructrionsScriptableObject[]> OnPlushieDamageClicked;
-    public bool DamageRepairComplete { get; private set; }
+    public static event Action<PlushieDamageGO> OnPlushieDamageClicked;
+    [SerializeField] public bool DamageRepairComplete;
 
     private void Awake() {
         DamageRepairComplete = false;
@@ -32,7 +31,11 @@ public class PlushieDamageGO : MonoBehaviour {
     // Send out event when damage is clicked to 
     public void OnMouseDown() {
         plushieDamageSM.SubscribeToMendingGame();
-        OnPlushieDamageClicked?.Invoke(this.damageInstructions);
+        OnPlushieDamageClicked?.Invoke(this);
+    }
+
+    public DamageInstructrionsScriptableObject[] GetDamageInstructrions() {
+        return this.damageInstructions;
     }
 
     public PlushieDamageType GetInitialDamageType() {

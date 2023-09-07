@@ -1,4 +1,5 @@
 
+using MendingGames;
 using PlayArea;
 using Scriptables.DamageInstructions;
 using System;
@@ -16,10 +17,10 @@ namespace GameState {
 
         /* Public Properties */
         public static Plushie CurrentPlushie { get; private set; }
-
+        public PlushieDamageGO CurrentPlushieDamage { get; private set; }
 
         public static event Action<DamageInstructrionsScriptableObject[]> MendingGameInitiated;
-
+        public static event Action<Plushie> OnPlushieCompleteEvent;
         public PlushieActiveState(GameStateMachine gameManager) {
             this.gameManager = gameManager;
         }
@@ -27,6 +28,7 @@ namespace GameState {
         public override void EnterState() {
             PlushieDamageGO.OnPlushieDamageClicked += HandleDamageClick;
             Workspace.OnClientPlushieloaded += HandlePlushieLoadEvent;
+            MendingGameManager.OnMendingGameComplete += HandleMendingGameCompleteEvent;
         }
 
         public override void UpdateState() {
@@ -39,13 +41,35 @@ namespace GameState {
             PlushieActiveState.CurrentPlushie = null;
         }
 
-        private void HandleDamageClick(DamageInstructrionsScriptableObject[] damageInstructions) {
+        private void HandleDamageClick(PlushieDamageGO plushieDamage) {
+            CurrentPlushieDamage = plushieDamage;
+
             // Send command to start mending repair mini-game
-            MendingGameInitiated?.Invoke(damageInstructions);
+            MendingGameInitiated?.Invoke(plushieDamage.GetDamageInstructrions());
         }
 
         private void HandlePlushieLoadEvent(Plushie plushie) {
             PlushieActiveState.CurrentPlushie = plushie;
+        }
+
+        private void HandleMendingGameCompleteEvent() {
+            CurrentPlushieDamage.DamageRepairComplete = true;
+            // Check count of plushie damage elements
+            PlushieDamageGO[] plushieDamages = CurrentPlushie.plushieDamageList;
+
+            // If only one, throw plushie complete event
+            if (plushieDamages.Length == 1) {
+                PlushieActiveState.OnPlushieCompleteEvent?.Invoke(CurrentPlushie);
+            } else {
+                // Else, check all of the plushie's damage elements for completeness
+                foreach (PlushieDamageGO p in plushieDamages) {
+                    if (!p.DamageRepairComplete) {
+                        return;
+                    }
+                }
+                // If DamageRepairComplete is true for all plushie damage elements, invoke event
+                PlushieActiveState.OnPlushieCompleteEvent?.Invoke(CurrentPlushie);
+            }
         }
     }
 }

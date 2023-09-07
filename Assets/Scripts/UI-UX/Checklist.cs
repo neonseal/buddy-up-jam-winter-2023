@@ -1,10 +1,9 @@
 using Dialogue;
+using GameState;
 using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using MendingGames;
-using Scriptables.DamageInstructions;
 
 namespace PlayArea {
     public class Checklist : MonoBehaviour {
@@ -31,7 +30,7 @@ namespace PlayArea {
 
             // Setup checklist UI interaction events
             notepadBtn.onClick.AddListener(HandleChecklistClick);
-            MendingGameManager.OnMendingGameComplete += HandleCompletedMendingGameEvent;
+            PlushieActiveState.OnPlushieCompleteEvent += EnableSendOff;
         }
 
         private void Update() {
@@ -41,7 +40,7 @@ namespace PlayArea {
             if (
                 Input.GetMouseButtonDown(0) &&
                 focusedChecklist.activeInHierarchy &&
-                (hit.collider == null || hit.collider.name != "Checklist") &&
+                (hit.collider == null || hit.collider.tag != "Checklist") &&
                 // If a tutorial is active, we don't want to hide the checklist prematurely
                 !tutorialManager.TutorialActive
             ) {
@@ -87,12 +86,9 @@ namespace PlayArea {
             }
         }
 
-        private void HandleCompletedMendingGameEvent(DamageInstructrionsScriptableObject[] damageInstructions) {
-            // Check initial damage type for instructions
-            // Find corresponding checklist line item by type
-            // If damage set contains more than one item, check all items for completion
-            // If all items in set complete, check line item on checklist
-            // If all line items checked, enable "Complete Repair" button
+        private void EnableSendOff(Plushie plushie) {
+            completeRepairBtn.interactable = true;
+            ShowHideChecklist(true);
         }
     }
 }
