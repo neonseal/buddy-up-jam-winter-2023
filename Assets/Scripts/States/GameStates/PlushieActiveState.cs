@@ -1,8 +1,8 @@
 
 using MendingGames;
 using PlayArea;
-using Scriptables.DamageInstructions;
 using System;
+using System.Linq;
 
 /// <summary>
 /// Plushie Active State
@@ -19,7 +19,7 @@ namespace GameState {
         public static Plushie CurrentPlushie { get; private set; }
         public PlushieDamageGO CurrentPlushieDamage { get; private set; }
 
-        public static event Action<DamageInstructrionsScriptableObject[]> MendingGameInitiated;
+        public static event Action<PlushieDamageGO> MendingGameInitiated;
         public static event Action<Plushie> OnPlushieCompleteEvent;
         public PlushieActiveState(GameStateMachine gameManager) {
             this.gameManager = gameManager;
@@ -45,17 +45,21 @@ namespace GameState {
             CurrentPlushieDamage = plushieDamage;
 
             // Send command to start mending repair mini-game
-            MendingGameInitiated?.Invoke(plushieDamage.GetDamageInstructrions());
+            MendingGameInitiated?.Invoke(plushieDamage);
         }
 
         private void HandlePlushieLoadEvent(Plushie plushie) {
             PlushieActiveState.CurrentPlushie = plushie;
         }
 
-        private void HandleMendingGameCompleteEvent() {
-            CurrentPlushieDamage.DamageRepairComplete = true;
+        private void HandleMendingGameCompleteEvent(PlushieDamageGO plushieDamage) {
+            PlushieDamageGO[] damageList = CurrentPlushie.PlushieDamageList;
+            PlushieDamageGO damage = damageList.Where(d => d == plushieDamage) as PlushieDamageGO;
+            damage.DamageRepairComplete = true;
+
             // Check count of plushie damage elements
-            PlushieDamageGO[] plushieDamages = CurrentPlushie.plushieDamageList;
+            PlushieDamageGO[] plushieDamages = CurrentPlushie.PlushieDamageList;
+
 
             // If only one, throw plushie complete event
             if (plushieDamages.Length == 1) {

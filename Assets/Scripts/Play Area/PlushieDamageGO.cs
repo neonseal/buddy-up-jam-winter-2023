@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlushieDamageGO : MonoBehaviour {
     // Initial damage type of the plushie damage
+    [SerializeField] public PlushieDamageType DamageType;
     [SerializeField] private DamageInstructrionsScriptableObject[] damageInstructions;
     [SerializeField]
     private List<GameObject> plushieDamagesDeletedOnCompletion;
@@ -39,7 +40,7 @@ public class PlushieDamageGO : MonoBehaviour {
     }
 
     public PlushieDamageType GetInitialDamageType() {
-        return this.damageInstructions[0].PlushieDamageType;
+        return this.DamageType;
     }
 
     public string GenerateChecklistLineItem(int count) {

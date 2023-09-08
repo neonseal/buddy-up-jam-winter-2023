@@ -1,6 +1,8 @@
 using Dialogue;
 using GameState;
+using MendingGames;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +16,7 @@ namespace PlayArea {
         [SerializeField] private Button notepadBtn;
         [SerializeField] private Button completeRepairBtn;
         [SerializeField] private ChecklistLineItem checklistStepPrefab;
+        private List<ChecklistLineItem> checklistLineItems;
 
         [Header("Dialogue/Tutorial Elements")]
         [SerializeField] private TutorialManager tutorialManager;
@@ -25,11 +28,12 @@ namespace PlayArea {
             // Buttons start disabled => Enabled during play states
             notepadBtn.interactable = false;
             completeRepairBtn.interactable = false;
-
+            checklistLineItems = new List<ChecklistLineItem>();
             checklistLineItemCount = 0;
 
             // Setup checklist UI interaction events
             notepadBtn.onClick.AddListener(HandleChecklistClick);
+            MendingGameManager.OnMendingGameComplete += HandleMendingGameCompleteEvent;
             PlushieActiveState.OnPlushieCompleteEvent += EnableSendOff;
         }
 
@@ -68,7 +72,7 @@ namespace PlayArea {
 
             // Count up each type of damage present on plushie
             foreach (PlushieDamageType damageType in Enum.GetValues(typeof(PlushieDamageType))) {
-                PlushieDamageGO[] subset = plushieDamages.Where(d => d.GetInitialDamageType() == damageType).ToArray();
+                PlushieDamageGO[] subset = plushieDamages.Where(d => d.DamageType == damageType).ToArray();
 
                 if (subset.Length > 0) {
                     ChecklistLineItem checklistLineItem = Instantiate(checklistStepPrefab, new Vector3(0, 0, 0), Quaternion.identity);
@@ -76,6 +80,7 @@ namespace PlayArea {
 
                     string lineItemText = subset[0].GenerateChecklistLineItem(subset.Length);
                     checklistLineItem.SetParameters(lineItemText, subset);
+                    checklistLineItems.Append(checklistLineItem);
                 }
             }
         }
@@ -83,6 +88,21 @@ namespace PlayArea {
         private void HandleChecklistClick() {
             if (!focusedChecklist.activeInHierarchy) {
                 ShowHideChecklist(true);
+            }
+        }
+
+        private void HandleMendingGameCompleteEvent(PlushieDamageGO plushieDamage) {
+            // Get damage type
+            PlushieDamageType damageType = plushieDamage.DamageType;
+            // Check all other similar damage types on plushie
+            PlushieDamageGO[] damageList = PlushieActiveState.CurrentPlushie.PlushieDamageList;
+            PlushieDamageGO[] matchingDamageList = damageList.Where(d => d.DamageType == damageType).ToArray();
+            int completedCount = matchingDamageList.Count(d => d.DamageRepairComplete);
+
+            // If all similar damage types are complete, check box
+            if (completedCount == matchingDamageList.Count()) {
+                ChecklistLineItem lineItem = checklistLineItems.Find(lineItem => lineItem.PlushieDamageType == damageType);
+                lineItem.CompleteLineItem();
             }
         }
 

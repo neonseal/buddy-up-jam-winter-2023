@@ -71,7 +71,7 @@ public class PlushieDamageSM : BaseStateMachine {
         MendingGameManager.OnMendingGameComplete -= ProgressMendingSteps;
     }
 
-    private void ProgressMendingSteps() {
+    private void ProgressMendingSteps(PlushieDamageGO plushieDamage) {
         ((PlushieDamageBaseState)currentState).CompleteRepair();
     }
 }

@@ -23,10 +23,10 @@ public class Plushie : MonoBehaviour {
     public bool HasTutorialDialogue;
     public TutorialSequenceScriptableObject TutorialSequenceScriptableObject;
 
-    public PlushieDamageGO[] plushieDamageList { get; private set; }
+    public PlushieDamageGO[] PlushieDamageList { get; private set; }
 
     private void Awake() {
-        plushieDamageList = GetComponentsInChildren<PlushieDamageGO>();
+        PlushieDamageList = GetComponentsInChildren<PlushieDamageGO>();
     }
 
     public TMPro.TMP_FontAsset ClientFont { get => clientFont; }

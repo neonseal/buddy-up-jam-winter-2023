@@ -30,6 +30,7 @@ namespace MendingGames {
 
     public class MendingGameManager : MonoBehaviour {
         [Header("High-level Status/Progress Elements")]
+        private PlushieDamageGO plushieDamage;
         private DamageInstructrionsScriptableObject[] damageInstructions;
         private DamageInstructrionsScriptableObject instructionStep;
         private int damageRepairStepIndex;
@@ -89,7 +90,7 @@ namespace MendingGames {
         [SerializeField] private TutorialManager tutorialManager;
 
         /* Mending Game Events */
-        public static event Action OnMendingGameComplete;
+        public static event Action<PlushieDamageGO> OnMendingGameComplete;
         public static event Action<DamageInstructrionsScriptableObject> OnMendingStepComplete;
 
         private void Awake() {
@@ -173,26 +174,21 @@ namespace MendingGames {
         /* ----------------------------------------------------------- */
         // Primary function invoked by the Mending Game Manager, responsible for parsing the 
         // damage instructions and rendering the appropriate game to the lens
-        public void GenerateMendingGame(DamageInstructrionsScriptableObject[] damageInstructions) {
+        public void GenerateMendingGame(PlushieDamageGO plushieDamage) {
             mendingGameInProgress = true;
-            this.damageInstructions = damageInstructions;
+            this.plushieDamage = plushieDamage;
+            this.damageInstructions = plushieDamage.GetDamageInstructrions();
             this.damageRepairStepIndex++;
 
             instructionStep = this.damageInstructions[damageRepairStepIndex];
 
             // Check first step of damage instructions to determine starting damage type
-            switch (damageInstructions[damageRepairStepIndex].PlushieDamageType) {
-                // TODO: Change to switch of MendingGameType (May need to add to DamageInstruction Scriptable)
-                case PlushieDamageType.SmallRip:
+            switch (damageInstructions[damageRepairStepIndex].MendingGameType) {
+                case MendingGameType.Sewing:
+                case MendingGameType.Cutting:
                     GenerateSewingOrCuttingGame();
                     break;
-                case PlushieDamageType.LargeRip:
-                    GenerateSewingOrCuttingGame();
-                    break;
-                case PlushieDamageType.WornStuffing:
-                    GenerateSewingOrCuttingGame();
-                    break;
-                case PlushieDamageType.MissingStuffing:
+                case MendingGameType.Stuffing:
                     this.requiredToolType = ToolType.Stuffing;
                     GenerateStuffingGame();
                     break;
@@ -210,15 +206,14 @@ namespace MendingGames {
             // Check if there are more steps to the repair process
             if (this.damageRepairStepIndex < this.damageInstructions.Count() - 1) {
                 // Fire step complete event 
-                // TODO: Add listener for this event on the ChecklistManager
                 OnMendingStepComplete?.Invoke(this.damageInstructions[this.damageRepairStepIndex]);
                 // Start next mending game step
-                GenerateMendingGame(this.damageInstructions);
+                GenerateMendingGame(this.plushieDamage);
             } else {
                 // Complete mending game and reset
                 magnifyingGlass.transform.DOLocalMove(startingLocation, duration).SetEase(easeType);
                 this.mendingGameInProgress = false;
-                OnMendingGameComplete?.Invoke();
+                OnMendingGameComplete?.Invoke(this.plushieDamage);
             }
 
             // Check if there is a tutorial active that requires a continue action, and continue tutorial
