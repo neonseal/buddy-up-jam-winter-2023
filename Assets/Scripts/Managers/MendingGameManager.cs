@@ -213,6 +213,7 @@ namespace MendingGames {
                 // Complete mending game and reset
                 magnifyingGlass.transform.DOLocalMove(startingLocation, duration).SetEase(easeType);
                 this.mendingGameInProgress = false;
+                OnMendingStepComplete?.Invoke(this.damageInstructions[this.damageRepairStepIndex]);
                 OnMendingGameComplete?.Invoke(this.plushieDamage);
             }
 

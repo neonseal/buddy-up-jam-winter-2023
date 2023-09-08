@@ -1,6 +1,5 @@
 using Dialogue;
 using GameState;
-using MendingGames;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +32,7 @@ namespace PlayArea {
 
             // Setup checklist UI interaction events
             notepadBtn.onClick.AddListener(HandleChecklistClick);
-            MendingGameManager.OnMendingGameComplete += HandleMendingGameCompleteEvent;
+            PlushieDamageGO.OnPlushieDamageComplete += HandleDamageCompleteEvent;
             PlushieActiveState.OnPlushieCompleteEvent += EnableSendOff;
         }
 
@@ -80,7 +79,7 @@ namespace PlayArea {
 
                     string lineItemText = subset[0].GenerateChecklistLineItem(subset.Length);
                     checklistLineItem.SetParameters(lineItemText, subset);
-                    checklistLineItems.Append(checklistLineItem);
+                    checklistLineItems.Add(checklistLineItem);
                 }
             }
         }
@@ -91,7 +90,7 @@ namespace PlayArea {
             }
         }
 
-        private void HandleMendingGameCompleteEvent(PlushieDamageGO plushieDamage) {
+        private void HandleDamageCompleteEvent(PlushieDamageGO plushieDamage) {
             // Get damage type
             PlushieDamageType damageType = plushieDamage.DamageType;
             // Check all other similar damage types on plushie

@@ -13,6 +13,8 @@ public class PlushieDamageGO : MonoBehaviour {
 
     /* Damage life cycle events */
     public static event Action<PlushieDamageGO> OnPlushieDamageClicked;
+    public static event Action<PlushieDamageGO> OnPlushieDamageComplete;
+
     [SerializeField] public bool DamageRepairComplete;
 
     private void Awake() {
@@ -32,6 +34,7 @@ public class PlushieDamageGO : MonoBehaviour {
     // Send out event when damage is clicked to 
     public void OnMouseDown() {
         plushieDamageSM.SubscribeToMendingGame();
+        PlushieDamageSM.OnCompleteRepair += HandleCompleteRepairEvent;
         OnPlushieDamageClicked?.Invoke(this);
     }
 
@@ -62,6 +65,13 @@ public class PlushieDamageGO : MonoBehaviour {
         }
 
         return lineItemDescription;
+    }
+
+    private void HandleCompleteRepairEvent() {
+        this.DamageRepairComplete = true;
+        plushieDamageSM.UnsubscribeToMendingGame();
+        PlushieDamageSM.OnCompleteRepair -= HandleCompleteRepairEvent;
+        OnPlushieDamageComplete?.Invoke(this);
     }
 
     private void _finishRepairing() {

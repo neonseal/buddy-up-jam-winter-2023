@@ -2,7 +2,6 @@
 using MendingGames;
 using PlayArea;
 using System;
-using System.Linq;
 
 /// <summary>
 /// Plushie Active State
@@ -53,10 +52,6 @@ namespace GameState {
         }
 
         private void HandleMendingGameCompleteEvent(PlushieDamageGO plushieDamage) {
-            PlushieDamageGO[] damageList = CurrentPlushie.PlushieDamageList;
-            PlushieDamageGO damage = damageList.Where(d => d == plushieDamage) as PlushieDamageGO;
-            damage.DamageRepairComplete = true;
-
             // Check count of plushie damage elements
             PlushieDamageGO[] plushieDamages = CurrentPlushie.PlushieDamageList;
 
