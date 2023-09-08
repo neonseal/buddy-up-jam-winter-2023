@@ -39,6 +39,7 @@ namespace GameState {
         }
 
         public void SwitchGameState(GameState newState) {
+            Debug.Log("SWITCH");
             // Set new state
             currentState = newState;
             currentState.EnterState();

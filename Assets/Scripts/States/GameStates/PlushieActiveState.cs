@@ -28,6 +28,7 @@ namespace GameState {
             PlushieDamageGO.OnPlushieDamageClicked += HandleDamageClick;
             Workspace.OnClientPlushieloaded += HandlePlushieLoadEvent;
             MendingGameManager.OnMendingGameComplete += HandleMendingGameCompleteEvent;
+            Plushie.OnPlushieComplete += FinishPlushieState;
         }
 
         public override void UpdateState() {
@@ -37,7 +38,12 @@ namespace GameState {
         public override void ExitState() {
             PlushieDamageGO.OnPlushieDamageClicked -= HandleDamageClick;
             Workspace.OnClientPlushieloaded -= HandlePlushieLoadEvent;
+            MendingGameManager.OnMendingGameComplete -= HandleMendingGameCompleteEvent;
             PlushieActiveState.CurrentPlushie = null;
+        }
+
+        public void FinishPlushieState() {
+            this.gameManager.SwitchGameState(this.gameManager.WorkspaceEmptyState);
         }
 
         private void HandleDamageClick(PlushieDamageGO plushieDamage) {

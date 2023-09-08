@@ -23,6 +23,7 @@ namespace PlayArea {
         [Header("Checklist Status Elements")]
         private int checklistLineItemCount;
 
+
         private void Awake() {
             // Buttons start disabled => Enabled during play states
             notepadBtn.interactable = false;
@@ -32,6 +33,7 @@ namespace PlayArea {
 
             // Setup checklist UI interaction events
             notepadBtn.onClick.AddListener(HandleChecklistClick);
+            completeRepairBtn.onClick.AddListener(SendOffPlushie);
             PlushieDamageGO.OnPlushieDamageComplete += HandleDamageCompleteEvent;
             PlushieActiveState.OnPlushieCompleteEvent += EnableSendOff;
         }
@@ -108,6 +110,10 @@ namespace PlayArea {
         private void EnableSendOff(Plushie plushie) {
             completeRepairBtn.interactable = true;
             ShowHideChecklist(true);
+        }
+
+        private void SendOffPlushie() {
+            PlushieActiveState.CurrentPlushie.SendOffPlushie();
         }
     }
 }
