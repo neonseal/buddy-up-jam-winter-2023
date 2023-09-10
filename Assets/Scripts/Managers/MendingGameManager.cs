@@ -226,8 +226,7 @@ namespace MendingGames {
             }
         }
 
-        private IEnumerator
-            ClearGameRoutine() {
+        private IEnumerator ClearGameRoutine() {
             yield return new WaitForSeconds(1f);
             foreach (var dashSet in dashSets) {
                 foreach (Dash dash in dashSet) {

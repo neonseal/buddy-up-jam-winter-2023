@@ -75,7 +75,6 @@ public class PlushieDamageGO : MonoBehaviour {
         plushieDamageSM.UnsubscribeToMendingGame();
         PlushieDamageSM.OnCompleteRepair -= HandleCompleteRepairEvent;
         OnPlushieDamageComplete?.Invoke(this);
-
     }
 
     private void _finishRepairing() {

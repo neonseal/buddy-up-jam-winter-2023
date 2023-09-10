@@ -12,7 +12,8 @@ namespace Dialogue {
         DropTool,
         StartRepair,
         CompleteRepair,
-        CompleteJob
+        CompleteJob,
+        SelectThankYou
     }
 
     [System.Serializable]
@@ -20,6 +21,7 @@ namespace Dialogue {
         [SerializeField, TextArea(3, 10)] public string stepText;
         [SerializeField] public ToolType requiredToolType;
         [SerializeField] public TutorialActionRequiredContinueType requiredContinueAction;
+        [SerializeField, Range(0, 10)] public int timer;
 
         [SerializeField] public Vector2 tutorialDialogueLocation;
         [SerializeField] public bool requiresArrow;
