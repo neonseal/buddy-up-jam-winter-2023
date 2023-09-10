@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 668989213637585115}
   - component: {fileID: 3932967621435437430}
-  - component: {fileID: 702459725349806567}
+  - component: {fileID: 4053477579820682806}
   m_Layer: 0
-  m_Name: Kalani
+  m_Name: Javier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2561925388067083303}
+  - {fileID: 2213960393703891742}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 675928311
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 30733887b7fb1614fa63aac613e81693, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bbcdb93bfd16183418d39f4763f07038, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &702459725349806567
+--- !u!114 &4053477579820682806
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f36ecf5859deb74a8f618f4ca8bac17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clientName: Kalani
+  clientName: Javier
   clientFont: {fileID: 11400000, guid: 96ccb3f7823cb054dab436d699160ba1, type: 2}
   nameFontSize: 40
   dialogueFontSize: 32
@@ -107,7 +107,7 @@ MonoBehaviour:
   lineSpacingValue: 0
   characterSpacingValue: 0
   wordSpacingValue: 0
-  _repairedPlushieSprite: {fileID: 21300000, guid: 30733887b7fb1614fa63aac613e81693, type: 3}
+  _repairedPlushieSprite: {fileID: 21300000, guid: b213de11068798245a93d177fecb20c9, type: 3}
   IssueDialogue:
     name: Reima & Remy
     sentences:
@@ -117,11 +117,11 @@ MonoBehaviour:
       plushies.  Usually it wouldn\u2019t matter, we could just buy a replacement,
       but this one is special. "
     - Do you think you could take a look?
-  resolutionClientCard: {fileID: -8861978948673554049, guid: f2616e340f3d0264eaa8a435a89c22ad, type: 3}
+  resolutionClientCard: {fileID: -8861978948673554049, guid: d256267d11e71034090048515d2a746b, type: 3}
   HasTutorialDialogue: 0
   TutorialSequenceScriptableObject: {fileID: 11400000, guid: 8238cfc784570944783cee4ec587f900, type: 2}
   duration: 2
---- !u!1001 &3701556248202397257
+--- !u!1001 &1038864102634647920
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -133,12 +133,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1212409871802061422, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6875
+      objectReference: {fileID: 0}
+    - target: {fileID: 1212409871802061422, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7125
+      objectReference: {fileID: 0}
+    - target: {fileID: 1212409871802061422, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.12
+      value: -3.5
       objectReference: {fileID: 0}
     - target: {fileID: 1212409871802061422, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.16
+      value: -8.33
       objectReference: {fileID: 0}
     - target: {fileID: 1212409871802061422, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -174,28 +182,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3576644469074929454, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
       propertyPath: DamageType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3576644469074929454, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
-      propertyPath: initialPlushieDamageType
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3576644469074929454, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
       propertyPath: plushieDamagesDeletedOnCompletion.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3576644469074929454, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
       propertyPath: plushieDamagesDeletedOnCompletion.Array.data[0]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4066721381560647145, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 577a9998e88b7ee4fad5cd87de8cfc8d, type: 3}
     - target: {fileID: 8031963007569900044, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
       propertyPath: m_Name
-      value: 2 - Large Rip
+      value: 3 - Worn stuffing
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
---- !u!4 &2561925388067083303 stripped
+--- !u!4 &2213960393703891742 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1212409871802061422, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
-  m_PrefabInstance: {fileID: 3701556248202397257}
+  m_PrefabInstance: {fileID: 1038864102634647920}
   m_PrefabAsset: {fileID: 0}
