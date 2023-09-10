@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 668989213637585115}
   - component: {fileID: 3932967621435437430}
-  - component: {fileID: 6737930733228867138}
+  - component: {fileID: 702459725349806567}
   m_Layer: 0
   m_Name: Kalani
   m_TagString: Untagged
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6737930733228867138
+--- !u!114 &702459725349806567
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,11 +95,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 4920179664441396057}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff0e72d9106b1ea448cfb51d62207f6c, type: 3}
+  m_Script: {fileID: 11500000, guid: 1f36ecf5859deb74a8f618f4ca8bac17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  repairedPlushieSprite: {fileID: 21300000, guid: ba4c29d302088bc40ab63e5f374292d1, type: 3}
-  customerRequestDialogue: 
+  clientName: Kalani
+  clientFont: {fileID: 11400000, guid: 96ccb3f7823cb054dab436d699160ba1, type: 2}
+  nameFontSize: 40
+  dialogueFontSize: 32
+  nameBolded: 0
+  dialogueBolded: 0
+  lineSpacingValue: 0
+  characterSpacingValue: 0
+  wordSpacingValue: 0
+  _repairedPlushieSprite: {fileID: 21300000, guid: 30733887b7fb1614fa63aac613e81693, type: 3}
+  IssueDialogue:
+    name: Reima & Remy
+    sentences:
+    - Hello, my girlfriend and I just moved here from out of state and happened to
+      see one of your fliers.
+    - "During our move, I may have accidentally damaged one of Remy\u2019s favorite
+      plushies.  Usually it wouldn\u2019t matter, we could just buy a replacement,
+      but this one is special. "
+    - Do you think you could take a look?
+  resolutionClientCard: {fileID: -8861978948673554049, guid: f2616e340f3d0264eaa8a435a89c22ad, type: 3}
+  HasTutorialDialogue: 0
+  TutorialSequenceScriptableObject: {fileID: 11400000, guid: 8238cfc784570944783cee4ec587f900, type: 2}
+  duration: 2
 --- !u!1001 &3701556248202397257
 PrefabInstance:
   m_ObjectHideFlags: 0
