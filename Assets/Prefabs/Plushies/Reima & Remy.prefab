@@ -109,6 +109,7 @@ MonoBehaviour:
   lineSpacingValue: 0
   characterSpacingValue: 0
   wordSpacingValue: 0
+  _repairedPlushieSprite: {fileID: 21300000, guid: b213de11068798245a93d177fecb20c9, type: 3}
   IssueDialogue:
     name: Reima & Remy
     sentences:
@@ -118,7 +119,7 @@ MonoBehaviour:
       plushies.  Usually it wouldn\u2019t matter, we could just buy a replacement,
       but this one is special. "
     - Do you think you could take a look?
-  resolutionClientCard: {fileID: 2937587479838695240, guid: 2d4dcde84829e1f49be5b0d2ef020b7d, type: 3}
+  resolutionClientCard: {fileID: -8861978948673554049, guid: be23ab6c064e9a04d939976afa6e473c, type: 3}
   HasTutorialDialogue: 0
   TutorialSequenceScriptableObject: {fileID: 11400000, guid: 8238cfc784570944783cee4ec587f900, type: 2}
   duration: 2
