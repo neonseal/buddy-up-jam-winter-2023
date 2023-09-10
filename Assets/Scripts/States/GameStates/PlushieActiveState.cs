@@ -1,8 +1,7 @@
 
+using MendingGames;
 using PlayArea;
-using Scriptables.DamageInstructions;
 using System;
-
 /// <summary>
 /// Plushie Active State
 /// 
@@ -16,10 +15,10 @@ namespace GameState {
 
         /* Public Properties */
         public static Plushie CurrentPlushie { get; private set; }
+        public PlushieDamageGO CurrentPlushieDamage { get; private set; }
 
-
-        public static event Action<DamageInstructrionsScriptableObject[]> MendingGameInitiated;
-
+        public static event Action<PlushieDamageGO> MendingGameInitiated;
+        public static event Action<Plushie> OnPlushieCompleteEvent;
         public PlushieActiveState(GameStateMachine gameManager) {
             this.gameManager = gameManager;
         }
@@ -27,6 +26,8 @@ namespace GameState {
         public override void EnterState() {
             PlushieDamageGO.OnPlushieDamageClicked += HandleDamageClick;
             Workspace.OnClientPlushieloaded += HandlePlushieLoadEvent;
+            MendingGameManager.OnMendingGameComplete += HandleMendingGameCompleteEvent;
+            ClientCard.OnClientCardInitialClick += FinishPlushieState;
         }
 
         public override void UpdateState() {
@@ -34,18 +35,45 @@ namespace GameState {
         }
 
         public override void ExitState() {
-            PlushieDamageGO.OnPlushieDamageClicked -= HandleDamageClick;
             Workspace.OnClientPlushieloaded -= HandlePlushieLoadEvent;
+            PlushieDamageGO.OnPlushieDamageClicked -= HandleDamageClick;
+            MendingGameManager.OnMendingGameComplete -= HandleMendingGameCompleteEvent;
             PlushieActiveState.CurrentPlushie = null;
         }
 
-        private void HandleDamageClick(DamageInstructrionsScriptableObject[] damageInstructions) {
+        public void FinishPlushieState(ClientCard clientCard) {
+            this.gameManager.SwitchGameState(this.gameManager.WorkspaceEmptyState);
+        }
+
+        private void HandleDamageClick(PlushieDamageGO plushieDamage) {
+            CurrentPlushieDamage = plushieDamage;
+
             // Send command to start mending repair mini-game
-            MendingGameInitiated?.Invoke(damageInstructions);
+            MendingGameInitiated?.Invoke(plushieDamage);
         }
 
         private void HandlePlushieLoadEvent(Plushie plushie) {
             PlushieActiveState.CurrentPlushie = plushie;
+        }
+
+        private void HandleMendingGameCompleteEvent(PlushieDamageGO plushieDamage) {
+            // Check count of plushie damage elements
+            PlushieDamageGO[] plushieDamages = CurrentPlushie.PlushieDamageList;
+
+
+            // If only one, throw plushie complete event
+            if (plushieDamages.Length == 1) {
+                PlushieActiveState.OnPlushieCompleteEvent?.Invoke(CurrentPlushie);
+            } else {
+                // Else, check all of the plushie's damage elements for completeness
+                foreach (PlushieDamageGO p in plushieDamages) {
+                    if (!p.DamageRepairComplete) {
+                        return;
+                    }
+                }
+                // If DamageRepairComplete is true for all plushie damage elements, invoke event
+                PlushieActiveState.OnPlushieCompleteEvent?.Invoke(CurrentPlushie);
+            }
         }
     }
 }

@@ -5,18 +5,22 @@ using UnityEngine;
 
 public class PlushieDamageGO : MonoBehaviour {
     // Initial damage type of the plushie damage
+    [SerializeField] public PlushieDamageType DamageType;
     [SerializeField] private DamageInstructrionsScriptableObject[] damageInstructions;
     [SerializeField]
     private List<GameObject> plushieDamagesDeletedOnCompletion;
-
     private PlushieDamageSM plushieDamageSM;
+    private CapsuleCollider2D capsuleCollider;
 
     /* Damage life cycle events */
-    public static event Action<DamageInstructrionsScriptableObject[]> OnPlushieDamageClicked;
-    public bool DamageRepairComplete { get; private set; }
+    public static event Action<PlushieDamageGO> OnPlushieDamageClicked;
+    public static event Action<PlushieDamageGO> OnPlushieDamageComplete;
+
+    [SerializeField] public bool DamageRepairComplete;
 
     private void Awake() {
         DamageRepairComplete = false;
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
     }
 
     public void Start() {
@@ -31,12 +35,18 @@ public class PlushieDamageGO : MonoBehaviour {
 
     // Send out event when damage is clicked to 
     public void OnMouseDown() {
+        capsuleCollider.enabled = false;
         plushieDamageSM.SubscribeToMendingGame();
-        OnPlushieDamageClicked?.Invoke(this.damageInstructions);
+        PlushieDamageSM.OnCompleteRepair += HandleCompleteRepairEvent;
+        OnPlushieDamageClicked?.Invoke(this);
+    }
+
+    public DamageInstructrionsScriptableObject[] GetDamageInstructrions() {
+        return this.damageInstructions;
     }
 
     public PlushieDamageType GetInitialDamageType() {
-        return this.damageInstructions[0].PlushieDamageType;
+        return this.DamageType;
     }
 
     public string GenerateChecklistLineItem(int count) {
@@ -58,6 +68,14 @@ public class PlushieDamageGO : MonoBehaviour {
         }
 
         return lineItemDescription;
+    }
+
+    private void HandleCompleteRepairEvent() {
+        this.DamageRepairComplete = true;
+        plushieDamageSM.UnsubscribeToMendingGame();
+        PlushieDamageSM.OnCompleteRepair -= HandleCompleteRepairEvent;
+        OnPlushieDamageComplete?.Invoke(this);
+
     }
 
     private void _finishRepairing() {

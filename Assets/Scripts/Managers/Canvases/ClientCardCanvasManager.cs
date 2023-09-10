@@ -3,11 +3,9 @@ using PlayArea;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ClientCardCanvasManager : MonoBehaviour {
     [Header("Client Card Canvas UI Elements")]
-    [SerializeField] private Button sendThankYouBtn;
     [SerializeField] private ClientCardContainer clientCardContainer;
     private Vector3 lastCardPosition;
     private float lastCardZRotation;
@@ -28,8 +26,8 @@ public class ClientCardCanvasManager : MonoBehaviour {
     private void Awake() {
         DOTween.Init();
         Workspace.OnClientPlushieloaded += HandlePlushieLoadEvent;
-        sendThankYouBtn.onClick.AddListener(SendClientCard);
         ClientCard.OnClientCardInitialClick += MoveClientCardToBoard;
+        Plushie.OnPlushieSendOffComplete += SendClientCard;
 
         cardCollection = new List<ClientCard>();
     }
@@ -46,6 +44,7 @@ public class ClientCardCanvasManager : MonoBehaviour {
 
     private IEnumerator SendClientCardRoutine() {
         clientCard = Instantiate(currentPlushie.ResolutionClientCard, this.transform, false);
+        clientCard.InitialInstantiation = true;
         clientCard.transform.localPosition = new Vector3(0, 1500, 0);
         clientCard.name = $"{currentPlushie.name} Client Card";
         yield return new WaitForSeconds(.5f);

@@ -1,4 +1,7 @@
+using DG.Tweening;
 using Dialogue;
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class Plushie : MonoBehaviour {
@@ -23,6 +26,29 @@ public class Plushie : MonoBehaviour {
     public bool HasTutorialDialogue;
     public TutorialSequenceScriptableObject TutorialSequenceScriptableObject;
 
+    [SerializeField] private float duration;
+
+    public PlushieDamageGO[] PlushieDamageList { get; private set; }
+
+    public static event Action OnPlushieSendOffComplete;
+
+    private void Awake() {
+        DOTween.Init();
+        PlushieDamageList = GetComponentsInChildren<PlushieDamageGO>();
+    }
+
+    public void SendOffPlushie() {
+        StartCoroutine("SendOffRoutine");
+    }
+
+    public IEnumerator SendOffRoutine() {
+        this.transform.DOLocalMoveY(20, duration);
+        yield return new WaitForSeconds(1f);
+        OnPlushieSendOffComplete?.Invoke();
+        yield return new WaitForSeconds(1f);
+        Destroy(gameObject);
+    }
+
     public TMPro.TMP_FontAsset ClientFont { get => clientFont; }
     public int NameFontSize { get => nameFontSize; }
     public int DialogueFontSize { get => dialogueFontSize; }
@@ -32,4 +58,5 @@ public class Plushie : MonoBehaviour {
     public int CharacterSpacingValue { get => characterSpacingValue; }
     public int WordSpacingValue { get => wordSpacingValue; }
     public ClientCard ResolutionClientCard { get => resolutionClientCard; }
+
 }

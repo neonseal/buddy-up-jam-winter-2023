@@ -4,6 +4,7 @@ using GameState;
 using PlayArea;
 using Scriptables.DamageInstructions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -30,6 +31,7 @@ namespace MendingGames {
 
     public class MendingGameManager : MonoBehaviour {
         [Header("High-level Status/Progress Elements")]
+        private PlushieDamageGO plushieDamage;
         private DamageInstructrionsScriptableObject[] damageInstructions;
         private DamageInstructrionsScriptableObject instructionStep;
         private int damageRepairStepIndex;
@@ -89,7 +91,7 @@ namespace MendingGames {
         [SerializeField] private TutorialManager tutorialManager;
 
         /* Mending Game Events */
-        public static event Action<DamageInstructrionsScriptableObject[]> OnMendingGameComplete;
+        public static event Action<PlushieDamageGO> OnMendingGameComplete;
         public static event Action<DamageInstructrionsScriptableObject> OnMendingStepComplete;
 
         private void Awake() {
@@ -173,26 +175,22 @@ namespace MendingGames {
         /* ----------------------------------------------------------- */
         // Primary function invoked by the Mending Game Manager, responsible for parsing the 
         // damage instructions and rendering the appropriate game to the lens
-        public void GenerateMendingGame(DamageInstructrionsScriptableObject[] damageInstructions) {
+        public void GenerateMendingGame(PlushieDamageGO plushieDamage) {
+
             mendingGameInProgress = true;
-            this.damageInstructions = damageInstructions;
-            this.damageRepairStepIndex++;
+            this.plushieDamage = plushieDamage;
+            this.damageInstructions = plushieDamage.GetDamageInstructrions();
+            this.damageRepairStepIndex = 0;
 
             instructionStep = this.damageInstructions[damageRepairStepIndex];
 
             // Check first step of damage instructions to determine starting damage type
-            switch (damageInstructions[damageRepairStepIndex].PlushieDamageType) {
-                // TODO: Change to switch of MendingGameType (May need to add to DamageInstruction Scriptable)
-                case PlushieDamageType.SmallRip:
+            switch (damageInstructions[damageRepairStepIndex].MendingGameType) {
+                case MendingGameType.Sewing:
+                case MendingGameType.Cutting:
                     GenerateSewingOrCuttingGame();
                     break;
-                case PlushieDamageType.LargeRip:
-                    GenerateSewingOrCuttingGame();
-                    break;
-                case PlushieDamageType.WornStuffing:
-                    GenerateSewingOrCuttingGame();
-                    break;
-                case PlushieDamageType.MissingStuffing:
+                case MendingGameType.Stuffing:
                     this.requiredToolType = ToolType.Stuffing;
                     GenerateStuffingGame();
                     break;
@@ -210,15 +208,16 @@ namespace MendingGames {
             // Check if there are more steps to the repair process
             if (this.damageRepairStepIndex < this.damageInstructions.Count() - 1) {
                 // Fire step complete event 
-                // TODO: Add listener for this event on the ChecklistManager
                 OnMendingStepComplete?.Invoke(this.damageInstructions[this.damageRepairStepIndex]);
                 // Start next mending game step
-                GenerateMendingGame(this.damageInstructions);
+                GenerateMendingGame(this.plushieDamage);
             } else {
                 // Complete mending game and reset
                 magnifyingGlass.transform.DOLocalMove(startingLocation, duration).SetEase(easeType);
                 this.mendingGameInProgress = false;
-                OnMendingGameComplete?.Invoke(this.damageInstructions);
+                OnMendingStepComplete?.Invoke(this.damageInstructions[this.damageRepairStepIndex]);
+                OnMendingGameComplete?.Invoke(this.plushieDamage);
+                StartCoroutine("ClearGameRoutine");
             }
 
             // Check if there is a tutorial active that requires a continue action, and continue tutorial
@@ -227,23 +226,27 @@ namespace MendingGames {
             }
         }
 
+        private IEnumerator
+            ClearGameRoutine() {
+            yield return new WaitForSeconds(1f);
+            foreach (var dashSet in dashSets) {
+                foreach (Dash dash in dashSet) {
+                    DestroyImmediate(dash.gameObject);
+                }
+            }
+            foreach (Node node in nodes) {
+                DestroyImmediate(node.gameObject);
+            }
+
+            dashSets.Clear();
+            nodes.Clear();
+        }
+
 
         /*                 SEWING AND CUTTING GAMES                    */
         /* ----------------------------------------------------------- */
 
         private void GenerateSewingOrCuttingGame() {
-            // If transitioning from cutting/sewing game to similar game, destroy previous game objects
-            if (dashSets.Count > 0) {
-                foreach (var dashSet in dashSets) {
-                    foreach (Dash dash in dashSet) {
-                        Destroy(dash);
-                    }
-                }
-                foreach (Node node in nodes) {
-                    Destroy(node);
-                }
-            }
-
             Node.OnNodeTriggered += HandleTargetNodeTrigger;
             Node.OnActiveNodeReleased += ResetCurrentLine;
 
@@ -251,8 +254,8 @@ namespace MendingGames {
             lensSpriteRenderer.sprite = this.damageInstructions[damageRepairStepIndex].DamageSprite;
 
             // Set updated rotation value
-            mendingGamePlayArea.transform.Rotate(0, 0, this.damageInstructions[damageRepairStepIndex].RotationZValue);
-            magnifyingGlassLens.transform.Rotate(0, 0, this.damageInstructions[damageRepairStepIndex].RotationZValue);
+            mendingGamePlayArea.transform.rotation = Quaternion.Euler(0, 0, this.damageInstructions[damageRepairStepIndex].RotationZValue);
+            magnifyingGlassLens.transform.rotation = Quaternion.Euler(0, 0, this.damageInstructions[damageRepairStepIndex].RotationZValue);
 
             // Ensure we are using the appropriate material
             if (lensSpriteRenderer.material != defaultMaterial) {
@@ -396,6 +399,7 @@ namespace MendingGames {
                 dashObject.ParentNode = this.nodes[this.dashSets.Count];
                 dashObject.transform.localPosition = dashPosition;
                 dashes.Add(dashObject);
+                //Debug.Log("DASH SET COUNT: " + this.dashSets.Count);
             }
 
             return dashes;

@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 public class ClientCard : MonoBehaviour, IPointerClickHandler {
     public bool MovedToBoard = false;
-
+    public bool InitialInstantiation = false;
 
     public static event Action<ClientCard> OnClientCardInitialClick;
     public static event Action<ClientCard> OnClientCardClick;
@@ -13,6 +13,7 @@ public class ClientCard : MonoBehaviour, IPointerClickHandler {
         if (MovedToBoard) {
             OnClientCardClick?.Invoke(this);
         } else {
+            MovedToBoard = true;
             OnClientCardInitialClick?.Invoke(this);
         }
     }

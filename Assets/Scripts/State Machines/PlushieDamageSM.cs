@@ -1,8 +1,10 @@
-using UnityEngine;
 using MendingGames;
-using Scriptables.DamageInstructions;
+using System;
+using UnityEngine;
 
 public class PlushieDamageSM : BaseStateMachine {
+    public static event Action OnCompleteRepair;
+
     // State of plushie damage as a small rip
     [HideInInspector]
     public SmallRipState smallRipState;
@@ -72,7 +74,8 @@ public class PlushieDamageSM : BaseStateMachine {
         MendingGameManager.OnMendingGameComplete -= ProgressMendingSteps;
     }
 
-    private void ProgressMendingSteps(DamageInstructrionsScriptableObject[] damageInstructions) {
-        ((PlushieDamageBaseState) currentState).CompleteRepair();
+    private void ProgressMendingSteps(PlushieDamageGO plushieDamage) {
+        PlushieDamageSM.OnCompleteRepair?.Invoke();
+        ((PlushieDamageBaseState)currentState).CompleteRepair();
     }
 }
