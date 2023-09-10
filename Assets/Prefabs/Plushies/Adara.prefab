@@ -102,24 +102,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clientName: Adara
-  clientFont: {fileID: 11400000, guid: 96ccb3f7823cb054dab436d699160ba1, type: 2}
-  nameFontSize: 40
-  dialogueFontSize: 32
-  nameBolded: 0
-  dialogueBolded: 0
-  lineSpacingValue: 0
+  clientFont: {fileID: 11400000, guid: e71f969454a436d4090e473de784dace, type: 2}
+  nameFontSize: 56
+  dialogueFontSize: 38
+  nameBolded: 1
+  dialogueBolded: 1
+  lineSpacingValue: -8
   characterSpacingValue: 0
   wordSpacingValue: 0
   _repairedPlushieSprite: {fileID: 21300000, guid: a691ed539120b1643beba0a01d929593, type: 3}
   IssueDialogue:
-    name: Reima & Remy
+    name: Adara
     sentences:
-    - Hello, my girlfriend and I just moved here from out of state and happened to
-      see one of your fliers.
-    - "During our move, I may have accidentally damaged one of Remy\u2019s favorite
-      plushies.  Usually it wouldn\u2019t matter, we could just buy a replacement,
-      but this one is special. "
-    - Do you think you could take a look?
+    - Hello, I was hoping you could take a look at my plushie.
+    - "I\u2019ve had her now for a few years so the stuffing is pretty worn down.
+      On top of that, I accidently ripped one of the seams."
+    - "I know it seems small, but I\u2019m afraid it\u2019s going to get worse. Do
+      you think you can fix it?"
   resolutionClientCard: {fileID: -8861978948673554049, guid: 88d404ae5bd0aa34893a535433824146, type: 3}
   HasTutorialDialogue: 0
   TutorialSequenceScriptableObject: {fileID: 11400000, guid: 8238cfc784570944783cee4ec587f900, type: 2}

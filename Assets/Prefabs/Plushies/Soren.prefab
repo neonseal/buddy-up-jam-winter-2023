@@ -100,24 +100,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clientName: Soren
-  clientFont: {fileID: 11400000, guid: 96ccb3f7823cb054dab436d699160ba1, type: 2}
-  nameFontSize: 40
-  dialogueFontSize: 32
+  clientFont: {fileID: 11400000, guid: 43efce2d0c89ef44aa21547f484885cb, type: 2}
+  nameFontSize: 70
+  dialogueFontSize: 48
   nameBolded: 0
   dialogueBolded: 0
-  lineSpacingValue: 0
+  lineSpacingValue: -12
   characterSpacingValue: 0
   wordSpacingValue: 0
   _repairedPlushieSprite: {fileID: 21300000, guid: 644e57c1dc9e0d341a46c16691df1435, type: 3}
   IssueDialogue:
-    name: Reima & Remy
+    name: Soren
     sentences:
-    - Hello, my girlfriend and I just moved here from out of state and happened to
-      see one of your fliers.
-    - "During our move, I may have accidentally damaged one of Remy\u2019s favorite
-      plushies.  Usually it wouldn\u2019t matter, we could just buy a replacement,
-      but this one is special. "
-    - Do you think you could take a look?
+    - "Good morning, I\u2019ve seen reviews about your shop and was hoping you\u2019d
+      be able to help me."
+    - "You see, I have this plushie that means a lot to me. I don\u2019t know how,
+      but my dog managed to get into my office and grabbed a hold of it."
+    - "In our struggle his teeth punctured the cloth and tore it. It\u2019s not really
+      noticeable, but I\u2019d like to fix it before it gets any worse. Is this something
+      you could help me with?\r"
   resolutionClientCard: {fileID: -8861978948673554049, guid: 127aff9e1e8e1864b81f87e69c20ba63, type: 3}
   HasTutorialDialogue: 0
   TutorialSequenceScriptableObject: {fileID: 11400000, guid: 8238cfc784570944783cee4ec587f900, type: 2}

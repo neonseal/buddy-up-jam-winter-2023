@@ -100,25 +100,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f36ecf5859deb74a8f618f4ca8bac17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clientName: Soren
-  clientFont: {fileID: 11400000, guid: 96ccb3f7823cb054dab436d699160ba1, type: 2}
-  nameFontSize: 40
-  dialogueFontSize: 32
+  clientName: Zaria
+  clientFont: {fileID: 11400000, guid: 18b35a798da0c7d45ab71228491145b0, type: 2}
+  nameFontSize: 52
+  dialogueFontSize: 42
   nameBolded: 0
   dialogueBolded: 0
   lineSpacingValue: 0
   characterSpacingValue: 0
-  wordSpacingValue: 0
+  wordSpacingValue: 4
   _repairedPlushieSprite: {fileID: 21300000, guid: 964b251e2d69f8144a1602b5ac4903c2, type: 3}
   IssueDialogue:
-    name: Reima & Remy
+    name: Zaria
     sentences:
-    - Hello, my girlfriend and I just moved here from out of state and happened to
-      see one of your fliers.
-    - "During our move, I may have accidentally damaged one of Remy\u2019s favorite
-      plushies.  Usually it wouldn\u2019t matter, we could just buy a replacement,
-      but this one is special. "
-    - Do you think you could take a look?
+    - Good afternoon, I saw one of your business cards in the subway station and
+      was hoping you could help.
+    - My plushie is missing some stuffing and has several small tears here and there.
+      Before you begin, I have to be up front.
+    - "I don\u2019t have a lot of money, but I promise I\u2019m good for my word.
+      I can give you a downpayment now and maybe we could set up some sort of payment
+      plan?"
   resolutionClientCard: {fileID: -8861978948673554049, guid: c9273df5fe3d3084cbe9564c1175a370, type: 3}
   HasTutorialDialogue: 0
   TutorialSequenceScriptableObject: {fileID: 11400000, guid: 8238cfc784570944783cee4ec587f900, type: 2}
