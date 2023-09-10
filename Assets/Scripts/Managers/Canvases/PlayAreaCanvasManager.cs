@@ -45,6 +45,8 @@ namespace PlayArea {
         [Header("Tutorial/Dialogue Managers")]
         [SerializeField] private TutorialManager tutorialManager;
 
+        private readonly Vector2 cursorPosition = new(30f, 32f);
+
         /* UI Interaction Event Actions */
         public static event Action OnNextClientBellRung;
 
@@ -148,10 +150,7 @@ namespace PlayArea {
                 // Set cursor at crosshair
                 Cursor.SetCursor(
                     currentTool.ToolScriptableObject.ToolCursorTexture,
-                    new Vector2(
-                        40f,
-                        29f
-                    ),
+                    cursorPosition,
                     CursorMode.ForceSoftware
                 );
             }
