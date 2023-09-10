@@ -26,7 +26,7 @@ MonoBehaviour:
   - stepText: Each client will give you a unique thank you note. When you are finished
       reading, click the note to move it to the board.
     requiredToolType: 0
-    requiredContinueAction: 0
+    requiredContinueAction: 8
     timer: 0
     tutorialDialogueLocation: {x: -600, y: -80}
     requiresArrow: 0

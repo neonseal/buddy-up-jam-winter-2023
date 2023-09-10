@@ -6306,6 +6306,7 @@ MonoBehaviour:
   ease: 8
   scaleX: 1
   scaleY: 1.5
+  TutorialManager: {fileID: 1741187910}
 --- !u!114 &1346061831
 MonoBehaviour:
   m_ObjectHideFlags: 0
