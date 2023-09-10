@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -8861978948673554049}
   - component: {fileID: 7024883753098089296}
   m_Layer: 5
-  m_Name: ReimaAndRemyCard
+  m_Name: Nissa
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,7 +72,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8e87f1f1fa0b34a4fb4a3e126ee2ca73, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fc563cdbf09896d428c2d800427495db, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -141,6 +141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd7ca6a166deeee4193ae3df166b61ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MovedToBoard: 0
+  InitialInstantiation: 0
 --- !u!210 &7024883753098089296
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -177,18 +179,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3142170290765226100}
-  m_LocalRotation: {x: -0, y: -0, z: 0.011239277, w: 0.9999369}
+  m_LocalRotation: {x: -0, y: -0, z: 0.013448985, w: 0.9999096}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.05, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 958951278925545544}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 1.288}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 1.541}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0, y: 1}
-  m_SizeDelta: {x: 80, y: 75}
+  m_AnchoredPosition: {x: 5.8, y: -1.7}
+  m_SizeDelta: {x: 72.5851, y: 69.8043}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5737643356716574459
 CanvasRenderer:
@@ -218,14 +220,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: It looks amazing! I bought this for Remy right before she came out to her
-    parents. She was so nervous, in fact when it came time, she just kind of stood
-    there babbling. I gave her this plushie half-way through and everything just
-    kind of clicked. We kind of see it as an inside joke now, but I know this fluffy
-    little guy means a lot to her. Thank you so much!
+  m_text: "Wow, she looks fantastic! I know what you\u2019re thinking, it\u2019s
+    kind of silly for a grown woman to be carrying around a plushy. I think that
+    too sometimes, but I hate going anywhere without her. It\u2019s been twenty years
+    since I lost my hearing and it's not gotten any easier. However, my plushie here
+    reminds me to have hope and that I\u2019m not alone... So, from the bottom of
+    my heart, thank you. \r\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 96ccb3f7823cb054dab436d699160ba1, type: 2}
-  m_sharedMaterial: {fileID: -1725620889687597683, guid: 96ccb3f7823cb054dab436d699160ba1, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 17cbf07fd66b0ec4da1047a66731af0d, type: 2}
+  m_sharedMaterial: {fileID: -7531442299890267281, guid: 17cbf07fd66b0ec4da1047a66731af0d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -249,8 +252,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7
-  m_fontSizeBase: 7
+  m_fontSize: 4.7
+  m_fontSizeBase: 4.7
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -326,7 +329,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 2.032}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 12.3, y: -44.7}
+  m_AnchoredPosition: {x: 6.6, y: -37.1}
   m_SizeDelta: {x: 60, y: 8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5106712460945694393
@@ -357,10 +360,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '- Reima & Remy'
+  m_text: '- Nissa'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 96ccb3f7823cb054dab436d699160ba1, type: 2}
-  m_sharedMaterial: {fileID: -1725620889687597683, guid: 96ccb3f7823cb054dab436d699160ba1, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 17cbf07fd66b0ec4da1047a66731af0d, type: 2}
+  m_sharedMaterial: {fileID: -7531442299890267281, guid: 17cbf07fd66b0ec4da1047a66731af0d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -390,7 +393,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
