@@ -10,6 +10,7 @@ public class PlushieDamageGO : MonoBehaviour {
     [SerializeField]
     private List<GameObject> plushieDamagesDeletedOnCompletion;
     private PlushieDamageSM plushieDamageSM;
+    private CapsuleCollider2D capsuleCollider;
 
     /* Damage life cycle events */
     public static event Action<PlushieDamageGO> OnPlushieDamageClicked;
@@ -19,6 +20,7 @@ public class PlushieDamageGO : MonoBehaviour {
 
     private void Awake() {
         DamageRepairComplete = false;
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
     }
 
     public void Start() {
@@ -33,6 +35,7 @@ public class PlushieDamageGO : MonoBehaviour {
 
     // Send out event when damage is clicked to 
     public void OnMouseDown() {
+        capsuleCollider.enabled = false;
         plushieDamageSM.SubscribeToMendingGame();
         PlushieDamageSM.OnCompleteRepair += HandleCompleteRepairEvent;
         OnPlushieDamageClicked?.Invoke(this);
@@ -72,6 +75,7 @@ public class PlushieDamageGO : MonoBehaviour {
         plushieDamageSM.UnsubscribeToMendingGame();
         PlushieDamageSM.OnCompleteRepair -= HandleCompleteRepairEvent;
         OnPlushieDamageComplete?.Invoke(this);
+
     }
 
     private void _finishRepairing() {

@@ -68,6 +68,13 @@ namespace PlayArea {
             if (plushieDamages.Length == 0) {
                 return;
             }
+
+            // Reset checklist
+            foreach (ChecklistLineItem checklistLineItem in checklistLineItems) {
+                DestroyImmediate(checklistLineItem.gameObject);
+            }
+            checklistLineItems.Clear();
+
             // Set high-level checklist item count
             checklistLineItemCount = plushieDamages.Length;
 

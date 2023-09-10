@@ -2,7 +2,6 @@
 using MendingGames;
 using PlayArea;
 using System;
-
 /// <summary>
 /// Plushie Active State
 /// 
@@ -28,7 +27,7 @@ namespace GameState {
             PlushieDamageGO.OnPlushieDamageClicked += HandleDamageClick;
             Workspace.OnClientPlushieloaded += HandlePlushieLoadEvent;
             MendingGameManager.OnMendingGameComplete += HandleMendingGameCompleteEvent;
-            Plushie.OnPlushieComplete += FinishPlushieState;
+            ClientCard.OnClientCardInitialClick += FinishPlushieState;
         }
 
         public override void UpdateState() {
@@ -36,13 +35,13 @@ namespace GameState {
         }
 
         public override void ExitState() {
-            PlushieDamageGO.OnPlushieDamageClicked -= HandleDamageClick;
             Workspace.OnClientPlushieloaded -= HandlePlushieLoadEvent;
+            PlushieDamageGO.OnPlushieDamageClicked -= HandleDamageClick;
             MendingGameManager.OnMendingGameComplete -= HandleMendingGameCompleteEvent;
             PlushieActiveState.CurrentPlushie = null;
         }
 
-        public void FinishPlushieState() {
+        public void FinishPlushieState(ClientCard clientCard) {
             this.gameManager.SwitchGameState(this.gameManager.WorkspaceEmptyState);
         }
 

@@ -4,6 +4,7 @@ using GameState;
 using PlayArea;
 using Scriptables.DamageInstructions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -175,10 +176,11 @@ namespace MendingGames {
         // Primary function invoked by the Mending Game Manager, responsible for parsing the 
         // damage instructions and rendering the appropriate game to the lens
         public void GenerateMendingGame(PlushieDamageGO plushieDamage) {
+
             mendingGameInProgress = true;
             this.plushieDamage = plushieDamage;
             this.damageInstructions = plushieDamage.GetDamageInstructrions();
-            this.damageRepairStepIndex++;
+            this.damageRepairStepIndex = 0;
 
             instructionStep = this.damageInstructions[damageRepairStepIndex];
 
@@ -215,6 +217,7 @@ namespace MendingGames {
                 this.mendingGameInProgress = false;
                 OnMendingStepComplete?.Invoke(this.damageInstructions[this.damageRepairStepIndex]);
                 OnMendingGameComplete?.Invoke(this.plushieDamage);
+                StartCoroutine("ClearGameRoutine");
             }
 
             // Check if there is a tutorial active that requires a continue action, and continue tutorial
@@ -223,23 +226,27 @@ namespace MendingGames {
             }
         }
 
+        private IEnumerator
+            ClearGameRoutine() {
+            yield return new WaitForSeconds(1f);
+            foreach (var dashSet in dashSets) {
+                foreach (Dash dash in dashSet) {
+                    DestroyImmediate(dash.gameObject);
+                }
+            }
+            foreach (Node node in nodes) {
+                DestroyImmediate(node.gameObject);
+            }
+
+            dashSets.Clear();
+            nodes.Clear();
+        }
+
 
         /*                 SEWING AND CUTTING GAMES                    */
         /* ----------------------------------------------------------- */
 
         private void GenerateSewingOrCuttingGame() {
-            // If transitioning from cutting/sewing game to similar game, destroy previous game objects
-            if (dashSets.Count > 0) {
-                foreach (var dashSet in dashSets) {
-                    foreach (Dash dash in dashSet) {
-                        Destroy(dash);
-                    }
-                }
-                foreach (Node node in nodes) {
-                    Destroy(node);
-                }
-            }
-
             Node.OnNodeTriggered += HandleTargetNodeTrigger;
             Node.OnActiveNodeReleased += ResetCurrentLine;
 
@@ -247,8 +254,8 @@ namespace MendingGames {
             lensSpriteRenderer.sprite = this.damageInstructions[damageRepairStepIndex].DamageSprite;
 
             // Set updated rotation value
-            mendingGamePlayArea.transform.Rotate(0, 0, this.damageInstructions[damageRepairStepIndex].RotationZValue);
-            magnifyingGlassLens.transform.Rotate(0, 0, this.damageInstructions[damageRepairStepIndex].RotationZValue);
+            mendingGamePlayArea.transform.rotation = Quaternion.Euler(0, 0, this.damageInstructions[damageRepairStepIndex].RotationZValue);
+            magnifyingGlassLens.transform.rotation = Quaternion.Euler(0, 0, this.damageInstructions[damageRepairStepIndex].RotationZValue);
 
             // Ensure we are using the appropriate material
             if (lensSpriteRenderer.material != defaultMaterial) {
@@ -392,6 +399,7 @@ namespace MendingGames {
                 dashObject.ParentNode = this.nodes[this.dashSets.Count];
                 dashObject.transform.localPosition = dashPosition;
                 dashes.Add(dashObject);
+                //Debug.Log("DASH SET COUNT: " + this.dashSets.Count);
             }
 
             return dashes;

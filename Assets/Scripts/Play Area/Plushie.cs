@@ -30,7 +30,7 @@ public class Plushie : MonoBehaviour {
 
     public PlushieDamageGO[] PlushieDamageList { get; private set; }
 
-    public static event Action OnPlushieComplete;
+    public static event Action OnPlushieSendOffComplete;
 
     private void Awake() {
         DOTween.Init();
@@ -43,9 +43,10 @@ public class Plushie : MonoBehaviour {
 
     public IEnumerator SendOffRoutine() {
         this.transform.DOLocalMoveY(20, duration);
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(1f);
+        OnPlushieSendOffComplete?.Invoke();
+        yield return new WaitForSeconds(1f);
         Destroy(gameObject);
-        OnPlushieComplete?.Invoke();
     }
 
     public TMPro.TMP_FontAsset ClientFont { get => clientFont; }

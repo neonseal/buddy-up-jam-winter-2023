@@ -39,6 +39,7 @@ namespace Dialogue {
         [SerializeField] private int openDyslexicTitleSize;
         [SerializeField] private int openDyslexicFontSize;
         [SerializeField] private int largeFontSize;
+
         private TMP_FontAsset clientFont;
         private int clientTitleSize;
         private int clientFontSize;
@@ -147,6 +148,7 @@ namespace Dialogue {
         private void EndDialogue() {
             animator.SetBool("isOpen", false);
             OnClientDialogueComplete?.Invoke();
+            continueButton.gameObject.GetComponentInChildren<TMP_Text>().text = ">>";
         }
 
         private void SetFont(bool clientFontVisibility) {
