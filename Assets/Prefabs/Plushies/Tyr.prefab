@@ -272,6 +272,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
+--- !u!1 &2586256971918469894 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8031963007569900044, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
+  m_PrefabInstance: {fileID: 5517886801972025610}
+  m_PrefabAsset: {fileID: 0}
+--- !u!70 &3101051641125293076
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2586256971918469894}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.029618742, y: 1.5881829e-10}
+  m_Size: {x: 6.3389196, y: 8.4}
+  m_Direction: 0
 --- !u!4 &6647348876010031972 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1212409871802061422, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
@@ -354,6 +375,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
+--- !u!1 &2416015960851189825 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8031963007569900044, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
+  m_PrefabInstance: {fileID: 5688093040988496461}
+  m_PrefabAsset: {fileID: 0}
+--- !u!70 &6058605911133363450
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2416015960851189825}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.1250653, y: 0.000000008035696}
+  m_Size: {x: 4.1325417, y: 8.399997}
+  m_Direction: 0
 --- !u!4 &6783390950741635107 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1212409871802061422, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}

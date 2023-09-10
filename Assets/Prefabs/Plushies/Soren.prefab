@@ -108,7 +108,7 @@ MonoBehaviour:
   lineSpacingValue: 0
   characterSpacingValue: 0
   wordSpacingValue: 0
-  _repairedPlushieSprite: {fileID: 21300000, guid: b213de11068798245a93d177fecb20c9, type: 3}
+  _repairedPlushieSprite: {fileID: 21300000, guid: 644e57c1dc9e0d341a46c16691df1435, type: 3}
   IssueDialogue:
     name: Reima & Remy
     sentences:
@@ -220,6 +220,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1212409871802061422, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
   m_PrefabInstance: {fileID: 1466048512300912855}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8876366813058278107 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8031963007569900044, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
+  m_PrefabInstance: {fileID: 1466048512300912855}
+  m_PrefabAsset: {fileID: 0}
+--- !u!70 &2975801309491596443
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8876366813058278107}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 8.000001, y: 8.000001}
+  m_Direction: 0
 --- !u!1001 &1499873805943110153
 PrefabInstance:
   m_ObjectHideFlags: 0
