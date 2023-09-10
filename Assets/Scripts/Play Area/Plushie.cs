@@ -1,5 +1,6 @@
 using DG.Tweening;
 using Dialogue;
+using GameState;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class Plushie : MonoBehaviour {
     [SerializeField] private int lineSpacingValue;
     [SerializeField] private int characterSpacingValue;
     [SerializeField] private int wordSpacingValue;
+    [SerializeField] private Sprite _repairedPlushieSprite;
 
     [Header("Issue and Resolution Elements")]
     public ClientDialogueSet IssueDialogue;
@@ -28,13 +30,21 @@ public class Plushie : MonoBehaviour {
 
     [SerializeField] private float duration;
 
+    // Components
     public PlushieDamageGO[] PlushieDamageList { get; private set; }
+    private SpriteRenderer _spriteRenderer;
 
+    // Events
     public static event Action OnPlushieSendOffComplete;
 
     private void Awake() {
         DOTween.Init();
         PlushieDamageList = GetComponentsInChildren<PlushieDamageGO>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    private void Start() {
+        PlushieActiveState.OnPlushieCompleteEvent += ChangeToRepairedSprite;
     }
 
     public void SendOffPlushie() {
@@ -59,4 +69,9 @@ public class Plushie : MonoBehaviour {
     public int WordSpacingValue { get => wordSpacingValue; }
     public ClientCard ResolutionClientCard { get => resolutionClientCard; }
 
+
+    private void ChangeToRepairedSprite(Plushie plushie) {
+        _spriteRenderer.sprite = _repairedPlushieSprite;
+        PlushieActiveState.OnPlushieCompleteEvent -= ChangeToRepairedSprite;
+    }
 }
