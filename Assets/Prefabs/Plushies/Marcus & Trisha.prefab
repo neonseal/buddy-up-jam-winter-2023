@@ -184,6 +184,14 @@ PrefabInstance:
       value: 21.368
       objectReference: {fileID: 0}
     - target: {fileID: 3576644469074929454, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
+      propertyPath: damageInstructions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3576644469074929454, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
+      propertyPath: damageInstructions.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: bc365ab75df6f415eb4a1d20fb21adc4, type: 2}
+    - target: {fileID: 3576644469074929454, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
       propertyPath: plushieDamagesDeletedOnCompletion.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -286,6 +294,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3576644469074929454, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
+      propertyPath: damageInstructions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3576644469074929454, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
+      propertyPath: damageInstructions.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 604c27b241c62ee489960181d7830653, type: 2}
     - target: {fileID: 3576644469074929454, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
       propertyPath: plushieDamagesDeletedOnCompletion.Array.size
       value: 1

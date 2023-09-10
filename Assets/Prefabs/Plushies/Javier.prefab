@@ -270,6 +270,22 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3576644469074929454, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
+      propertyPath: damageInstructions.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3576644469074929454, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
+      propertyPath: damageInstructions.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2d2161fa3175b4fa9ab933b000ae1d17, type: 2}
+    - target: {fileID: 3576644469074929454, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
+      propertyPath: damageInstructions.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4b1d3e6e4f2f749d6a215c788168a01b, type: 2}
+    - target: {fileID: 3576644469074929454, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
+      propertyPath: damageInstructions.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 761c827db3d594c0190df0045a33f6ea, type: 2}
+    - target: {fileID: 3576644469074929454, guid: b18ce723c68f17f47b0fa1c8acccc6b1, type: 3}
       propertyPath: plushieDamagesDeletedOnCompletion.Array.size
       value: 2
       objectReference: {fileID: 0}
