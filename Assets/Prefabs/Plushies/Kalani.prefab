@@ -100,8 +100,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clientName: Kalani
   clientFont: {fileID: 11400000, guid: 7a1a354fbfc8a7649af4c1b26217fb75, type: 2}
-  nameFontSize: 44
-  dialogueFontSize: 36
+  nameFontSize: 36
+  dialogueFontSize: 30
   nameBolded: 0
   dialogueBolded: 0
   lineSpacingValue: 4

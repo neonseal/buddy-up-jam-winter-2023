@@ -1,7 +1,6 @@
-
-using MendingGames;
 using PlayArea;
 using System;
+using UnityEngine;
 /// <summary>
 /// Plushie Active State
 /// 
@@ -26,7 +25,6 @@ namespace GameState {
         public override void EnterState() {
             PlushieDamageGO.OnPlushieDamageClicked += HandleDamageClick;
             Workspace.OnClientPlushieloaded += HandlePlushieLoadEvent;
-            MendingGameManager.OnMendingGameComplete += HandleMendingGameCompleteEvent;
             ClientCard.OnClientCardInitialClick += FinishPlushieState;
         }
 
@@ -37,7 +35,6 @@ namespace GameState {
         public override void ExitState() {
             Workspace.OnClientPlushieloaded -= HandlePlushieLoadEvent;
             PlushieDamageGO.OnPlushieDamageClicked -= HandleDamageClick;
-            MendingGameManager.OnMendingGameComplete -= HandleMendingGameCompleteEvent;
             PlushieActiveState.CurrentPlushie = null;
         }
 
@@ -56,7 +53,7 @@ namespace GameState {
             PlushieActiveState.CurrentPlushie = plushie;
         }
 
-        private void HandleMendingGameCompleteEvent(PlushieDamageGO plushieDamage) {
+        public static void CheckPlushieCompletionState() {
             // Check count of plushie damage elements
             PlushieDamageGO[] plushieDamages = CurrentPlushie.PlushieDamageList;
 
@@ -68,9 +65,11 @@ namespace GameState {
                 // Else, check all of the plushie's damage elements for completeness
                 foreach (PlushieDamageGO p in plushieDamages) {
                     if (!p.DamageRepairComplete) {
+                        Debug.Log("NOT COMPLETE");
                         return;
                     }
                 }
+                Debug.Log("COMPLETE");
                 // If DamageRepairComplete is true for all plushie damage elements, invoke event
                 PlushieActiveState.OnPlushieCompleteEvent?.Invoke(CurrentPlushie);
             }

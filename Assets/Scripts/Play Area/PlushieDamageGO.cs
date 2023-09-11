@@ -1,3 +1,5 @@
+using GameState;
+using MendingGames;
 using Scriptables.DamageInstructions;
 using System;
 using System.Collections.Generic;
@@ -35,10 +37,12 @@ public class PlushieDamageGO : MonoBehaviour {
 
     // Send out event when damage is clicked to 
     public void OnMouseDown() {
-        capsuleCollider.enabled = false;
-        plushieDamageSM.SubscribeToMendingGame();
-        PlushieDamageSM.OnCompleteRepair += HandleCompleteRepairEvent;
-        OnPlushieDamageClicked?.Invoke(this);
+        if (!MendingGameManager.Clearing) {
+            capsuleCollider.enabled = false;
+            plushieDamageSM.SubscribeToMendingGame();
+            PlushieDamageSM.OnCompleteRepair += HandleCompleteRepairEvent;
+            OnPlushieDamageClicked?.Invoke(this);
+        }
     }
 
     public DamageInstructrionsScriptableObject[] GetDamageInstructrions() {
@@ -75,7 +79,7 @@ public class PlushieDamageGO : MonoBehaviour {
         plushieDamageSM.UnsubscribeToMendingGame();
         PlushieDamageSM.OnCompleteRepair -= HandleCompleteRepairEvent;
         OnPlushieDamageComplete?.Invoke(this);
-
+        PlushieActiveState.CheckPlushieCompletionState();
     }
 
     private void _finishRepairing() {
