@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class ChecklistLineItem : MonoBehaviour {
     [SerializeField] private Image checkmark;
+    [SerializeField] private Sprite checkmarkSprite;
     [SerializeField] private TMPro.TMP_Text lineItemText;
     private PlushieDamageGO[] plushieDamageSet;
     public PlushieDamageType PlushieDamageType { get; private set; }
@@ -14,6 +15,7 @@ public class ChecklistLineItem : MonoBehaviour {
     }
 
     public void CompleteLineItem() {
+        checkmark.sprite = checkmarkSprite;
         Color tempColor = checkmark.color;
         tempColor.a = 1f;
         checkmark.color = tempColor;
