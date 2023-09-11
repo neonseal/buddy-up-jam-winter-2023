@@ -1,6 +1,5 @@
 using PlayArea;
 using System;
-using UnityEngine;
 /// <summary>
 /// Plushie Active State
 /// 
@@ -65,11 +64,9 @@ namespace GameState {
                 // Else, check all of the plushie's damage elements for completeness
                 foreach (PlushieDamageGO p in plushieDamages) {
                     if (!p.DamageRepairComplete) {
-                        Debug.Log("NOT COMPLETE");
                         return;
                     }
                 }
-                Debug.Log("COMPLETE");
                 // If DamageRepairComplete is true for all plushie damage elements, invoke event
                 PlushieActiveState.OnPlushieCompleteEvent?.Invoke(CurrentPlushie);
             }
