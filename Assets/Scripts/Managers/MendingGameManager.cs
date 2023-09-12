@@ -120,6 +120,7 @@ namespace MendingGames {
                     RaycastHit2D hit = Physics2D.Raycast(position, Vector2.zero);
 
                     if (hit.collider != null && hit.collider.name == "LensBackground") {
+                        Debug.Log("COLLIDE");
                         // Determine mouse position as percentage of collider extents 
                         if (GetStuffedAmount() < 0.85f) {
                             float percentX = (float)Math.Round((position.x + (textureXPosMax / 2f)) / textureXPosMax, 2);
@@ -231,6 +232,12 @@ namespace MendingGames {
             Clearing = true;
 
             yield return new WaitForSeconds(1f);
+            ClearSewingCuttingGame();
+            damageRepairStepIndex = -1;
+            Clearing = false;
+        }
+
+        private void ClearSewingCuttingGame() {
             foreach (var dashSet in dashSets) {
                 foreach (Dash dash in dashSet) {
                     DestroyImmediate(dash.gameObject);
@@ -242,8 +249,6 @@ namespace MendingGames {
 
             dashSets.Clear();
             nodes.Clear();
-            damageRepairStepIndex = -1;
-            Clearing = false;
         }
 
 
@@ -426,6 +431,10 @@ namespace MendingGames {
         /*                        STUFFING GAME                         */
         /* ----------------------------------------------------------- */
         private void GenerateStuffingGame() {
+
+            stepCompleteCalled = false;
+            stuffedAreaCurrent = 0;
+
             // Create Masking Texture
             stuffingMaskTexture = new Texture2D(uvMask.width, uvMask.height);
             stuffingMaskTexture.SetPixels(uvMask.GetPixels());
@@ -455,6 +464,10 @@ namespace MendingGames {
             }
 
             lensCircleCollider.enabled = true;
+
+            if (dashSets.Count > 0) {
+                ClearSewingCuttingGame();
+            }
         }
 
         private float GetStuffedAmount() {

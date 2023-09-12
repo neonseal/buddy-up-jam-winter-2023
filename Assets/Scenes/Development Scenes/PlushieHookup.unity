@@ -3820,15 +3820,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plushieList:
+  - {fileID: 7742099866771880458, guid: fe0bd066c2080ed44aded3a3b4dc77f7, type: 3}
+  - {fileID: -8918833531433070196, guid: 06dbf73a4c3351d4e8b7e755b97694d6, type: 3}
+  - {fileID: 2119863328074978100, guid: c4702be6f013caf469788bef4dbd1dc1, type: 3}
   - {fileID: -8918833531433070196, guid: 5b1f9029f89758e4591055e389ed4fbd, type: 3}
   - {fileID: 7742099866771880458, guid: c3c941c2ab23f024eb311e6db768f7ef, type: 3}
   - {fileID: 702459725349806567, guid: ef848622359687d47bbcab4a2d4e59e9, type: 3}
   - {fileID: 7420385327291723435, guid: 016f76c33115dcf4384896f0dbef3c73, type: 3}
   - {fileID: 2119863328074978100, guid: e010f44a6d8e997438014409bf8cfe9a, type: 3}
   - {fileID: 4053477579820682806, guid: 7d5802e9867bff9458c19bd7e4b51ebd, type: 3}
-  - {fileID: 7742099866771880458, guid: fe0bd066c2080ed44aded3a3b4dc77f7, type: 3}
-  - {fileID: -8918833531433070196, guid: 06dbf73a4c3351d4e8b7e755b97694d6, type: 3}
-  - {fileID: 2119863328074978100, guid: c4702be6f013caf469788bef4dbd1dc1, type: 3}
   moveEaseType: 21
   moveDuration: 0.5
   animateDuration: 0.7
