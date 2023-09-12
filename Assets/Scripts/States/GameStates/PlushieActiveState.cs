@@ -56,7 +56,6 @@ namespace GameState {
             // Check count of plushie damage elements
             PlushieDamageGO[] plushieDamages = CurrentPlushie.PlushieDamageList;
 
-
             // If only one, throw plushie complete event
             if (plushieDamages.Length == 1) {
                 PlushieActiveState.OnPlushieCompleteEvent?.Invoke(CurrentPlushie);

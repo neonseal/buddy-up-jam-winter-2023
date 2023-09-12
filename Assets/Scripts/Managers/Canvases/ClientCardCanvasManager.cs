@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Dialogue;
 using PlayArea;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +23,8 @@ public class ClientCardCanvasManager : MonoBehaviour {
     [SerializeField] private Ease ease;
     [SerializeField] private float scaleX;
     [SerializeField] private float scaleY;
+
+    [SerializeField] public TutorialManager TutorialManager;
 
     private void Awake() {
         DOTween.Init();
@@ -51,8 +54,16 @@ public class ClientCardCanvasManager : MonoBehaviour {
 
         // Tween the card into view
         clientCard.transform.DOLocalMove(new Vector3(0, 0, 0), 1.5f).SetEase(Ease.OutBack);
+        yield return new WaitForSeconds(1.75f);
+
+        if (clientCard.TutorialSequence) {
+            clientCard.TutorialManager = this.TutorialManager;
+            TutorialManager.StartTutorialSequence(clientCard.TutorialSequence);
+        }
 
         cardCollection.Add(clientCard);
+
+
     }
 
     private void MoveClientCardToBoard(ClientCard clientCard) {
