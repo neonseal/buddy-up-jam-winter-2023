@@ -120,7 +120,6 @@ namespace MendingGames {
                     RaycastHit2D hit = Physics2D.Raycast(position, Vector2.zero);
 
                     if (hit.collider != null && hit.collider.name == "LensBackground") {
-                        Debug.Log("COLLIDE");
                         // Determine mouse position as percentage of collider extents 
                         if (GetStuffedAmount() < 0.85f) {
                             float percentX = (float)Math.Round((position.x + (textureXPosMax / 2f)) / textureXPosMax, 2);
