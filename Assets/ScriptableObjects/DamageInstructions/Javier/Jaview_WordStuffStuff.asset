@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9f80a159de1db645878f7f5f69d17b5, type: 3}
   m_Name: Jaview_WordStuffStuff
   m_EditorClassIdentifier: 
-  PlushieDamageType: 3
   MendingGameType: 2
   RequiredToolType: 3
   TargetLocations: []
-  DamageSprite: {fileID: 0}
+  DamageSprite: {fileID: 21300000, guid: e3ae01043378c534caff4faf845f58ad, type: 3}
+  DamageTexture: {fileID: 0}
   RepairedDamageSprite: {fileID: 0}
+  StuffingBackgroundTexture: {fileID: 2800000, guid: 94a5fc8f9c876be41b31858a9358ed5a, type: 3}
   RotationZValue: 0

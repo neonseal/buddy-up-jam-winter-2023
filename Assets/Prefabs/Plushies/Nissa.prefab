@@ -101,24 +101,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clientName: Nissa
-  clientFont: {fileID: 11400000, guid: 96ccb3f7823cb054dab436d699160ba1, type: 2}
-  nameFontSize: 40
-  dialogueFontSize: 32
+  clientFont: {fileID: 11400000, guid: 17cbf07fd66b0ec4da1047a66731af0d, type: 2}
+  nameFontSize: 48
+  dialogueFontSize: 38
   nameBolded: 0
   dialogueBolded: 0
-  lineSpacingValue: 0
-  characterSpacingValue: 0
+  lineSpacingValue: -14
+  characterSpacingValue: 2
   wordSpacingValue: 0
   _repairedPlushieSprite: {fileID: 21300000, guid: b213de11068798245a93d177fecb20c9, type: 3}
   IssueDialogue:
-    name: Reima & Remy
+    name: Nissa
     sentences:
-    - Hello, my girlfriend and I just moved here from out of state and happened to
-      see one of your fliers.
-    - "During our move, I may have accidentally damaged one of Remy\u2019s favorite
-      plushies.  Usually it wouldn\u2019t matter, we could just buy a replacement,
-      but this one is special. "
-    - Do you think you could take a look?
+    - Hello, I recently read an article about your little shop and was hoping you
+      could help me.
+    - I accidently caught my plushie on the edge of the counter. As you can see,
+      it made a fairly large rip
+    - "Afterwards, I noticed that there was some stuffing missing as well. I know
+      it\u2019s a big tear, but do you think you could fix it?"
   resolutionClientCard: {fileID: -8861978948673554049, guid: cce14a612ca548846b39ece53aca79e2, type: 3}
   HasTutorialDialogue: 0
   TutorialSequenceScriptableObject: {fileID: 11400000, guid: 8238cfc784570944783cee4ec587f900, type: 2}

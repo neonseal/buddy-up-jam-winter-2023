@@ -8,7 +8,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
 /// <summary>
 /// Mending Game Manager
 /// 
@@ -41,6 +40,7 @@ namespace MendingGames {
         [SerializeField] private PlayAreaCanvasManager canvasManager;
         [Range(0f, 1f)]
         [SerializeField] private float lineCompleteThreshold;
+        public static bool Clearing = false;
 
         [Header("Sewing/Cutting Game Rendering")]
         [SerializeField] private Material defaultMaterial;
@@ -120,7 +120,7 @@ namespace MendingGames {
 
                     if (hit.collider != null && hit.collider.name == "LensBackground") {
                         // Determine mouse position as percentage of collider extents 
-                        if (GetStuffedAmount() < 0.9f) {
+                        if (GetStuffedAmount() < 0.85f) {
                             float percentX = (float)Math.Round((position.x + (textureXPosMax / 2f)) / textureXPosMax, 2);
                             float percentY = (float)Math.Round((position.y + (textureYPosMax / 2f)) / textureYPosMax, 2);
 
@@ -180,7 +180,7 @@ namespace MendingGames {
             mendingGameInProgress = true;
             this.plushieDamage = plushieDamage;
             this.damageInstructions = plushieDamage.GetDamageInstructrions();
-            this.damageRepairStepIndex = 0;
+            this.damageRepairStepIndex++;
 
             instructionStep = this.damageInstructions[damageRepairStepIndex];
 
@@ -227,7 +227,15 @@ namespace MendingGames {
         }
 
         private IEnumerator ClearGameRoutine() {
+            Clearing = true;
+
             yield return new WaitForSeconds(1f);
+            ClearSewingCuttingGame();
+            damageRepairStepIndex = -1;
+            Clearing = false;
+        }
+
+        private void ClearSewingCuttingGame() {
             foreach (var dashSet in dashSets) {
                 foreach (Dash dash in dashSet) {
                     DestroyImmediate(dash.gameObject);
@@ -421,6 +429,10 @@ namespace MendingGames {
         /*                        STUFFING GAME                         */
         /* ----------------------------------------------------------- */
         private void GenerateStuffingGame() {
+
+            stepCompleteCalled = false;
+            stuffedAreaCurrent = 0;
+
             // Create Masking Texture
             stuffingMaskTexture = new Texture2D(uvMask.width, uvMask.height);
             stuffingMaskTexture.SetPixels(uvMask.GetPixels());
@@ -450,6 +462,10 @@ namespace MendingGames {
             }
 
             lensCircleCollider.enabled = true;
+
+            if (dashSets.Count > 0) {
+                ClearSewingCuttingGame();
+            }
         }
 
         private float GetStuffedAmount() {
@@ -457,7 +473,7 @@ namespace MendingGames {
         }
 
         private void CompleteStuffingGame() {
-            Color32 stuffedColor = new Color32(0, 0, 0, 0);
+            Color32 stuffedColor = new Color32(1, 1, 1, 0);
             Color32[] colors = stuffingMaskTexture.GetPixels32();
 
             for (int i = 0; i < colors.Length; i++) {
