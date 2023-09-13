@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 4920179664441396057}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.35, y: 0.35, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2213960393703891742}
@@ -120,8 +120,8 @@ MonoBehaviour:
       it fixed up, but she just never had the time. So, if you\u2019re willing, I\u2019d
       greatly appreciate it."
   resolutionClientCard: {fileID: -8861978948673554049, guid: d256267d11e71034090048515d2a746b, type: 3}
-  HasTutorialDialogue: 0
-  TutorialSequenceScriptableObject: {fileID: 11400000, guid: 8238cfc784570944783cee4ec587f900, type: 2}
+  HasTutorialDialogue: 1
+  TutorialSequenceScriptableObject: {fileID: 11400000, guid: ce56e14c756311a4b8fbfabffbd5cb3c, type: 2}
   duration: 2
 --- !u!1001 &277875640951136250
 PrefabInstance:
