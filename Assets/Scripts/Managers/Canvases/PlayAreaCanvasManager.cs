@@ -102,7 +102,6 @@ namespace PlayArea {
             // If no tool selected or different tool, pick up clicked tool
             if (currentTool == null || currentTool != tool) {
                 SetCurrentTool(tool, toolType);
-
                 // Set held tool cursor
                 SetToolCursor();
 
