@@ -117,8 +117,8 @@ MonoBehaviour:
     - "As you can see from the large rip and missing stuffing it\u2019s not going
       to be easy."
   resolutionClientCard: {fileID: -8861978948673554049, guid: f2616e340f3d0264eaa8a435a89c22ad, type: 3}
-  HasTutorialDialogue: 0
-  TutorialSequenceScriptableObject: {fileID: 11400000, guid: 8238cfc784570944783cee4ec587f900, type: 2}
+  HasTutorialDialogue: 1
+  TutorialSequenceScriptableObject: {fileID: 11400000, guid: b2020ef1392c15d48ba7993d08352255, type: 2}
   duration: 2
 --- !u!1001 &3701556248202397257
 PrefabInstance:
