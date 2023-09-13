@@ -78,6 +78,9 @@ namespace PlayArea {
 
         public void Place() {
             held = false;
+            contionuousMouseHoldSound.Stop();
+            usingTool = false;
+            StopAllCoroutines();
             placeSound.Play();
         }
 

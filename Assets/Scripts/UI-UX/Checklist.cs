@@ -122,6 +122,9 @@ namespace PlayArea {
 
         private void SendOffPlushie() {
             repairCompleteSound.Play();
+            if (tutorialManager.TutorialActive) {
+                tutorialManager.ContinueTutorialSequence();
+            }
             PlushieActiveState.CurrentPlushie.SendOffPlushie();
         }
     }
