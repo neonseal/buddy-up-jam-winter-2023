@@ -15,6 +15,7 @@ namespace PlayArea {
         [SerializeField] private Button notepadBtn;
         [SerializeField] private Button completeRepairBtn;
         [SerializeField] private ChecklistLineItem checklistStepPrefab;
+        [SerializeField] private AudioSource repairCompleteSound;
         private List<ChecklistLineItem> checklistLineItems;
 
         [Header("Dialogue/Tutorial Elements")]
@@ -120,6 +121,10 @@ namespace PlayArea {
         }
 
         private void SendOffPlushie() {
+            repairCompleteSound.Play();
+            if (tutorialManager.TutorialActive) {
+                tutorialManager.ContinueTutorialSequence();
+            }
             PlushieActiveState.CurrentPlushie.SendOffPlushie();
         }
     }

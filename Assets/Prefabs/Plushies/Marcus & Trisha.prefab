@@ -118,7 +118,7 @@ MonoBehaviour:
       see one of your fliers.
     - "There\u2019s no major damage, just several small rips here and there."
     - "We\u2019d appreciate it very much if you could take a look."
-  resolutionClientCard: {fileID: -8861978948673554049, guid: 2d4dcde84829e1f49be5b0d2ef020b7d, type: 3}
+  resolutionClientCard: {fileID: -8861978948673554049, guid: 46219ea1c30844d44802c8f68d84eac3, type: 3}
   HasTutorialDialogue: 0
   TutorialSequenceScriptableObject: {fileID: 11400000, guid: 8238cfc784570944783cee4ec587f900, type: 2}
   duration: 2

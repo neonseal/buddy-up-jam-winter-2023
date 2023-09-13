@@ -38,7 +38,7 @@ namespace PlayArea {
         float bellResetTimer;
 
         [Header("Mending Tool Elements")]
-        private AudioSource bellSound;
+        [SerializeField] private AudioSource bellSound;
         private Tool currentTool;
         private ToolType currentToolType;
 
@@ -72,7 +72,6 @@ namespace PlayArea {
         public void InitializeCanvasManager() {
             DOTween.Init();
 
-            bellSound = this.gameObject.GetComponent<AudioSource>();
             bellResetTimer = 1f;
             nextClientBtn.onClick.AddListener(HandleNextClientBtnClick);
 
@@ -102,7 +101,6 @@ namespace PlayArea {
             // If no tool selected or different tool, pick up clicked tool
             if (currentTool == null || currentTool != tool) {
                 SetCurrentTool(tool, toolType);
-
                 // Set held tool cursor
                 SetToolCursor();
 

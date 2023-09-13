@@ -40,6 +40,7 @@ namespace MendingGames {
         [SerializeField] private PlayAreaCanvasManager canvasManager;
         [Range(0f, 1f)]
         [SerializeField] private float lineCompleteThreshold;
+        private AudioSource stepCompleteSound;
         public static bool Clearing = false;
 
         [Header("Sewing/Cutting Game Rendering")]
@@ -99,6 +100,7 @@ namespace MendingGames {
             dashSets = new List<List<Dash>>();
             lensSpriteRenderer = magnifyingGlassLens.GetComponent<SpriteRenderer>();
             lensCircleCollider = magnifyingGlassLens.GetComponent<CircleCollider2D>();
+            stepCompleteSound = this.GetComponent<AudioSource>();
 
             damageRepairStepIndex = -1;
             startingLocation = magnifyingGlass.transform.localPosition;
@@ -205,6 +207,8 @@ namespace MendingGames {
         }
 
         private void CompleteOrContinueMendingGames() {
+            stepCompleteSound.Play();
+
             // Check if there are more steps to the repair process
             if (this.damageRepairStepIndex < this.damageInstructions.Count() - 1) {
                 // Fire step complete event 

@@ -1,8 +1,10 @@
 
 using Scriptables;
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 /// <summary>
 /// Tool Class
@@ -22,6 +24,8 @@ namespace PlayArea {
     public class Tool : MonoBehaviour, IPointerClickHandler {
         [SerializeField]
         private ToolScriptableObject toolScriptableObject;
+        private bool held;
+        private bool usingTool;
 
         [Header("Audio Sources")]
         [SerializeField] private AudioSource pickupSound;
@@ -29,19 +33,54 @@ namespace PlayArea {
         [SerializeField] private AudioSource singleMouseClickSound;
         [SerializeField] private AudioSource contionuousMouseHoldSound;
 
+        [Header("Tool Image Assets")]
+        private Image toolRollSlotImage;
+        [SerializeField] private Sprite defaultToolImage;
+        [SerializeField] private Sprite pickedUpToolImage;
+
         /* Tool Selected Event */
         public static event Action<Tool, ToolType> OnToolClicked;
 
+        private void Awake() {
+            held = false;
+            toolRollSlotImage = GetComponent<Image>();
+        }
+
+        private void Update() {
+            if (held && Input.GetMouseButton(0) && !usingTool) {
+                StartCoroutine("PlayMouseHoldSound");
+            }
+
+            if (Input.GetMouseButtonUp(0)) {
+                contionuousMouseHoldSound.Stop();
+                usingTool = false;
+                StopAllCoroutines();
+            }
+        }
+
         // Set the selected tool as the player's cursor
         public void OnPointerClick(PointerEventData eventData) {
+            if (pickedUpToolImage != null) {
+                toolRollSlotImage.sprite = toolRollSlotImage.sprite == defaultToolImage ? pickedUpToolImage : defaultToolImage;
+            } else {
+                Color tempColor = toolRollSlotImage.color;
+                tempColor.a = toolRollSlotImage.color.a == 1f ? 0f : 1f;
+                toolRollSlotImage.color = tempColor;
+            }
+
             OnToolClicked?.Invoke(this, toolScriptableObject.ToolType);
         }
 
         public void Pickup() {
             pickupSound.Play();
+            held = true;
         }
 
         public void Place() {
+            held = false;
+            contionuousMouseHoldSound.Stop();
+            usingTool = false;
+            StopAllCoroutines();
             placeSound.Play();
         }
 
@@ -49,8 +88,11 @@ namespace PlayArea {
             singleMouseClickSound.Play();
         }
 
-        public void PlayMouseHoldSound() {
+        public IEnumerator PlayMouseHoldSound() {
+            usingTool = true;
             contionuousMouseHoldSound.Play();
+            yield return new WaitForSeconds(2f);
+            usingTool = false;
         }
 
         /* Public Properties */
