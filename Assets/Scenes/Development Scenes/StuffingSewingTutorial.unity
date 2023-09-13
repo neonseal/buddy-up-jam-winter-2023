@@ -3898,7 +3898,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plushieList:
-  - {fileID: -8918833531433070196, guid: 5b1f9029f89758e4591055e389ed4fbd, type: 3}
+  - {fileID: -8918833531433070196, guid: 2275983da05e8664da50d3cb760182ff, type: 3}
   - {fileID: 7742099866771880458, guid: c3c941c2ab23f024eb311e6db768f7ef, type: 3}
   - {fileID: 702459725349806567, guid: ef848622359687d47bbcab4a2d4e59e9, type: 3}
   - {fileID: 7420385327291723435, guid: 016f76c33115dcf4384896f0dbef3c73, type: 3}

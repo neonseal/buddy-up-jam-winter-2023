@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 2937587479838695240}
   - component: {fileID: 2937587479838695243}
   m_Layer: 5
-  m_Name: ReimaAndRemyCard_BACKUP
+  m_Name: ReimaAndRemyCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -283,7 +283,7 @@ MonoBehaviour:
   MovedToBoard: 0
   InitialInstantiation: 0
   TutorialSequence: {fileID: 11400000, guid: 47bef8abcba137b4fa814714be836c93, type: 2}
-  canvasManager: {fileID: 0}
+  TutorialManager: {fileID: 0}
 --- !u!210 &2937587479838695243
 SortingGroup:
   m_ObjectHideFlags: 0

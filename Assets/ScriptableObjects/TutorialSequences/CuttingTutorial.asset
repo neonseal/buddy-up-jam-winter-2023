@@ -12,5 +12,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a91674e172df5314f94edd4876060d27, type: 3}
   m_Name: CuttingTutorial
   m_EditorClassIdentifier: 
-  sequenceName: 
-  tutorialSteps: []
+  sequenceName: Cutting Tutorial
+  tutorialSteps:
+  - stepText: Uh oh! It looks like this plushie has some worn stuffing. You'll have
+      cut the area open and replace the stuffing here.
+    requiredToolType: 0
+    requiredContinueAction: 0
+    timer: 0
+    tutorialDialogueLocation: {x: 0, y: -225}
+    requiresArrow: 0
+    tutorialArrowLocation: {x: 200, y: 50}
+    arrowZRotationValue: -50
+  - stepText: Click the large damage area here to begin the repair.
+    requiredToolType: 0
+    requiredContinueAction: 2
+    timer: 0
+    tutorialDialogueLocation: {x: 555, y: -130}
+    requiresArrow: 1
+    tutorialArrowLocation: {x: 200, y: 50}
+    arrowZRotationValue: -50
+  - stepText: First, you'll need cut the stitches open. Select the scissors from
+      your tool roll here.
+    requiredToolType: 0
+    requiredContinueAction: 3
+    timer: 0
+    tutorialDialogueLocation: {x: -335, y: -20}
+    requiresArrow: 1
+    tutorialArrowLocation: {x: -675, y: -200}
+    arrowZRotationValue: 55
+  - stepText: Click and hold the top most X to begin the repair
+    requiredToolType: 0
+    requiredContinueAction: 5
+    timer: 0
+    tutorialDialogueLocation: {x: -450, y: 75}
+    requiresArrow: 1
+    tutorialArrowLocation: {x: -90, y: 245}
+    arrowZRotationValue: -135
+  - stepText: "Draw a line between the X\u2019s from top to bottom to pull cut open
+      the fabric."
+    requiredToolType: 0
+    requiredContinueAction: 6
+    timer: 0
+    tutorialDialogueLocation: {x: -430, y: -110}
+    requiresArrow: 1
+    tutorialArrowLocation: {x: -75, y: -275}
+    arrowZRotationValue: 135
+  - stepText: Return the scissors to the tool roll to complete the step.
+    requiredToolType: 0
+    requiredContinueAction: 4
+    timer: 0
+    tutorialDialogueLocation: {x: -335, y: -20}
+    requiresArrow: 1
+    tutorialArrowLocation: {x: -675, y: -200}
+    arrowZRotationValue: 55
+  - stepText: Good job! Now you just need to add in the cotton and sew the stuffie
+      back together.
+    requiredToolType: 0
+    requiredContinueAction: 0
+    timer: 0
+    tutorialDialogueLocation: {x: 600, y: -300}
+    requiresArrow: 0
+    tutorialArrowLocation: {x: 0, y: 0}
+    arrowZRotationValue: 0
