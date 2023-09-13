@@ -1,6 +1,7 @@
 
 using Scriptables;
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -23,6 +24,8 @@ namespace PlayArea {
     public class Tool : MonoBehaviour, IPointerClickHandler {
         [SerializeField]
         private ToolScriptableObject toolScriptableObject;
+        private bool held;
+        private bool usingTool;
 
         [Header("Audio Sources")]
         [SerializeField] private AudioSource pickupSound;
@@ -39,7 +42,20 @@ namespace PlayArea {
         public static event Action<Tool, ToolType> OnToolClicked;
 
         private void Awake() {
+            held = false;
             toolRollSlotImage = GetComponent<Image>();
+        }
+
+        private void Update() {
+            if (held && Input.GetMouseButton(0) && !usingTool) {
+                StartCoroutine("PlayMouseHoldSound");
+            }
+
+            if (Input.GetMouseButtonUp(0)) {
+                contionuousMouseHoldSound.Stop();
+                usingTool = false;
+                StopAllCoroutines();
+            }
         }
 
         // Set the selected tool as the player's cursor
@@ -57,9 +73,11 @@ namespace PlayArea {
 
         public void Pickup() {
             pickupSound.Play();
+            held = true;
         }
 
         public void Place() {
+            held = false;
             placeSound.Play();
         }
 
@@ -67,8 +85,11 @@ namespace PlayArea {
             singleMouseClickSound.Play();
         }
 
-        public void PlayMouseHoldSound() {
+        public IEnumerator PlayMouseHoldSound() {
+            usingTool = true;
             contionuousMouseHoldSound.Play();
+            yield return new WaitForSeconds(2f);
+            usingTool = false;
         }
 
         /* Public Properties */
