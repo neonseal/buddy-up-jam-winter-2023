@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a91674e172df5314f94edd4876060d27, type: 3}
+  m_Name: StuffingTutorial
+  m_EditorClassIdentifier: 
+  sequenceName: Stuffing Tutorial
+  tutorialSteps:
+  - stepText: Looks like this plushie has a large rip in its belly and has lost some
+      stuffing. You'll need to replace the stuffing and sew it back up.
+    requiredToolType: 0
+    requiredContinueAction: 0
+    timer: 0
+    tutorialDialogueLocation: {x: 0, y: 100}
+    requiresArrow: 0
+    tutorialArrowLocation: {x: 0, y: 0}
+    arrowZRotationValue: 0
+  - stepText: Click the damaged area here to begin the repair.
+    requiredToolType: 0
+    requiredContinueAction: 2
+    timer: 0
+    tutorialDialogueLocation: {x: 500, y: 0}
+    requiresArrow: 1
+    tutorialArrowLocation: {x: 150, y: -175}
+    arrowZRotationValue: 45
+  - stepText: "Click on the cotton to pick it up. You\u2019ll use it to replace the
+      stuffing.\r"
+    requiredToolType: 0
+    requiredContinueAction: 3
+    timer: 0
+    tutorialDialogueLocation: {x: -200, y: -115}
+    requiresArrow: 1
+    tutorialArrowLocation: {x: -550, y: -285}
+    arrowZRotationValue: 45
+  - stepText: Color in the area to stuff the plushie with new cotton.
+    requiredToolType: 0
+    requiredContinueAction: 6
+    timer: 0
+    tutorialDialogueLocation: {x: -630, y: 400}
+    requiresArrow: 0
+    tutorialArrowLocation: {x: 0, y: 0}
+    arrowZRotationValue: 0
+  - stepText: Return the cotton to your tool roll. Now, you'll be able to sew up
+      the area to complete the repair.
+    requiredToolType: 0
+    requiredContinueAction: 4
+    timer: 0
+    tutorialDialogueLocation: {x: -200, y: -115}
+    requiresArrow: 1
+    tutorialArrowLocation: {x: -550, y: -285}
+    arrowZRotationValue: 45
