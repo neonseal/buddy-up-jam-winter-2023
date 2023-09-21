@@ -68,9 +68,6 @@ namespace Dialogue {
 
             // Setup font styling and switching variables
             clientFontVisible = true;
-            openDyslexicTitleSize = 26;
-            openDyslexicFontSize = 22;
-            largeFontSize = 50;
 
             // Setup event listeners
             continueButton.onClick.AddListener(DisplayNextSentence);
@@ -159,7 +156,13 @@ namespace Dialogue {
             nameText.fontSize = this.clientFontVisible ? this.clientTitleSize : this.openDyslexicTitleSize;
 
             dialogueText.font = this.clientFontVisible ? this.clientFont : this.openDyslexicFont;
-            dialogueText.fontSize = this.clientFontVisible ? this.clientFontSize : this.openDyslexicFontSize;
+
+            if (fontSizeToggle.value > 0) {
+                dialogueText.fontSize = largeFontSize;
+            } else {
+                dialogueText.fontSize = this.clientFontVisible ? this.clientFontSize : this.openDyslexicFontSize;
+
+            }
         }
 
         private void SwitchFonts() {

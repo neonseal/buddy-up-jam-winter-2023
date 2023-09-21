@@ -40,6 +40,8 @@ namespace MendingGames {
         [SerializeField] private PlayAreaCanvasManager canvasManager;
         [Range(0f, 1f)]
         [SerializeField] private float lineCompleteThreshold;
+        [Range(0f, 1f)]
+        [SerializeField] private float stuffingCompleteThreshold;
         private AudioSource stepCompleteSound;
         public static bool Clearing = false;
 
@@ -122,7 +124,7 @@ namespace MendingGames {
 
                     if (hit.collider != null && hit.collider.name == "LensBackground") {
                         // Determine mouse position as percentage of collider extents 
-                        if (GetStuffedAmount() < 0.85f) {
+                        if (GetStuffedAmount() < stuffingCompleteThreshold) {
                             float percentX = (float)Math.Round((position.x + (textureXPosMax / 2f)) / textureXPosMax, 2);
                             float percentY = (float)Math.Round((position.y + (textureYPosMax / 2f)) / textureYPosMax, 2);
 
