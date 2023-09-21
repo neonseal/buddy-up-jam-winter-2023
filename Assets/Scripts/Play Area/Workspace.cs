@@ -33,7 +33,7 @@ namespace PlayArea {
         private int currentPlushieIndex = 0;
         private Plushie currentPlushie;
          // Name of the game finished/credit scene, used by LoadScene as the String parameter for scene name
-        private const String _GAME_FINISH_SCENE_NAME = "testSceneName";
+        private const String _GAME_FINISH_SCENE_NAME = "TestEndScene";
 
         /* Public Event Actions */
         public static event Action<Plushie> OnClientPlushieloaded;
@@ -52,13 +52,15 @@ namespace PlayArea {
         // If there are more plushies to be repaired, load in next pluishei
         // else, switch to game finish scene
         private void TryCallInNextClientPlushie() {
+            /*
             if (currentPlushieIndex < plushieList.Length) {
                 StartCoroutine(StartLoadPlushieRoutine());
             }
             else {
                 SceneManager.LoadScene(_GAME_FINISH_SCENE_NAME, LoadSceneMode.Single);
             }
-            
+            */
+            SceneManager.LoadScene(_GAME_FINISH_SCENE_NAME, LoadSceneMode.Single);
         }
 
         IEnumerator StartLoadPlushieRoutine() {
