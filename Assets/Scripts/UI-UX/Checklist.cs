@@ -15,6 +15,7 @@ namespace PlayArea {
         [SerializeField] private Button notepadBtn;
         [SerializeField] private Button completeRepairBtn;
         [SerializeField] private ChecklistLineItem checklistStepPrefab;
+        [SerializeField] private AudioSource repairCompleteSound;
         private List<ChecklistLineItem> checklistLineItems;
 
         [Header("Dialogue/Tutorial Elements")]
@@ -22,7 +23,7 @@ namespace PlayArea {
 
         [Header("Checklist Status Elements")]
         private int checklistLineItemCount;
-
+        private bool sendOffStarted;
 
         private void Awake() {
             // Buttons start disabled => Enabled during play states
@@ -30,6 +31,7 @@ namespace PlayArea {
             completeRepairBtn.interactable = false;
             checklistLineItems = new List<ChecklistLineItem>();
             checklistLineItemCount = 0;
+            sendOffStarted = false;
 
             // Setup checklist UI interaction events
             notepadBtn.onClick.AddListener(HandleChecklistClick);
@@ -68,6 +70,7 @@ namespace PlayArea {
             if (plushieDamages.Length == 0) {
                 return;
             }
+            sendOffStarted = false;
 
             // Reset checklist
             foreach (ChecklistLineItem checklistLineItem in checklistLineItems) {
@@ -120,7 +123,15 @@ namespace PlayArea {
         }
 
         private void SendOffPlushie() {
-            PlushieActiveState.CurrentPlushie.SendOffPlushie();
+            if (!sendOffStarted && PlushieActiveState.CurrentPlushie != null) {
+                sendOffStarted = true;
+                repairCompleteSound.Play();
+                if (tutorialManager.TutorialActive) {
+                    tutorialManager.ContinueTutorialSequence();
+                }
+                PlushieActiveState.CurrentPlushie.SendOffPlushie();
+
+            }
         }
     }
 }

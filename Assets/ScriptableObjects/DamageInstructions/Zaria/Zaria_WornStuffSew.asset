@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9f80a159de1db645878f7f5f69d17b5, type: 3}
   m_Name: Zaria_WornStuffSew
   m_EditorClassIdentifier: 
-  PlushieDamageType: 1
   MendingGameType: 0
   RequiredToolType: 2
   TargetLocations:
@@ -24,6 +23,8 @@ MonoBehaviour:
   - {x: 2.77, y: -4.69}
   - {x: -1.12, y: -5.42}
   - {x: 1.71, y: -7.91}
-  DamageSprite: {fileID: 0}
+  DamageSprite: {fileID: 21300000, guid: 8eee395130032f44680be3f7404e8582, type: 3}
+  DamageTexture: {fileID: 0}
   RepairedDamageSprite: {fileID: 0}
+  StuffingBackgroundTexture: {fileID: 0}
   RotationZValue: 0
