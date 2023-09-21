@@ -71,6 +71,19 @@ namespace PlayArea {
             OnToolClicked?.Invoke(this, toolScriptableObject.ToolType);
         }
 
+        public void Reset() {
+            held = false;
+            usingTool = false;
+
+            if (pickedUpToolImage != null) {
+                toolRollSlotImage.sprite = defaultToolImage;
+            } else {
+                Color tempColor = toolRollSlotImage.color;
+                tempColor.a = 1f;
+                toolRollSlotImage.color = tempColor;
+            }
+        }
+
         public void Pickup() {
             pickupSound.Play();
             held = true;

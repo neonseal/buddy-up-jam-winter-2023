@@ -933,8 +933,8 @@ MonoBehaviour:
   continueButton: {fileID: 2410398822448209033}
   fontSizeToggle: {fileID: 188207662325007148}
   scrollRect: {fileID: 3207328879625603264}
-  defaultFontSize: 20
-  largeFontSize: 30
+  defaultFontSize: 15
+  largeFontSize: 24
 --- !u!1 &6302696518105762111
 GameObject:
   m_ObjectHideFlags: 0
@@ -1120,8 +1120,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1132,7 +1132,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -20
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0

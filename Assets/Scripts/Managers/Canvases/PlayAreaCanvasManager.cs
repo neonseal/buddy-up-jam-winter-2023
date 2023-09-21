@@ -100,7 +100,14 @@ namespace PlayArea {
         private void HandleToolSelection(Tool tool, ToolType toolType) {
             // If no tool selected or different tool, pick up clicked tool
             if (currentTool == null || currentTool != tool) {
+                // Reset current tool
+                if (currentTool != null) {
+                    currentTool.Reset();
+                }
+
+                // Set selected tool
                 SetCurrentTool(tool, toolType);
+
                 // Set held tool cursor
                 SetToolCursor();
 
