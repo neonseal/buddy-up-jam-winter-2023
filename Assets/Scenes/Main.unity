@@ -865,7 +865,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &184381823
 GameObject:
@@ -896,7 +896,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &203457330
 GameObject:
@@ -1062,7 +1062,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &223699794
 GameObject:
@@ -1869,7 +1869,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &470216305
 GameObject:
@@ -2690,7 +2690,7 @@ Transform:
   - {fileID: 281240516}
   - {fileID: 1129289021}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &756971292
 GameObject:
@@ -3622,9 +3622,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 144778963}
-  - {fileID: 1338265284}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &998477017
 GameObject:
@@ -3756,7 +3755,7 @@ Transform:
   - {fileID: 1346061828}
   - {fileID: 1808384075}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1077653551
 GameObject:
@@ -6115,7 +6114,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1338265283
 GameObject:
@@ -6151,8 +6150,8 @@ Transform:
   - {fileID: 258153542}
   - {fileID: 1359966344}
   - {fileID: 1088061599}
-  m_Father: {fileID: 990622870}
-  m_RootOrder: 1
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1338265285
 AudioSource:
@@ -6818,7 +6817,7 @@ Transform:
   - {fileID: 1045650917}
   - {fileID: 1077653552}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1468199307
 GameObject:
@@ -6935,18 +6934,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209041260833d4e4db00ba8c2fc24e53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: {fileID: 223699796}
-  dialogueText: {fileID: 68398064}
-  continueButton: {fileID: 756971294}
-  fontToggle: {fileID: 1854113164}
-  fontSizeToggle: {fileID: 1900284237}
-  scrollRect: {fileID: 343992057}
-  animator: {fileID: 1468199311}
-  defaultAnimationDelay: 0.025
-  openDyslexicFont: {fileID: 11400000, guid: 831c988cc79f6804593c3e8f5a175d66, type: 2}
-  openDyslexicTitleSize: 24
-  openDyslexicFontSize: 26
-  largeFontSize: 50
 --- !u!1 &1558090610
 GameObject:
   m_ObjectHideFlags: 0
