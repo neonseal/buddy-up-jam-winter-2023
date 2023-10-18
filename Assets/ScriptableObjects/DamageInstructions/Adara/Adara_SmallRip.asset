@@ -16,7 +16,7 @@ MonoBehaviour:
   RequiredToolType: 2
   TargetLocations:
   - {x: -2.19, y: 6.82}
-  - {x: -2.59, y: 2.89}
+  - {x: -3.82, y: 3.08}
   - {x: 3.53, y: 2.51}
   - {x: -0.38, y: -0.38}
   - {x: 3.79, y: -3.38}
