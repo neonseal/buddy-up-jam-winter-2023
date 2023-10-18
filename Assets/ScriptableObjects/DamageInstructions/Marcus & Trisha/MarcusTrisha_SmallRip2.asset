@@ -20,7 +20,7 @@ MonoBehaviour:
   - {x: 0.06, y: -0.03}
   - {x: 3.69, y: -3.17}
   - {x: -2.27, y: -4.29}
-  DamageSprite: {fileID: 21300000, guid: 228e7883fc3eacc45bb0b2b8cb007361, type: 3}
+  DamageSprite: {fileID: 21300000, guid: 50c609ba5c7f9c4419ee7514cbbadd1e, type: 3}
   DamageTexture: {fileID: 0}
   RepairedDamageSprite: {fileID: 21300000, guid: 982f410c82a57094d93848a599ad0084, type: 3}
   StuffingBackgroundTexture: {fileID: 0}
