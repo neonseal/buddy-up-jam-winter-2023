@@ -37,7 +37,7 @@ public class PlushieDamageGO : MonoBehaviour {
 
     // Send out event when damage is clicked to 
     public void OnMouseDown() {
-        if (!MendingGameManager.Clearing) {
+        if (!MendingGameManager.Clearing && !MendingGameManager.MendingGameInProgress) {
             capsuleCollider.enabled = false;
             plushieDamageSM.SubscribeToMendingGame();
             PlushieDamageSM.OnCompleteRepair += HandleCompleteRepairEvent;

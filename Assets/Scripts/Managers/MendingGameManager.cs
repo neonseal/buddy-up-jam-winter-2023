@@ -30,11 +30,11 @@ namespace MendingGames {
 
     public class MendingGameManager : MonoBehaviour {
         [Header("High-level Status/Progress Elements")]
+        public static bool MendingGameInProgress = false;
         private PlushieDamageGO plushieDamage;
         private DamageInstructrionsScriptableObject[] damageInstructions;
         private DamageInstructrionsScriptableObject instructionStep;
         private int damageRepairStepIndex;
-        private bool mendingGameInProgress;
         private int activeNodeIndex;
         private ToolType requiredToolType;
         [SerializeField] private PlayAreaCanvasManager canvasManager;
@@ -114,7 +114,7 @@ namespace MendingGames {
 
         private void Update() {
             // Update stuffing material if interacting with stuffing game
-            if (mendingGameInProgress && requiredToolType == ToolType.Stuffing) {
+            if (MendingGameInProgress && requiredToolType == ToolType.Stuffing) {
                 if (Input.GetMouseButton(0) && canvasManager.CurrentToolType == requiredToolType && !stepCompleteCalled) {
                     // Check for raycast hits on magnifying glass and update mask
                     Vector3 position = Input.mousePosition;
@@ -181,7 +181,7 @@ namespace MendingGames {
         // damage instructions and rendering the appropriate game to the lens
         public void GenerateMendingGame(PlushieDamageGO plushieDamage) {
 
-            mendingGameInProgress = true;
+            MendingGameInProgress = true;
             this.plushieDamage = plushieDamage;
             this.damageInstructions = plushieDamage.GetDamageInstructrions();
             this.damageRepairStepIndex++;
@@ -220,7 +220,7 @@ namespace MendingGames {
             } else {
                 // Complete mending game and reset
                 magnifyingGlass.transform.DOLocalMove(startingLocation, duration).SetEase(easeType);
-                this.mendingGameInProgress = false;
+                MendingGameInProgress = false;
                 OnMendingStepComplete?.Invoke(this.damageInstructions[this.damageRepairStepIndex]);
                 OnMendingGameComplete?.Invoke(this.plushieDamage);
                 StartCoroutine("ClearGameRoutine");
@@ -494,10 +494,6 @@ namespace MendingGames {
 
             CompleteOrContinueMendingGames();
         }
-
-
-        /* Public Properties */
-        public bool MendingGameInProgress { get => mendingGameInProgress; }
     }
 }
 

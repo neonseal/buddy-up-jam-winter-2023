@@ -14,7 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MendingGameType: 0
   RequiredToolType: 2
-  TargetLocations: []
+  TargetLocations:
+  - {x: -2.19, y: 6.82}
+  - {x: -2.59, y: 2.89}
+  - {x: 3.53, y: 2.51}
+  - {x: -0.38, y: -0.38}
+  - {x: 3.79, y: -3.38}
+  - {x: -2.14, y: -3.74}
+  - {x: -1, y: -6.84}
   DamageSprite: {fileID: 21300000, guid: 3ec42d009f4a46e43b108252744e6885, type: 3}
   DamageTexture: {fileID: 0}
   RepairedDamageSprite: {fileID: 0}

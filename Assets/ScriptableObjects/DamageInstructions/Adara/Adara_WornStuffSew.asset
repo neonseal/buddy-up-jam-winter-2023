@@ -15,11 +15,11 @@ MonoBehaviour:
   MendingGameType: 0
   RequiredToolType: 2
   TargetLocations:
-  - {x: -2.1, y: 5.02}
-  - {x: 4.16, y: 2.03}
-  - {x: -1.73, y: -1.6}
-  - {x: 2.62, y: -4.88}
-  - {x: -0.91, y: -7.58}
+  - {x: -2.87, y: 6}
+  - {x: 1.84, y: 2.03}
+  - {x: -3.99, y: -1.6}
+  - {x: 2.28, y: -4.88}
+  - {x: -1.89, y: -7.9}
   DamageSprite: {fileID: 21300000, guid: 319f9f32899a7764d860458eb804f8c7, type: 3}
   DamageTexture: {fileID: 0}
   RepairedDamageSprite: {fileID: 0}
