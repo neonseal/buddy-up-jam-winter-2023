@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9f80a159de1db645878f7f5f69d17b5, type: 3}
   m_Name: Soren_LargeRipSew
   m_EditorClassIdentifier: 
-  PlushieDamageType: 1
   MendingGameType: 0
   RequiredToolType: 2
   TargetLocations:
-  - {x: -1.91, y: 5.02}
-  - {x: 3.98, y: 2.93}
-  - {x: -3.25, y: 0.19}
-  - {x: 3.87, y: -1.7}
-  - {x: -1.19, y: -4.53}
-  - {x: 3.15, y: -6.76}
+  - {x: -2.95, y: 6}
+  - {x: 2.6, y: 3}
+  - {x: -4.25, y: 0.25}
+  - {x: 2.15, y: -1.75}
+  - {x: -3.85, y: -4.5}
+  - {x: 1.75, y: -7.5}
   DamageSprite: {fileID: 21300000, guid: 1d236ff63e11d7d43902e402e5156501, type: 3}
+  DamageTexture: {fileID: 0}
   RepairedDamageSprite: {fileID: 0}
+  StuffingBackgroundTexture: {fileID: 0}
   RotationZValue: 0
