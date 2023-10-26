@@ -24,6 +24,7 @@ public class RadioController : MonoBehaviour {
     [SerializeField] private float clickDuration;
 
     private void Awake() {
+        DontDestroyOnLoad(this.gameObject);
         DOTween.Init();
 
         musicPlayer = GetComponent<AudioSource>();

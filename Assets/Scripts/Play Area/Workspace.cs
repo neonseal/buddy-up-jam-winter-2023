@@ -3,6 +3,7 @@ using GameState;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Workspace Controller
@@ -13,10 +14,9 @@ using UnityEngine;
 namespace PlayArea {
     public class Workspace : MonoBehaviour {
         /* Private Member Variables */
+        // Serialized fields
         [Header("Plushie Loading Elements")]
         [SerializeField] private Plushie[] plushieList;
-        private int currentPlushieIndex = -1;
-        private Plushie currentPlushie;
 
         [Header("Plushie Animation Elements")]
         [SerializeField] private Ease moveEaseType;
@@ -26,9 +26,14 @@ namespace PlayArea {
         [SerializeField] private float squashedY;
         [SerializeField] private int punchVibrato;
         [SerializeField] private float punchElasticity;
-
         [Header("Game UI Elements")]
         [SerializeField] private Checklist checklist;
+
+        // Private fields
+        private int currentPlushieIndex = 0;
+        private Plushie currentPlushie;
+         // Name of the game finished/credit scene, used by LoadScene as the String parameter for scene name
+        private const String _GAME_FINISH_SCENE_NAME = "TestEndScene";
 
         /* Public Event Actions */
         public static event Action<Plushie> OnClientPlushieloaded;
@@ -40,17 +45,27 @@ namespace PlayArea {
         public void InitializeWorkspace() {
             DOTween.Init();
 
-            WorkspaceEmptyState.OnNextClientRequested += LoadNextClientPlushie;
+            WorkspaceEmptyState.OnNextClientRequested += TryCallInNextClientPlushie;
         }
 
-        private void LoadNextClientPlushie() {
-            StartCoroutine(StartLoadPlushieRoutine());
+        // Handle the request to call in next plushie in PlushieList
+        // If there are more plushies to be repaired, load in next pluishei
+        // else, switch to game finish scene
+        private void TryCallInNextClientPlushie() {
+            /*
+            if (currentPlushieIndex < plushieList.Length) {
+                StartCoroutine(StartLoadPlushieRoutine());
+            }
+            else {
+                SceneManager.LoadScene(_GAME_FINISH_SCENE_NAME, LoadSceneMode.Single);
+            }
+            */
+            SceneManager.LoadScene(_GAME_FINISH_SCENE_NAME, LoadSceneMode.Single);
         }
 
         IEnumerator StartLoadPlushieRoutine() {
 
             Sequence loadPlushieSequence = DOTween.Sequence();
-            currentPlushieIndex++;
 
             // Load next plushie prefab if there are any left
             if (currentPlushieIndex < plushieList.Length) {
@@ -72,6 +87,8 @@ namespace PlayArea {
                 // Send task complete event
                 OnClientPlushieloaded?.Invoke(currentPlushie);
             }
+
+            currentPlushieIndex++;
         }
 
         /* Public Properties */
